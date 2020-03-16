@@ -1,227 +1,209 @@
 <template>
     <div>
         <sui-container id="main-container">
-            <h3>WOMEN</h3>
-            <sui-card-group :items-per-row="5">
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Matt Giampietro</sui-card-header>
-                        <sui-card-meta>Friends</sui-card-meta>
-                        <sui-card-description>
-                            Matthew is an interior designer living in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 75 Friends
-                        <span slot="right">Joined in 2013</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Molly</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Molly is a personal assistant living in Paris.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 35 Friends
-                        <span slot="right">Joined in 2011</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-            </sui-card-group>
+            <sui-grid>
+                <sui-grid-row>
+                    <h3 is="sui-header" text-align="center">WOMEN</h3>
+                    <sui-card-group :items-per-row="5">
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                    </sui-card-group>
+                </sui-grid-row>
+            </sui-grid>
 
-            <h3>MEN</h3>
-            <sui-card-group :items-per-row="5">
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Matt Giampietro</sui-card-header>
-                        <sui-card-meta>Friends</sui-card-meta>
-                        <sui-card-description>
-                            Matthew is an interior designer living in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 75 Friends
-                        <span slot="right">Joined in 2013</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Molly</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Molly is a personal assistant living in Paris.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 35 Friends
-                        <span slot="right">Joined in 2011</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-            </sui-card-group>
+            <sui-grid>
+                <sui-grid-row>
+                    <h3 is="sui-header" text-align="center">MEN</h3>
+                    <sui-card-group :items-per-row="5">
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                    </sui-card-group>
+                </sui-grid-row>
+            </sui-grid>
 
-            <h3>LIFE</h3>
-            <sui-card-group :items-per-row="5">
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Matt Giampietro</sui-card-header>
-                        <sui-card-meta>Friends</sui-card-meta>
-                        <sui-card-description>
-                            Matthew is an interior designer living in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 75 Friends
-                        <span slot="right">Joined in 2013</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Molly</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Molly is a personal assistant living in Paris.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 35 Friends
-                        <span slot="right">Joined in 2011</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card>
-                    <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
-                    <sui-card-content>
-                        <sui-card-header>Elyse</sui-card-header>
-                        <sui-card-meta>Coworker</sui-card-meta>
-                        <sui-card-description>
-                            Elyse is a copywriter working in New York.
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra>
-                        <sui-icon name="user" /> 151 Friends
-                        <span slot="right">Joined in 2014</span>
-                    </sui-card-content>
-                </sui-card>
-            </sui-card-group>
+            <sui-grid>
+                <sui-grid-row>
+                    <h3 is="sui-header" text-align="center">LIFE</h3>
+                    <sui-card-group :items-per-row="5">
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                        <sui-card>
+                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/26/45/82/03/12/1203824526_1.jpg/chg/resize/294x294/extent/294x294/optimize" />
+                            <sui-card-content>
+                                <sui-card-header>닥스(셔츠)</sui-card-header>
+                                <sui-card-description>
+                                    2020 프리미엄 셔츠 남방 10가지(DGS2SHCL108I)
+                                </sui-card-description>
+                            </sui-card-content>
+                            <sui-card-content extra>
+                                47,400<span>원</span>
+                            </sui-card-content>
+                        </sui-card>
+                    </sui-card-group>
+                </sui-grid-row>
+            </sui-grid>
         </sui-container>
     </div>
 </template>
@@ -237,8 +219,5 @@
     #main-container {
         margin-top:80px;
         margin-bottom:80px;
-    }
-    #main-container h3 {
-        text-align:center;
     }
 </style>
