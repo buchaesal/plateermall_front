@@ -14,13 +14,14 @@
                 <span class="item"><a>KIDS</a></span>
                 <span class="item"><a>LIVING</a></span>
                 <span class="item"><a>FOODS</a></span>
+
             </div>
 
             <div class="right_bar">
-                <a class="ui item">3D 쇼핑</a>
-                <a class="ui item">ZIPSA</a>
-                <a class="ui item">온앤더뷰티</a>
-                <a class="ui item">버튼</a>
+                <span class="item"><a>3D 쇼핑</a></span>
+                <span class="item"><a>ZIPSA</a></span>
+                <span class="item"><a>온앤더뷰티</a></span>
+                <span class="item"><a>버튼</a></span>
             </div>
         </div>
     </div>
@@ -69,12 +70,12 @@
         position: relative;
     }
 
-    .item:hover {
+    a:hover {
         color: lightgray;
         cursor: pointer;
     }
 
-    .item:hover:after {
+    a:hover:after {
         content: '';
         width: 100%;
         height: 2px;
