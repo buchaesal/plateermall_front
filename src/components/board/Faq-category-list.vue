@@ -165,6 +165,8 @@
          </li>
      </ul>
  </div>
+
+
 </template>
 
 <script>
@@ -192,5 +194,20 @@
     }
     a{
         color:inherit;
+    }
+    .faq_category-list>li h3 {
+        padding: 0 16px;
+        font-size: 24px;
+        text-align: center;
+        line-height: 33px;
+        background-position: 50% 20px;
+        background-repeat: no-repeat;
+    }
+    .faq_category-list .depth_menu {
+        margin-top: 20px;
+        padding: 0 20px 0 40px;
+    }
+    .faq_category-list .depth_menu>li a {
+        color: #666;
     }
 </style>
