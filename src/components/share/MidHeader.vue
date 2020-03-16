@@ -4,20 +4,15 @@
 
         <div class="util">
             <div class="search_area">
-                <input type="text" placeholder="아디다스키즈 봄 컬렉션" value autocomplete="off">
+                <input type="text" placeholder="아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
                 <sui-icon name="search" class="search_btn" size="large"/>
             </div>
         </div>
 
-        <!--<ul class="my_info">
-            <li><sui-icon name="user" size="large"/></li>
-            <li><sui-icon name="heart" size="large"/></li>
-            <li><sui-icon name="shopping bag" size="large"/></li>
-        </ul> -->
         <div class="my_info">
-            <sui-icon name="user" size="large"/>
-            <sui-icon name="heart" size="large"/>
-            <sui-icon name="shopping bag" size="large"/>
+            <a href="#"><sui-icon name="user" size="large"/></a>
+            <a href="#"><sui-icon name="heart" size="large"/></a>
+            <a href="#"><sui-icon name="shopping bag" size="large"/></a>
         </div>
     </div>
 </template>
@@ -29,6 +24,17 @@
 </script>
 
 <style scoped>
+
+    a:link {
+        color: black;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: black;
+        text-decoration: none;
+    }
+
 
     .search_btn {
         margin-top: 0;
@@ -76,10 +82,10 @@
         border-bottom: 2px solid #000;
     }
 
-   .my_info {
-       float: right;
-       height: 50px;
-   }
+    .my_info {
+        float: right;
+        height: 50px;
+    }
 
     i {
         margin-right: 20px;

@@ -1,17 +1,17 @@
 <template>
-    <div class="top-header">
-        <ul>
-            <li><a href="#">앱다운로드</a></li>
-            <li><a href="#">바로방문</a></li>
-        </ul>
-        <ul>
-            <li><a href="#">로그인</a></li>
-            <li><a href="#">회원가입</a></li>
-            <li><a href="#">고객센터</a></li>
-            <li><a href="#">스마트픽</a></li>
-            <li><a href="#">이벤트</a></li>
-            <li><a href="#">출석체크</a></li>
-        </ul>
+    <div class="top_header">
+        <div class="left_bar">
+            <a href="#">앱다운로드</a>
+            <a href="#">바로방문 ON</a>
+        </div>
+        <div class="right_bar">
+            <a href="#">로그인</a>
+            <a href="#">회원가입</a>
+            <a href="#">고객센터</a>
+            <a href="#">스마트픽</a>
+            <a href="#">이벤트</a>
+            <a href="#">출석체크</a>
+        </div>
     </div>
 </template>
 
@@ -22,27 +22,32 @@
 </script>
 
 <style scoped>
-    ul{
-        list-style: none;
-        display: block;
-        padding-inline-start: 40px;
-        font-size: 12px;
-        line-height: 36px;
-        color: lightgray;
-        float: left;
+    .top_header {
+        height: 50px;
     }
-    li {
+    .left_bar {
+        display: inline-block;
         float: left;
-        margin-left: 28px;
-        font-weight: 400;
+        margin: 10px 0 0 6%;
     }
-    .top-header {
-        min-width: inherit;
+
+    .left_bar a {
+        color: #878787;
         font-weight: bold;
-        max-width: 1680px;
-        margin: 0 auto;
-        overflow: hidden;
-        padding: 0 40px;
-        display: block;
+        margin: 0 7px;
+        font-size: 0.9rem;
+    }
+
+    .right_bar {
+        display: inline-block;
+        float: right;
+        margin: 10px 6% 0 0;
+    }
+
+    .right_bar a {
+        color: #878787;
+        font-weight: bold;
+        margin: 0 10px;
+        font-size: 0.9rem;
     }
 </style>
