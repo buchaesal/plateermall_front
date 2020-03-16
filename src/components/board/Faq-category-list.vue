@@ -210,4 +210,11 @@
     .faq_category-list .depth_menu>li a {
         color: #666;
     }
+    .faq_category-list .more {
+        position: relative;
+        display: inline-block;
+        margin: 16px 0 0 40px;
+        padding-right: 16px;
+        color: #000;
+    }
 </style>
