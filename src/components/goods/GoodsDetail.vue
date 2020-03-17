@@ -58,10 +58,10 @@
                         <dt>카드할인</dt>
                         <dd><span id="dcMaxInfoTxt">KB국민카드 10%청구할인</span>
                             <div class="tooltip">
-                                <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip"
-                                        @mouseleave="offTooltip"><i class="info icon"></i>
+                                <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
+                                        @mouseleave="offTooltip1"><i class="info icon"></i>
                                 </button>
-                                <div role="tooltip" class="tooltip-conts" v-if="tooltipDisplay">
+                                <div role="tooltip" class="tooltip-conts" v-if="tooltip1Display">
                                     <p class="desc-tit">카드 할인 혜택</p>
                                     <ul class="benefit_list">
                                         <li><p class="item">청구할인</p>
@@ -78,12 +78,12 @@
                         </dd>
                         <dt>포인트</dt>
                         <dd class="">
-                        <span class="oners_txt mt_none">롯데 오너스 L.POINT 0.5% 적립
-                        <div class="tooltip tooltip_oners_saving">
-
-                                <button class="circular ui icon basic button btn-tooltip"><i class="info icon"></i>
+                        <span class="oners-txt mt-none">롯데 오너스 L.POINT 0.5% 적립
+                        <div class="tooltip tooltip-oners-saving">
+                                <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
+                                        @mouseleave="offTooltip2"><i class="info icon"></i>
                                 </button>
-                            <div role="tooltip" class="tooltip_conts">
+                            <div role="tooltip" class="tooltip-conts" v-if="tooltip2Display">
                             <p class="desc_tit">롯데 오너스 적립 안내</p>
                                 <div class="saving_info">
                                     <dl>
@@ -118,8 +118,130 @@
                         </dd>
                     </dl>
                 </div>
+                <div class="goods-option">
+                    <div>
+                        <sui-dropdown class="option-select option-dropdown"
+                                      placeholder="옵션 선택"
+                                      selection
+                                      :options="options"
+                                      v-model="current"
+                        />
+                    </div>
+                    <div style="height:64px;">
+                        옵션 선택 목록
+                    </div>
+                    <div style="height:64px;">
+                        가격
+                    </div>
+                    <div style="height:64px;">
+                        배송 방법 선택
+                    </div>
+                    <div style="height:64px;">
+                        쇼핑백 / 바로구매
+                    </div>
+                    <div style="height:64px;">
+                        상품 정보
+                    </div>
+                    <div style="height:64px;">
+                        상품평
+                    </div>
+                </div>
+
+
             </div>
+
         </section>
+        <div class="promotion-banner">
+            <div class="banner-text">
+                <a href="#">프로모션 배너</a>
+            </div>
+        </div>
+        <div class="details">
+            <section class="md-details">
+                <div>
+                    <sui-accordion exclusive>
+                        <sui-accordion-title active class="accordion-title">
+                            <sui-icon name="dropdown"/>
+                            NOTICE
+                        </sui-accordion-title>
+                        <sui-accordion-content active class="accordion-content">
+                            <p>
+                                MD공지
+                            </p>
+                        </sui-accordion-content>
+                    </sui-accordion>
+                </div>
+                <h4 class="subheading">상품 상세 설명</h4>
+                <div class="goods-more-detail">
+                    상품상세
+                </div>
+                <div>
+                    <sui-accordion exclusive>
+                        <sui-accordion-title active class="accordion-title">
+                            <sui-icon name="dropdown"/>
+                            상품평
+                        </sui-accordion-title>
+                        <sui-accordion-content active class="review-content">
+                            <p>
+                                상품평
+                            </p>
+                        </sui-accordion-content>
+                    </sui-accordion>
+                </div>
+
+            </section>
+            <div class="promotion-banner">
+                <div class="banner-text">
+                    <a href="#">브랜드 배너</a>
+                </div>
+            </div>
+            <div class="detail-tab">
+                <sui-tab>
+                    <sui-tab-pane title="구매정보">
+                        <table class="ui definition table">
+                            <tbody>
+                            <tr>
+                                <td class="two wide column">Size</td>
+                                <td>1" x 2"</td>
+                            </tr>
+                            <tr>
+                                <td>Weight</td>
+                                <td>6 ounces</td>
+                            </tr>
+                            <tr>
+                                <td>Color</td>
+                                <td>Yellowish</td>
+                            </tr>
+                            <tr>
+                                <td>Odor</td>
+                                <td>Not Much Usually</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </sui-tab-pane>
+                    <sui-tab-pane title="Q&A">
+                        <p>
+                            Cascading Style Sheets (CSS) is a stylesheet language used to describe
+                            the presentation of a document written in HTML or XML (including XML
+                            dialects such as SVG or XHTML). CSS describes how elements should be
+                            rendered on screen, on paper, in speech, or on other media.
+                        </p>
+                    </sui-tab-pane>
+                    <sui-tab-pane title="배송/결제/교환/반품 정보">
+                        <p>
+                            JavaScript (JS) is a lightweight interpreted or JIT-compiled
+                            programming language with first-class functions. While it is most
+                            well-known as the scripting language for Web pages, many non-browser
+                            environments also use it, such as Node.js, Apache CouchDB and Adobe
+                            Acrobat. JavaScript is a prototype-based, multi-paradigm, dynamic
+                            language, supporting object-oriented, imperative, and declarative
+                            (e.g. functional programming) styles.
+                        </p>
+                    </sui-tab-pane>
+                </sui-tab>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -138,9 +260,24 @@
                     dcRate: 20,
                     saleCnt: 14,
                 },
+                options: [
+                    {
+                        text: 'S',
+                        value: 1,
+                    },
+                    {
+                        text: 'M',
+                        value: 2,
+                    },
+                    {
+                        text: 'L',
+                        value: 3,
+                    },
+                ],
                 shareDisplay: false,
                 isLike: false,
-                tooltipDisplay: false,
+                tooltip1Display: false,
+                tooltip2Display: false,
             }
         },
         methods: {
@@ -162,12 +299,19 @@
             likeBtnClick() {
                 this.isLike = !this.isLike;
             },
-            onTooltip() {
-                this.tooltipDisplay = true;
+            onTooltip1() {
+                this.tooltip1Display = true;
             },
 
-            offTooltip() {
-                this.tooltipDisplay = false;
+            offTooltip1() {
+                this.tooltip1Display = false;
+            },
+            onTooltip2() {
+                this.tooltip2Display = true;
+            },
+
+            offTooltip2() {
+                this.tooltip2Display = false;
             }
         },
     }
@@ -179,6 +323,15 @@
         padding: 0;
     }
 
+    dt {
+        display: block;
+    }
+
+    dd {
+        display: block;
+        margin-inline-start: 40px;
+    }
+
     a {
         text-decoration: none;
         color: inherit;
@@ -186,7 +339,10 @@
 
     .fix-inner {
         width: 1200px;
+        height: 1800px;
         margin: 0 auto;
+        min-height: 600px;
+        padding-top: 80px;
     }
 
     ul {
@@ -196,6 +352,7 @@
     .goods-detail {
         position: relative;
         margin-bottom: 80px;
+        height: 45%;
     }
 
     .gallery {
@@ -305,16 +462,17 @@
         clear: both;
     }
 
-    .detail > dd {
-        float: left;
-        width: calc(100% - 86px);
-    }
 
     .detail > dt {
         float: left;
         width: 86px;
         color: #666;
-        padding-top: 16px;
+    }
+
+    .detail > dd {
+        float: left;
+        margin: 0;
+        width: calc(100% - 86px);
     }
 
     .summary {
@@ -373,9 +531,83 @@
         border-bottom: 0;
     }
 
-    .detail > dd .oners-txt {
+    .tooltip .tooltip-conts {
+        position: absolute;
+        top: 20px;
+        right: 0;
+        z-index: 100;
+        width: 282px;
+        padding: 24px;
+        border: 1px solid #b3b3b3;
+        background: #fff;
+        color: #666;
+        text-align: left;
+    }
+
+    .oners-txt {
         display: block;
-        margin: 10px 0 5px;
         color: #773dbd;
+    }
+
+    .option-select {
+        margin-top: 32px;
+        width: 100%;
+    }
+
+    .option-dropdown {
+        width: 100%;
+        margin-bottom: 32px;
+    }
+
+    .promotion-banner {
+        position: static;
+        background-color: rgb(125, 115, 103);
+    }
+
+    .banner-text a {
+        display: block;
+        height: 100px;
+        padding: 28px 0;
+        font-size: 32px;
+        line-height: 44px;
+        text-align: center;
+    }
+
+    .detail {
+        position: relative;
+        height: 90px;
+    }
+
+    .accordion-title {
+        position: relative;
+        padding-left: 8px;
+        width: 100%;
+        height: 88px;
+        line-height: 90px;
+        font-size: 24px !important;
+        text-align: left;
+        background-color: transparent;
+        border: 2px solid #000;
+        border-width: 0 0 2px 0;
+    }
+
+    .accordion-content {
+        font-size: 14px !important;
+    }
+
+    .subheading {
+        margin-bottom: 40px;
+        padding: 80px 0 10px;
+        border-bottom: 2px solid #000;
+        font-size: 24px;
+    }
+
+    .detail-tab {
+        margin-top: 40px;
+    }
+
+    .summary .detail > dt:not(:first-of-type),
+    .summary .detail > dd:not(:first-of-type) {
+        padding-top: 16px;
     }
 </style>
