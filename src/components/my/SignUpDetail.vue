@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="sign-in">
-            <a class="sign-in-btn">
+            <a class="sign-in-btn" href="#">
                 <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_btn_login_create.gif" size="large" />
             </a>
         </div>
@@ -63,12 +63,12 @@
 </script>
 
 <style scoped>
-.signup-detail-main {
+/* .signup-detail-main {
     margin-top: 3%;
     margin-left: 30%;
     margin-right: 30%;
     color: #888;
-}
+} */
 .password-input {
     width: 100%;
     margin-right: 3px;

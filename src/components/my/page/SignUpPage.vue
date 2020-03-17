@@ -38,15 +38,23 @@
         <sui-input class="phone-input-back" type="list"/>
     </div>
     <br>
-    <sui-button @click="signUp" class="signup-btn">회원가입</sui-button>
+    <sui-button @click="signUp" class="signup-btn">중복확인</sui-button>
+    <br>
+    <br>
+    <SignUpDetail v-if="isNotDuplicated"></SignUpDetail>
+    <br>
+    <br>
   </div>
 </template>
 
 <script>
+import SignUpDetail from '../SignUpDetail';
+
 export default {
   name: "Sample",
   data() {
     return {
+      isNotDuplicated: false,
       userName: '',
       userEmail: '',
       userEmailDomain: '',
@@ -75,10 +83,14 @@ export default {
     },
     signUp() {
       //
+      this.isNotDuplicated = true;
     },
     emailDomainChange(){
       alert("ge")
     },
+  },
+  components: {
+    SignUpDetail,
   }
 };
 </script>
