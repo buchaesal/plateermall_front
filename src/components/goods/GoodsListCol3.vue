@@ -1,10 +1,10 @@
 <template>
     <div class="min_inner">
-        <h3 class="section_title ui center aligned">{{section_title}}</h3>
+        <h3 class="section_title ui">{{section_title}}</h3>
         <div>
             <sui-card-group :items-per-row="3">
                 <sui-card v-for="(goodsData, index) in goods" :key="index" @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
                         <sui-card-meta class="title"></sui-card-meta>
@@ -21,7 +21,7 @@
                     </sui-card-content>
                 </sui-card>
                 <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
                         <sui-card-meta class="title"></sui-card-meta>
@@ -38,7 +38,7 @@
                     </sui-card-content>
                 </sui-card>
                 <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
                         <sui-card-meta class="title"></sui-card-meta>
@@ -55,7 +55,7 @@
                     </sui-card-content>
                 </sui-card>
                 <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
                         <sui-card-meta class="title"></sui-card-meta>
@@ -123,6 +123,7 @@
         font-size: 32px;
         line-height: 44px;
         font-weight: 400;
+        text-align: center;
     }
 
     .original-price {

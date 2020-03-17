@@ -21,4 +21,7 @@ const routes = [
 
 export default new VueRouter({
     routes,
+    scrollBehavior () {
+        return { x: 0, y: 0 }
+    }
 })
