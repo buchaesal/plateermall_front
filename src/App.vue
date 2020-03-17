@@ -5,16 +5,13 @@
 </template>
 
 <script>
-import MainPage from './components/share/page/MainPage.vue'
 
-export default {
-  name: 'App',
-  components: {
-    MainPage
+  import MainPage from './components/share/page/MainPage.vue'
+
+  export default {
+    name: 'App',
+    components: {
+      MainPage
+    }
   }
-}
 </script>
-
-<style>
-  
-</style>
