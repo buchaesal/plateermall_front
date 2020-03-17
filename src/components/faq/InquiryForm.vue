@@ -1,6 +1,5 @@
 <template>
     <div>
-        <UserInfo></UserInfo>
         <div>
             <div class="inquiry_header">
                 <FaqHeader :title="'1:1문의하기'"></FaqHeader>
@@ -60,13 +59,11 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
-    import UserInfo from '../my/UserInfo';
 
     export default {
         name: "InquiryForm",
         components: {
-            FaqHeader,
-            UserInfo
+            FaqHeader
         }
     }
 </script>

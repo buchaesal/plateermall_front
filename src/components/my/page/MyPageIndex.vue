@@ -3,6 +3,9 @@
         <Header></Header>
         <div id="container">
             <div class="fix_inner">
+                <div id="user_info">
+                    <UserInfo></UserInfo>
+                </div>
                 <FaqNav></FaqNav>
                 <div class="sub_cont">
                     <component :is="selectedComponent"></component>
@@ -21,7 +24,8 @@
     import MyReview from "../../comment/MyReview";
     import InquiryForm from "../../faq/InquiryForm";
     import FaqCategoryList from "../../faq/FaqCategoryList";
-    import DeliveryAndUserInfoManagementTaps from "../DeliveryAndUserInfoManagementTaps"
+    import DeliveryAndUserInfoManagementTaps from "../DeliveryAndUserInfoManagementTaps";
+    import UserInfo from '../UserInfo';
 
     export default {
         name: "Main",
@@ -35,6 +39,7 @@
             InquiryForm,
             FaqCategoryList,
             DeliveryAndUserInfoManagementTaps,
+            UserInfo
         }
     }
 </script>
@@ -59,5 +64,8 @@
         float: left;
         width: 996px;
         font-size: 14px;
+    }
+    #user_info{
+
     }
 </style>
