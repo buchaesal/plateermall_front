@@ -187,15 +187,16 @@
                                 상품평
                             </sui-accordion-title>
                             <sui-accordion-content active class="review-content">
-                                <p>
-                                    상품평
-                                </p>
+                                <div>
+                                    <Rating/>
+                                    <ReviewList />
+                                </div>
                             </sui-accordion-content>
                         </sui-accordion>
                     </div>
 
                 </section>
-                <div class="promotion-banner">
+                <div class="brand-banner">
                     <div class="banner-text">
                         <a href="#">브랜드 배너</a>
                     </div>
@@ -345,11 +346,13 @@
     import Header from "../share/Header";
     import Footer from "../share/Footer";
     import SideBanner from "../share/SideBanner";
+    import Rating from "../comment/Rating";
 
 
     export default {
         name: "GoodsDetail",
         components: {
+            Rating,
             Header,
             Footer,
             SideBanner,
@@ -667,6 +670,9 @@
 
     .promotion-banner {
         position: static;
+        background-color: rgb(125, 115, 103);
+    }
+    .brand-banner {
         background-color: rgb(125, 115, 103);
     }
 
