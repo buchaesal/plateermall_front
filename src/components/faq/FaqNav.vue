@@ -4,6 +4,7 @@
             <ul class="nav_question">
                 <li><a href="#">1:1 문의하기</a></li>
                 <li><a href="#">1:1 답변확인</a></li>
+                <li><router-link to="/myreview"><a href="#">상품평/이용후기 관리</a></router-link></li>
             </ul>
         </nav>
     </div>

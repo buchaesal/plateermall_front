@@ -12,6 +12,7 @@
     import Footer from '../../share/Footer.vue';
     import FaqNav from "../../faq/FaqNav";
     import FaqContent from "../../faq/FaqContent";
+    import MyReview from "../../comment/MyReview";
 
     export default {
         name: "Main",
@@ -20,7 +21,8 @@
             Header,
             Footer,
             FaqNav,
-            FaqContent
+            FaqContent,
+            MyReview
         }
     }
 </script>

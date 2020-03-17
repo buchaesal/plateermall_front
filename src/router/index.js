@@ -9,7 +9,8 @@ Vue.use(VueRouter);
 const routes = [
     {path: '/', component: MainPage},
     {path: '/login', component: LoginForm},
-    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent'}}
+    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent'}},
+    {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}}
 ]
 
 export default new VueRouter({
