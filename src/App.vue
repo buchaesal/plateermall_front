@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-     Plateer Project
-     <sui-button primary>Primary</sui-button>
+     <MainPage></MainPage>
   </div>
 </template>
 
 <script>
+import MainPage from './components/share/page/MainPage.vue'
 
 export default {
   name: 'App',
   components: {
-    
+    MainPage
   }
 }
 </script>
 
 <style>
+  
 </style>
