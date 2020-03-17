@@ -1,6 +1,6 @@
 <template>
  <div>
-     <FaqHeader is-button="true" :title="'자주 찾는 질문'"></FaqHeader>
+     <FaqHeader :is-button="true" :title="'자주 찾는 질문'"></FaqHeader>
      <FaqSearchForm></FaqSearchForm>
      <ul class="faq_category-list">
          <li class="shipping">
