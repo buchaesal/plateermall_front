@@ -2,10 +2,12 @@
     <div id="main-page-container">
         <Header></Header>
         <div id="container">
-        <div class="fix_inner">
-        <FaqNav></FaqNav>
-        <component :is="selectedComponent"></component>
-        </div>
+            <div class="fix_inner">
+                <FaqNav></FaqNav>
+                <div class="sub_cont">
+                    <component :is="selectedComponent"></component>
+                </div>
+            </div>
         </div>
         <Footer></Footer>
     </div>
@@ -20,8 +22,8 @@
 
     export default {
         name: "Main",
-        props:['selectedComponent'],
-        components:{
+        props: ['selectedComponent'],
+        components: {
             Header,
             Footer,
             FaqNav,
@@ -35,13 +37,21 @@
     #main-page-container {
         height: 300%;
     }
+
     [class^="fix_inner"] {
         width: 1200px;
         margin: 0 auto;
     }
+
     #container {
         width: 100%;
         min-height: 600px;
         padding-top: 80px;
+    }
+
+    .sub_cont {
+        float: left;
+        width: 996px;
+        font-size: 14px;
     }
 </style>
