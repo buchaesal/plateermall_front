@@ -2,7 +2,7 @@
     <div id="main-page-container">
         <Header></Header>
             <sui-container>
-                <div>
+                <div style="margin-top:30px; margin-bottom:30px;">
                     <h1>쇼핑백</h1>
                 </div>
 
@@ -21,41 +21,56 @@
                             <a href="#" class="goods-option" style="margin-right:10px;">품절삭제</a>
                             <a href="#" class="goods-option" style="margin-right:10px;">위시담기</a>
                         </div>
-                        <div style="background-color:#ededed; height:50px;">
-                            <p style="text-align:right; line-height:50px;">무료배송</p>
-                        </div>
-                        <div>
-                            <sui-grid :columns="5" divided>
-                                <sui-grid-row stretched style="width:100%;">
-                                    <sui-grid-column style="width:10%;">
-                                        <sui-segment>
-                                            <sui-checkbox class="goods-checkbox" v-model="value" />
-                                        </sui-segment>
-                                    </sui-grid-column>
-                                    <sui-grid-column style="width:30%;">
-                                        <sui-segment>
-                                            <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize" size="small" />
-                                        </sui-segment>
-                                    </sui-grid-column>
-                                    <sui-grid-column style="width:40%;">
-                                        <sui-segment>필립스(아울렛)</sui-segment>
-                                        <sui-segment>필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04</sui-segment>
-                                        <sui-segment>모델명:HX9338/04</sui-segment>
-                                    </sui-grid-column>
-                                    <sui-grid-column style="width:10%;">
-                                        <sui-segment>
-                                            <div class="quantity-box">
-                                                <sui-button>-</sui-button>
-                                                <sui-input value="1"/>
-                                                <sui-button>+</sui-button>
-                                            </div>
-                                        </sui-segment>
-                                    </sui-grid-column>
-                                    <sui-grid-column style="width:10%;">
-                                        <sui-segment>1</sui-segment>
-                                    </sui-grid-column>
-                                </sui-grid-row>
-                            </sui-grid>
+                        <div class="goods-list">
+                            <div style="background-color:#ededed; height:50px;">
+                                <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
+                            </div>
+                            <div>
+                                <sui-grid :columns="5" divided>
+                                    <sui-grid-row stretched class="cart-grid-row">
+                                        <sui-grid-column style="width:10%;">
+                                            <sui-segment>
+                                                <sui-checkbox class="goods-checkbox" v-model="value" />
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                        <sui-grid-column style="width:20%;">
+                                            <sui-segment>
+                                                <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize" size="small" />
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                        <sui-grid-column style="width:40%;">
+                                            <sui-segment>필립스(아울렛)</sui-segment>
+                                            <sui-segment>필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04</sui-segment>
+                                            <sui-segment>모델명:HX9338/04</sui-segment>
+                                        </sui-grid-column>
+                                        <sui-grid-column style="width:15%;">
+                                            <sui-segment>
+                                                <!--
+                                                <div class="quantity-box">
+                                                    <span class="minus">-</span>
+                                                    <input type="text" value="1"/>
+                                                    <span class="plus">+</span>
+                                                </div>
+                                                -->
+                                                <div class="quantity-box">
+                                                    <sui-button class="minus">-</sui-button>
+                                                    <sui-input value="1" style="margin-left:18px;"/>
+                                                    <sui-button class="plus">+</sui-button>
+                                                </div>
+                                                <div>
+                                                    <sui-button basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
+                                                </div>
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                        <sui-grid-column style="width:15%;">
+                                            <sui-segment>
+                                                <div>X</div>
+                                                <div>1,206,000원</div>
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                    </sui-grid-row>
+                                </sui-grid>
+                            </div>
                         </div>
                     </div>
 
@@ -134,20 +149,51 @@
     .goods-list-container {
         float:left;
         width:70%;
+        margin:100px 0px;
     }
     .goods-price-container {
         float:right;
-        width:30%;
+        width:25%;
+        margin:100px 0px;
     }
     .goods-main-container {
         width:100%;
     }
+
     .ui.segment {
         border: 0px;
         box-shadow: 0 0 0 0;
     }
 
+    .ui.input {
+        width:37px;
+    }
+
     .quantity-box {
-        float: left;
+        position:relative;
+    }
+
+    .quantity-box .minus {
+        position:absolute;
+        left:-20px;
+        background:#fff;
+    }
+    .quantity-box .plus {
+        position:absolute;
+        left:47px;
+        background:#fff;
+        padding-left: 10px;
+        margin-left: 12px;
+        padding-right: 15px;
+    }
+    .cart-grid-row {
+        width:100%;
+        border-bottom:1px solid #ccc;
+    }
+    #cart-grid-row .column {
+        box-shadow: none;
+    }
+    .goods-list {
+        margin-bottom:50px;
     }
 </style>
