@@ -14,7 +14,6 @@ const routes = [
     {path: '/signup', component: SignUpPage},
     {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent'}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
-    {path: '/signup', component: SignUpPage},
 ]
 
 export default new VueRouter({
