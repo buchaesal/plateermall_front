@@ -1,8 +1,12 @@
 <template>
     <div id="main-page-container">
         <Header></Header>
+        <div id="container">
+        <div class="fix_inner">
         <FaqNav></FaqNav>
         <component :is="selectedComponent"></component>
+        </div>
+        </div>
         <Footer></Footer>
     </div>
 </template>
@@ -30,5 +34,14 @@
 <style scoped>
     #main-page-container {
         height: 300%;
+    }
+    [class^="fix_inner"] {
+        width: 1200px;
+        margin: 0 auto;
+    }
+    #container {
+        width: 100%;
+        min-height: 600px;
+        padding-top: 80px;
     }
 </style>
