@@ -1,25 +1,32 @@
 <template>
-    <div class="ui secondary  menu">
-        <a class="active item">HOME</a>
-        <a class="item">OUTLET</a>
-        <a class="item">BEAUTY</a>
-        <a class="item">BAG & ACC</a>
-        <a class="item">SHOES</a>
-        <a class="item">WOMEN</a>
-        <a class="item">MEN</a>
-        <a class="item">CASUAL</a>
-        <a class="item">SPORTS</a>
-        <a class="item">KIDS</a>
-        <a class="item">LIVING</a>
-        <a class="item">FOOD</a>
+        <div class="menu_bar">
+            <div class="inner_bar">
+                <div class="left_bar">
+                    <span class="item"><a>HOME</a></span>
+                    <span class="item"><a>OUTLET</a></span>
+                    <span class="item"><a>BEAUTY</a></span>
+                    <span class="item"><a>BAG & ACC</a></span>
+                    <span class="item"><a>SHOES</a></span>
+                    <span class="item"><a>WOMEN</a></span>
+                    <span class="item"><a>MEN</a></span>
+                    <span class="item"><a>CASUAL</a></span>
+                    <span class="item"><a>SPORTS</a></span>
+                    <span class="item"><a>KIDS</a></span>
+                    <span class="item"><a>LIVING</a></span>
+                    <span class="item"><a>FOODS</a></span>
 
-        <div class="right menu">
-            <a class="ui item">3D 쇼핑</a>
-            <a class="ui item">ZIPSA</a>
-            <a class="ui item">온앤더뷰티</a>
-            <a class="ui item">버튼</a>
+                </div>
+
+                <div class="right_bar">
+                    <span class="item"><a>3D 쇼핑</a></span>
+                    <span class="item"><a>ZIPSA</a></span>
+                    <span class="item"><a>온앤더뷰티</a></span>
+                    <a href="#">
+                        <sui-icon size="big" name="plus square"/>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -30,21 +37,50 @@
 
 <style scoped>
 
-    .ui.secondary.menu {
-        background-color: black;
-        height: 50px;
+    .menu_bar {
+        /*position: -webkit-sticky;*/
+        /*position: sticky;*/
+        /*top: 0;*/
+        /*background-color: black;*/
+        /*height: 60px;*/
     }
 
-    .ui.secondary.menu .item {
+    .inner_bar {
+        margin: 20px 7%;
+    }
+
+    .left_bar {
+        display: inline-block;
+        float: left;
+        margin-top: 20px;
+    }
+
+    .left_bar a {
+        color: darkgray;
+        margin: 0 10px;
+    }
+
+    .right_bar {
+        display: inline-block;
+        float: right;
+        margin-top: 20px;
+    }
+
+    .right_bar a {
         color: lightgray;
+        margin: 0 15px;
+        font-weight: bold;
     }
 
-    .ui.secondary.menu .active.item{
-        margin-left: 80px;
+    .item {
+        position: relative;
     }
 
-    .right.menu{
-        margin-right: 80px;
+    a:hover {
+        color: lightgray;
+        cursor: pointer;
+        border-bottom: 3px solid white;
+        padding-bottom: 19px;
     }
 
 </style>
