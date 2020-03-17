@@ -3,9 +3,10 @@
         <form>
             <fieldset>
             <input type="text" placeholder="자주 묻는 질문을 검색해보세요.">
-                <input type="submit" value="검색">
+                <sui-icon size="large" name="search"></sui-icon>
             </fieldset>
         </form>
+
         <ul class="rank">
             <li><a href="#">주문내역확인</a></li>
             <li><a href="#">배송확인</a></li>
@@ -44,18 +45,18 @@
         background-color: #f2f2f2;
         font-size: 18px;
     }
-    .search_faq-form input[type="submit"] {
+    .search_faq-form i {
         position: absolute;
-        right: 82px;
-        top: 52px;
+        right: 70px;
+        top: 57px;
         width: 44px;
         height: 30px;
         display: inline-block;
         vertical-align: middle;
-        background-color: white;
         background-size: 480px auto;
         background-repeat: no-repeat;
         background-position: -5px -84px;
+        cursor: pointer;
     }
     .rank {
         margin-top: 16px;
