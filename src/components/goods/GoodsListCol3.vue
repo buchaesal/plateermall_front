@@ -37,7 +37,7 @@
                         <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
                 </sui-card>
-                <sui-card>
+                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
@@ -54,7 +54,7 @@
                         <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
                 </sui-card>
-                <sui-card>
+                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>

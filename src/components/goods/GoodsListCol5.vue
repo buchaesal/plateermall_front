@@ -19,7 +19,7 @@
 
                     </sui-card-content>
                 </sui-card>
-                <sui-card>
+                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
@@ -35,7 +35,7 @@
 
                     </sui-card-content>
                 </sui-card>
-                <sui-card>
+                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
@@ -51,7 +51,7 @@
 
                     </sui-card-content>
                 </sui-card>
-                <sui-card>
+                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
@@ -67,7 +67,7 @@
 
                     </sui-card-content>
                 </sui-card>
-                <sui-card>
+                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
@@ -83,7 +83,7 @@
 
                     </sui-card-content>
                 </sui-card>
-                <sui-card>
+                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
@@ -128,6 +128,9 @@
                 var price = originalPrice * (100 - dcRate) / 100;
                     price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 return price;
+            },
+            goToGoodsDetail(goodsCode) {
+                this.$router.push('/goodsDetail/'+goodsCode);
             },
         }
     }
