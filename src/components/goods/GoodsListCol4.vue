@@ -2,83 +2,83 @@
     <div class="min_inner">
         <h3 class="section_title ui center aligned">{{section_title}}</h3>
         <div>
-        <sui-card-group :items-per-row="4">
-            <sui-card v-for="(goodsData, index) in goods" :key="index">
-                <sui-image :src="goodsData.imgUrl"/>
-                <sui-card-content>
-                    <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                    <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                    <sui-card-description class="price">
-                        {{goodsData.pricing(goodsData.originalPrice,
-                        goodsData.dcRate)}}<span class="unit">원</span>
-                    </sui-card-description>
-                </sui-card-content>
-            </sui-card>
-            <sui-card>
-                <sui-image :src="goodsData.imgUrl"/>
-                <sui-card-content>
-                    <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                    <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                    <sui-card-description>
-                        
-                    </sui-card-description>
-                </sui-card-content>
-                <sui-card-content extra class="price">
-                    <sui-icon name="won sign icon"/>
-                    <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+            <sui-card-group :items-per-row="4">
+                <sui-card v-for="(goodsData, index) in goods" :key="index">
+                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-card-content>
+                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
+                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
+                        <sui-card-description class="price">
+                            {{pricing(goodsData.originalPrice,
+                            goodsData.dcRate)}}<span class="unit">원</span>
+                        </sui-card-description>
+                    </sui-card-content>
+                </sui-card>
+                <sui-card>
+                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-card-content>
+                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
+                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
+                        <sui-card-description>
+
+                        </sui-card-description>
+                    </sui-card-content>
+                    <sui-card-content extra class="price">
+                        <sui-icon name="won sign icon"/>
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                    
-                </sui-card-content>
-            </sui-card>
-            <sui-card>
-                <sui-image :src="goodsData.imgUrl"/>
-                <sui-card-content>
-                    <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                    <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                    <sui-card-description>
-                        
-                    </sui-card-description>
-                </sui-card-content>
-                <sui-card-content extra class="price">
-                    <sui-icon name="won sign icon"/>
-                    <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+
+                    </sui-card-content>
+                </sui-card>
+                <sui-card>
+                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-card-content>
+                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
+                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
+                        <sui-card-description>
+
+                        </sui-card-description>
+                    </sui-card-content>
+                    <sui-card-content extra class="price">
+                        <sui-icon name="won sign icon"/>
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                    
-                </sui-card-content>
-            </sui-card>
-            <sui-card>
-                <sui-image :src="goodsData.imgUrl"/>
-                <sui-card-content>
-                    <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                    <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                    <sui-card-description>
-                        
-                    </sui-card-description>
-                </sui-card-content>
-                <sui-card-content extra class="price">
-                    <sui-icon name="won sign icon"/>
-                    <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+
+                    </sui-card-content>
+                </sui-card>
+                <sui-card>
+                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-card-content>
+                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
+                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
+                        <sui-card-description>
+
+                        </sui-card-description>
+                    </sui-card-content>
+                    <sui-card-content extra class="price">
+                        <sui-icon name="won sign icon"/>
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                    
-                </sui-card-content>
-            </sui-card>
-            <sui-card>
-                <sui-image :src="goodsData.imgUrl"/>
-                <sui-card-content>
-                    <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                    <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                    <sui-card-description>
-                        
-                    </sui-card-description>
-                </sui-card-content>
-                <sui-card-content extra class="price">
-                    <sui-icon name="won sign icon"/>
-                    <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+
+                    </sui-card-content>
+                </sui-card>
+                <sui-card>
+                    <sui-image :src="goodsData.imgUrl"/>
+                    <sui-card-content>
+                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
+                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
+                        <sui-card-description>
+
+                        </sui-card-description>
+                    </sui-card-content>
+                    <sui-card-content extra class="price">
+                        <sui-icon name="won sign icon"/>
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                    
-                </sui-card-content>
-            </sui-card>
-        </sui-card-group>
+
+                    </sui-card-content>
+                </sui-card>
+            </sui-card-group>
         </div>
 
 
@@ -99,13 +99,16 @@
                     title: "플라워 원피스",
                     originalPrice: 49000,
                     dcRate: 20,
-                    pricing(originalPrice, dcRate) {
-                        return originalPrice * (100 - dcRate) / 100;
-                    },
                 },
             }
         },
-        methods: {}
+        methods: {
+            pricing(originalPrice, dcRate) {
+                var price = originalPrice * (100 - dcRate) / 100;
+                    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return price;
+            },
+        }
     }
 </script>
 

@@ -9,14 +9,14 @@
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                         <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                         <sui-card-description>
-                            
+
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                        
+
                     </sui-card-content>
                 </sui-card>
                 <sui-card>
@@ -25,14 +25,14 @@
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                         <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                         <sui-card-description>
-                            
+
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                        
+
                     </sui-card-content>
                 </sui-card>
                 <sui-card>
@@ -41,14 +41,14 @@
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                         <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                         <sui-card-description>
-                            
+
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                        
+
                     </sui-card-content>
                 </sui-card>
                 <sui-card>
@@ -57,14 +57,14 @@
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                         <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                         <sui-card-description>
-                            
+
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                        
+
                     </sui-card-content>
                 </sui-card>
                 <sui-card>
@@ -73,14 +73,14 @@
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                         <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                         <sui-card-description>
-                            
+
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                        
+
                     </sui-card-content>
                 </sui-card>
                 <sui-card>
@@ -89,14 +89,14 @@
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                         <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                         <sui-card-description>
-                            
+
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
+                        <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-                        
+
                     </sui-card-content>
                 </sui-card>
             </sui-card-group>
@@ -120,13 +120,16 @@
                     title: "플라워 원피스",
                     originalPrice: 49000,
                     dcRate: 20,
-                    pricing(originalPrice, dcRate) {
-                        return originalPrice * (100 - dcRate) / 100;
-                    },
                 },
             }
         },
-        methods: {}
+        methods: {
+            pricing(originalPrice, dcRate) {
+                var price = originalPrice * (100 - dcRate) / 100;
+                    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return price;
+            },
+        }
     }
 </script>
 

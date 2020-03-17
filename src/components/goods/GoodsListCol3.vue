@@ -7,16 +7,16 @@
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
-                        <sui-card-meta class="title">{{goodsData.title}}</sui-card-meta>
+                        <sui-card-meta class="title"></sui-card-meta>
                         <sui-card-description>
                             {{goodsData.saleCnt}}<span>개 구매</span>
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
-                        <span>{{goodsData.originalPrice}}</span>
+                        <span class="price">{{pricing(goodsData.originalPrice,
+                            goodsData.dcRate)}} ~</span><span class="unit"></span>
+                        <span class="original-price">{{goodsData.originalPrice}}</span>
                         <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
                 </sui-card>
@@ -24,16 +24,16 @@
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
-                        <sui-card-meta class="title">{{goodsData.title}}</sui-card-meta>
+                        <sui-card-meta class="title"></sui-card-meta>
                         <sui-card-description>
                             {{goodsData.saleCnt}}<span>개 구매</span>
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
-                        <span>{{goodsData.originalPrice}}</span>
+                        <span class="price">{{pricing(goodsData.originalPrice,
+                            goodsData.dcRate)}} ~</span><span class="unit"></span>
+                        <span class="original-price">{{goodsData.originalPrice}}</span>
                         <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
                 </sui-card>
@@ -41,16 +41,16 @@
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
-                        <sui-card-meta class="title">{{goodsData.title}}</sui-card-meta>
+                        <sui-card-meta class="title"></sui-card-meta>
                         <sui-card-description>
                             {{goodsData.saleCnt}}<span>개 구매</span>
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
-                        <span>{{goodsData.originalPrice}}</span>
+                        <span class="price">{{pricing(goodsData.originalPrice,
+                            goodsData.dcRate)}} ~</span><span class="unit"></span>
+                        <span class="original-price">{{goodsData.originalPrice}}</span>
                         <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
                 </sui-card>
@@ -58,16 +58,16 @@
                     <sui-image :src="goodsData.imgUrl"/>
                     <sui-card-content>
                         <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
-                        <sui-card-meta class="title">{{goodsData.title}}</sui-card-meta>
+                        <sui-card-meta class="title"></sui-card-meta>
                         <sui-card-description>
                             {{goodsData.saleCnt}}<span>개 구매</span>
                         </sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
-                        <span class="price">{{goodsData.pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
-                        <span>{{goodsData.originalPrice}}</span>
+                        <span class="price">{{pricing(goodsData.originalPrice,
+                            goodsData.dcRate)}} ~</span><span class="unit"></span>
+                        <span class="original-price">{{goodsData.originalPrice}}</span>
                         <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
                 </sui-card>
@@ -93,13 +93,16 @@
                     originalPrice: 49000,
                     dcRate: 20,
                     saleCnt: 14,
-                    pricing(originalPrice, dcRate) {
-                        return originalPrice * (100 - dcRate) / 100;
-                    },
                 },
             }
         },
-        methods: {}
+        methods: {
+            pricing(originalPrice, dcRate) {
+                var price = originalPrice * (100 - dcRate) / 100;
+                    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                return price;
+            },
+        }
     }
 </script>
 
@@ -117,5 +120,14 @@
         font-size: 32px;
         line-height: 44px;
         font-weight: 400;
+    }
+
+    .original-price {
+        text-decoration: line-through;
+        font-size: 0.8em;
+    }
+
+    .unit {
+        margin-left: 2px;
     }
 </style>
