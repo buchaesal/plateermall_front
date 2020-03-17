@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div class="header-container">
         <TopHeader></TopHeader>
         <MidHeader></MidHeader>
-        <BottomHeader></BottomHeader>
+        <BottomHeader class="bottom-header"></BottomHeader>
     </div>
 </template>
 
@@ -22,5 +22,20 @@
     }
 </script>
 
-<style scoped>
+<style>
+
+    .header-container {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0;
+        background-color: white;
+        z-index: 100;
+    }
+
+    .bottom-header {
+
+        background-color: black;
+        height: 60px;
+    }
+
 </style>

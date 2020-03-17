@@ -1,20 +1,25 @@
 <template>
-    <div>
+    <div id="main-page-container">
+        <Header></Header>
+        <Slide></Slide>
         <Contents></Contents>
         <Footer></Footer>
     </div>
 </template>
 
 <script>
-    import Contents from '../Contents.vue'
-    import Footer from '../Footer.vue'
+
+    import Header from '../Header.vue';
+    import Slide from '../Slide.vue';
+    import Contents from '../Contents.vue';
+    import Footer from '../Footer.vue';
+
 
     export default {
-        name: "Sample",
-        props: {
-
-        },
+        name: "MainPage.vue",
         components: {
+            Header,
+            Slide,
             Contents,
             Footer
         }
@@ -23,4 +28,7 @@
 
 <style scoped>
 
+    #main-page-container {
+        height: 300%;
+    }
 </style>
