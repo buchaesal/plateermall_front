@@ -1,10 +1,22 @@
 <template>
     <div class="slide">
         <ul>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li>
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03121626283.jpg/chg/resize/960x720/crop/960x640+0+0/optimize">
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03121642245.jpg/chg/resize/960x720/crop/960x640+0+0/optimize">
+            </li>
+            <li>
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03121623368.jpg/chg/resize/960x720/crop/960x640+0+0/optimize">
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03121114833.jpg/chg/resize/960x720/crop/960x640+0+0/optimize">
+            </li>
+            <li>
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03121114833.jpg/chg/resize/960x720/crop/960x640+0+0/optimize">
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03121700841.jpg/chg/resize/960x720/crop/960x640+0+0/optimize">
+            </li>
+            <li>
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03101430215.jpg/chg/resize/960x720/crop/960x640+0+0/optimize">
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03131716304.jpg/chg/resize/960x720/crop/960x640+0+0/optimize">
+            </li>
         </ul>
     </div>
 </template>
@@ -17,15 +29,26 @@
 
 <style scoped>
 
-    * {margin:0;padding:0;}
-    ul,li{list-style:none;}
-    .slide{height:500px;overflow:hidden;}
-    .slide ul{width:calc(100% * 4);display:flex;animation:slide 8s infinite;} /* slide를 8초동안 진행하며 무한반복 함 */
-    .slide li{width:calc(100% / 4);height:500px;}
-    .slide li:nth-child(1){background:#ffa;}
-    .slide li:nth-child(2){background:#faa;}
-    .slide li:nth-child(3){background:#afa;}
-    .slide li:nth-child(4){background:#aaf;}
+    * {
+        margin:0;
+        padding:0;
+    }
+
+    .slide{
+        height:640px;
+        overflow:hidden;
+        margin-bottom: 4%;
+    }
+    .slide ul{
+        list-style: none;
+        width:calc(100% * 4);
+        display:flex;
+        animation:slide 10s infinite;
+    }
+    .slide li{
+        width:calc(100% / 4);
+        height:640px;
+    }
     @keyframes slide {
         0% {margin-left: 0;}
         /* 0 ~ 10  : 정지 */
@@ -40,6 +63,13 @@
         75% {margin-left: -300%;}
         85% {margin-left: -300%;}
         100% {margin-left: 0;}
+    }
+
+    img{
+        display: inline;
+        float: left;
+        width: 50%;
+        height: 640px;
     }
 
 </style>
