@@ -5,7 +5,10 @@
             <a href="#">바로방문 ON</a>
         </div>
         <div class="right_bar">
-            <a href="#">로그인</a>
+<!--            <a @click="goToLoginForm" href="#">로그인</a>-->
+<!--            <router-link to="/login"><a href="#">로그인</a></router-link>-->
+            <a @click="goToLoginForm" href="#">로그인</a>
+
             <a href="#">회원가입</a>
             <a href="#">고객센터</a>
             <a href="#">스마트픽</a>
@@ -17,7 +20,13 @@
 
 <script>
     export default {
-        name: "TopHeader.vue"
+        name: "TopHeader.vue",
+        methods: {
+            goToLoginForm() {
+                alert("이동")
+                this.$router.push('/login');
+            }
+        }
     }
 </script>
 
