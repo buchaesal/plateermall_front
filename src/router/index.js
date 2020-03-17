@@ -14,13 +14,17 @@ const routes = [
     {path: '/', component: MainPage},
     {path: '/login', component: LoginForm},
     {path: '/signup', component: SignUpPage},
-    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent'}},
+    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqCategoryList'}},
+    {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
-    {path: '/signup', component: SignUpPage},
     {path: '/goodsDetail/:goodsCode', component: GoodsDetail},
-    {path: '/cart', component: MyCart}
+    {path: '/cart', component: MyCart},
+    {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}}
 ]
 
 export default new VueRouter({
     routes,
+    scrollBehavior () {
+        return { x: 0, y: 0 }
+    }
 })

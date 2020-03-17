@@ -1,6 +1,6 @@
 <template>
     <div class="search_box">
-        <img src="https://image.ellotte.com/ellt.static.lotteeps.com/common/logo/logo_01231535202.png">
+        <img @click="goToHome" class="ellotte-img" src="https://image.ellotte.com/ellt.static.lotteeps.com/common/logo/logo_01231535202.png">
 
         <div class="util">
             <div class="search_area">
@@ -19,11 +19,20 @@
 
 <script>
     export default {
-        name: "MidHeader.vue"
+        name: "MidHeader.vue",
+        methods: {
+            goToHome(){
+              this.$router.push('/');
+            },
+        }
     }
 </script>
 
 <style scoped>
+
+    .ellotte-img {
+        cursor: pointer;
+    }
 
     a:link {
         color: black;

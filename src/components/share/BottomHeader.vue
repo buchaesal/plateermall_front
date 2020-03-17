@@ -2,7 +2,7 @@
         <div class="menu_bar">
             <div class="inner_bar">
                 <div class="left_bar">
-                    <span class="item"><a>HOME</a></span>
+                    <span class="item"><a @click="goToHome">HOME</a></span>
                     <span class="item"><a>OUTLET</a></span>
                     <span class="item"><a>BEAUTY</a></span>
                     <span class="item"><a>BAG & ACC</a></span>
@@ -31,19 +31,16 @@
 
 <script>
     export default {
-        name: "BottomHeader.vue"
+        name: "BottomHeader.vue",
+        methods: {
+            goToHome(){
+                this.$router.push('/');
+            }
+        }
     }
 </script>
 
 <style scoped>
-
-    .menu_bar {
-        /*position: -webkit-sticky;*/
-        /*position: sticky;*/
-        /*top: 0;*/
-        /*background-color: black;*/
-        /*height: 60px;*/
-    }
 
     .inner_bar {
         margin: 20px 7%;
