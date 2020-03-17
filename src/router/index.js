@@ -5,6 +5,7 @@ import LoginForm from '../components/my/page/LoginFormPage';
 import SignUpPage from '../components/my/page/SignUpPage' ;
 import MyPage from '../components/my/page/MyPageIndex';
 import GoodsDetail from '../components/goods/GoodsDetail';
+import MyCart from "../components/my/page/MyCartPage";
 
 
 Vue.use(VueRouter);
@@ -17,6 +18,7 @@ const routes = [
     {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
     {path: '/goodsDetail/:goodsCode', component: GoodsDetail},
+    {path: '/cart', component: MyCart},
     {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}}
 ]
 

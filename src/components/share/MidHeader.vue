@@ -12,7 +12,7 @@
         <div class="my_info">
             <a href="#"><sui-icon name="user" size="large"/></a>
             <a href="#"><sui-icon name="heart" size="large"/></a>
-            <a href="#"><sui-icon name="shopping bag" size="large"/></a>
+            <router-link to="/cart"><sui-icon name="shopping bag" size="large"/></router-link>
         </div>
     </div>
 </template>
