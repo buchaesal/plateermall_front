@@ -28,7 +28,7 @@
 
 <script>
 export default {
-  name: "Sample"
+  name: "LoginFormPage"
 };
 </script>
 

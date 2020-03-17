@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-     <MainPage></MainPage>
+     <!-- <MainPage></MainPage> -->
+     <LoginFormPage></LoginFormPage>
   </div>
 </template>
 
 <script>
 
-  import MainPage from './components/share/page/MainPage.vue'
-
+  // import MainPage from './components/share/page/MainPage.vue'
+  import LoginFormPage from './components/my/page/LoginFormPage'
   export default {
     name: 'App',
     components: {
-      MainPage
+      // MainPage
+      LoginFormPage
     }
   }
 </script>
