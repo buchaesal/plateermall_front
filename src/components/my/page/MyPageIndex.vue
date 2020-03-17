@@ -20,6 +20,7 @@
     import FaqContent from "../../faq/FaqContent";
     import MyReview from "../../comment/MyReview";
     import InquiryForm from "../../faq/InquiryForm";
+    import FaqCategoryList from "../../faq/FaqCategoryList";
 
     export default {
         name: "Main",
@@ -30,7 +31,8 @@
             FaqNav,
             FaqContent,
             MyReview,
-            InquiryForm
+            InquiryForm,
+            FaqCategoryList
         }
     }
 </script>

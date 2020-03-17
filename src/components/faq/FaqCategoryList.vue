@@ -1,5 +1,7 @@
 <template>
  <div>
+     <FaqHeader is-button="true" :title="'자주 찾는 질문'"></FaqHeader>
+     <FaqSearchForm></FaqSearchForm>
      <ul class="faq_category-list">
          <li class="shipping">
              <h3>배송</h3>
@@ -170,8 +172,15 @@
 </template>
 
 <script>
+    import FaqHeader from "./FaqHeader";
+    import FaqSearchForm from "./FaqSearchForm";
+
     export default {
-        name: "Faq-category-list"
+        name: "Faq-category-list",
+        components:{
+            FaqHeader,
+            FaqSearchForm
+        }
     }
 </script>
 
