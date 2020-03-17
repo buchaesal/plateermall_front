@@ -2,7 +2,7 @@
     <div class="nav_set">
         <nav>
             <ul class="nav_question">
-                <li><a href="#">1:1 문의하기</a></li>
+                <li><router-link to="/inquiryForm"><a href="#">1:1 문의하기</a></router-link></li>
                 <li><a href="#">1:1 답변확인</a></li>
                 <li><router-link to="/myreview"><a href="#">상품평/이용후기 관리</a></router-link></li>
             </ul>
@@ -25,7 +25,6 @@
     border-top: 3px solid #000;
     border-bottom: 3px solid #000;
     font-size: 14px;
-    height: 1200px;
 }
 
     li{

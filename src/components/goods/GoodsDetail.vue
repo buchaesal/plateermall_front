@@ -1,83 +1,88 @@
 <template>
-    <div class="fix-inner">
-        <section class="goods-detail">
-            <div class="gallery">
-                <img :src="goodsData.imgUrl" width="714px">
-            </div>
-            <div class="info">
-                <p class="seller">
-                    <a href="#">{{goodsData.seller}}</a>
-                </p>
-                <h3 class="title">{{goodsData.title}}</h3>
-                <div class="price-area">
-                    <p class="discount" v-if="isDiscount(goodsData.dcRate)">
-                        {{goodsData.dcRate}}<span class="unit">%</span>
-                    </p>
-                    <p class="price">
-                        {{pricing(goodsData.originalPrice,
-                        goodsData.dcRate)}}<span class="unit">원</span>
-                    </p>
-                    <ul class="utils">
-                        <li class="share">
-                            <button class="circular ui icon basic button btn-share" @click="shareBtnClick">
-                                <i class="share alternate icon"></i>
-                            </button>
-                            <ul class="share-list" v-if="shareDisplay">
-                                <li>
-                                    <button class="circular ui icon basic button facebook"><i class="facebook icon"></i>
-                                    </button>
-                                    <br><span class="share-text">페이스북</span>
-                                </li>
-                                <li>
-                                    <button class="circular ui icon basic button twitter"><i class="twitter icon"></i>
-                                    </button>
-                                    <br><span class="share-text">트위터</span>
-                                </li>
-                                <li>
-                                    <button class="circular ui icon basic button kakaotalk"><i class="comment icon"></i>
-                                    </button>
-                                    <br><span class="share-text">카카오톡</span>
-                                </li>
-                                <li>
-                                    <button class="circular ui icon basic button url"><i class="linkify icon"></i>
-                                    </button>
-                                    <br><span class="share-text">URL복사</span>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <button class="circular ui icon basic button btn-like" @click="likeBtnClick">
-                                <i class="heart icon red" v-if="isLike"></i>
-                                <i class="heart outline icon" v-else></i>
-                            </button>
-                        </li>
-                    </ul>
+    <div id="main-page-container">
+        <Header></Header>
+        <div class="fix-inner">
+            <section class="goods-detail">
+                <div class="gallery">
+                    <img :src="goodsData.imgUrl" width="714px">
                 </div>
-                <div class="summary">
-                    <dl class="detail">
-                        <dt>카드할인</dt>
-                        <dd><span id="dcMaxInfoTxt">KB국민카드 10%청구할인</span>
-                            <div class="tooltip">
-                                <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
-                                        @mouseleave="offTooltip1"><i class="info icon"></i>
+                <div class="info">
+                    <p class="seller">
+                        <a href="#">{{goodsData.seller}}</a>
+                    </p>
+                    <h3 class="title">{{goodsData.title}}</h3>
+                    <div class="price-area">
+                        <p class="discount" v-if="isDiscount(goodsData.dcRate)">
+                            {{goodsData.dcRate}}<span class="unit">%</span>
+                        </p>
+                        <p class="price">
+                            {{pricing(goodsData.originalPrice,
+                            goodsData.dcRate)}}<span class="unit">원</span>
+                        </p>
+                        <ul class="utils">
+                            <li class="share">
+                                <button class="circular ui icon basic button btn-share" @click="shareBtnClick">
+                                    <i class="share alternate icon"></i>
                                 </button>
-                                <div role="tooltip" class="tooltip-conts" v-if="tooltip1Display">
-                                    <p class="desc-tit">카드 할인 혜택</p>
-                                    <ul class="benefit_list">
-                                        <li><p class="item">청구할인</p>
-                                            <div class="conts"><p>KB국민카드 10%</p>
-                                                <ul class="bull_list-square">
-                                                    <li>70,000원 이상 10% 청구할인</li>
-                                                    <li>1일 할인한도 최대 70,000원</li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
+                                <ul class="share-list" v-if="shareDisplay">
+                                    <li>
+                                        <button class="circular ui icon basic button facebook"><i
+                                                class="facebook icon"></i>
+                                        </button>
+                                        <br><span class="share-text">페이스북</span>
+                                    </li>
+                                    <li>
+                                        <button class="circular ui icon basic button twitter"><i
+                                                class="twitter icon"></i>
+                                        </button>
+                                        <br><span class="share-text">트위터</span>
+                                    </li>
+                                    <li>
+                                        <button class="circular ui icon basic button kakaotalk"><i
+                                                class="comment icon"></i>
+                                        </button>
+                                        <br><span class="share-text">카카오톡</span>
+                                    </li>
+                                    <li>
+                                        <button class="circular ui icon basic button url"><i class="linkify icon"></i>
+                                        </button>
+                                        <br><span class="share-text">URL복사</span>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <button class="circular ui icon basic button btn-like" @click="likeBtnClick">
+                                    <i class="heart icon red" v-if="isLike"></i>
+                                    <i class="heart outline icon" v-else></i>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="summary">
+                        <dl class="detail">
+                            <dt>카드할인</dt>
+                            <dd><span id="dcMaxInfoTxt">KB국민카드 10%청구할인</span>
+                                <div class="tooltip">
+                                    <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
+                                            @mouseleave="offTooltip1"><i class="info icon"></i>
+                                    </button>
+                                    <div role="tooltip" class="tooltip-conts" v-if="tooltip1Display">
+                                        <p class="desc-tit">카드 할인 혜택</p>
+                                        <ul class="benefit_list">
+                                            <li><p class="item">청구할인</p>
+                                                <div class="conts"><p>KB국민카드 10%</p>
+                                                    <ul class="bull_list-square">
+                                                        <li>70,000원 이상 10% 청구할인</li>
+                                                        <li>1일 할인한도 최대 70,000원</li>
+                                                    </ul>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
-                        </dd>
-                        <dt>포인트</dt>
-                        <dd class="">
+                            </dd>
+                            <dt>포인트</dt>
+                            <dd class="">
                         <span class="oners-txt mt-none">롯데 오너스 L.POINT 0.5% 적립
                         <div class="tooltip tooltip-oners-saving">
                                 <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
@@ -114,140 +119,244 @@
                             </div>
                         </div>
                     </span>
-                            *오너스 회원가로 결제 시, 표기 된 카드혜택가 및 적립 내역과 상이할 수 있습니다.
-                        </dd>
-                    </dl>
-                </div>
-                <div class="goods-option">
-                    <div>
-                        <sui-dropdown class="option-select option-dropdown"
-                                      placeholder="옵션 선택"
-                                      selection
-                                      :options="options"
-                                      v-model="current"
-                        />
+                                *오너스 회원가로 결제 시, 표기 된 카드혜택가 및 적립 내역과 상이할 수 있습니다.
+                            </dd>
+                        </dl>
                     </div>
-                    <div style="height:64px;">
-                        옵션 선택 목록
-                    </div>
-                    <div style="height:64px;">
-                        가격
-                    </div>
-                    <div style="height:64px;">
-                        배송 방법 선택
-                    </div>
-                    <div style="height:64px;">
-                        쇼핑백 / 바로구매
-                    </div>
-                    <div style="height:64px;">
-                        상품 정보
-                    </div>
-                    <div style="height:64px;">
-                        상품평
-                    </div>
-                </div>
-
-
-            </div>
-
-        </section>
-        <div class="promotion-banner">
-            <div class="banner-text">
-                <a href="#">프로모션 배너</a>
-            </div>
-        </div>
-        <div class="details">
-            <section class="md-details">
-                <div>
-                    <sui-accordion exclusive>
-                        <sui-accordion-title active class="accordion-title">
-                            <sui-icon name="dropdown"/>
-                            NOTICE
-                        </sui-accordion-title>
-                        <sui-accordion-content active class="accordion-content">
-                            <p>
-                                MD공지
-                            </p>
-                        </sui-accordion-content>
-                    </sui-accordion>
-                </div>
-                <h4 class="subheading">상품 상세 설명</h4>
-                <div class="goods-more-detail">
-                    상품상세
-                </div>
-                <div>
-                    <sui-accordion exclusive>
-                        <sui-accordion-title active class="accordion-title">
-                            <sui-icon name="dropdown"/>
+                    <div class="goods-option">
+                        <div>
+                            <sui-dropdown class="option-select option-dropdown"
+                                          placeholder="옵션 선택"
+                                          selection
+                                          :options="options"
+                                          v-model="current"
+                            />
+                        </div>
+                        <div style="height:64px;">
+                            옵션 선택 목록
+                        </div>
+                        <div style="height:64px;">
+                            가격
+                        </div>
+                        <div style="height:64px;">
+                            배송 방법 선택
+                        </div>
+                        <div style="height:64px;">
+                            쇼핑백 / 바로구매
+                        </div>
+                        <div style="height:64px;">
+                            상품 정보
+                        </div>
+                        <div style="height:64px;">
                             상품평
-                        </sui-accordion-title>
-                        <sui-accordion-content active class="review-content">
-                            <p>
-                                상품평
-                            </p>
-                        </sui-accordion-content>
-                    </sui-accordion>
+                        </div>
+                    </div>
+
+
                 </div>
 
             </section>
             <div class="promotion-banner">
                 <div class="banner-text">
-                    <a href="#">브랜드 배너</a>
+                    <a href="#">프로모션 배너</a>
                 </div>
             </div>
-            <div class="detail-tab">
-                <sui-tab>
-                    <sui-tab-pane title="구매정보">
-                        <table class="ui definition table">
-                            <tbody>
-                            <tr>
-                                <td class="two wide column">Size</td>
-                                <td>1" x 2"</td>
-                            </tr>
-                            <tr>
-                                <td>Weight</td>
-                                <td>6 ounces</td>
-                            </tr>
-                            <tr>
-                                <td>Color</td>
-                                <td>Yellowish</td>
-                            </tr>
-                            <tr>
-                                <td>Odor</td>
-                                <td>Not Much Usually</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </sui-tab-pane>
-                    <sui-tab-pane title="Q&A">
-                        <p>
-                            Cascading Style Sheets (CSS) is a stylesheet language used to describe
-                            the presentation of a document written in HTML or XML (including XML
-                            dialects such as SVG or XHTML). CSS describes how elements should be
-                            rendered on screen, on paper, in speech, or on other media.
-                        </p>
-                    </sui-tab-pane>
-                    <sui-tab-pane title="배송/결제/교환/반품 정보">
-                        <p>
-                            JavaScript (JS) is a lightweight interpreted or JIT-compiled
-                            programming language with first-class functions. While it is most
-                            well-known as the scripting language for Web pages, many non-browser
-                            environments also use it, such as Node.js, Apache CouchDB and Adobe
-                            Acrobat. JavaScript is a prototype-based, multi-paradigm, dynamic
-                            language, supporting object-oriented, imperative, and declarative
-                            (e.g. functional programming) styles.
-                        </p>
-                    </sui-tab-pane>
-                </sui-tab>
-            </div>
-        </div>
+            <div class="details">
+                <section class="md-details">
+                    <div>
+                        <sui-accordion exclusive>
+                            <sui-accordion-title active class="accordion-title">
+                                <sui-icon name="dropdown"/>
+                                NOTICE
+                            </sui-accordion-title>
+                            <sui-accordion-content active class="accordion-content">
+                                <p>
+                                    MD공지
+                                </p>
+                            </sui-accordion-content>
+                        </sui-accordion>
+                    </div>
+                    <h4 class="subheading">상품 상세 설명</h4>
+                    <div class="goods-more-detail">
+                        상품상세
+                    </div>
+                    <div>
+                        <sui-accordion exclusive>
+                            <sui-accordion-title active class="accordion-title">
+                                <sui-icon name="dropdown"/>
+                                상품평
+                            </sui-accordion-title>
+                            <sui-accordion-content active class="review-content">
+                                <div>
+                                    <Rating/>
+                                    <ReviewList />
+                                </div>
+                            </sui-accordion-content>
+                        </sui-accordion>
+                    </div>
 
+                </section>
+                <div class="brand-banner">
+                    <div class="banner-text">
+                        <a href="#">브랜드 배너</a>
+                    </div>
+                </div>
+                <div class="detail-tab">
+                    <sui-tab>
+                        <sui-tab-pane title="구매정보">
+                            <table class="ui definition table">
+                                <tbody>
+                                <tr>
+                                    <td class="two wide column">Size</td>
+                                    <td>1" x 2"</td>
+                                </tr>
+                                <tr>
+                                    <td>Weight</td>
+                                    <td>6 ounces</td>
+                                </tr>
+                                <tr>
+                                    <td>Color</td>
+                                    <td>Yellowish</td>
+                                </tr>
+                                <tr>
+                                    <td>Odor</td>
+                                    <td>Not Much Usually</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </sui-tab-pane>
+                        <sui-tab-pane title="Q&A">
+                            <p>
+                                Q&A Vue
+                            </p>
+                        </sui-tab-pane>
+                        <sui-tab-pane title="배송/결제/교환/반품 정보">
+                            <h3 is="sui-header" dividing>
+                                배송안내
+                            </h3>
+                            <table class="ui definition table">
+                                <tbody>
+                                <tr>
+                                    <td class="two wide column">배송비</td>
+                                    <td>2,500원 (30,000원이상 무료배송)<br>
+                                        제주/도서산간 지역의 경우, 추가비용 발생 가능
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>배송정보</td>
+                                    <td>택배
+                                        03/20(금) 이내 택배 도착예정<br>
+                                        (도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>배송지역</td>
+                                    <td>전국(일부지역 제외)</td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <h3 is="sui-header" dividing>
+                                교환/반품 접수안내
+                            </h3>
+                            <div>교환/반품 접수 방법 안내
+                                1. 마이롯데 >주문/배송조회로 이동
+                                2. 주문건에서 '교환/반품접수' 버튼 선택
+                                주문배송조회 바로가기
+                                MY LOTTE에서 접수가 어려우신 경우, 엘롯데 고객만족센터 1899-2500 으로 문의하여 주시기 바랍니다.
+                            </div>
+
+                            <h3 is="sui-header" dividing>
+                                교환/반품 규정안내
+                            </h3>
+                            <table class="ui definition table">
+                                <tbody>
+                                <tr>
+                                    <td class="two wide column">교환/반품 비용</td>
+                                    <td>
+                                        <div>
+                                            <sui-list bulleted>
+                                                <sui-list-item>예상 반품비 : 5,000원, 예상 교환비 : 7,500원 (주문 상품을 1개씩 각각 반품/교환 시
+                                                    상품 별로 발생하는 비용임)
+                                                </sui-list-item>
+                                                <sui-list-item>정확한 반품/교환비는 MY Lotte에서 반품/교환 접수 시 또는 고객센터로 문의 시 확인
+                                                    가능합니다.
+                                                </sui-list-item>
+                                                <sui-list-item>고객님의 단순변심으로 인하여 교환/반품을 하시는 경우에는 상품등의 반환에 필요한 비용을 고객님이
+                                                    부담하셔야 합니다.
+                                                </sui-list-item>
+                                                <sui-list-item>고객님이 받으신 상품 등의 내용이 표시/광고 내용과 다르거나 계약내용과 다르게 이행되어 교환/반품을
+                                                    하시는 경우에는, 교환·반품 배송비는 무료입니다.
+                                                </sui-list-item>
+                                                <sui-list-item>고객님께서 직접 택배로 발송하실 경우 택배비는 본인 부담입니다.</sui-list-item>
+                                                <sui-list-item>중/대형 가전, 가구등 설치상품의 경우 상품, 지역, 설치비 등에 따라 반품/교환 비용이 상이할 수
+                                                    있습니다.
+                                                </sui-list-item>
+                                                <sui-list-item>회원등급에 따라 반품·교환 비용이 상이할 수 있습니다.</sui-list-item>
+                                            </sui-list>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>교환/반품 신청일 기준</td>
+                                    <td>
+                                        <sui-list bulleted>
+                                            <sui-list-item>단순변심으로 인한 교환/반품은 상품을 받으신 날부터 7일 이내 신청 가능합니다.</sui-list-item>
+                                            <sui-list-item>상품의 상세정보 등이 표기/광고한 내용과 다르거나, 계약내용이 다르게 이행되어 교환/반품을 하는 경우 상품을
+                                                받으신 날부터 3개월 이내 혹은 사실을 알게 된 날 또는 알 수 있었던 날부터 30일 이내 신청 가능합니다.
+                                            </sui-list-item>
+                                            <sui-list-item>롯데쇼핑 상품 교환·반품 안내</sui-list-item>
+                                            <sui-list-item>식품 7일 이내, 의류·보석 15일 이내, 그 밖의 일반 상품 30일 이내 교환 반품 가능합니다.
+                                            </sui-list-item>
+                                            <sui-list-item>주문제작 상품 등 일부 상품은 교환·반품 기준이 상이할 수 있습니다.</sui-list-item>
+                                            <sui-list-item>전자상거래법에 따른 교환·반품 규정이 상품공급업체가 개별적으로 지정한 교환·반품 조건 보다 우선 합니다.
+                                            </sui-list-item>
+                                            <sui-list-item>스마트픽 픽업 배송상품은 해당 스마트픽 픽업 지점에 상품도착일로부터 5일까지 픽업 가능합니다. 픽업가능일 경과
+                                                시 자동으로 반품되며 반품배송비 차감 후 환불됩니다.
+                                            </sui-list-item>
+                                        </sui-list>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                            <h3 is="sui-header" dividing>
+                                교환/반품 규정 안내
+                            </h3>
+                            <div>
+                                상품 정보 페이지에 협력업체가 개별적으로 게시한 "반품, 교환, 환불"(이하 "청약철회"라 합니다)에 관한 내용이 "전자상거래등에서의소비자보호에관한법률"
+                                (이하 전상법이라 합니다)에서 규정한 내용보다 고객님께 유리한 경우에는 개별적으로 게시한 해당 "청약철회" 내용을 우선 적용하며, "전상법"의 규정보다 불리한
+                                경우에는 "전상법"의 규정을 우선하여 적용합니다.
+                            </div>
+
+
+                        </sui-tab-pane>
+                    </sui-tab>
+                </div>
+            </div>
+
+        </div>
+        <Footer></Footer>
+        <SideBanner></SideBanner>
     </div>
 </template>
 
 <script>
+
+    import Header from "../share/Header";
+    import Footer from "../share/Footer";
+    import SideBanner from "../share/SideBanner";
+    import Rating from "../comment/Rating";
+
+
     export default {
         name: "GoodsDetail",
+        components: {
+            Rating,
+            Header,
+            Footer,
+            SideBanner,
+        },
         data() {
             return {
                 goodsData: {
@@ -561,6 +670,9 @@
 
     .promotion-banner {
         position: static;
+        background-color: rgb(125, 115, 103);
+    }
+    .brand-banner {
         background-color: rgb(125, 115, 103);
     }
 
