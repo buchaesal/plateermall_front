@@ -1,19 +1,17 @@
 <template>
   <div id="app">
-     Plateer Project
-     <sui-button primary>Primary</sui-button>
+     <MainPage></MainPage>
   </div>
 </template>
 
 <script>
 
-export default {
-  name: 'App',
-  components: {
-    
-  }
-}
-</script>
+  import MainPage from './components/share/page/MainPage.vue'
 
-<style>
-</style>
+  export default {
+    name: 'App',
+    components: {
+      MainPage
+    }
+  }
+</script>

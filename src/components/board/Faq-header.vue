@@ -1,8 +1,8 @@
 <template>
     <div>
     <header>
-        <h3 class="page_title">자주 찾는 질문</h3>
-        <p class="title_button">
+        <h3 class="page_title">{{ title }}</h3>
+        <p class="title_button" v-if="isButton">
             <a href="https://order.ellotte.com/order-fo/claim/orderDelivery?bypass" class="btn_normal">주문배송조회</a>
             <a href="https://order.ellotte.com/order-fo/claim/claims?claimType=cancel&amp;bypass" class="btn_normal">취소/교환/반품 조회</a>
         </p>
@@ -12,7 +12,14 @@
 
 <script>
     export default {
-        name: "Faq-header"
+        name: "Faq-header",
+        props:{
+            isButton:{
+                type: Boolean,
+                default: false
+            },
+            title: String
+        }
     }
 </script>
 
