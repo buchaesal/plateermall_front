@@ -22,6 +22,7 @@
 <style scoped>
     #my-cancel{
         margin-top: 5%;
+        text-align: center;
     }
 
     #my-cancel > p{
