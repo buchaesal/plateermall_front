@@ -31,38 +31,51 @@
         </div>
 
         <div class="foot_info">
-            <div class="inner_info_img"><img class="lotteDepartmentStoreLogo" src="https://1.cms.s81c.com/sites/default/files/2018-11-12/image_lottedpt_logo%20copy.png"></div>
-            <div class="inner_info">
-                <div class="inner_1st">
+            <div class="inner-info-img"><img class="lotteDepartmentStoreLogo" src="https://1.cms.s81c.com/sites/default/files/2018-11-12/image_lottedpt_logo%20copy.png"></div>
+            <div class="inner-info">
+                <div class="inner-1st">
                     <p class="shopping-title">롯데쇼핑주식회사</p>
                     롯데쇼핑(주) 대표이사 강희태, 서울시 중구 소공동 1번지<br>
                     사업자등록번호 : 104-81-26067(롯데쇼핑㈜ 백화점 사업본부)<br>
                     통신판매업신고 : 중구 01243호<br>
                     개인정보보호책임자: 박광석 청소년보호책임자 : 김진수 <br><br>
                     Copyright 2018. LOTTESHOPPING Co., LTD. All rights reserved.<br>
-
-
                 </div>
-                <div class="inner_2st">
+                <div class="inner-2st">
                     고객만족센터 : 1899-2500 (FAX: 02-3675-2500/E-mail: ellotte@lotte.net)<br>
                     운영시간 : 평일(09시-18시) 주말/공휴일(휴무)<br>
                     호스팅 서비스 사업자 : 롯데쇼핑㈜ e커머스 사업본부<br>
                 </div>
+                <div class="inner-3st">
+                    <br>
+                    콘텐츠산업진흥법에 의한 콘텐츠보호안내 [자세히 보기]<br><br>
+                    서울보증보험 소비자피해보상보험<br>
+                    고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에 대해 저희 쇼핑몰에서 가입한 소비자 피해 보상보험 서비스를 이용하실 수 있습니다.
+                </div>
             </div>
-            <div>
-                콘텐츠산업진흥법에 의한 콘텐츠보호안내 [자세히 보기]<br><br>
-                서울보증보험 소비자피해보상보험<br>
-                고객님의 안전거래를 위해 현금 등으로 결제 시 결제금액 전액에 대해 저희 쇼핑몰에서 가입한 소비자 피해 보상보험 서비스를 이용하실 수 있습니다.
-            </div>
+
         </div>
 
         <div class="list">
-            <ul class="price-list">
+            <ul class="awards-list">
                 <li><img src="//image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/common/footer_link01.png"></li>
                 <li><img src="//image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/common/footer_link02.png"></li>
                 <li><img src="//image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/common/footer_link03.png"></li>
-                <li><img src="//image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/common/footer_link04.png"></li>
-                <li><img src="//image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/common/footer_link05.png"></li>
+                <li>
+                    <a href="http://www.relaycall.or.kr/home/main1.asp">
+                    <img src="//image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/common/footer_link04.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="http://www.kolsa.or.kr/neopress/index.php">
+                    <img src="//image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/common/footer_link05.png">
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.hometax.go.kr/websquare/websquare.html?w2xPath=/ui/pp/index.xml">
+                    <img src="//image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/common/footer_link06.png">
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -111,8 +124,7 @@
         margin-bottom: 0px;
     }
 
-    ol,
-    ul {
+    ol, ul {
         list-style: none;
     }
 
@@ -139,7 +151,7 @@
         font-weight: 400;
         color: #000;
     }
-    
+
     .dropdown_list {
         float: right;
         width:20%;
@@ -149,7 +161,7 @@
     }
 
     .foot_info {
-        margin : 50px 9% 0 9%;
+        margin : 30px 9% 0 9%;
     }
 
     .lotteDepartmentStoreLogo {
@@ -163,28 +175,39 @@
         font-size: 1.2rem;
     }
 
-    .inner_1st {
+    .inner-1st {
         float: left;
         margin-right: 80px;
     }
 
-    .inner_1st, .inner_2st {
+    .inner-1st, .inner-2st, .inner-3st {
         font-size: 0.9rem;
         color: #666666;
     }
 
     .list {
-        margin-bottom: 5%;
+        margin: 3% auto 5% auto;
+        text-align: center;
     }
 
-    .price-list {
+    .awards-list {
+        display: inline-block;
         list-style: none;
     }
-    .price-list li {
+    .awards-list li {
         float: left;
+        text-align: center;
+        height: 56px;
+        width: 192px;
         margin: auto 10px;
         padding: 5px;
         border: 1px solid lightgray;
+        vertical-align: middle;
+        line-height: 54px;
+    }
+
+    .awards-list li>img {
+        vertical-align: center;
     }
 
 </style>
