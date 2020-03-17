@@ -25,6 +25,7 @@
     border-top: 3px solid #000;
     border-bottom: 3px solid #000;
     font-size: 14px;
+    height: 1200px;
 }
 
     li{
