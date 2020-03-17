@@ -19,6 +19,7 @@
     import FaqNav from "../../faq/FaqNav";
     import FaqContent from "../../faq/FaqContent";
     import MyReview from "../../comment/MyReview";
+    import InquiryForm from "../../faq/InquiryForm";
 
     export default {
         name: "Main",
@@ -28,7 +29,8 @@
             Footer,
             FaqNav,
             FaqContent,
-            MyReview
+            MyReview,
+            InquiryForm
         }
     }
 </script>

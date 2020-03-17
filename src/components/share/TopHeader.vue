@@ -8,10 +8,8 @@
 <!--            <a @click="goToLoginForm" href="#">로그인</a>-->
 <!--            <router-link to="/login"><a href="#">로그인</a></router-link>-->
             <a @click="goToLoginForm" href="#">로그인</a>
-
             <a @click="goToSignUp" href="#">회원가입</a>
             <router-link to="/faq"><a href="#">고객센터</a></router-link>
-            <a href="#">고객센터</a>
             <a href="#">스마트픽</a>
             <a href="#">이벤트</a>
             <a href="#">출석체크</a>
@@ -24,6 +22,7 @@
         name: "TopHeader.vue",
         methods: {
             goToLoginForm() {
+                alert("이동")
                 this.$router.push('/login');
             },
             goToSignUp() {
