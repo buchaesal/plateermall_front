@@ -26,7 +26,7 @@
 </template>
 
 <script>
-    import FaqHeader from './Faq-header';
+    import FaqHeader from './FaqHeader';
 
     export default {
         name: "Faq-list",

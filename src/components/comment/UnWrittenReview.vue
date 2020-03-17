@@ -26,9 +26,17 @@
                             <span class='due-date'>작성기한: {{unwritten.dueDate}}</span>
                             <sui-button @click='toggleReviewModal' size="tiny" floated="right" basic content="상품평 작성" />
                         
-                        <sui-modal v-model="open">
-                            
+                        <sui-modal  v-model="open">
+                            <sui-modal-content scrolling image>
+                                <ReviewForm/>
+                            </sui-modal-content>
+
+                            <sui-modal-actions>
+                            <sui-button basic @click="toggleReviewModal">취소</sui-button>
+                            <sui-button color="black">작성완료</sui-button>
+                        </sui-modal-actions>
                         </sui-modal>    
+
                         </sui-item-description>
                     </sui-item-content>
                     </sui-item>

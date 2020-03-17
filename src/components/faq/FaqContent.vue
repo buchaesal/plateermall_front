@@ -8,10 +8,10 @@
 </template>
 
 <script>
-    import FaqHeader from './Faq-header';
-    import FaqSearchForm from './Faq-search-form';
+    import FaqHeader from './FaqHeader';
+    import FaqSearchForm from './FaqSearchForm';
     // import FaqCategoryList from './Faq-category-list';
-    import FaqList from './Faq-list';
+    import FaqList from './FaqList';
 
     export default {
         name: "Faq-content",
