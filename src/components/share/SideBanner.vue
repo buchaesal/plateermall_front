@@ -2,38 +2,37 @@
     <div id="side-banner-container">
         <div id="side-banner" style="text-align:center;">
             <div>
-                <sui-image src="static/images/wireframes/image.png" size="small" />
+                <a href="javascript:;" id="open_chatbot"></a>
             </div>
-            <div>
+            <div @click="handleToggle" style="cursor:pointer;">
                 <p>최근 본 쇼핑</p>
-                <p>1</p>
+                <p>{{goods.length}}</p>
             </div>
             <div>
-                <sui-button @click="handleToggle" style="width:100%;" basic color="black" inverted>TOP</sui-button>
+                <sui-button style="width:100%;" basic color="black" inverted>TOP</sui-button>
             </div>
         </div>
         <div id="side-banner-addon">
             <div>
                 <h3 style="text-align:center;">최근 본 쇼핑정보</h3>
                 <sui-label v-if="isVisible" id="addon-label" color="red" floating>
-                    22
+                    {{goods.length}}
                 </sui-label>
             </div>
             <div>
-                <p style="text-align:right;">전체 삭제</p>
+                <p @click="totalRemoveGoods" style="text-align:right; margin-left:200px; cursor:pointer;">전체 삭제</p>
             </div>
-            
             <!-- 상품 들어갈 곳 -->
             <ul>
-                <li>
+                <li v-for="(good, index) in goods" v-bind:key="index" style="margin-bottom:15px;">
                     <div style="width:20%; display:inline-block;">
                         <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/72/80/04/04/12/1204048072_1.jpg/chg/resize/72x72/extent/72x72/optimize" size="small" />
                     </div>
-                    <div style="width:80%; display:inline-block;">
+                    <div style="width:80%; display:inline-block; font-size:11px;">
                         <a href="#">
                             <p>비에스코스</p>
                             <p>[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★</p>
-                            <p>6,720원</p>
+                            <p>6,720<span class="price">원</span></p>
                         </a>
                     </div>
                 </li>
@@ -43,11 +42,15 @@
 </template>
 
 <script>
+
+    import SideBannerGoodsModel from "./model/SideBannerGoodsModel";
+
     export default {
         name: "SideBanner.vue",
         data() {
             return {
                 isVisible: false,
+                goods:[],
             }
         },
         components: {
@@ -76,7 +79,25 @@
                     let sideBannerContainer = document.getElementById('side-banner-container');
                     sideBannerContainer.style.width = '400px';
                 }
+            },
+            totalRemoveGoods() {
+                this.goods = [];
             }
+        },
+        created: function() {
+            this.goods.push(new SideBannerGoodsModel(
+                "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/72/80/04/04/12/1204048072_1.jpg/chg/resize/72x72/extent/72x72/optimize",
+                "비에스코스",
+                "[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★",
+                "6,720"
+            ));
+
+            this.goods.push(new SideBannerGoodsModel(
+                "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/72/80/04/04/12/1204048072_1.jpg/chg/resize/72x72/extent/72x72/optimize",
+                "비에스코스",
+                "[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★",
+                "6,720"
+            ));
         }
     }
 </script>
@@ -110,5 +131,18 @@
 
     li {
         list-style: none;
+    }
+
+    #open_chatbot {
+        display: block;
+        position: relative;
+        right: -4px;
+        width: 69px;
+        height: 61px;
+        animation: shallot_rot 10s infinite linear;
+        background:url('https://image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/icons/ico_shallot.png') 0 0 no-repeat;
+        background-size: 69px 61px;
+        margin:0 auto;
+        background-color:white;
     }
 </style>
