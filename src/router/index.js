@@ -17,6 +17,7 @@ const routes = [
     {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
     {path: '/goodsDetail/:goodsCode', component: GoodsDetail},
+    {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}}
 ]
 
 export default new VueRouter({
