@@ -37,14 +37,6 @@
 
 <style scoped>
 
-    .menu_bar {
-        /*position: -webkit-sticky;*/
-        /*position: sticky;*/
-        /*top: 0;*/
-        /*background-color: black;*/
-        /*height: 60px;*/
-    }
-
     .inner_bar {
         margin: 20px 7%;
     }
