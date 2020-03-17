@@ -1,5 +1,5 @@
 <template>
-    <div class="sub_cont">
+    <div>
         <FaqHeader :is-button="true" :title="'자주 찾는 질문'"></FaqHeader>
         <FaqSearchForm></FaqSearchForm>
 <!--        <FaqCategoryList></FaqCategoryList>-->
@@ -25,9 +25,5 @@
 </script>
 
 <style scoped>
-.sub_cont{
-    float: left;
-    width: 996px;
-    font-size: 14px;
-}
+
 </style>

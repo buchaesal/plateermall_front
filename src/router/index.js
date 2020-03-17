@@ -4,6 +4,7 @@ import MainPage from "../components/share/page/MainPage";
 import LoginForm from '../components/my/page/LoginFormPage';
 import SignUpPage from '../components/my/page/SignUpPage' ;
 import MyPage from '../components/my/page/MyPageIndex';
+import GoodsDetail from '../components/goods/GoodsDetail';
 
 
 Vue.use(VueRouter);
@@ -14,6 +15,7 @@ const routes = [
     {path: '/signup', component: SignUpPage},
     {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent'}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
+    {path: '/goodsDetail/:goodsCode', component: GoodsDetail},
 ]
 
 export default new VueRouter({
