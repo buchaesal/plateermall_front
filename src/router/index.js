@@ -13,7 +13,7 @@ const routes = [
     {path: '/', component: MainPage},
     {path: '/login', component: LoginForm},
     {path: '/signup', component: SignUpPage},
-    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent'}},
+    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqCategoryList'}},
     {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
     {path: '/signup', component: SignUpPage},
