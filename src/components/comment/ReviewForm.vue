@@ -86,7 +86,7 @@
                     <sui-table-row>
                         <sui-table-cell>사진 올리기</sui-table-cell>
                         <sui-table-cell>
-                            <sui-button size="massive" icon="plus"></sui-button>
+                            <sui-button @click="inputPhoto" size="massive" icon="plus"></sui-button>
                             <sui-button size="massive" icon="plus"></sui-button>
                             <sui-button size="massive" icon="plus"></sui-button>
                             <br><br>
@@ -137,6 +137,9 @@
             handleRate(evt, props) {
                 this.myGrade = props.rating;
                 this.payload = props;
+            },
+            inputPhoto(){
+                alert('click');
             },
   },
     }

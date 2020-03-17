@@ -30,6 +30,8 @@
                 <sui-progress size="small" progress label="생각보다 작아요" percent="0" />
             </div>
         </div>
+
+
     </div>
     
 

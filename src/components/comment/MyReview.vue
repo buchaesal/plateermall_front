@@ -3,7 +3,7 @@
         <header><h3 id='review-header'>상품평</h3></header>
 
         <article>
-            <sui-menu tabular>
+            <sui-menu pointing secondary>
                 <a @click="selectItem(item)" class='review-menu' is="sui-menu-item" v-for="(item, index) in items" :key="index" :active="isActive(item)" :content="item"/>
             </sui-menu>
             <div v-if="active=='상품평 작성'">
