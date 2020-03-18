@@ -40,7 +40,7 @@
                     <p>지번 주소 : {{shippingSpot.zipcodeAddress}}</p>
                 </div>
             </sui-table-cell>
-            <sui-table-cell>1</sui-table-cell>
+            <sui-table-cell>3</sui-table-cell>
         </sui-table-row>
     </sui-table-body>
 
