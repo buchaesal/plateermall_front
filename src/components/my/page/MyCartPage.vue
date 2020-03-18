@@ -61,6 +61,7 @@
                                                 <div>
                                                     <sui-button @click="changeState" basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
                                                     <p>{{getCartListData}}</p>
+                                                    <p>git test</p>
                                                 </div>
                                             </sui-segment>
                                         </sui-grid-column>
