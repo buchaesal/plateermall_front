@@ -7,22 +7,22 @@
              <h3>배송</h3>
              <ul class="depth_menu">
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00001/P00009">배송확인</a>
+                     <router-link to="#">배송확인</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00001/P00011">배송지변경</a>
+                     <router-link to="#">배송지변경</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00001/P00012">배송비</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00001/P00012">배송비</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00001/P00013">선물포장</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00001/P00013">선물포장</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00001/P00015">스마트픽</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00001/P00015">스마트픽</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00001/P00136">신속배송</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00001/P00136">신속배송</router-link>
                  </li>
              </ul>
 
@@ -31,19 +31,19 @@
              <h3>교환/반품</h3>
              <ul class="depth_menu">
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00002/P00016">교환접수</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00002/P00016">교환접수</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00002/P00017">반품접수</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00002/P00017">반품접수</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00002/P00018">AS접수</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00002/P00018">AS접수</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00002/P00020">교환/반품 배송비</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00002/P00020">교환/반품 배송비</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00002/P00021">스마트픽 교환/반품</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00002/P00021">스마트픽 교환/반품</router-link>
                  </li>
              </ul>
 
@@ -52,49 +52,49 @@
              <h3>주문/결제</h3>
              <ul class="depth_menu">
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00022">주문방법</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00022">주문방법</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00023">주문내역확인</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00023">주문내역확인</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00024">주문취소</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00024">주문취소</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00025">주문변경</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00025">주문변경</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00026">신용카드</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00026">신용카드</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00029">무통장/계좌이체</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00029">무통장/계좌이체</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00028">포인트</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00028">포인트</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00030">상품권</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00030">상품권</router-link>
                  </li>
                  <li style="display:none;">
-                     <a href="/cca-fo/faq/viewFAQ/P00003/P00032">비회원 주문확인</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00003/P00032">비회원 주문확인</router-link>
                  </li>
              </ul>
-             <a href="/cca-fo/faq/viewFAQ/P00003/P00022?showmore=true" class="more">더보기 <i class="ico_arrow"></i></a>
+             <router-link to="/cca-fo/faq/viewFAQ/P00003/P00022?showmore=true" class="more">더보기 <i class="ico_arrow"></i></router-link>
          </li>
          <li class="cancel">
              <h3>환불</h3>
              <ul class="depth_menu">
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00042/P00043">신용카드 환불</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00042/P00043">신용카드 환불</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00042/P00044">현금/보관금 환불</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00042/P00044">현금/보관금 환불</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00042/P00045">환불 관련 기타사항</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00042/P00045">환불 관련 기타사항</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00042/P00046">스마트픽 환불</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00042/P00046">스마트픽 환불</router-link>
                  </li>
              </ul>
 
@@ -103,19 +103,19 @@
              <h3>회원</h3>
              <ul class="depth_menu">
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00005/P00037">회원가입</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00005/P00037">회원가입</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00005/P00038">회원정보변경</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00005/P00038">회원정보변경</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00005/P00039">회원등급</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00005/P00039">회원등급</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00005/P00041">회원탈퇴</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00005/P00041">회원탈퇴</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00005/P00131">롯데오너스</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00005/P00131">롯데오너스</router-link>
                  </li>
              </ul>
 
@@ -124,16 +124,16 @@
              <h3>포인트/쿠폰/이벤트</h3>
              <ul class="depth_menu">
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00006/P00049">L.POINT</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00006/P00049">L.POINT</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00006/P00050">쿠폰</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00006/P00050">쿠폰</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00006/P00052">구매사은이벤트</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00006/P00052">구매사은이벤트</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00006/P00053">제세공과금 입금</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00006/P00053">제세공과금 입금</router-link>
                  </li>
              </ul>
 
@@ -142,10 +142,10 @@
              <h3>거래증빙서류</h3>
              <ul class="depth_menu">
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00007/P00054">현금영수증</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00007/P00054">현금영수증</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00007/P00056">기타 증빙서류</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00007/P00056">기타 증빙서류</router-link>
                  </li>
              </ul>
 
@@ -154,13 +154,13 @@
              <h3>기타/서비스</h3>
              <ul class="depth_menu">
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00008/P00057">오류신고</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00008/P00057">오류신고</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00008/P00058">고객센터</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00008/P00058">고객센터</router-link>
                  </li>
                  <li>
-                     <a href="/cca-fo/faq/viewFAQ/P00008/P00134">피팅예약</a>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00008/P00134">피팅예약</router-link>
                  </li>
              </ul>
 

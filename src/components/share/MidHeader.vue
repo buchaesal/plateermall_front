@@ -1,6 +1,6 @@
 <template>
     <div class="search_box">
-        <img @click="goToHome" class="ellotte-img" src="https://image.ellotte.com/ellt.static.lotteeps.com/common/logo/logo_01231535202.png">
+        <img @click="goToHome" class="logo-img" src="../../assets/logo.png">
 
         <div class="util">
             <div class="search_area">
@@ -30,7 +30,7 @@
 
 <style scoped>
 
-    .ellotte-img {
+    .logo-img {
         cursor: pointer;
     }
 
