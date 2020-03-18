@@ -1,5 +1,6 @@
 <template>
   <div class="signup-main">
+    <!-- <AgreementPage/> -->
     <div>
       <sui-image @click="backToMain" src="https://simage.lotte.com/ellotte/images/login/newel_icon_top_logo.jpg" size="small" />
     </div>
@@ -49,6 +50,7 @@
 
 <script>
 import SignUpDetail from '../SignUpDetail';
+// import AgreementPage from './AgreementPage';
 
 export default {
   name: "Sample",
@@ -91,6 +93,7 @@ export default {
   },
   components: {
     SignUpDetail,
+    // AgreementPage,
   }
 };
 </script>
