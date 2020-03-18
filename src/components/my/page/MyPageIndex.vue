@@ -27,6 +27,8 @@
     import DeliveryAndUserInfoManagementTaps from "../DeliveryAndUserInfoManagementTaps";
     import UserInfo from '../UserInfo';
     import InquiryAnswer from "../../faq/InquiryAnswer";
+    import Wishlist from '../Wishlist';
+    import OrderList from "../OrderList";
 
     export default {
         name: "Main",
@@ -41,7 +43,9 @@
             FaqCategoryList,
             DeliveryAndUserInfoManagementTaps,
             UserInfo,
-            InquiryAnswer
+            InquiryAnswer,
+            Wishlist,
+            OrderList
         }
     }
 </script>
@@ -66,8 +70,5 @@
         float: left;
         width: 996px;
         font-size: 14px;
-    }
-    #user_info{
-
     }
 </style>
