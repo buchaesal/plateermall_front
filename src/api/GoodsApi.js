@@ -177,7 +177,7 @@ class GoodsApi {
     }
 
     getGoods() {
-
+        return this.goodsModel;
     }
 }
 
