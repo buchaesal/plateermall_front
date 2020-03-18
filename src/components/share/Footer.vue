@@ -18,12 +18,10 @@
                 <div class="dropdown_list">
                     <sui-dropdown text="패밀리 사이트">
                         <sui-dropdown-menu>
-                            <sui-dropdown-item>플래티어지주</sui-dropdown-item>
-                            <sui-dropdown-item>플래티어건설</sui-dropdown-item>
-                            <sui-dropdown-item>플래티어글로벌로지스</sui-dropdown-item>
-                            <sui-dropdown-item>플래티어기공</sui-dropdown-item>
-                            <sui-dropdown-item>플래티어비피화학</sui-dropdown-item>
-                            <sui-dropdown-item>플래티어렌탈</sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://plateer.com">(주)플래티어</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://www.mousoft.co.kr/">모우소프트</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://sys4u.kr/">플래티어 모바일</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://wiki.sys4u.co.kr/#all-updates">SYS4U OPEN WIKI</a></sui-dropdown-item>
                         </sui-dropdown-menu>
                     </sui-dropdown>
                 </div>
@@ -37,8 +35,9 @@
                     <p class="shopping-title">(주)플래티어</p>
                     서울시 송파구 법원로9길 26 H Business Park D동 6층<br><br>
                     통신판매업신고 : 송파 01234호<br><br>
-                    개인정보보호책임자 : 손성관<br><br>
-                    신입사원보호책임자 : 손성관 <br><br>
+                    개인정보보호책임자 : 손성관 책임<br>
+                    교육총괄담당자 : Nextree 박상현 선임<br>
+                    신입사원보호책임자 : 손성관 책임<br><br>
                     Copyright ⓒ 2020 PLATEER. All rights reserved.<br>
                 </div>
                 <div class="inner-2st">

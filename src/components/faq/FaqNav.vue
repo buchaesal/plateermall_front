@@ -23,7 +23,10 @@
                     <router-link to="/myreview"><span>상품평/후기</span></router-link>
                 </li>
                 <li class="inquiry_area">
-                    <router-link to="#"><span>배송지/회원정보</span></router-link>
+                    <router-link to="/deliveryanduserinfomanagement"><span>배송지/회원정보</span></router-link>
+                </li>
+                <li class="inquiry_area">
+                    <router-link to="/faq"><span>FAQ</span></router-link>
                 </li>
             </ul>
         </nav>

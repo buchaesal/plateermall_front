@@ -30,6 +30,9 @@
     </sui-table-header>
 
     </sui-table>
+    <div>
+        hello
+    </div>
   </div>
 </template>
 
@@ -65,5 +68,15 @@ export default {
     color: #666;
   font-size: 14px;
   font-weight: bold;
+}
+.info {
+    position: absolute;
+    left: 0;
+    top: 24px;
+    width: calc(100% - 680px);
+}
+.info-title {
+    font-weight: 500;
+    font-size: 14px;
 }
 </style>
