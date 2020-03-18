@@ -22,7 +22,6 @@
         name: "TopHeader.vue",
         methods: {
             goToLoginForm() {
-                alert("이동")
                 this.$router.push('/login');
             },
             goToSignUp() {
