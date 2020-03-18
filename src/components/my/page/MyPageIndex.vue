@@ -69,7 +69,4 @@
         width: 996px;
         font-size: 14px;
     }
-    #user_info{
-
-    }
 </style>
