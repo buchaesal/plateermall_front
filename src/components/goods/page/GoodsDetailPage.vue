@@ -723,6 +723,7 @@
 
     .detail-tab {
         margin-top: 40px;
+        margin-bottom: 40px;
     }
 
     .summary .detail > dt:not(:first-of-type),

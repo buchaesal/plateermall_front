@@ -27,6 +27,7 @@
     import DeliveryAndUserInfoManagementTaps from "../DeliveryAndUserInfoManagementTaps";
     import UserInfo from '../UserInfo';
     import InquiryAnswer from "../../faq/InquiryAnswer";
+    import Wishlist from '../Wishlist';
 
     export default {
         name: "Main",
@@ -41,7 +42,8 @@
             FaqCategoryList,
             DeliveryAndUserInfoManagementTaps,
             UserInfo,
-            InquiryAnswer
+            InquiryAnswer,
+            Wishlist,
         }
     }
 </script>

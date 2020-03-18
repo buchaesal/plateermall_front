@@ -35,15 +35,15 @@
                     </div>
                 </li>
                 <li v-else v-for="(good, index) in goods" v-bind:key="index" class="shopping-info">
-                    <div>
-                        <div class="banner-info-img">
+                    <div class="banner-item">
+                        <div class="banner-item-img">
                             <img :src=good.imgSrc>
                         </div>
-                        <div class="banner-info-text">
+                        <div class="banner-item-text">
                             <a href="#">
-                                <p>{{good.title}}</p>
-                                <p>{{good.contents}}</p>
-                                <p>{{good.price}}<span class="price">원</span></p>
+                                <p class="banner-item-title">{{good.title}}</p>
+                                <p class="banner-item-contents">{{good.contents}}</p>
+                                <p class="banner-item-price">{{good.price}}<span class="price">원</span></p>
                             </a>
                         </div>
                     </div>
@@ -151,6 +151,7 @@
 
     .side-banner-addon-title {
         text-align: center;
+        background-color: #181818;
     }
 
     .shopping-info {
@@ -177,16 +178,31 @@
         padding: 15px 0;
     }
 
-    .banner-info-img {
+    .banner-item {
+        border-bottom: 1px solid gray;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .banner-item-img {
         width: 20%;
         display: inline-block;
     }
 
-    .banner-info-text {
+    .banner-item-text {
         width: 80%;
         padding-left: 45px;
         display: inline-block;
         font-size: 11px;
+    }
+
+    .banner-item-title {
+        color: lightgray;
+        font-size: 12px;
+    }
+
+    .banner-item-contents, .banner-item-price{
+        color: white;
     }
 
     #side-banner-addon {

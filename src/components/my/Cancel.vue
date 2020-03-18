@@ -39,10 +39,10 @@
 </script>
 
 <style scoped>
-    #my-cancel{
-        margin-top: 5%;
-        text-align: center;
-    }
+#my-cancel{
+    margin-top: 5%;
+    text-align: center;
+}
 
     #my-cancel > p{
         font-size: 10px;
@@ -58,5 +58,9 @@
         border-top: 1px solid #ededed;
         border-bottom: 1px solid #ededed;
     }
+#my-cancel > p{
+    font-size: 10px;
+}
+
     
 </style>

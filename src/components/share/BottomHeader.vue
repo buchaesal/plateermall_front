@@ -60,7 +60,7 @@
     .right_bar {
         display: inline-block;
         float: right;
-        margin-top: 20px;
+        margin-top: 17px;
     }
 
     .right_bar a {

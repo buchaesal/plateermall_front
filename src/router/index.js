@@ -19,7 +19,8 @@ const routes = [
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview',userInfo: true}},
     {path: '/goodsDetail/:goodsCode', component: GoodsDetailPage},
     {path: '/cart', component: MyCart},
-    {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}}
+    {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}},
+    {path: '/wishlist', component: MyPage, props:{selectedComponent: 'Wishlist'}}
 ]
 
 export default new VueRouter({
