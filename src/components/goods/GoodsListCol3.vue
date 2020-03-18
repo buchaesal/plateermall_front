@@ -20,57 +20,6 @@
                         <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
                 </sui-card>
-                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src="goodsData.imgUrl" width="100%"/>
-                    <sui-card-content>
-                        <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
-                        <sui-card-meta class="title"></sui-card-meta>
-                        <sui-card-description>
-                            {{goodsData.saleCnt}}<span>개 구매</span>
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra class="price">
-                        <sui-icon name="won sign icon"/>
-                        <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}} ~</span><span class="unit"></span>
-                        <span class="original-price">{{goodsData.originalPrice}}</span>
-                        <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src="goodsData.imgUrl" width="100%"/>
-                    <sui-card-content>
-                        <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
-                        <sui-card-meta class="title"></sui-card-meta>
-                        <sui-card-description>
-                            {{goodsData.saleCnt}}<span>개 구매</span>
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra class="price">
-                        <sui-icon name="won sign icon"/>
-                        <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}} ~</span><span class="unit"></span>
-                        <span class="original-price">{{goodsData.originalPrice}}</span>
-                        <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src="goodsData.imgUrl" width="100%"/>
-                    <sui-card-content>
-                        <sui-card-header class="copy">{{goodsData.copy}}</sui-card-header>
-                        <sui-card-meta class="title"></sui-card-meta>
-                        <sui-card-description>
-                            {{goodsData.saleCnt}}<span>개 구매</span>
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra class="price">
-                        <sui-icon name="won sign icon"/>
-                        <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}} ~</span><span class="unit"></span>
-                        <span class="original-price">{{goodsData.originalPrice}}</span>
-                        <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
-                    </sui-card-content>
-                </sui-card>
             </sui-card-group>
         </div>
 
@@ -84,7 +33,7 @@
         data() {
             return {
                 section_title: "FLEX-Tem",
-                goodsData: {
+                goods: [{
                     imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/00/77/91/03/12/1203917700_1.jpg/chg/resize/308x308/extent/308x308/optimize",
                     goodsCode: "1203917700",
                     seller: "SOUP",
@@ -93,7 +42,25 @@
                     originalPrice: 49000,
                     dcRate: 20,
                     saleCnt: 14,
-                },
+                },{
+                    imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/00/77/91/03/12/1203917700_1.jpg/chg/resize/308x308/extent/308x308/optimize",
+                    goodsCode: "1203917700",
+                    seller: "SOUP",
+                    copy: "플라워 패턴이 예쁜 원피스",
+                    title: "플라워 원피스",
+                    originalPrice: 49000,
+                    dcRate: 20,
+                    saleCnt: 14,
+                },{
+                    imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/00/77/91/03/12/1203917700_1.jpg/chg/resize/308x308/extent/308x308/optimize",
+                    goodsCode: "1203917700",
+                    seller: "SOUP",
+                    copy: "플라워 패턴이 예쁜 원피스",
+                    title: "플라워 원피스",
+                    originalPrice: 49000,
+                    dcRate: 20,
+                    saleCnt: 14,
+                }],
             }
         },
         methods: {
