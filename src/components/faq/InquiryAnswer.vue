@@ -8,34 +8,34 @@
                     <li>- 문의 상태가 ‘처리중’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
                 </ul>
             </div>
-            <ul class="status" id="div_countDetail"><li>총 문의 건 : <span>0</span>건</li>    <li>답변완료 : <span>0</span>건</li>    <li>처리중 건 : <span>0</span>건</li>    <li>접수 건 : <span>0</span>건</li></ul>
+            <ul class="status" id="div_countDetail">
+                <li>총 문의 건 : <span>0</span>건</li>
+                <li>답변완료 : <span>0</span>건</li>
+                <li>처리중 건 : <span>0</span>건</li>
+                <li>접수 건 : <span>0</span>건</li>
+            </ul>
             <sui-table single-line>
                 <sui-table-header>
                     <sui-table-row>
-                        <sui-table-header-cell>Name</sui-table-header-cell>
-                        <sui-table-header-cell>Registration Date</sui-table-header-cell>
-                        <sui-table-header-cell>E-mail address</sui-table-header-cell>
-                        <sui-table-header-cell>Premium Plan</sui-table-header-cell>
+                        <sui-table-header-cell>순번</sui-table-header-cell>
+                        <sui-table-header-cell>제목</sui-table-header-cell>
+                        <sui-table-header-cell>문의일</sui-table-header-cell>
+                        <sui-table-header-cell>답변일</sui-table-header-cell>
+                        <sui-table-header-cell>문의상태</sui-table-header-cell>
                     </sui-table-row>
                 </sui-table-header>
-                <sui-table-body>
+                <sui-table-body v-if="answers.length === 0">
+                    <sui-table-row>
+                        <sui-table-cell colspan="5" style="text-align:center;">문의 내역이 없습니다.</sui-table-cell>
+                    </sui-table-row>
+                </sui-table-body>
+                <sui-table-body v-else>
                     <sui-table-row>
                         <sui-table-cell>John Lilki</sui-table-cell>
                         <sui-table-cell>September 14, 2013</sui-table-cell>
                         <sui-table-cell>jhlilk22@yahoo.com</sui-table-cell>
                         <sui-table-cell>No</sui-table-cell>
-                    </sui-table-row>
-                    <sui-table-row>
-                        <sui-table-cell>Jamie Harington</sui-table-cell>
-                        <sui-table-cell>January 11, 2014</sui-table-cell>
-                        <sui-table-cell>jamieharingonton@yahoo.com</sui-table-cell>
-                        <sui-table-cell>Yes</sui-table-cell>
-                    </sui-table-row>
-                    <sui-table-row>
-                        <sui-table-cell>Jill Lewis</sui-table-cell>
-                        <sui-table-cell>May 11, 2014</sui-table-cell>
-                        <sui-table-cell>jilsewris22@yahoo.com</sui-table-cell>
-                        <sui-table-cell>Yes</sui-table-cell>
+                        <sui-table-cell>No</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
@@ -50,6 +50,11 @@
         name: "InquiryAnswer",
         components: {
             FaqHeader
+        },
+        data() {
+            return {
+                answers: []
+            }
         }
     }
 </script>
@@ -78,12 +83,26 @@
     tr {
         height: 60px;
     }
-    .information_table .status {
-        margin-bottom: 12px;
+
+    .status {
         font-size: 0;
         text-align: right;
+        margin-top: 30px;
     }
-    ul {
-        list-style: none;
+
+    .status li {
+        display: inline-block;
+        font-size: 14px;
+        line-height: 20px;
+    }
+
+    .status li:not(:first-child) {
+        margin-left: 12px;
+        padding-left: 12px;
+        position: relative;
+    }
+
+    .ui.table {
+        margin: 0
     }
 </style>

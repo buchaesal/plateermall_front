@@ -3,8 +3,8 @@
         <Header></Header>
         <Slide></Slide>
         <Contents></Contents>
-        <Footer></Footer>
         <SideBanner></SideBanner>
+        <Footer></Footer>
     </div>
 </template>
 
@@ -32,4 +32,5 @@
     #main-page-container {
         height: 300%;
     }
+
 </style>

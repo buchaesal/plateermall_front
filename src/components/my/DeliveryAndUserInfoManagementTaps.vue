@@ -12,7 +12,7 @@
             <DeliveryManagement></DeliveryManagement>
         </div>
         <div v-if="active=='비밀번호변경'">
-        
+            <PasswordChange></PasswordChange>
         </div>
         </div>
     </div>
@@ -21,6 +21,7 @@
 <script>
     // import Cancel from './Cancel'
     import DeliveryManagement from './DeliveryManagement'
+    import PasswordChange from './PasswordChange'
 
     export default {
         name: "DeliveryAndUserInfoManagementTaps",
@@ -40,6 +41,7 @@
         },
         components:{
             DeliveryManagement,
+            PasswordChange,
         }
     }
 </script>

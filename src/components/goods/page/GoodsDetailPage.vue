@@ -124,11 +124,11 @@
                         </dl>
                     </div>
                     <div class="goods-option">
-                        <div>
-                            <sui-dropdown class="option-select option-dropdown"
+                        <div class="option-select">
+                            <sui-dropdown class="option-dropdown "
                                           placeholder="옵션 선택"
                                           selection
-                                          :options="options"
+                                          :options="goodsData.options"
                                           v-model="current"
                             />
                         </div>
@@ -190,7 +190,7 @@
                                 <div>
                                     <RatingStarPoint/>
                                     <RatingGraph/>
-                                    <ReviewList />
+                                    <ReviewList/>
                                 </div>
                             </sui-accordion-content>
                         </sui-accordion>
@@ -373,21 +373,21 @@
                     originalPrice: 49000,
                     dcRate: 20,
                     saleCnt: 14,
+                    options: [
+                        {
+                            text: 'S',
+                            value: 1,
+                        },
+                        {
+                            text: 'M',
+                            value: 2,
+                        },
+                        {
+                            text: 'L',
+                            value: 3,
+                        },
+                    ],
                 },
-                options: [
-                    {
-                        text: 'S',
-                        value: 1,
-                    },
-                    {
-                        text: 'M',
-                        value: 2,
-                    },
-                    {
-                        text: 'L',
-                        value: 3,
-                    },
-                ],
                 shareDisplay: false,
                 isLike: false,
                 tooltip1Display: false,
@@ -454,7 +454,6 @@
 
     .fix-inner {
         width: 1200px;
-        height: 1800px;
         margin: 0 auto;
         min-height: 600px;
         padding-top: 80px;
@@ -465,9 +464,9 @@
     }
 
     .goods-detail {
-        position: relative;
+        position: static;
         margin-bottom: 80px;
-        height: 45%;
+        min-height: 800px;
     }
 
     .gallery {
@@ -479,7 +478,6 @@
         margin-bottom: 5px;
         font-size: 16px;
         color: #666;
-        position: relative;
     }
 
     .info {
@@ -600,7 +598,7 @@
 
     .summary button {
         display: inline-block;
-        font-size: 3px;
+        font-size: 0.7em;
     }
 
     .btn-tooltip {
@@ -664,20 +662,24 @@
         color: #773dbd;
     }
 
+    .goods-option {
+
+    }
+
     .option-select {
         margin-top: 32px;
+        margin-bottom: 32px;
         width: 100%;
     }
 
     .option-dropdown {
         width: 100%;
-        margin-bottom: 32px;
     }
 
     .promotion-banner {
-        position: static;
         background-color: rgb(125, 115, 103);
     }
+
     .brand-banner {
         background-color: rgb(125, 115, 103);
     }
@@ -692,7 +694,6 @@
     }
 
     .detail {
-        position: relative;
         height: 90px;
     }
 

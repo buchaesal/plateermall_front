@@ -75,6 +75,7 @@
     .userinfo .user_box .name.charge span {
         display: block;
         font-weight: 300;
+        text-align: center;
     }
     .userinfo .point_box {
         float: left;
