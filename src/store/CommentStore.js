@@ -17,12 +17,12 @@ const mutations = {
        state.customerCount = CommentApi.customerCount;
        state.averageStarPoint = CommentApi.averageStarPoint;
        state.averageGrade = CommentApi.averageGrade;
-    }
+    },
 }
 
 //비동기 통신
 const actions = {
-
+    
 }
 
 export default {

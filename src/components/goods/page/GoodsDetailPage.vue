@@ -426,6 +426,10 @@
 
         },
         created: {
+            getCommentsData(){
+                return this.$store.state.commentStore.getComments;
+            }
+
         },
     }
 </script>
