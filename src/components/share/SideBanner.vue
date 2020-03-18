@@ -35,11 +35,11 @@
                     </div>
                 </li>
                 <li v-else v-for="(good, index) in goods" v-bind:key="index" class="shopping-info">
-                    <div>
-                        <div class="banner-info-img">
+                    <div class="banner-item">
+                        <div class="banner-item-img">
                             <img :src=good.imgSrc>
                         </div>
-                        <div class="banner-info-text">
+                        <div class="banner-item-text">
                             <a href="#">
                                 <p>{{good.title}}</p>
                                 <p>{{good.contents}}</p>
@@ -177,12 +177,16 @@
         padding: 15px 0;
     }
 
-    .banner-info-img {
+    .banner-item {
+        border-bottom: 1px solid gray;
+    }
+
+    .banner-item-img {
         width: 20%;
         display: inline-block;
     }
 
-    .banner-info-text {
+    .banner-item-text {
         width: 80%;
         padding-left: 45px;
         display: inline-block;
