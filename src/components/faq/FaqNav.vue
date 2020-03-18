@@ -11,13 +11,13 @@
             </ul>
             <ul class="nav_question line">
                 <li class="inquiry_area">
-                    <router-link to="#"><span>주문배송조회</span></router-link>
+                    <router-link to="/orderList"><span>주문배송조회</span></router-link>
                 </li>
                 <li class="inquiry_area">
                     <router-link to="#"><span>취소/교환/반품</span></router-link>
                 </li>
                 <li class="inquiry_area">
-                    <router-link to="#"><span>위시리스트</span></router-link>
+                    <router-link to="/wishlist"><span>위시리스트</span></router-link>
                 </li>
                 <li class="inquiry_area">
                     <router-link to="/myreview"><span>상품평/후기</span></router-link>
