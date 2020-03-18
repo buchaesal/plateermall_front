@@ -4,15 +4,15 @@
             <div class="min_inner">
                 <ul class="foot_links">
                     <li>
-                        <a href="https://www.lotteshopping.com" target="_blank" title="(주)롯데쇼핑">
+                        <a href="javascript:void(0);" title="(주)롯데쇼핑">
                             <strong>롯데쇼핑(주)</strong>
                         </a>
                     </li>
-                    <li><a href="http://www.lpoint.com/view/interface/link.jsp?reUrl=/app/affiliate/HPAA100100.do?tracking=EL_FOOTER_02" target="_blank" title="LPOINT 회원소개">LPOINT 회원소개</a></li>
-                    <li class="privacy"><a href="//members.ellotte.com/members-fo/join/privacy" target="_self" title="개인정보처리방침"><strong>개인정보처리방침</strong></a></li>
-                    <li><a href="//members.ellotte.com/members-fo/join/youthProtection" target="_self" title="청소년보호방침">청소년보호방침</a></li>
-                    <li><a href="//common.ellotte.com/common-fo/feedback/customer?bypass" target="_blank" title="고객의견" id="cm_customer-feedback">고객의견</a></li>
-                    <li><a href="//members.ellotte.com/members-fo/staff/execJoin" target="_self" title="임직원인증">임직원인증</a></li>
+                    <li><a href="javascript:void(0);" title="LPOINT 회원소개">LPOINT 회원소개</a></li>
+                    <li class="privacy"><a href="javascript:void(0);" title="개인정보처리방침"><strong>개인정보처리방침</strong></a></li>
+                    <li><a href="javascript:void(0);" title="청소년보호방침">청소년보호방침</a></li>
+                    <li><a href="javascript:void(0);" title="고객의견" id="cm_customer-feedback">고객의견</a></li>
+                    <li><a href="javascript:void(0);" title="임직원인증">임직원인증</a></li>
                     <li id="dpsLocationReceiptPopup"><a href="javascript:void(0);">입점상담</a></li>
                 </ul>
                 <div class="dropdown_list">
@@ -209,5 +209,11 @@
     .awards-list li>img {
         vertical-align: center;
     }
+
+    /*#footer {*/
+    /*    position:absolute;*/
+    /*    bottom:0;*/
+    /*    width:100%;*/
+    /*}*/
 
 </style>

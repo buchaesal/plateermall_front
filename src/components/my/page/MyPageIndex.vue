@@ -3,7 +3,7 @@
         <Header></Header>
         <div id="container">
             <div class="fix_inner">
-                <div id="user_info">
+                <div id="user_info" v-if="userInfo">
                     <UserInfo></UserInfo>
                 </div>
                 <FaqNav></FaqNav>
@@ -60,7 +60,7 @@
 
     #container {
         width: 100%;
-        min-height: 1200px;
+        min-height: 1500px;
         padding-top: 80px;
     }
 
