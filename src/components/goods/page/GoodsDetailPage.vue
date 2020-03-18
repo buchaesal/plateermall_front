@@ -20,8 +20,8 @@
                             goodsData.dcRate)}}<span class="unit">원</span>
                         </p>
                         <ul class="utils">
-                            <li class="share">
-                                <button class="circular ui icon basic button btn-share" @click="shareBtnClick">
+                            <li class="share" @mouseover="onShareList" @mouseleave="offShareList">
+                                <button class="circular ui icon basic button btn-share">
                                     <i class="share alternate icon"></i>
                                 </button>
                                 <ul class="share-list" v-if="shareDisplay">
@@ -124,11 +124,11 @@
                         </dl>
                     </div>
                     <div class="goods-option">
-                        <div>
-                            <sui-dropdown class="option-select option-dropdown"
+                        <div class="option-select">
+                            <sui-dropdown class="option-dropdown "
                                           placeholder="옵션 선택"
                                           selection
-                                          :options="options"
+                                          :options="goodsData.options"
                                           v-model="current"
                             />
                         </div>
@@ -147,8 +147,8 @@
                         <div style="height:64px;">
                             상품 정보
                         </div>
-                        <div style="height:64px;">
-                            상품평
+                        <div>
+                            <RatingStarPoint/>
                         </div>
                     </div>
 
@@ -188,8 +188,9 @@
                             </sui-accordion-title>
                             <sui-accordion-content active class="review-content">
                                 <div>
-                                    <Rating/>
-                                    <ReviewList />
+                                    <RatingStarPoint/>
+                                    <RatingGraph/>
+                                    <ReviewList/>
                                 </div>
                             </sui-accordion-content>
                         </sui-accordion>
@@ -343,19 +344,23 @@
 
 <script>
 
-    import Header from "../share/Header";
-    import Footer from "../share/Footer";
-    import SideBanner from "../share/SideBanner";
-    import Rating from "../comment/Rating";
+    import Header from "../../share/Header";
+    import Footer from "../../share/Footer";
+    import SideBanner from "../../share/SideBanner";
+    import RatingStarPoint from "../../comment/RatingStarPoint";
+    import RatingGraph from "../../comment/RatingGraph";
+    import ReviewList from "../../comment/ReviewList";
 
 
     export default {
         name: "GoodsDetail",
         components: {
-            Rating,
+            RatingStarPoint,
+            RatingGraph,
             Header,
             Footer,
             SideBanner,
+            ReviewList,
         },
         data() {
             return {
@@ -368,21 +373,21 @@
                     originalPrice: 49000,
                     dcRate: 20,
                     saleCnt: 14,
+                    options: [
+                        {
+                            text: 'S',
+                            value: 1,
+                        },
+                        {
+                            text: 'M',
+                            value: 2,
+                        },
+                        {
+                            text: 'L',
+                            value: 3,
+                        },
+                    ],
                 },
-                options: [
-                    {
-                        text: 'S',
-                        value: 1,
-                    },
-                    {
-                        text: 'M',
-                        value: 2,
-                    },
-                    {
-                        text: 'L',
-                        value: 3,
-                    },
-                ],
                 shareDisplay: false,
                 isLike: false,
                 tooltip1Display: false,
@@ -402,8 +407,11 @@
                     return true;
                 }
             },
-            shareBtnClick() {
-                this.shareDisplay = !this.shareDisplay;
+            onShareList() {
+                this.shareDisplay = true;
+            },
+            offShareList() {
+                this.shareDisplay = false;
             },
             likeBtnClick() {
                 this.isLike = !this.isLike;
@@ -411,14 +419,12 @@
             onTooltip1() {
                 this.tooltip1Display = true;
             },
-
             offTooltip1() {
                 this.tooltip1Display = false;
             },
             onTooltip2() {
                 this.tooltip2Display = true;
             },
-
             offTooltip2() {
                 this.tooltip2Display = false;
             }
@@ -448,7 +454,6 @@
 
     .fix-inner {
         width: 1200px;
-        height: 1800px;
         margin: 0 auto;
         min-height: 600px;
         padding-top: 80px;
@@ -459,9 +464,9 @@
     }
 
     .goods-detail {
-        position: relative;
+        position: static;
         margin-bottom: 80px;
-        height: 45%;
+        min-height: 800px;
     }
 
     .gallery {
@@ -473,7 +478,6 @@
         margin-bottom: 5px;
         font-size: 16px;
         color: #666;
-        position: relative;
     }
 
     .info {
@@ -522,8 +526,8 @@
 
     .share-list {
         position: absolute;
-        top: 40px;
-        right: 0;
+        top: 50px;
+        right: -45px;
         z-index: 11;
         width: 314px;
         padding: 24px 20px 16px;
@@ -594,7 +598,7 @@
 
     .summary button {
         display: inline-block;
-        font-size: 3px;
+        font-size: 0.7em;
     }
 
     .btn-tooltip {
@@ -658,20 +662,24 @@
         color: #773dbd;
     }
 
+    .goods-option {
+
+    }
+
     .option-select {
         margin-top: 32px;
+        margin-bottom: 32px;
         width: 100%;
     }
 
     .option-dropdown {
         width: 100%;
-        margin-bottom: 32px;
     }
 
     .promotion-banner {
-        position: static;
         background-color: rgb(125, 115, 103);
     }
+
     .brand-banner {
         background-color: rgb(125, 115, 103);
     }
@@ -686,7 +694,6 @@
     }
 
     .detail {
-        position: relative;
         height: 90px;
     }
 

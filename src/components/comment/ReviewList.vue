@@ -31,7 +31,7 @@
                     <sui-item-meta>
                         <p>{{review.content}}</p>
                         <img :src='review.photo' width='99' height='99'>
-                        <p>{{review.id}} | {{review.date}}</p>
+                        <p>{{review.id}} | {{review.writeDate}}</p>
 
                         <span class='recommend-review'><sui-button size="tiny" floated="right" basic content="신고 하기"/></span>
                         <span class='report-review'><sui-button size="tiny"  icon="thumbs up outline" floated="right" basic content="추천해요"/></span>
@@ -59,17 +59,17 @@
                         starCount: 5,
                         option: '사이즈선택:235',
                         content: '발 볼이 생각보다 좁아서 아프네요. 사이즈는 5mm정도 작게 나온 것 같아요.',
-                        photo: require('./img/review.jpg'),
+                        photo: require('../../assets/review.jpg'),
                         id: '선경',
-                        date: '2020.03.16'
+                        writeDate: '2020.03.16'
                     },
                     {
                         starCount: 3,
                         option: '사이즈선택:245',
                         content: '음 글쎄 잘 모르겠어요',
-                        photo: require('./img/review.jpg'),
+                        photo: require('../../assets/review.jpg'),
                         id: 'testreview',
-                        date: '2020.03.16'
+                        writeDate: '2020.03.16'
                     },
                 ]
             }

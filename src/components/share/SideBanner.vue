@@ -1,6 +1,6 @@
 <template>
     <div id="side-banner-container">
-        <div id="side-banner" style="text-align:center;">
+        <div id="side-banner">
             <div>
                 <img src="https://image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/icons/ico_shallot.png">
             </div>
@@ -15,29 +15,31 @@
             </div>
         </div>
         <div id="side-banner-addon">
-            <div>
-                <h3 class="banner-title">최근 본 쇼핑정보</h3>
-                <sui-label v-if="isVisible" class="addon-label" floating>
+            <div class="side-banner-addon-title">
+                <h3 class="banner-title">
+                    최근 본 쇼핑정보
+                </h3>
+                <sui-label v-if="isVisible" class="addon-label">
                     {{goods.length}}
                 </sui-label>
             </div>
             <div>
-                <p @click="totalRemoveGoods" style="text-align:right; margin-left:200px; cursor:pointer;">전체 삭제</p>
+                <p @click="totalRemoveGoods" class="cancel-all">전체 삭제</p>
             </div>
             <!-- 상품 들어갈 곳 -->
 
-            <ul>
+            <ul class="zzim-list">
                 <li v-if="goods.length==0">
                     <div>
                         최근 본 쇼핑정보가 없습니다.
                     </div>
                 </li>
                 <li v-else v-for="(good, index) in goods" v-bind:key="index" class="shopping-info">
-                    <div>
-                        <div class="banner-info-img">
+                    <div class="banner-item">
+                        <div class="banner-item-img">
                             <img :src=good.imgSrc>
                         </div>
-                        <div class="banner-info-text">
+                        <div class="banner-item-text">
                             <a href="#">
                                 <p>{{good.title}}</p>
                                 <p>{{good.contents}}</p>
@@ -69,13 +71,13 @@
                 if (this.isVisible) {
                     this.isVisible = false;
                     let sideBanner = document.getElementById('side-banner');
-                    sideBanner.style.width = '100%';
+                    sideBanner.style.width = '80px';
 
                     let addon = document.getElementById('side-banner-addon');
                     addon.style.width = '0%';
 
                     let sideBannerContainer = document.getElementById('side-banner-container');
-                    sideBannerContainer.style.width = '120px';
+                    sideBannerContainer.style.width = '80px';
                 } else {
                     this.isVisible = true;
                     let sideBanner = document.getElementById('side-banner');
@@ -127,10 +129,28 @@
 
     .banner-title {
         text-align: center;
+        margin-top: 20px;
+    }
+
+    .cancel-all{
+        text-align:right;
+        margin: 0 20px 0 150px;
+        cursor:pointer;
     }
 
     .addon-label {
-        color: red;
+        color: white;
+        background-color: red;
+        margin: 0 0 10px 10px;
+        vertical-align: middle;
+    }
+
+    .banner-title {
+        display: inline-block;
+    }
+
+    .side-banner-addon-title {
+        text-align: center;
     }
 
     .shopping-info {
@@ -148,6 +168,7 @@
 
     #side-banner {
         display: inline-block;
+        text-align:center;
         width: 100%;
     }
     .recent {
@@ -156,13 +177,18 @@
         padding: 15px 0;
     }
 
-    .banner-info-img {
+    .banner-item {
+        border-bottom: 1px solid gray;
+    }
+
+    .banner-item-img {
         width: 20%;
         display: inline-block;
     }
 
-    .banner-info-text {
+    .banner-item-text {
         width: 80%;
+        padding-left: 45px;
         display: inline-block;
         font-size: 11px;
     }
@@ -170,30 +196,16 @@
     #side-banner-addon {
         display: inline-block;
         width: 0%;
-        height: 10%;
+        height: 15%;
         background-color: black;
-    }
-
-    .addon-label {
-        top: 0em;
-        left: 87%;
     }
 
     li {
         list-style: none;
     }
 
-    #open_chatbot {
-        display: block;
-        position: relative;
-        right: -4px;
-        width: 69px;
-        height: 61px;
-        animation: shallot_rot 10s infinite linear;
-        background: url('https://image.ellotte.com/ellt.static.lotteeps.com/front/desktop/assets/img/icons/ico_shallot.png') 0 0 no-repeat;
-        background-size: 69px 61px;
-        margin: 0 auto;
-        background-color: white;
+    .zzim-list {
+        padding-right: 40px;
     }
 
     .go-top a {
