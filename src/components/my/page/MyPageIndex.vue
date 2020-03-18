@@ -58,7 +58,7 @@
 
     #container {
         width: 100%;
-        min-height: 1200px;
+        min-height: 1500px;
         padding-top: 80px;
     }
 
