@@ -9,7 +9,10 @@
         </div>
 
         <div v-else>
-        
+            <div class='summary' v-for='(cancelItem, index) in cancelItems' :key='index')>
+                <span class='cancel-info'>{{cancelItem.cancelInfo}}</span>
+                <span class='cancel-date'>취소일: {{cancelItem.cancelDate}}</span>
+            </div>
         </div>
     </div>
 </template>
@@ -19,7 +22,17 @@
         name: "Sample",
         data(){
             return{
-                cancelCount:0
+                cancelCount:1,
+                cancelItems:[
+                    {
+                        brand: '이지함',
+                        itemName: '이지함 스팟케어 블루원(스팟케어)',
+                        quantity: 1,
+                        price: '10,000원',
+                        cancelDate: '2020-03-17 16:44',
+                        cancelInfo: '03월 17일 2020-03-17-3210155',
+                    },
+                ]
             }
         }
     }
@@ -33,6 +46,17 @@
 
     #my-cancel > p{
         font-size: 10px;
+    }
+
+    .cancel-date{
+        text-align: right;
+    }
+
+    .summary{
+        margin-left: 1%;
+        margin-right: 1%;
+        border-top: 1px solid #ededed;
+        border-bottom: 1px solid #ededed;
     }
     
 </style>

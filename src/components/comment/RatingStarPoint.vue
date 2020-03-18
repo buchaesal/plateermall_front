@@ -6,7 +6,7 @@
             </p>
             
             <div>
-                <span class="average-grade"><strong>{{starPoint}}</strong><sui-rating :interactive="false" id="starAvg" :rating="starPoint" :max-rating="5" /></span>
+                <span class="average-grade"><strong>{{starPoint}}</strong><span><sui-rating :interactive="false" id="starAvg" :rating="starPoint" :max-rating="5" /></span></span>
             </div>
         </div>
     </div>
