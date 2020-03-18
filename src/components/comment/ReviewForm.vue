@@ -1,6 +1,6 @@
 <template>
     <div id="review-modal">
-        <header><h3 id='write-review'>상품평 작성</h3></header>
+        <header><h2 id='write-review'>상품평 작성</h2></header>
     
         <ul>
             <li>고객님께서 작성해주신 상품평은 등록 즉시 바로 사이트에 게재되며, 모두 공개를 원칙으로 합니다.</li>
@@ -99,7 +99,9 @@
 
                     <sui-table-row>
                         <sui-table-cell>상품평 작성</sui-table-cell>
-                        <sui-table-cell><textarea id="review-textarea"></textarea></sui-table-cell>
+                        <sui-table-cell><textarea id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
+이 곳에 작성하시면 답변을 받지 못합니다.">
+                        </textarea></sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
@@ -176,6 +178,7 @@
     #review-textarea{
         width: 95%;
         height: 100px;
+        resize: none;
     }
 
 </style>
