@@ -1,4 +1,5 @@
 class GoodsModel {
+
     constructor(imgUrl, goodsCode, seller, copy, title, originalPrice, dcRate, saleCnt) {
         this.imgUrl = imgUrl,
             this.goodsCode = goodsCode,
