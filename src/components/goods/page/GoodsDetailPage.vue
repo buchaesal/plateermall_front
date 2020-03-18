@@ -343,10 +343,11 @@
 
 <script>
 
-    import Header from "../share/Header";
-    import Footer from "../share/Footer";
-    import SideBanner from "../share/SideBanner";
-    import Rating from "../comment/Rating";
+    import Header from "../../share/Header";
+    import Footer from "../../share/Footer";
+    import SideBanner from "../../share/SideBanner";
+    import Rating from "../../comment/Rating";
+    import ReviewList from "../../comment/ReviewList";
 
 
     export default {
@@ -356,6 +357,7 @@
             Header,
             Footer,
             SideBanner,
+            ReviewList,
         },
         data() {
             return {

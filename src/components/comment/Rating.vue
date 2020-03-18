@@ -1,5 +1,5 @@
 <template>
-    <div class='inner'>
+    <div class='total-review'>
         <div class='total'>
             <p class='count'>
                 총 <span>10</span> 개 고객 평점
@@ -53,7 +53,9 @@
 
 <style scoped>
     .total{
-        width: 30%;
+        padding-top: 2%;
+        padding-left: 3%;
+        width: 20%;
         display: inline-block;
         float: left;
     }
@@ -65,16 +67,20 @@
     }
 
     .count{
-        padding-top: 20%;
-        padding-right: 5%;
-        font-size: 20px;
+
+        font-size: 15px;
     }
 
     #starAvg{
-        font-size: 20px;
+        padding-left: 5%;
+        font-size: 17px;
     }
 
     .menu{
         text-align: left;
+    }
+
+    .total-review{
+        height: 450px;
     }
 </style>
