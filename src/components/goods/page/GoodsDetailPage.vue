@@ -133,7 +133,7 @@
                     </div>
                     <div class="goods-option">
                         <div class="option-select">
-                            <sui-dropdown class="option-dropdown "
+                            <sui-dropdown class="option-dropdown"
                                           placeholder="옵션 선택"
                                           selection
                                           :options="goodsData.options"

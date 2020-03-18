@@ -196,7 +196,7 @@
     }
     .recent {
         background-color: black;
-        height: 110px;
+        height: 160px;
         padding: 15px 0;
     }
 
