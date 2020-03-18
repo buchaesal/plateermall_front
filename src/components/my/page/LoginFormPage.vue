@@ -83,6 +83,8 @@ export default {
   font-weight: bold;
   font-size: 25px;
   color: white;
+  border: 0;
+  outline: 0;
 }
 .link_box {
   margin-top: 15px;
