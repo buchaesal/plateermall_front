@@ -7,7 +7,10 @@
             <div class="recent">
                 <div @click="handleToggle" class="recent-shopping">
                     <p class="recent-shopping-title">최근 본 쇼핑</p>
-                    <p class="recent-shopping-length">{{goods.length}}</p>
+
+                    <sui-button @click="changeState">바꾸자!</sui-button>
+
+                    <p class="recent-shopping-length">{{getGoodsCount}}</p>
                 </div>
                 <div class="go-top" @click="scrollToTop">
                     <a inverted>TOP</a>
@@ -70,6 +73,9 @@
         },
         components: {},
         methods: {
+            changeState(){
+                this.$store.commit('getGoodsList');
+            },
             handleToggle() {
                 if (this.isVisible) {
                     this.isVisible = false;
@@ -120,6 +126,12 @@
                 "[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★",
                 "6,720"
             ));
+        },
+        computed: {
+            getGoodsCount(){
+                return this.$store.state.goodsStore.goodsCount;
+            }
+            
         }
     }
 </script>
