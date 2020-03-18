@@ -2,9 +2,9 @@
     <div class="nav_set">
         <nav>
             <ul class="nav_question">
-                <li><router-link to="/inquiryForm"><a href="#">1:1 문의하기</a></router-link></li>
-                <li><a href="#">1:1 답변확인</a></li>
-                <li><router-link to="/myreview"><a href="#">상품평/이용후기 관리</a></router-link></li>
+                <li><router-link to="/inquiryForm">1:1 문의하기</router-link></li>
+                <li><router-link to="/inquiryAnswer">1:1 답변확인</router-link></li>
+                <li><router-link to="/myreview">상품평/이용후기 관리</router-link></li>
             </ul>
         </nav>
     </div>
@@ -12,7 +12,7 @@
 
 <script>
     export default {
-        name: "Faq-main"
+        name: "FaqNav"
     }
 </script>
 

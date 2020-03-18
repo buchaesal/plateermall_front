@@ -26,10 +26,11 @@
     import FaqCategoryList from "../../faq/FaqCategoryList";
     import DeliveryAndUserInfoManagementTaps from "../DeliveryAndUserInfoManagementTaps";
     import UserInfo from '../UserInfo';
+    import InquiryAnswer from "../../faq/InquiryAnswer";
 
     export default {
         name: "Main",
-        props: ['selectedComponent'],
+        props: ['selectedComponent', 'userInfo'],
         components: {
             Header,
             Footer,
@@ -39,7 +40,8 @@
             InquiryForm,
             FaqCategoryList,
             DeliveryAndUserInfoManagementTaps,
-            UserInfo
+            UserInfo,
+            InquiryAnswer
         }
     }
 </script>
@@ -56,7 +58,7 @@
 
     #container {
         width: 100%;
-        min-height: 600px;
+        min-height: 1200px;
         padding-top: 80px;
     }
 
