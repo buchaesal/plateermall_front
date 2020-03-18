@@ -1,6 +1,6 @@
 <template>
     <div class="search_box">
-        <img @click="goToHome" class="logo-img" src="../../assets/PLATEER_LOGO.png">
+        <img @click="goToHome" class="logo-img" src="../../assets/PlateerMall.png">
 
         <div class="util">
             <div class="search_area">
@@ -56,6 +56,7 @@
         vertical-align: bottom;
         top: 5px;
         margin: 0;
+        margin-right: 20px;
         padding: 0;
         min-width: 52px;
         max-width: 128px;
