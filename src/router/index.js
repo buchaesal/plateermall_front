@@ -7,7 +7,6 @@ import MyPage from '../components/my/page/MyPageIndex';
 import GoodsDetailPage from '../components/goods/page/GoodsDetailPage';
 import MyCart from "../components/my/page/MyCartPage";
 
-
 Vue.use(VueRouter);
 
 const routes = [
@@ -16,6 +15,7 @@ const routes = [
     {path: '/signup', component: SignUpPage},
     {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqCategoryList'}},
     {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'}},
+    {path: '/inquiryAnswer', component: MyPage, props:{selectedComponent:'InquiryAnswer'}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
     {path: '/goodsDetail/:goodsCode', component: GoodsDetailPage},
     {path: '/cart', component: MyCart},

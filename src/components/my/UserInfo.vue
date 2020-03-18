@@ -81,6 +81,7 @@
         width: 892px;
         border: 3px solid #000;
         border-left: 3px;
+        margin-bottom: 50px;
     }
     .userinfo .point_box .item {
         float: left;
