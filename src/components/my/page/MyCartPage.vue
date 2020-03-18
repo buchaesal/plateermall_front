@@ -35,7 +35,7 @@
                                         </sui-grid-column>
                                         <sui-grid-column style="width:20%;">
                                             <sui-segment>
-                                                <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize" size="small" />
+                                                <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize" size="small" class="cart-img" />
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:40%;">
@@ -277,7 +277,7 @@
 
         },
         created() {
-            
+
         }
     }
 </script>
