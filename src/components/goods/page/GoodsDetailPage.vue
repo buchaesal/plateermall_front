@@ -20,8 +20,8 @@
                             goodsData.dcRate)}}<span class="unit">원</span>
                         </p>
                         <ul class="utils">
-                            <li class="share">
-                                <button class="circular ui icon basic button btn-share" @click="shareBtnClick">
+                            <li class="share" @mouseover="onShareList" @mouseleave="offShareList">
+                                <button class="circular ui icon basic button btn-share">
                                     <i class="share alternate icon"></i>
                                 </button>
                                 <ul class="share-list" v-if="shareDisplay">
@@ -407,8 +407,11 @@
                     return true;
                 }
             },
-            shareBtnClick() {
-                this.shareDisplay = !this.shareDisplay;
+            onShareList() {
+                this.shareDisplay = true;
+            },
+            offShareList() {
+                this.shareDisplay = false;
             },
             likeBtnClick() {
                 this.isLike = !this.isLike;
@@ -416,14 +419,12 @@
             onTooltip1() {
                 this.tooltip1Display = true;
             },
-
             offTooltip1() {
                 this.tooltip1Display = false;
             },
             onTooltip2() {
                 this.tooltip2Display = true;
             },
-
             offTooltip2() {
                 this.tooltip2Display = false;
             }
@@ -527,8 +528,8 @@
 
     .share-list {
         position: absolute;
-        top: 40px;
-        right: 0;
+        top: 50px;
+        right: -45px;
         z-index: 11;
         width: 314px;
         padding: 24px 20px 16px;
