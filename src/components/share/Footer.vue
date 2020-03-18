@@ -18,12 +18,10 @@
                 <div class="dropdown_list">
                     <sui-dropdown text="패밀리 사이트">
                         <sui-dropdown-menu>
-                            <sui-dropdown-item>롯데지주</sui-dropdown-item>
-                            <sui-dropdown-item>롯데건설</sui-dropdown-item>
-                            <sui-dropdown-item>롯데글로벌로지스</sui-dropdown-item>
-                            <sui-dropdown-item>롯데기공</sui-dropdown-item>
-                            <sui-dropdown-item>롯데비피화학</sui-dropdown-item>
-                            <sui-dropdown-item>롯데렌탈</sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://plateer.com">(주)플래티어</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://www.mousoft.co.kr/">모우소프트</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://sys4u.kr/">플래티어 모바일</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://wiki.sys4u.co.kr/#all-updates">SYS4U OPEN WIKI</a></sui-dropdown-item>
                         </sui-dropdown-menu>
                     </sui-dropdown>
                 </div>
