@@ -24,7 +24,10 @@
                 </sui-label>
             </div>
             <div>
-                <p @click="totalRemoveGoods" class="cancel-all">전체 삭제</p>
+                <p @click="totalRemoveGoods" class="cancel-all">
+                    <sui-icon name="trash alternate outline" size="small"/>
+                    전체 삭제
+                </p>
             </div>
             <!-- 상품 들어갈 곳 -->
 
@@ -111,6 +114,12 @@
                 "[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★",
                 "6,720"
             ));
+            this.goods.push(new SideBannerGoodsModel(
+                "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/72/80/04/04/12/1204048072_1.jpg/chg/resize/72x72/extent/72x72/optimize",
+                "비에스코스",
+                "[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★",
+                "6,720"
+            ));
         }
     }
 </script>
@@ -134,7 +143,8 @@
 
     .cancel-all{
         text-align:right;
-        margin: 0 20px 0 150px;
+        font-size: 11px;
+        margin: 10px 20px 0 150px;
         cursor:pointer;
     }
 

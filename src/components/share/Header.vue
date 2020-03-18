@@ -33,7 +33,7 @@
     }
 
     .bottom-header {
-        background-color: #383838;
+        background-color: black;
         height: 60px;
     }
 

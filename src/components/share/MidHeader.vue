@@ -4,7 +4,7 @@
 
         <div class="util">
             <div class="search_area">
-                <input type="text" placeholder="아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
+                <input type="text" placeholder="  아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
                 <sui-icon name="search" class="search_btn" size="large"/>
             </div>
         </div>
