@@ -26,13 +26,13 @@
 </script>
 
 <style scoped>
-    #my-cancel{
-        margin-top: 5%;
-        text-align: center;
-    }
+#my-cancel{
+    margin-top: 5%;
+    text-align: center;
+}
 
-    #my-cancel > p{
-        font-size: 10px;
-    }
+#my-cancel > p{
+    font-size: 10px;
+}
     
 </style>
