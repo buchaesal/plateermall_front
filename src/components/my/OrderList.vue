@@ -20,6 +20,6 @@
 <style scoped>
     .order_header{
         border-top: 3px solid #000;
-        border-bottom: 1px solid #000;
+        border-bottom: 1px solid rgba(179, 179, 179, 0.58);
     }
 </style>
