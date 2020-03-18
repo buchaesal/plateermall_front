@@ -10,7 +10,7 @@
         </div>
 
         <div class="my_info">
-            <a href="#"><sui-icon name="user" size="large"/></a>
+            <router-link to="/orderList"><sui-icon name="user" size="large"/></router-link>
             <a href="#"><sui-icon name="heart" size="large"/></a>
             <router-link to="/cart"><sui-icon name="shopping bag" size="large"/></router-link>
         </div>
