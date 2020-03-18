@@ -1,4 +1,4 @@
-import GoodsModel from "../components/goods/model/GoodsModel";
+// import GoodsModel from "../components/goods/model/GoodsModel";
 
 const state = {
     goodsModels: [],
@@ -18,7 +18,7 @@ const mutations = {
 }
 
 const actions = {
-    
+
 }
 
 
