@@ -5,10 +5,10 @@
         <div class='summary'>
             <p id='my-review-count'>작성한 상품평 <strong>{{reviewCount}}</strong>건</p>
         </div>
-        
+
         <div class='my-review-list'>
             <p id='no-review' v-if='reviewCount == 0'>작성한 상품평이 없습니다.</p>
-        
+
             <div v-else>
                 <sui-item-group divided>
                     <sui-item class='review-item'  v-for='(review, index) in myReviews' :key='index'>
@@ -27,7 +27,7 @@
                         </sui-item-description>
                     </sui-item-content>
                     </sui-item>
-                </sui-item-group>            
+                </sui-item-group>
             </div>
 
         </div>
@@ -99,7 +99,7 @@
         padding: 1%;
         border-bottom: 1px solid #ededed;
     }
-    
+
     .itemName{
         font-size: 13px;
     }
