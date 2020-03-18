@@ -6,7 +6,12 @@
             </p>
             
             <div>
-                <span class="average-grade"><strong>{{starPoint}}</strong><span><sui-rating :interactive="false" id="starAvg" :rating="starPoint" :max-rating="5" /></span></span>
+                <div id="grade">
+                    <span class="average-grade"><strong>{{starPoint}}</strong></span>
+                </div>
+                <div id="star-average">
+                    <span><sui-rating id="starAvg" :rating="starPoint" :max-rating="5" /></span>
+                </div>
             </div>
         </div>
     </div>
@@ -48,4 +53,12 @@
         font-size: 30px;
     }
     
+    #grade{
+        display: inline-block;
+        padding-bottom: 5%;
+    }
+
+    #star-average{
+        display: inline-block;
+    }
 </style>
