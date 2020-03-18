@@ -3,14 +3,17 @@
             <div class="user_box charge_box">
                 <div class="user">
                     <p class="name charge">
-                        <span>최단비님의 마이롯데 입니다.</span>
+                        <span>최단비님의 마이페이지 입니다.</span>
                     </p>
                 </div>
             </div>
             <div class="point_box">
                 <div class="item" id="lpointDivItem" style="display: block;">
-                    <a href="https://campaign.ellotte.com/campaign-fo/mylottePoint/myLpoint?bypass">
-                        <p class="name">L.POINT</p>
+                    <p class="icon">
+                        <sui-icon size="big" name="home"></sui-icon>
+                    </p>
+                    <a href="#">
+                        <p class="name">P.POINT</p>
                     </a>
                     <p class="point">
                         <span id="lPoint"><em id="usablePoint">2,027</em>점</span>
@@ -18,19 +21,28 @@
                 </div>
 
                 <div class="item">
-                    <a href="https://campaign.ellotte.com/campaign-fo/mylottePoint/myEllottePoint?bypass">
-                        <p class="name">엘롯데포인트</p>
+                    <p class="icon">
+                        <sui-icon size="big" name="home"></sui-icon>
+                    </p>
+                    <a href="#">
+                        <p class="name">플래티어몰 포인트</p>
                     </a>
                     <p class="point"><em id="pointBlnc">0</em>점</p>
                 </div>
                 <div class="item">
-                    <a href="https://cca.ellotte.com/cca-fo/keepMny/main?bypass">
+                    <p class="icon">
+                        <sui-icon size="big" name="home"></sui-icon>
+                    </p>
+                    <a href="#">
                         <p class="name">보관금</p>
                     </a>
                     <p class="point"><em id="deposits">0</em>점</p>
                 </div>
                 <div class="item">
-                    <a href="https://campaign.ellotte.com/campaign-fo/coupon/mylotte/historyCoupon?bypass">
+                    <p class="icon">
+                        <sui-icon size="big" name="home"></sui-icon>
+                    </p>
+                    <a href="#">
                         <p class="name">쿠폰</p>
                     </a>
                     <p class="point"><em id="couponCnt">0</em>장</p>
@@ -52,7 +64,7 @@
     .userinfo .user_box {
         float: left;
         width: 308px;
-        height: 95px;
+        height: 128px;
         background: #000;
     }
     .userinfo .user_box.charge_box .user {
@@ -62,7 +74,7 @@
         display: -webkit-box;
         overflow: hidden;
         height: 56px;
-        padding-top: 8px;
+        padding-top: 22px;
         font-size: 14px;
         color: #fff;
         text-overflow: ellipsis;
@@ -88,7 +100,7 @@
         float: left;
         position: relative;
         width: 25%;
-        height: 89px;
+        height: 122px;
         padding: 24px 0;
         text-align: center;
     }

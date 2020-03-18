@@ -7,8 +7,9 @@ class GoodsModel {
     originalPrice = "";
     dcRate = "";
     saleCnt = "";
+    category = "";
 
-    constructor(imgUrl, goodsCode, seller, copy, title, originalPrice, dcRate, saleCnt, options, cardPromotions) {
+    constructor(imgUrl, goodsCode, seller, copy, title, originalPrice, dcRate, saleCnt, options, cardPromotions, category) {
         this.imgUrl = imgUrl,
             this.goodsCode = goodsCode,
             this.seller = seller,
@@ -18,7 +19,8 @@ class GoodsModel {
             this.dcRate = dcRate,
             this.saleCnt = saleCnt,
             this.options = options,
-            this.card = cardPromotions
+            this.card = cardPromotions,
+            this.category = category
     }
 }
 
