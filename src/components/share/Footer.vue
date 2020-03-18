@@ -4,8 +4,8 @@
             <div class="min_inner">
                 <ul class="foot_links">
                     <li>
-                        <a href="javascript:void(0);" title="(주)롯데쇼핑">
-                            <strong>롯데쇼핑(주)</strong>
+                        <a href="javascript:void(0);" title="(주)플래티어쇼핑">
+                            <strong>플래티어쇼핑(주)</strong>
                         </a>
                     </li>
                     <li><a href="javascript:void(0);" title="LPOINT 회원소개">LPOINT 회원소개</a></li>
@@ -18,12 +18,12 @@
                 <div class="dropdown_list">
                     <sui-dropdown text="패밀리 사이트">
                         <sui-dropdown-menu>
-                            <sui-dropdown-item>롯데지주</sui-dropdown-item>
-                            <sui-dropdown-item>롯데건설</sui-dropdown-item>
-                            <sui-dropdown-item>롯데글로벌로지스</sui-dropdown-item>
-                            <sui-dropdown-item>롯데기공</sui-dropdown-item>
-                            <sui-dropdown-item>롯데비피화학</sui-dropdown-item>
-                            <sui-dropdown-item>롯데렌탈</sui-dropdown-item>
+                            <sui-dropdown-item>플래티어지주</sui-dropdown-item>
+                            <sui-dropdown-item>플래티어건설</sui-dropdown-item>
+                            <sui-dropdown-item>플래티어글로벌로지스</sui-dropdown-item>
+                            <sui-dropdown-item>플래티어기공</sui-dropdown-item>
+                            <sui-dropdown-item>플래티어비피화학</sui-dropdown-item>
+                            <sui-dropdown-item>플래티어렌탈</sui-dropdown-item>
                         </sui-dropdown-menu>
                     </sui-dropdown>
                 </div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="foot_info">
-            <div class="inner-info-img"><img class="lotteDepartmentStoreLogo" src="https://img.hankyung.com/photo/202002/01.21767524.1.jpg"></div>
+            <div class="inner-info-img"><img class="lotteDepartmentStoreLogo" src="../../assets/intro_logo.png"></div>
             <div class="inner-info">
                 <div class="inner-1st">
                     <p class="shopping-title">(주)플래티어</p>
