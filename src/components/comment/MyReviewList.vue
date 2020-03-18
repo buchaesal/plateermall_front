@@ -48,14 +48,14 @@
                         itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
                         option: '사이즈 선택: 235',
                         content: '발 볼이 생각보다 좁아서 아프네요. 사이즈는 5mm정도 작게 나온 것 같아요.',
-                        photo: require('./img/review.jpg'),
+                        photo: '',
                     },
                     {
                         brand: '나이키',
                         itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
                         option: '사이즈 선택: 235',
                         content: '발 볼이 생각보다 좁아서 아프네요. 사이즈는 5mm정도 작게 나온 것 같아요.',
-                        photo: require('./img/review.jpg'),
+                        photo: '',
                     }
                 ],
             }
