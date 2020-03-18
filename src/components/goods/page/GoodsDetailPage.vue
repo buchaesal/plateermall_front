@@ -147,8 +147,8 @@
                         <div style="height:64px;">
                             상품 정보
                         </div>
-                        <div style="height:64px;">
-                            상품평
+                        <div>
+                            <RatingStarPoint/>
                         </div>
                     </div>
 
@@ -188,7 +188,8 @@
                             </sui-accordion-title>
                             <sui-accordion-content active class="review-content">
                                 <div>
-                                    <Rating/>
+                                    <RatingStarPoint/>
+                                    <RatingGraph/>
                                     <ReviewList />
                                 </div>
                             </sui-accordion-content>
@@ -346,14 +347,16 @@
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
     import SideBanner from "../../share/SideBanner";
-    import Rating from "../../comment/Rating";
+    import RatingStarPoint from "../../comment/RatingStarPoint";
+    import RatingGraph from "../../comment/RatingGraph";
     import ReviewList from "../../comment/ReviewList";
 
 
     export default {
         name: "GoodsDetail",
         components: {
-            Rating,
+            RatingStarPoint,
+            RatingGraph,
             Header,
             Footer,
             SideBanner,
