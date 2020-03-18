@@ -6,7 +6,7 @@
             </p>
             
             <div>
-                <span class="average-grade"><strong>{{starPoint}}</strong></span><sui-rating id="starAvg" :rating="starPoint" :max-rating="5" />
+                <span class="average-grade"><strong>{{starPoint}}</strong><sui-rating :interactive="false" id="starAvg" :rating="starPoint" :max-rating="5" /></span>
             </div>
         </div>
     </div>
@@ -30,13 +30,12 @@
     .total{
         padding-top: 2%;
         padding-left: 3%;
-        width: 20%;
+
         display: inline-block;
         float: left;
     }
 
     .count{
-
         font-size: 15px;
     }
 
@@ -46,7 +45,7 @@
     }
 
     .average-grade{
-        font-size: 20px;
+        font-size: 30px;
     }
     
 </style>
