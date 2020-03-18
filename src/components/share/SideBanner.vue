@@ -41,9 +41,9 @@
                         </div>
                         <div class="banner-item-text">
                             <a href="#">
-                                <p>{{good.title}}</p>
-                                <p>{{good.contents}}</p>
-                                <p>{{good.price}}<span class="price">원</span></p>
+                                <p class="banner-item-title">{{good.title}}</p>
+                                <p class="banner-item-contents">{{good.contents}}</p>
+                                <p class="banner-item-price">{{good.price}}<span class="price">원</span></p>
                             </a>
                         </div>
                     </div>
@@ -151,6 +151,7 @@
 
     .side-banner-addon-title {
         text-align: center;
+        background-color: #181818;
     }
 
     .shopping-info {
@@ -179,6 +180,8 @@
 
     .banner-item {
         border-bottom: 1px solid gray;
+        font-weight: bold;
+        text-decoration: none;
     }
 
     .banner-item-img {
@@ -191,6 +194,15 @@
         padding-left: 45px;
         display: inline-block;
         font-size: 11px;
+    }
+
+    .banner-item-title {
+        color: lightgray;
+        font-size: 12px;
+    }
+
+    .banner-item-contents, .banner-item-price{
+        color: white;
     }
 
     #side-banner-addon {

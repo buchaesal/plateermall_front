@@ -1,6 +1,6 @@
 <template>
     <div class="search_box">
-        <img @click="goToHome" class="logo-img" src="../../assets/logo.png">
+        <img @click="goToHome" class="logo-img" src="../../assets/PLATEER_LOGO.png">
 
         <div class="util">
             <div class="search_area">
