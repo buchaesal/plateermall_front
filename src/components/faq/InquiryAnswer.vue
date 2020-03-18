@@ -82,6 +82,7 @@
 
     tr {
         height: 60px;
+        text-align: center;
     }
 
     .status {

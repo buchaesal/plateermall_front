@@ -1,16 +1,16 @@
 <template>
     <div class="search_box">
-        <img @click="goToHome" class="logo-img" src="../../assets/logo.png">
+        <img @click="goToHome" class="logo-img" src="../../assets/PlateerMall.png">
 
         <div class="util">
             <div class="search_area">
-                <input type="text" placeholder="아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
+                <input type="text" placeholder="  아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
                 <sui-icon name="search" class="search_btn" size="large"/>
             </div>
         </div>
 
         <div class="my_info">
-            <a href="#"><sui-icon name="user" size="large"/></a>
+            <router-link to="/orderList"><sui-icon name="user" size="large"/></router-link>
             <a href="#"><sui-icon name="heart" size="large"/></a>
             <router-link to="/cart"><sui-icon name="shopping bag" size="large"/></router-link>
         </div>
@@ -56,6 +56,7 @@
         vertical-align: bottom;
         top: 5px;
         margin: 0;
+        margin-right: 20px;
         padding: 0;
         min-width: 52px;
         max-width: 128px;

@@ -31,20 +31,20 @@
         </div>
 
         <div class="foot_info">
-            <div class="inner-info-img"><img class="lotteDepartmentStoreLogo" src="https://1.cms.s81c.com/sites/default/files/2018-11-12/image_lottedpt_logo%20copy.png"></div>
+            <div class="inner-info-img"><img class="lotteDepartmentStoreLogo" src="https://img.hankyung.com/photo/202002/01.21767524.1.jpg"></div>
             <div class="inner-info">
                 <div class="inner-1st">
-                    <p class="shopping-title">롯데쇼핑주식회사</p>
-                    롯데쇼핑(주) 대표이사 강희태, 서울시 중구 소공동 1번지<br>
-                    사업자등록번호 : 104-81-26067(롯데쇼핑㈜ 백화점 사업본부)<br>
-                    통신판매업신고 : 중구 01243호<br>
-                    개인정보보호책임자: 박광석 청소년보호책임자 : 김진수 <br><br>
-                    Copyright 2018. LOTTESHOPPING Co., LTD. All rights reserved.<br>
+                    <p class="shopping-title">(주)플래티어</p>
+                    서울시 송파구 법원로9길 26 H Business Park D동 6층<br><br>
+                    통신판매업신고 : 송파 01234호<br><br>
+                    개인정보보호책임자 : 손성관<br><br>
+                    신입사원보호책임자 : 손성관 <br><br>
+                    Copyright ⓒ 2020 PLATEER. All rights reserved.<br>
                 </div>
                 <div class="inner-2st">
-                    고객만족센터 : 1899-2500 (FAX: 02-3675-2500/E-mail: ellotte@lotte.net)<br>
-                    운영시간 : 평일(09시-18시) 주말/공휴일(휴무)<br>
-                    호스팅 서비스 사업자 : 롯데쇼핑㈜ e커머스 사업본부<br>
+                    전화 :
+                    TEL  02-554-4668,
+                    FAX  02-554-4583<br>
                 </div>
                 <div class="inner-3st">
                     <br>

@@ -71,7 +71,7 @@
                         id: 'testreview',
                         writeDate: '2020.03.16'
                     },
-                ]
+                ],
             }
         },
     }
@@ -82,11 +82,14 @@
     .options{
         text-align: left;
         padding-left: 5%;
+        padding-bottom: 1%;
+        border-bottom: 1px solid #ededed;
     }
     .review-list{
         text-align: left;
         padding-top: 3%;
         padding-left: 5%;
+        margin-bottom: 5%;
     }
 
     .photo-review{

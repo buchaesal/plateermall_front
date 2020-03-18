@@ -2,16 +2,28 @@
     <div class="nav_set">
         <nav>
             <ul class="nav_question">
-                <li>
-                    <router-link to="/inquiryForm">1:1 문의하기</router-link>
+                <li class="big_font">
+                    <router-link to="/inquiryForm"><span>1:1 문의하기</span></router-link>
                 </li>
-                <li>
-                    <router-link to="/inquiryAnswer">1:1 답변확인</router-link>
+                <li class="big_font">
+                    <router-link to="/inquiryAnswer"><span>1:1 답변확인</span></router-link>
                 </li>
             </ul>
             <ul class="nav_question line">
-                <li>
-                    <router-link to="/myreview">상품평/후기</router-link>
+                <li class="inquiry_area">
+                    <router-link to="/orderList"><span>주문배송조회</span></router-link>
+                </li>
+                <li class="inquiry_area">
+                    <router-link to="#"><span>취소/교환/반품</span></router-link>
+                </li>
+                <li class="inquiry_area">
+                    <router-link to="/wishlist"><span>위시리스트</span></router-link>
+                </li>
+                <li class="inquiry_area">
+                    <router-link to="/myreview"><span>상품평/후기</span></router-link>
+                </li>
+                <li class="inquiry_area">
+                    <router-link to="#"><span>배송지/회원정보</span></router-link>
                 </li>
             </ul>
         </nav>
@@ -35,9 +47,13 @@
         font-size: 14px;
     }
 
-    li {
+    .big_font{
         font-size: 18px;
         font-weight: 500;
+    }
+
+    .inquiry_area{
+        font-size: 14px;
     }
 
     .nav_set .nav_question li + li {

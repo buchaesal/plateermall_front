@@ -24,7 +24,10 @@
                 </sui-label>
             </div>
             <div>
-                <p @click="totalRemoveGoods" class="cancel-all">전체 삭제</p>
+                <p @click="totalRemoveGoods" class="cancel-all">
+                    <sui-icon name="trash alternate outline" size="small"/>
+                    전체 삭제
+                </p>
             </div>
             <!-- 상품 들어갈 곳 -->
 
@@ -41,9 +44,9 @@
                         </div>
                         <div class="banner-item-text">
                             <a href="#">
-                                <p>{{good.title}}</p>
-                                <p>{{good.contents}}</p>
-                                <p>{{good.price}}<span class="price">원</span></p>
+                                <p class="banner-item-title">{{good.title}}</p>
+                                <p class="banner-item-contents">{{good.contents}}</p>
+                                <p class="banner-item-price">{{good.price}}<span class="price">원</span></p>
                             </a>
                         </div>
                     </div>
@@ -111,6 +114,12 @@
                 "[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★",
                 "6,720"
             ));
+            this.goods.push(new SideBannerGoodsModel(
+                "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/72/80/04/04/12/1204048072_1.jpg/chg/resize/72x72/extent/72x72/optimize",
+                "비에스코스",
+                "[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★",
+                "6,720"
+            ));
         }
     }
 </script>
@@ -134,7 +143,8 @@
 
     .cancel-all{
         text-align:right;
-        margin: 0 20px 0 150px;
+        font-size: 11px;
+        margin: 10px 20px 0 150px;
         cursor:pointer;
     }
 
@@ -151,6 +161,7 @@
 
     .side-banner-addon-title {
         text-align: center;
+        background-color: #181818;
     }
 
     .shopping-info {
@@ -179,6 +190,8 @@
 
     .banner-item {
         border-bottom: 1px solid gray;
+        font-weight: bold;
+        text-decoration: none;
     }
 
     .banner-item-img {
@@ -191,6 +204,15 @@
         padding-left: 45px;
         display: inline-block;
         font-size: 11px;
+    }
+
+    .banner-item-title {
+        color: lightgray;
+        font-size: 12px;
+    }
+
+    .banner-item-contents, .banner-item-price{
+        color: white;
     }
 
     #side-banner-addon {
