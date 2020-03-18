@@ -6,4 +6,4 @@ class GoodsApi {
     }
 }
 
-export default GoodsApi;``
+export default GoodsApi;
