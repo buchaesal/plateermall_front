@@ -37,9 +37,9 @@
             }
         },
         methods: {
-            changeState() {
-                this.$store.commit('getGoodsList');
-            },
+            // changeState() {
+            //     this.$store.commit('getGoodsList');
+            // },
             pricing(originalPrice, dcRate) {
                 var price = originalPrice * (100 - dcRate) / 100;
                 price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -49,9 +49,12 @@
                 this.$router.push('/goodsDetail/' + goodsCode);
             },
         },
+        created() {
+            this.$store.commit('getCardList');
+        },
         computed: {
             getCardList() {
-                return this.$store.state.goodsStore.getCardList;
+                return this.$store.state.goodsStore.goodsModels;
             }
         }
     }

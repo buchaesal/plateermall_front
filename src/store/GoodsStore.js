@@ -2,6 +2,7 @@
 
 const state = {
     goodsModels: [],
+    goodsModel: {},
     goodsCount: 0
 }
 
@@ -10,12 +11,20 @@ const getters = {
 }
 
 const mutations = {
+    getGoodsModel(state) {
+        var goodsApi = new GoodsApi();
+        state.goodsModel = goodsApi.getGoods();
+    },
+    getCardList(state) {
+        var goodsApi = new GoodsApi();
+        state.goodsModels = goodsApi.getGoodsList();
+    },
+
+
+
     getGoodsList(state){
         state.goodsCount = 3;
     },
-    getCardList(state) {
-        return state.goodsModels;
-    }
 }
 
 const actions = {
@@ -31,3 +40,5 @@ export default {
     mutations,
     actions
   };
+
+import GoodsApi from "../api/GoodsApi";

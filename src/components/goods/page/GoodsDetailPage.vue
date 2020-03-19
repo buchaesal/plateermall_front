@@ -159,7 +159,7 @@
                             상품 정보
                         </div>
                         <div class="review-summary-box">
-                            <RatingStarPoint class="review-summary"/>
+                            <RatingStarPoint class="review-summary" v-bind="getGoodsData.goodsCode"/>
                         </div>
                     </div>
 
@@ -419,17 +419,13 @@
                 this.tooltip2Display = false;
             }
         },
+        created() {
+            this.$store.commit('getGoodsModel');
+        },
         computed: {
             getGoodsData(){
                 return this.$store.state.goodsStore.goodsModel;
-            }
-
-        },
-        created: {
-            getCommentsData(){
-                return this.$store.state.commentStore.getComments;
-            }
-
+            },
         },
     }
 </script>
