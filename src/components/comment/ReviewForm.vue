@@ -4,20 +4,20 @@
     
         <ul>
             <li>고객님께서 작성해주신 상품평은 등록 즉시 바로 사이트에 게재되며, 모두 공개를 원칙으로 합니다.</li>
-            <li>- 상품평에 적합하지 않으 내용, 미풍양속을 해치는 글, 상품기능 및 효과에 대한 오해의 소지가 있는 내용은 통보 없이 삭제될 수 있으며,</li>
+            <li>- 상품평에 적합하지 않은 내용, 미풍양속을 해치는 글, 상품기능 및 효과에 대한 오해의 소지가 있는 내용은 통보 없이 삭제될 수 있으며,</li>
             <li> L.POINT는 지급되지 않습니다.</li>
             <li>- 단순상품문의, 교환/반품 요청, 제품이상 등 불편사항은 1:1 E-mail 상담을 이용해주세요.</li>
         </ul>
-
+        {{reviewCode}}
         <div id="selected-item">
             <sui-item-group divided>
                 <sui-item>
-                    <sui-item-image size="tiny" :src='myGoods.photo'/>
+                    <sui-item-image size="tiny" :src='getSelectedUnwrittenReview.myGoods.photo'/>
                     <sui-item-content class='review'>                        
-                    <sui-item-header>{{myGoods.brand}}</sui-item-header>
+                    <sui-item-header>{{getSelectedUnwrittenReview.myGoods.brand}}</sui-item-header>
                         <sui-item-meta>
-                            <p class="goodsName">{{myGoods.itemName}}</p>
-                            <p class="goodsOption">{{myGoods.option}}</p>
+                            <p class="goodsName">{{getSelectedUnwrittenReview.myGoods.itemName}}</p>
+                            <p class="goodsOption">{{getSelectedUnwrittenReview.myGoods.option}}</p>
                         </sui-item-meta>
 
                     </sui-item-content>
@@ -112,17 +112,10 @@
 
 <script>
     export default {
+        props:['reviewCode'],
         name: "Sample",
         data(){
             return{
-                myGoods:{
-                        brand: '나이키',
-                        itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
-                        option: '사이즈 선택: 235',
-                        photo: require('../../assets/review.jpg'),
-                        purchaseDate: '2020-03-11',
-                        dueDate: '2020-06-10',
-                    },
                 myGrade: 0,
                 payload: {},
                 deleveryValue:'',
@@ -130,10 +123,17 @@
                 sizeValue:'',
             }
         },
+        created(){
+            this.$store.commit('loadSelectedUnwrittenComment', '1');
+        },
         computed: {
             formattedPayload() {
-                    return JSON.stringify(this.payload, null, 2);
+                return JSON.stringify(this.payload, null, 2);
             },
+
+            getSelectedUnwrittenReview(){
+                return this.$store.state.commentStore.selectedUnwrittenReview;
+            }
         },
         methods: {
             handleRate(evt, props) {

@@ -54,7 +54,7 @@
         name: "Sample",
         data(){
             return{
-                reviews:[],
+                
             }
         },
         computed: {
