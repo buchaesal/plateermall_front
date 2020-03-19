@@ -138,15 +138,16 @@
                                           selection
                                           :options="getGoodsData.options"
                                           v-model="current"
-                                          @select="console.log('hi')"
-                                          @click="addOptions(current)"
                             />
                         </div>
-                        <div>
-                            옵션 선택 목록
-                            <div>
-                                {{selectedOptions}}
-                            </div>
+                        <div class="option-select-box">
+                            <sui-message v-for="(option, index) in selectedOptions"
+                                         :key="index"
+                                    :header="option"
+                                    content="This is a special notification which you can dismiss."
+                                    dismissable
+                                    @dismiss="handleDismiss(index)"
+                            />
                         </div>
                         <div>
                             가격
@@ -398,7 +399,7 @@
                 tooltip1Display: false,
                 tooltip2Display: false,
                 radioButtons: [true, false, false],
-                selectedOptions: [],
+                selectedOptions: ['220', '230'],
             }
         },
         methods: {
@@ -423,10 +424,12 @@
                 this.radioButtons = changedRadio;
             },
             addOptions(option) {
-                let addedOption = this.selectedOptions;
-                addedOption.push(option);
-                this.selectedOptions = addedOption;
-                console.log(this.selectedOptions);
+                let addOptions = this.selectedOptions;
+                addOptions.push(option);
+                this.selectedOptions = addOptions;
+            },
+            handleDismiss(index) {
+                this.visible[index] = false;
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -459,6 +462,10 @@
                 let goodsData = this.$store.state.goodsStore.goodsModel
 
                 return goodsData;
+            },
+            changeOption() {
+                this.addOptions(this.current);
+                return this.current;
             },
         },
 
@@ -702,8 +709,12 @@
 
     .option-select {
         margin-top: 32px;
-        margin-bottom: 32px;
+        margin-bottom: 20px;
         width: 100%;
+    }
+
+    .option-select-box {
+        margin-bottom: 20px;
     }
 
     .option-dropdown {
