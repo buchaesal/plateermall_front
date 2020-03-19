@@ -13,7 +13,7 @@ const mutations = {
         state.goodsCount = 3;
     },
     getCardList(state) {
-        state.goodsModels = [param];
+        return state.goodsModels;
     }
 }
 
