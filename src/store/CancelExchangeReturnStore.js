@@ -2,6 +2,8 @@ import CancelExchangeReturnApi from '../../src/api/CancelExchangeReturnApi';
 
 const state = {
     cancelInfo:{},
+    exchangeInfo:{},
+    returnInfo:{},
 }
 
 const getters = {
@@ -10,13 +12,25 @@ const getters = {
 
 //state를 바꿀 때
 const mutations = {
-    
+
     loadCancelGoodsInfo(state, userId){
 
-        console.log(userId);
         let cancelExchangeReturnApi = new CancelExchangeReturnApi();
         state.cancelInfo = cancelExchangeReturnApi.getCancelInfo(userId);
     },
+
+    loadExchangeGoodsInfo(state, userId){
+
+        let cancelExchangeReturnApi = new CancelExchangeReturnApi();
+        state.exchangeInfo = cancelExchangeReturnApi.getExchangeInfo(userId);
+
+    },
+
+    loadReturnGoodsInfo(state, userId){
+
+        let cancelExchangeReturnApi = new CancelExchangeReturnApi();
+        state.returnInfo = cancelExchangeReturnApi.getReturnInfo(userId);
+    }
     
 }
 

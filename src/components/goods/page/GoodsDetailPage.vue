@@ -138,18 +138,28 @@
                                           selection
                                           :options="getGoodsData.options"
                                           v-model="current"
-                                          @select="console.log('hi')"
-                                          @click="addOptions(current)"
                             />
                         </div>
-                        <div>
-                            옵션 선택 목록
-                            <div>
-                                {{selectedOptions}}
-                            </div>
+                        <div class="option-select-box">
+                            <sui-message v-for="(option, index) in selectedOptions"
+                                         :key="index"
+                                         :header="option.name"
+                                         dismissable
+                                         @dismiss="handleDismiss(index)"
+                            >
+                                <div class="amount">
+                                    <sui-button circular icon='plus' class="ico-plus"/>
+                                    <input transparent class="output" :value="option.qauantity">
+                                    <sui-button circular icon='minus' class="ico-minus"/>
+                                </div>
+
+                            </sui-message>
                         </div>
-                        <div>
-                            가격
+                        <div class="subtotal" id="priceSumInfo">
+                            <input type="hidden" id="orderSumQty" :value="orderSumQuantity">
+                            <p class="price"><span class="item" id="orderSumQtyTxt">총 {{orderSumQuantity}}개 : </span>
+                                <span id="orderDcSumPrcTxt">{{priceFormatting(orderSumPrice)}}</span> <span
+                                        class="unit">원</span></p>
                         </div>
                         <div>
                             <sui-button-group class="shipping-option">
@@ -453,7 +463,6 @@
         created() {
             this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
             this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
-            this.$store.commit('addSawList');
         },
         computed: {
             getGoodsData() {

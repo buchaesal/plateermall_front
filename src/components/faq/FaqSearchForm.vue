@@ -26,7 +26,7 @@
 <style scoped>
     .search_faq-form {
         position: relative;
-        margin: 0 0 80px;
+        margin: 0 0 100px;
         padding: 40px 58px 0;
         border-top: 1px solid #ededed;
     }
