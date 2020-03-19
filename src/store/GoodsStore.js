@@ -1,3 +1,4 @@
+import GoodsApi from "../api/GoodsApi";
 // import GoodsModel from "../components/goods/model/GoodsModel";
 
 const state = {
@@ -36,5 +37,3 @@ export default {
     mutations,
     actions
   };
-
-import GoodsApi from "../api/GoodsApi";
