@@ -224,7 +224,8 @@ class GoodsApi {
         return this.goodsModels;
     }
 
-    getGoods() {
+    getGoods(goodsCode) {
+        console.log("select * from goods where " + goodsCode);
         return this.goodsModel;
     }
 }

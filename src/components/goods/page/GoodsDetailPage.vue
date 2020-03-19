@@ -374,6 +374,7 @@
         },
         data() {
             return {
+                current: null,
                 shareDisplay: false,
                 isLike: false,
                 tooltip1Display: false,
@@ -419,14 +420,12 @@
             }
         },
         created() {
-            this.$store.commit('getGoodsModel');
-
+            this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
+            this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
         },
         computed: {
             getGoodsData(){
                 let goodsData = this.$store.state.goodsStore.goodsModel
-
-                this.$store.commit('loadCommentByGoodsCode', goodsData.goodsCode);
 
                 return goodsData;
             },

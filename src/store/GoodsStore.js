@@ -11,9 +11,10 @@ const getters = {
 }
 
 const mutations = {
-    getGoodsModel(state) {
+    getGoodsModel(state, goodsCode) {
         let goodsApi = new GoodsApi();
-        state.goodsModel = goodsApi.getGoods();
+
+        state.goodsModel = goodsApi.getGoods(goodsCode);
     },
     getCardList(state) {
         let goodsApi = new GoodsApi();
