@@ -4,7 +4,7 @@
         <h3 class="page_title">{{ title }}</h3>
         <p class="title_button" v-if="isButton">
             <router-link to="/orderList" class="btn_normal">주문배송조회</router-link>
-            <a href="#" class="btn_normal">취소/교환/반품 조회</a>
+            <router-link to="/cancelSearch" class="btn_normal">취소/교환/반품 조회</router-link>
         </p>
     </header>
     </div>

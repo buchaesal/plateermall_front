@@ -2,11 +2,7 @@
   <div>
     <p class="action_info-large">
       엘롯데에서 상품구매 시 배송되는 주소록입니다. 배송지를 추가/수정/삭제하여 관리할 수 있습니다.
-      <button
-        class="btn_normal"
-        id="btn_dlvAdd"
-        title="배송지 추가 열기"
-      >배송지 추가</button>
+      <button class="btn_normal" @click="openShippingSpotForm">배송지 추가</button>
     </p>
 
     <sui-table celled textAlign="center">
@@ -20,6 +16,18 @@
     </sui-table-header>
     <sui-table-body>
 
+        <sui-table-row v-if="getIsOpenShippingSpotForm">
+            <sui-table-cell><sui-checkbox/></sui-table-cell>
+            <sui-table-cell class="spot-type"></sui-table-cell>
+            <sui-table-cell text-align="left">
+                <ShippingSpotForm></ShippingSpotForm>
+            </sui-table-cell>
+            <sui-table-cell>
+                <p><button class="cancel-btn" @click="closeShippingSpotForm">취소</button></p>
+                <p><button class="save-btn">저장</button></p>
+            </sui-table-cell>
+        </sui-table-row>
+
       <sui-table-row v-if="shippingSpotSize == 0">
         <sui-table-cell class="no-delivery-spot" colspan="4">
             <br>
@@ -29,19 +37,38 @@
             <br>
         </sui-table-cell>
       </sui-table-row>
-        <sui-table-row v-else v-for="(shippingSpot, index) in shippingSpots" :key="index" text-align="center">
+
+
+        <sui-table-row v-else>
             <sui-table-cell><sui-checkbox/></sui-table-cell>
             <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
             <sui-table-cell text-align="left">
-                <p class="user-name">{{shippingSpot.userName}}</p>
+                <p class="user-name">{{defaultShippingSpot.receiverName}}</p>
+                <div class="spot-details">
+                    <p>{{defaultShippingSpot.lineNumber}}/{{defaultShippingSpot.phoneNumber}}</p>
+                    <p>도로명 주소 : {{defaultShippingSpot.roadAddress}}</p>
+                    <p>지번 주소 : {{defaultShippingSpot.zipcodeAddress}}</p>
+                </div>
+            </sui-table-cell>
+            <sui-table-cell><button class="modify-btn">수정</button></sui-table-cell>
+        </sui-table-row>
+
+        <sui-table-row v-for="(shippingSpot, index) in otherShippingSpots" :key="index" text-align="center">
+            <sui-table-cell><sui-checkbox/></sui-table-cell>
+
+            <sui-table-cell class="spot-type">{{shippingSpot.spotName}}</sui-table-cell>
+
+            <sui-table-cell text-align="left">
+                <p class="user-name">{{shippingSpot.receiverName}}</p>
                 <div class="spot-details">
                     <p>{{shippingSpot.lineNumber}}/{{shippingSpot.phoneNumber}}</p>
                     <p>도로명 주소 : {{shippingSpot.roadAddress}}</p>
                     <p>지번 주소 : {{shippingSpot.zipcodeAddress}}</p>
                 </div>
             </sui-table-cell>
-            <sui-table-cell>1</sui-table-cell>
+            <sui-table-cell><button class="modify-btn">수정</button></sui-table-cell>
         </sui-table-row>
+
     </sui-table-body>
 
     </sui-table>
@@ -58,22 +85,60 @@
 </template>
 
 <script>
+import ShippingSpotForm from './ShippingSpotForm';
+
 export default {
   name: "Sample",
     data() {
       return {
+          createNewShippingSpot: false,
+
+          defaultShippingSpot: {},
+          otherShippingSpots: [],
           shippingSpotSize: -1,
-          shippingSpots: [
-              {
-                  userName: '아무개',
-                  lineNumber: '010-1234-5678',
-                  phoneNumber: '010-1234-5678',
-                  roadAddress: '서울시 송파구 문정동 미안아파트 111-1501',
-                  zipcodeAddress: '서울시 송파구 문정동 미안아파트 111-1501',
-              }, {}
-          ],
       }
+    },
+    components: {
+        ShippingSpotForm,
+    },
+    methods: {
+    //     addNewShippingSpot(){
+    //        this.createNewShippingSpot = true;
+    //    }
+        openShippingSpotForm(){
+            this.$store.commit('openShippingSpotForm')
+            // console.log(this.$store.state.shippingSpotListStore.isOpenShippingSpotForm) 왜 state는 이렇게 하고 getters는 안되냐
+            console.log(this.$store.state.shippingSpotListStore.isOpenShippingSpotForm)
+        },
+        closeShippingSpotForm(){
+            this.$store.commit('closeShippingSpotForm');
+        },
+    },
+    computed: {
+       // 계산된 리턴값이 필요한 경우.
+       getIsOpenShippingSpotForm(){
+           //show로 해보기
+           console.log('flag에 직접 접근' + this.$store.state.shippingSpotListStore.isOpenShippingSpotForm);
+           console.log('getters를 통해 값에 접근' + this.$store.getters.getIsOpenShippingSpotForm);
+        //    console.log(this.$store.getters['shippingSpotListStore/getIsOpenShippingSpotForm']); 
+        //   return this.$store.state.shippingSpotListStore.getters.getIsOpenShippingSpotForm;
+            return this.$store.getters.getIsOpenShippingSpotForm; //값이 바뀌었을 때 getters를 호출할까? 잘 호출한다!
+       }
+    },
+    created: function(){
+        this.$store.commit('setShippingSpotList');
+        this.shippingSpots = this.$store.state.shippingSpotListStore.shippingSpotList;
+        this.shippingSpotSize = this.shippingSpots.length;
+        this.shippingSpots.filter((shippingSpot) => {
+            if(shippingSpot.isDefaultShippingSpot === 'Y'){
+                this.defaultShippingSpot = shippingSpot;
+            }  
+            else{
+                this.otherShippingSpots.push(shippingSpot);
+            }
+        });
     }
+
 };
 </script>
 
@@ -134,5 +199,33 @@ export default {
     }
     .spot-type, .spot-details{
         color: #888;
+        font-weight: bold;
+    }
+    .modify-btn{
+        background: white;
+        min-width: 80px;
+        height: 40px;
+        font-size: 14px;
+        line-height: 40px;
+        border: 1px solid #333;
+        color: black;
+    }
+    .cancel-btn{
+        background: white;
+        min-width: 80px;
+        height: 40px;
+        font-size: 14px;
+        line-height: 40px;
+        border: 1px solid #333;
+        color: black;
+    }
+    .save-btn{
+        background: black;
+        min-width: 80px;
+        height: 40px;
+        font-size: 14px;
+        line-height: 40px;
+        border: 1px solid #333;
+        color: white;
     }
 </style>
