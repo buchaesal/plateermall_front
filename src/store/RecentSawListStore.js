@@ -5,11 +5,11 @@ const state = {
     // codeList:[]
 }
 
-const getters = {
-    setListLength(state) {
-        return state.goodsList.length;
-    }
-}
+// const getters = {
+//     setListLength(state) {
+//         return state.goodsList.length;
+//     }
+// }
 
 const mutations ={
     async addSawList(state, goodsCode){
@@ -28,5 +28,5 @@ const mutations ={
 export default {
     state,
     mutations,
-    getters
+    // getters
 }

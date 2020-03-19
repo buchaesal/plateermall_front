@@ -86,10 +86,10 @@
                 } else {
                     this.isVisible = true;
                     let sideBanner = document.getElementById('side-banner');
-                    sideBanner.style.width = '30%';
+                    sideBanner.style.width = '80px';
 
                     let addon = document.getElementById('side-banner-addon');
-                    addon.style.width = '70%';
+                    addon.style.width = '80%';
 
                     let sideBannerContainer = document.getElementById('side-banner-container');
                     sideBannerContainer.style.width = '400px';
@@ -189,7 +189,7 @@
     }
     .recent {
         background-color: black;
-        height: 160px;
+        height: 109px;
         padding: 15px 0;
     }
 

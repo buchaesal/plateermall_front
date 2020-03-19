@@ -6,10 +6,6 @@ const state = {
     goodsCount: 0
 }
 
-const getters = {
-
-}
-
 const mutations = {
     getGoodsModel(state, goodsCode) {
         let goodsApi = new GoodsApi();
@@ -34,7 +30,6 @@ const actions = {
 export default {
     namespace: false,
     state,
-    getters,
     mutations,
     actions
   };
