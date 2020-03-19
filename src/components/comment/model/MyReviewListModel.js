@@ -13,3 +13,5 @@ class MyReviewListModel{
         this.photo = photo;
     }
 }
+
+export default MyReviewListModel;

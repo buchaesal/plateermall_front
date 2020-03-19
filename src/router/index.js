@@ -21,7 +21,8 @@ const routes = [
     {path: '/cart', component: MyCart},
     {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}},
     {path: '/wishlist', component: MyPage, props:{selectedComponent: 'Wishlist'}},
-    {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList', userInfo:true}}
+    {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList', userInfo:true}},
+    {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch', userInfo: true}}
 ]
 
 export default new VueRouter({
