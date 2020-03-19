@@ -3,7 +3,6 @@
 const state = {
     goodsModels: [],
     goodsModel: {},
-    goodsCount: 0
 }
 
 const getters = {
@@ -16,16 +15,12 @@ const mutations = {
 
         state.goodsModel = goodsApi.getGoods(goodsCode);
     },
-    getCardList(state) {
+    getCardList(state, goodsSet) {
         let goodsApi = new GoodsApi();
-        state.goodsModels = goodsApi.getGoodsList();
+
+        state.goodsModels = goodsApi.getGoodsList(goodsSet);
     },
 
-
-
-    getGoodsList(state){
-        state.goodsCount = 3;
-    },
 }
 
 const actions = {

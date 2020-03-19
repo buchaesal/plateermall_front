@@ -16,12 +16,12 @@
                 <div class="goods-main-container">
                     <div class="goods-list-container">
                         <div class="goods-options">
-                            <sui-checkbox class="goods-checkbox" label="택배배송" v-model="value" />
+                            <sui-checkbox @click="cartCheck" class="goods-checkbox" label="택배배송" />
                             <a href="#" class="goods-option" >선택삭제</a>
                             <a href="#" class="goods-option" style="margin-right:10px;">품절삭제</a>
                             <a href="#" class="goods-option" style="margin-right:10px;">위시담기</a>
                         </div>
-                        <div class="goods-list">
+                        <div v-for="cart in getCartList" v-bind:key="cart.cartCode"  class="goods-list">
                             <div style="background-color:#ededed; height:50px;">
                                 <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
                             </div>
@@ -35,17 +35,13 @@
                                         </sui-grid-column>
                                         <sui-grid-column style="width:20%;">
                                             <sui-segment>
-                                                <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize" size="small" class="cart-img" />
+                                                <sui-image :src="cart.imgUrl" size="small" class="cart-img" />
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:40%;">
                                             <sui-segment>
                                                 <p>
-                                                    필립스(아울렛)
-                                                    필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04
-                                                </p>
-                                                <p>
-                                                    모델명:HX9338/04
+                                                    {{cart.title}}
                                                 </p>
                                             </sui-segment>
                                         </sui-grid-column>
@@ -53,62 +49,7 @@
                                             <sui-segment>
                                                 <div class="quantity-box">
                                                     <sui-button class="minus">-</sui-button>
-                                                    <sui-input value="1" style="margin-left:18px;"/>
-                                                    <sui-button class="plus">+</sui-button>
-                                                </div>
-                                            </sui-segment>
-                                            <sui-segment>
-                                                <div>
-                                                    <sui-button @click="changeState" basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
-                                                    <p>{{getCartList}}</p>
-                                                </div>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:15%; padding-bottom: 6%;">
-                                            <sui-segment>
-                                                <div style="text-align:center;"><a href="#">X</a></div>
-                                            </sui-segment>
-                                            <sui-segment>
-                                                <div><span class="goods-price">1,206,000원</span></div>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                    </sui-grid-row>
-                                </sui-grid>
-                            </div>
-                        </div>
-                        <div class="goods-list">
-                            <div style="background-color:#ededed; height:50px;">
-                                <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
-                            </div>
-                            <div>
-                                <sui-grid :columns="5">
-                                    <sui-grid-row stretched class="cart-grid-row">
-                                        <sui-grid-column style="width:10%;">
-                                            <sui-segment style="position:absolute; top:50%;">
-                                                <sui-checkbox class="goods-checkbox" v-model="value" />
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:20%;">
-                                            <sui-segment>
-                                                <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize" size="small" />
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:40%;">
-                                            <sui-segment>
-                                                <p>
-                                                    필립스(아울렛)
-                                                    필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04
-                                                </p>
-                                                <p>
-                                                    모델명:HX9338/04
-                                                </p>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:15%; padding-bottom:5%;">
-                                            <sui-segment>
-                                                <div class="quantity-box">
-                                                    <sui-button class="minus">-</sui-button>
-                                                    <sui-input value="1" style="margin-left:18px;"/>
+                                                    <sui-input :value="cart.cartStock" style="margin-left:18px;"/>
                                                     <sui-button class="plus">+</sui-button>
                                                 </div>
                                             </sui-segment>
@@ -123,61 +64,7 @@
                                                 <div style="text-align:center;"><a href="#">X</a></div>
                                             </sui-segment>
                                             <sui-segment>
-                                                <div><span class="goods-price">1,206,000원</span></div>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                    </sui-grid-row>
-                                </sui-grid>
-                            </div>
-                        </div>
-                        <div class="goods-list">
-                            <div style="background-color:#ededed; height:50px;">
-                                <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
-                            </div>
-                            <div>
-                                <sui-grid :columns="5">
-                                    <sui-grid-row stretched class="cart-grid-row">
-                                        <sui-grid-column style="width:10%;">
-                                            <sui-segment style="position:absolute; top:50%;">
-                                                <sui-checkbox class="goods-checkbox" v-model="value" />
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:20%;">
-                                            <sui-segment>
-                                                <sui-image src="https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize" size="small" />
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:40%;">
-                                            <sui-segment>
-                                                <p>
-                                                    필립스(아울렛)
-                                                    필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04
-                                                </p>
-                                                <p>
-                                                    모델명:HX9338/04
-                                                </p>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:15%; padding-bottom:5%;">
-                                            <sui-segment>
-                                                <div class="quantity-box">
-                                                    <sui-button class="minus">-</sui-button>
-                                                    <sui-input value="1" style="margin-left:18px;"/>
-                                                    <sui-button class="plus">+</sui-button>
-                                                </div>
-                                            </sui-segment>
-                                            <sui-segment>
-                                                <div>
-                                                    <sui-button basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
-                                                </div>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:15%; padding-bottom: 6%;">
-                                            <sui-segment>
-                                                <div style="text-align:center;"><a href="#">X</a></div>
-                                            </sui-segment>
-                                            <sui-segment>
-                                                <div><span class="goods-price">1,206,000원</span></div>
+                                                <div><span class="goods-price">{{cart.originalPrice}}원</span></div>
                                             </sui-segment>
                                         </sui-grid-column>
                                     </sui-grid-row>
@@ -188,7 +75,7 @@
 
                     <div class="goods-price-container">
                         <div>
-                            <h3>상품 0개</h3>
+                            <h3>상품 n개</h3>
                             <sui-divider />
                             <div class="goods-price-info">
                                 <div class="goods-price-info-won">
@@ -255,6 +142,12 @@
                     </div>
                 </div>
             </sui-container>
+            <div>
+                <sui-button @click="addCartList">장바구니 추가</sui-button>
+            </div>
+            <div>
+                <div>{{getCartList}}</div>
+            </div>
         <Footer></Footer>
     </div>
 </template>
@@ -275,12 +168,15 @@
             Footer,
         },
         methods: {
-            changeState(){
-                this.$store.commit('getCartList');
+            addCartList() {
+                this.$store.commit('addCartList');
             },
+            cartCheck() {
+                alert("cartCheck");
+            }
         },
         created() {
-
+            this.$store.commit('getCartList');
         },
         computed: {
             getCartList() {
