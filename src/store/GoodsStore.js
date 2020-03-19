@@ -12,7 +12,7 @@ const mutations = {
     getGoodsList(state){
         state.goodsCount = 3;
     },
-    getCardList(state, param) {
+    getCardList(state) {
         state.goodsModels = [param];
     }
 }
