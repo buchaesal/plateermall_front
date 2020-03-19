@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="my-cancel" v-if="getCancelGoodsInfo.cancelCount==0">
+        <div id="my-return" v-if="getReturnGoodsInfo.returnCount==0">
             <i class="huge exclamation icon"></i>
             <br><br>
             <p>해당되는 주문내역이 없습니다.</p>
@@ -8,31 +8,31 @@
             <p>이전 기간의 내역은 주문배송조회 메뉴에서 확인하세요.</p>
         </div>
 
-        <div class='cancel-list' v-else>
-            <p id="cancel-info">취소된 상품이 <span>{{getCancelGoodsInfo.cancelCount}}개 있습니다.</span></p>
+        <div class='return-list' v-else>
+            <p id="return-info">반품된 상품이 <span>{{getReturnGoodsInfo.returnCount}}개 있습니다.</span></p>
 
-            <div v-for='(cancelItem, index) in getCancelGoodsInfo.cancelItems' :key='index'>
+            <div v-for='(returnItem, index) in getReturnGoodsInfo.returnItems' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>{{cancelItem.info}}</span>
-                    <span class='cancel-date'>취소일: {{cancelItem.cancelDate}}</span>
+                    <span class='item-info'>{{returnItem.info}}</span>
+                    <span class='return-date'>반품일: {{returnItem.cancelDate}}</span>
                 </div>
 
-                <div class='cancel-item'>
-                    <span><img :src='cancelItem.photo' width='130' height='130'></span>
+                <div class='return-item'>
+                    <span><img :src='returnItem.photo' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{cancelItem.brand}}</strong></span>
+                        <span><strong>{{returnItem.brand}}</strong></span>
                         <br>
-                        <span>{{cancelItem.itemName}}</span>
+                        <span>{{returnItem.itemName}}</span>
                         <br><br>
-                        <span>수량: {{cancelItem.quantity}}개</span>
+                        <span>수량: {{returnItem.quantity}}개</span>
                     </div>
 
                     <div class='process'>
-                        <span class='cancel-process'>주문 취소</span>
+                        <span class='return-process'>반품 완료</span>
                     </div>
 
                     <div class='result'>
-                        <span class='cancel-price'>{{cancelItem.price}}</span>
+                        <span class='return-price'>{{returnItem.price}}</span>
                     </div>
                 </div>
                 <br>
@@ -51,11 +51,11 @@
             }
         },
         created(){
-            this.$store.commit('loadCancelGoodsInfo', 'testId');
+            this.$store.commit('loadReturnGoodsInfo', 'testId');
         },
         computed: {
-            getCancelGoodsInfo(){
-                return this.$store.state.cancelExchangeReturnStore.cancelInfo;
+            getReturnGoodsInfo(){
+                return this.$store.state.cancelExchangeReturnStore.returnInfo;
             }
 
         },
@@ -63,16 +63,16 @@
 </script>
 
 <style scoped>
-    #my-cancel{
-        margin-top: 5%;
+    #my-return{
+        margin-top: 10%;
         text-align: center;
     }
 
-    #my-cancel > p{
+    #my-return > p{
         font-size: 10px;
     }
     
-    #cancel-info{
+    #return-info{
         margin-top: 2%;
         padding: 1%;
     }
@@ -88,16 +88,16 @@
     .item-info{
         margin-left: 2%;
     }
-    .cancel-date{
+    .return-date{
         float: right;
         padding-right: 2%;
     }
 
-    .cancel-item{
+    .return-item{
         padding: 2%;
     }
 
-    .cancel-item > img{
+    .return-item > img{
         float: left;
     }
 
@@ -127,7 +127,7 @@
         font-size: 16px;
     }
 
-    .cancel-list{
+    .return-list{
         padding-left: 1%;
         padding-right: 1%;
     }
