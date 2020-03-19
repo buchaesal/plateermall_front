@@ -59,7 +59,8 @@
                                             </sui-segment>
                                             <sui-segment>
                                                 <div>
-                                                    <sui-button basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
+                                                    <sui-button @click="changeState" basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
+                                                    <p>{{getCartListData}}</p>
                                                 </div>
                                             </sui-segment>
                                         </sui-grid-column>
@@ -274,10 +275,17 @@
             Footer,
         },
         methods: {
-
+            changeState(){
+                this.$store.commit('getCartList');
+            },
         },
         created() {
 
+        },
+        computed: {
+            getCartListData() {
+                return this.$store.state.cartListStore.cartListCount;
+            }
         }
     }
 </script>

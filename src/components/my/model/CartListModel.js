@@ -5,11 +5,16 @@ class CartListModel {
 
     imgUrl = ''
     goodsCode = ''
-    seller = ''
+    seller = '' //판매자
     title = ''
-    originalPrice = 0
-    dcRate = 0.0
-    saleCnt = 0
+    originalPrice = 0 // 상품 가격
+    dcRate = 0.0 // 할인금액
+    saleCnt = 0 // 몇개 팔렸는지
+
+    constructor(goodsCode, cartStock) {
+        this.goodsCode = goodsCode;
+        this.cartStock = cartStock;
+    }
 
     constructor(imgUrl, goodsCode, title, originalPrice, cartStock) {
         this.imgUrl = imgUrl;
@@ -19,3 +24,5 @@ class CartListModel {
         this.cartStock = cartStock;
     }
 }
+
+export default CartListModel;

@@ -12,13 +12,15 @@
     <sui-table celled textAlign="center">
     <sui-table-header>
       <sui-table-row>
-        <sui-table-header-cell></sui-table-header-cell>
-        <sui-table-header-cell>배송지 이름</sui-table-header-cell>
+        <sui-table-header-cell :width="2"></sui-table-header-cell>
+        <sui-table-header-cell :width="3">배송지 이름</sui-table-header-cell>
         <sui-table-header-cell>배송지</sui-table-header-cell>
-        <sui-table-header-cell>관리</sui-table-header-cell>
+        <sui-table-header-cell :width="2">관리</sui-table-header-cell>
       </sui-table-row>
+    </sui-table-header>
+    <sui-table-body>
 
-      <sui-table-row>
+      <sui-table-row v-if="shippingSpotSize == 0">
         <sui-table-cell class="no-delivery-spot" colspan="4">
             <br>
             <br>
@@ -27,15 +29,51 @@
             <br>
         </sui-table-cell>
       </sui-table-row>
-    </sui-table-header>
+        <sui-table-row v-else v-for="(shippingSpot, index) in shippingSpots" :key="index" text-align="center">
+            <sui-table-cell><sui-checkbox/></sui-table-cell>
+            <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
+            <sui-table-cell text-align="left">
+                <p class="user-name">{{shippingSpot.userName}}</p>
+                <div class="spot-details">
+                    <p>{{shippingSpot.lineNumber}}/{{shippingSpot.phoneNumber}}</p>
+                    <p>도로명 주소 : {{shippingSpot.roadAddress}}</p>
+                    <p>지번 주소 : {{shippingSpot.zipcodeAddress}}</p>
+                </div>
+            </sui-table-cell>
+            <sui-table-cell>1</sui-table-cell>
+        </sui-table-row>
+    </sui-table-body>
 
     </sui-table>
+    <div>
+        <p class="info-title">배송비 등록/변경 안내</p>
+        <li>
+            <span class="info-content">배송 주소를 변경하실 경우는 쇼핑 전에 변경해 주시기 바랍니다.</span>
+        </li>
+    </div>
+      <p class="content-wrap">
+          <button class="default-shipping-spot">기본 배송지 설정</button>
+      </p>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Sample"
+  name: "Sample",
+    data() {
+      return {
+          shippingSpotSize: -1,
+          shippingSpots: [
+              {
+                  userName: '아무개',
+                  lineNumber: '010-1234-5678',
+                  phoneNumber: '010-1234-5678',
+                  roadAddress: '서울시 송파구 문정동 미안아파트 111-1501',
+                  zipcodeAddress: '서울시 송파구 문정동 미안아파트 111-1501',
+              }, {}
+          ],
+      }
+    }
 };
 </script>
 
@@ -66,4 +104,35 @@ export default {
   font-size: 14px;
   font-weight: bold;
 }
+.info-title {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    /*color: #888;*/
+}
+.info-content{
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #888;
+}
+    .content-wrap{
+        margin: 40px 0 0;
+        text-align: center;
+    }
+    .default-shipping-spot{
+        background: black;
+        min-width: 160px;
+        height: 40px;
+        font-size: 14px;
+        line-height: 40px;
+        border: 1px solid #333;
+        color: white;
+    }
+    .user-name{
+        font-weight: bold;
+    }
+    .spot-type, .spot-details{
+        color: #888;
+    }
 </style>
