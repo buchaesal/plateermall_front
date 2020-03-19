@@ -12,7 +12,7 @@ const getters = {
 const mutations = {
     addCartList() {
         const cartList = {
-            cartCode: "code1",
+            cartCode: "code3",
             userId: "1",
             cartStock: 5,
             imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
