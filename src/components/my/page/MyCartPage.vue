@@ -8,20 +8,20 @@
 
                 <div>
                     <sui-menu :widths="3">
-                        <sui-menu-item>일반배송</sui-menu-item>
+                        <sui-menu-item active>일반배송</sui-menu-item>
                         <sui-menu-item>스마트픽</sui-menu-item>
-                        <sui-menu-item active>해외직구</sui-menu-item>
+                        <sui-menu-item>해외직구</sui-menu-item>
                     </sui-menu>
                 </div>
                 <div class="goods-main-container">
                     <div class="goods-list-container">
                         <div class="goods-options">
-                            <sui-checkbox @click="cartCheck" class="goods-checkbox" label="택배배송" />
+                            <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송"  />
                             <a href="#" class="goods-option" >선택삭제</a>
                             <a href="#" class="goods-option" style="margin-right:10px;">품절삭제</a>
                             <a href="#" class="goods-option" style="margin-right:10px;">위시담기</a>
                         </div>
-                        <div v-for="cart in getCartList" v-bind:key="cart.cartCode"  class="goods-list">
+                        <div v-for="(cart, index) in getCartList" v-bind:key="index"  class="goods-list">
                             <div style="background-color:#ededed; height:50px;">
                                 <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
                             </div>
@@ -30,7 +30,7 @@
                                     <sui-grid-row stretched class="cart-grid-row">
                                         <sui-grid-column style="width:10%;">
                                             <sui-segment style="position:absolute; top:50%;">
-                                                <sui-checkbox class="goods-checkbox" v-model="value" />
+                                                <sui-checkbox class="goods-checkbox" :id="cart.cartCode" :value="cart.cartCode" v-model="checkedIndexList"/>
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:20%;">
@@ -64,7 +64,7 @@
                                                 <div style="text-align:center;"><a href="#">X</a></div>
                                             </sui-segment>
                                             <sui-segment>
-                                                <div><span class="goods-price">{{cart.originalPrice}}원</span></div>
+                                                <div><span class="goods-price">{{priceFormatting(cart.originalPrice)}}원</span></div>
                                             </sui-segment>
                                         </sui-grid-column>
                                     </sui-grid-row>
@@ -75,14 +75,14 @@
 
                     <div class="goods-price-container">
                         <div>
-                            <h3>상품 n개</h3>
+                            <h3>상품 {{totalCartCount()}}개</h3>
                             <sui-divider />
                             <div class="goods-price-info">
                                 <div class="goods-price-info-won">
                                     <span>상품금액</span>
                                 </div>
                                 <div class="goods-price-won">
-                                    <span>0원</span>
+                                    <span>{{totalCartPrice()}}원</span>
                                 </div>
                             </div>
                             <div class="goods-price-info">
@@ -146,7 +146,7 @@
                 <sui-button @click="addCartList">장바구니 추가</sui-button>
             </div>
             <div>
-                <div>{{getCartList}}</div>
+                <div>{{JSON.stringify(checkedIndexList)}}</div>
             </div>
         <Footer></Footer>
     </div>
@@ -160,7 +160,8 @@
         name: "MyCart",
         data() {
             return {
-
+                isChecked:false,
+                checkedIndexList:[],
             }
         },
         components: {
@@ -168,12 +169,29 @@
             Footer,
         },
         methods: {
+            priceFormatting(price) {
+                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
             addCartList() {
                 this.$store.commit('addCartList');
             },
-            cartCheck() {
-                alert("cartCheck");
-            }
+            checkWholeItem() {
+                if(!this.isChecked) {
+                    this.$store.state.cartListStore.cartList.map((cart) => {
+                        this.checkedIndexList.push(cart.cartCode);
+                    })
+                    this.isChecked = true;
+                } else {
+                    this.checkedIndexList = [];
+                    this.isChecked = false;
+                }
+            },
+            totalCartCount() {
+                return this.checkedIndexList.length;
+            },
+            totalCartPrice() {
+
+            },
         },
         created() {
             this.$store.commit('getCartList');
@@ -181,7 +199,7 @@
         computed: {
             getCartList() {
                 return this.$store.state.cartListStore.cartList;
-            }
+            },
         }
     }
 </script>

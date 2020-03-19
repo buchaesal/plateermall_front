@@ -268,27 +268,27 @@ class GoodsApi {
         options: [
             {
                 text: '220',
-                value: 1,
+                value: '220',
             },
             {
                 text: '230',
-                value: 2,
+                value: '230',
             },
             {
                 text: '240',
-                value: 3,
+                value: '240',
             },
             {
                 text: '250',
-                value: 4,
+                value: '250',
             },
             {
                 text: '260',
-                value: 5,
+                value: '260',
             },
             {
                 text: '270',
-                value: 6,
+                value: '270',
             },
         ],
         cardPromotions: [

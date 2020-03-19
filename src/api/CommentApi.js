@@ -1,4 +1,14 @@
-//import request from './axios';
+import request,{COMMENTS_URL} from './axios';
+
+export const requestComments = function(goodsCode){
+    request.get(COMMENTS_URL + `/list/${goodsCode}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
 
 class CommentApi{
     reviewInfo={
