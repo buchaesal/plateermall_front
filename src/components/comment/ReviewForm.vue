@@ -12,12 +12,12 @@
         <div id="selected-item">
             <sui-item-group divided>
                 <sui-item>
-                    <sui-item-image size="tiny" :src='getSelectedUnwrittenReview.myGoods.photo'/>
+                    <sui-item-image size="tiny" :src='getSelectedUnwrittenReview.photo'/>
                     <sui-item-content class='review'>                        
-                    <sui-item-header>{{getSelectedUnwrittenReview.myGoods.brand}}</sui-item-header>
+                    <sui-item-header>{{getSelectedUnwrittenReview.brand}}</sui-item-header>
                         <sui-item-meta>
-                            <p class="goodsName">{{getSelectedUnwrittenReview.myGoods.itemName}}</p>
-                            <p class="goodsOption">{{getSelectedUnwrittenReview.myGoods.option}}</p>
+                            <p class="goodsName">{{getSelectedUnwrittenReview.itemName}}</p>
+                            <p class="goodsOption">{{getSelectedUnwrittenReview.option}}</p>
                         </sui-item-meta>
 
                     </sui-item-content>
@@ -132,7 +132,7 @@
             },
 
             getSelectedUnwrittenReview(){
-                return this.$store.state.commentStore.selectedUnwrittenReview;
+                return this.$store.state.commentStore.selectedUnwrittenReview.myGoods;
             }
         },
         methods: {
