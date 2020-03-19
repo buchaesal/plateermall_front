@@ -1,13 +1,10 @@
 import CommentApi from '../../src/api/CommentApi';
 
 const state = {
-    reviewInfo:{
-        reviews:[],
-        customerCount: 0,
-        averageStarPoint: 0,
-        averageGrade:{},    
-    }
-
+    reviewInfo:{},
+    unwrittenReviewsInfo:{},
+    myReviewsInfo:{},
+    selectedUnwrittenReview:{},
 }
 
 const getters = {
@@ -16,13 +13,30 @@ const getters = {
 
 //state를 바꿀 때
 const mutations = {
-
+    
     loadCommentByGoodsCode(state, goodsCode){
+
         let commentApi = new CommentApi();
-        console.log(goodsCode);
         state.reviewInfo = commentApi.getReviewsInfo(goodsCode);
     },
 
+    loadUnwrittenCommentsByUserId(state, userId){
+
+        let commentApi = new CommentApi();
+        state.unwrittenReviewsInfo = commentApi.getUnwrittenReviewsInfo(userId);
+    },
+
+    loadMyCommentsByUserId(state, userId){
+        
+        let commentApi = new CommentApi();
+        state.myReviewsInfo = commentApi.getMyReviewsInfo(userId);
+    },
+
+    loadSelectedUnwrittenComment(state, reviewCode){
+
+        let commentApi = new CommentApi();
+        state.selectedUnwrittenReview = commentApi.getSeletedUnwrittenReview(reviewCode);
+    }
 }
 
 //비동기 통신

@@ -7,7 +7,7 @@
         </sui-menu>
 
         <div v-if="active=='취소'">
-            <Cancel/>
+            <CancelGoods/>
         </div>
         <div v-if="active=='교환'">
         
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Cancel from './Cancel'
+import CancelGoods from './CancelGoods'
 
     export default {
         name: "Sample",
@@ -39,7 +39,7 @@ import Cancel from './Cancel'
             },
         },
         components:{
-            Cancel,
+            CancelGoods,
         }
     }
 </script>
