@@ -1,11 +1,40 @@
 import request,{COMMENTS_URL} from './axios';
 
-export const requestComments = function(goodsCode){
-    request.get(COMMENTS_URL + `/list/${goodsCode}`).then(
+export const requestComments = function(item){
+    
+    //상품코드에 대한 리뷰리스트 조회
+    request.get(COMMENTS_URL + `/getCommentList/${item}`).then(
         (response) => {
             return response.data
         }
     ).catch(function (error) {
+        console.log(error);
+    });
+
+    //미작성 리뷰리스트 조회
+    request.get(COMMENTS_URL + `/getUnWrittenList/${item}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+
+    //내가 작성한 리뷰리스트 조회
+    request.get(COMMENTS_URL + `/getMyCommentList/${item}`).then(
+        (response) =>{
+            return response.data
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+
+    //선택한 미작성 리뷰 조회
+    request.get(COMMENTS_URL + `/getSelectedComment/${item}`).then(
+        (response) =>{
+            return response.data
+        }
+    ).catch(function(error){
         console.log(error);
     });
 }
