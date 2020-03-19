@@ -159,7 +159,7 @@
                             상품 정보
                         </div>
                         <div class="review-summary-box">
-                            <RatingStarPoint class="review-summary" v-bind="getGoodsData.goodsCode"/>
+                            <RatingStarPoint class="review-summary"/>
                         </div>
                     </div>
 
@@ -346,7 +346,6 @@
                     </sui-tab>
                 </div>
             </div>
-
         </div>
         <Footer></Footer>
         <SideBanner></SideBanner>
@@ -386,7 +385,7 @@
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
             pricing(originalPrice, dcRate) {
-                var price = originalPrice * (100 - dcRate) / 100;
+                let price = originalPrice * (100 - dcRate) / 100;
                 price = this.priceFormatting(price);
                 return price;
             },
@@ -421,12 +420,18 @@
         },
         created() {
             this.$store.commit('getGoodsModel');
+
         },
         computed: {
             getGoodsData(){
-                return this.$store.state.goodsStore.goodsModel;
+                let goodsData = this.$store.state.goodsStore.goodsModel
+
+                this.$store.commit('loadCommentByGoodsCode', goodsData.goodsCode);
+
+                return goodsData;
             },
         },
+
     }
 </script>
 

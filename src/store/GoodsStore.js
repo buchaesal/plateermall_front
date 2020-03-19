@@ -12,11 +12,11 @@ const getters = {
 
 const mutations = {
     getGoodsModel(state) {
-        var goodsApi = new GoodsApi();
+        let goodsApi = new GoodsApi();
         state.goodsModel = goodsApi.getGoods();
     },
     getCardList(state) {
-        var goodsApi = new GoodsApi();
+        let goodsApi = new GoodsApi();
         state.goodsModels = goodsApi.getGoodsList();
     },
 
