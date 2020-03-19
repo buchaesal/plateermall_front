@@ -1,10 +1,13 @@
+import CartListModel from "../components/my/model/CartListModel"
+
 class CartListApi {
     cartList = [];
 
     constructor() {
-        cartList.push(new CartListModel("code1", 1));
-        cartList.push(new CartListModel("code2", 2));
-        cartList.push(new CartListModel("code3", 3));
+        this.cartList.push(new CartListModel("code1", 1));
+        this.cartList.push(new CartListModel("code2", 2));
+
+        this.cartList.push()
     }
     getCartList() {
         return this.cartList;
