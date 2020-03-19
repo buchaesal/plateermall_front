@@ -2,7 +2,7 @@
     <div>
         <div class="photo-review">
             <h3>포토<br>상품평</h3>
-            <div class='review-img' v-for='(review, index) in reviews' :key='index'>
+            <div class='review-img' v-for='(review, index) in getRequestComments.reviews' :key='index'>
                 <img :src='review.photo' width='99' height='99' v-if='review.photo != ""'>
             </div>
         </div>
@@ -25,7 +25,7 @@
         <br>
         <div class='review-list'>
             <sui-item-group divided>
-                <sui-item v-for='(review, index) in reviews' :key='index'>
+                <sui-item v-for='(review, index) in getRequestComments.reviews' :key='index'>
                     <sui-item-content>
                     <sui-item-header><sui-rating id="starAvg" :rating="review.starCount" :max-rating="5" /> {{review.option}}</sui-item-header>
                     <sui-item-meta>
@@ -55,6 +55,11 @@
         data(){
             return{
                 reviews:[],
+            }
+        },
+        computed: {
+            getRequestComments(){
+                return this.$store.state.commentStore.reviewInfo;
             }
         },
     }
