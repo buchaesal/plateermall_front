@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="my-cancel" v-if="getCancelGoodsInfo.cancelCount==0">
+        <div id="my-exchange" v-if="getExchangeGoodsInfo.exchangeCount==0">
             <i class="huge exclamation icon"></i>
             <br><br>
             <p>해당되는 주문내역이 없습니다.</p>
@@ -8,31 +8,31 @@
             <p>이전 기간의 내역은 주문배송조회 메뉴에서 확인하세요.</p>
         </div>
 
-        <div class='cancel-list' v-else>
-            <p id="cancel-info">취소된 상품이 <span>{{getCancelGoodsInfo.cancelCount}}개 있습니다.</span></p>
+        <div class='exchange-list' v-else>
+            <p id="exchange-info">교환된 상품이 <span>{{getExchangeGoodsInfo.exchangeCount}}개 있습니다.</span></p>
 
-            <div v-for='(cancelItem, index) in getCancelGoodsInfo.cancelItems' :key='index'>
+            <div v-for='(exchangeItem, index) in getExchangeGoodsInfo.exchangeItems' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>{{cancelItem.info}}</span>
-                    <span class='cancel-date'>취소일: {{cancelItem.cancelDate}}</span>
+                    <span class='item-info'>{{exchangeItem.info}}</span>
+                    <span class='exchange-date'>교환일: {{exchangeItem.cancelDate}}</span>
                 </div>
 
-                <div class='cancel-item'>
-                    <span><img :src='cancelItem.photo' width='130' height='130'></span>
+                <div class='exchange-item'>
+                    <span><img :src='exchangeItem.photo' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{cancelItem.brand}}</strong></span>
+                        <span><strong>{{exchangeItem.brand}}</strong></span>
                         <br>
-                        <span>{{cancelItem.itemName}}</span>
+                        <span>{{exchangeItem.itemName}}</span>
                         <br><br>
-                        <span>수량: {{cancelItem.quantity}}개</span>
+                        <span>수량: {{exchangeItem.quantity}}개</span>
                     </div>
 
                     <div class='process'>
-                        <span class='cancel-process'>주문 취소</span>
+                        <span class='exchange-process'>교환 완료</span>
                     </div>
 
                     <div class='result'>
-                        <span class='cancel-price'>{{cancelItem.price}}</span>
+                        <span class='exchange-price'>{{exchangeItem.price}}</span>
                     </div>
                 </div>
                 <br>
@@ -51,11 +51,11 @@
             }
         },
         created(){
-            this.$store.commit('loadCancelGoodsInfo', 'testId');
+            this.$store.commit('loadExchangeGoodsInfo', 'testId');
         },
         computed: {
-            getCancelGoodsInfo(){
-                return this.$store.state.cancelExchangeReturnStore.cancelInfo;
+            getExchangeGoodsInfo(){
+                return this.$store.state.cancelExchangeReturnStore.exchangeInfo;
             }
 
         },
@@ -63,16 +63,16 @@
 </script>
 
 <style scoped>
-    #my-cancel{
-        margin-top: 5%;
+    #my-exchange{
+        margin-top: 10%;
         text-align: center;
     }
 
-    #my-cancel > p{
+    #my-exchange > p{
         font-size: 10px;
     }
     
-    #cancel-info{
+    #exchange-info{
         margin-top: 2%;
         padding: 1%;
     }
@@ -88,16 +88,16 @@
     .item-info{
         margin-left: 2%;
     }
-    .cancel-date{
+    .exchange-date{
         float: right;
         padding-right: 2%;
     }
 
-    .cancel-item{
+    .exchange-item{
         padding: 2%;
     }
 
-    .cancel-item > img{
+    .exchange-item > img{
         float: left;
     }
 
@@ -127,7 +127,7 @@
         font-size: 16px;
     }
 
-    .cancel-list{
+    .exchange-list{
         padding-left: 1%;
         padding-right: 1%;
     }

@@ -31,7 +31,7 @@ const mutations = {
     getCartList(state) {
         const cartListApi = new CartListApi();
         state.cartList = cartListApi.getCartList();
-    }
+    },
 }
 
 const actions = {

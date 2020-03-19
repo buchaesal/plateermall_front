@@ -1,5 +1,15 @@
 import CartListModel from "../components/my/model/CartListModel"
-//import request from './axios';
+import request,{CART_URL} from './axios';
+
+export const requestCartList = function(){
+    request.get(CART_URL).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
 
 class CartListApi {
     cartList = [];
@@ -8,7 +18,7 @@ class CartListApi {
         this.cartList.push(new CartListModel({
             cartCode: "code1",
             userId: "1",
-            cartStock: 5,
+            cartStock: 2,
             imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
             goodsCode: "123",
             seller: "판매자1",
@@ -23,7 +33,7 @@ class CartListApi {
         this.cartList.push(new CartListModel({
             cartCode: "code2",
             userId: "1",
-            cartStock: 5,
+            cartStock: 1,
             imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
             goodsCode: "123",
             seller: "판매자1",

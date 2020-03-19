@@ -10,17 +10,19 @@
             <CancelGoods/>
         </div>
         <div v-if="active=='교환'">
-        
+            <ExchangeGoods/>
         </div>
 
-        <div v-else>
-        
+        <div v-if="active=='반품'">
+            <ReturnGoods/>
         </div>
     </div>
 </template>
 
 <script>
 import CancelGoods from './CancelGoods'
+import ExchangeGoods from './ExchangeGoods'
+import ReturnGoods from './ReturnGoods'
 
     export default {
         name: "Sample",
@@ -40,6 +42,8 @@ import CancelGoods from './CancelGoods'
         },
         components:{
             CancelGoods,
+            ExchangeGoods,
+            ReturnGoods
         }
     }
 </script>

@@ -114,4 +114,7 @@
         height: 40px;
         margin: 0 auto;
     }
+    a{
+        color: #666666;
+    }
 </style>
