@@ -14,3 +14,5 @@ class UnWrittenReviewModel{
         this.dueDate = dueDate;
     }
 }
+
+export default UnWrittenReviewModel;

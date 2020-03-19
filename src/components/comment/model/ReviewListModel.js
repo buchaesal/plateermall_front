@@ -16,3 +16,5 @@ class ReviewListModel{
         this.writeDate = writeDate;
     }
 }
+
+export default ReviewListModel;

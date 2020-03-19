@@ -7,3 +7,5 @@ class RatingStarPointModel{
         this.starPoint = starPoint;
     }
 }
+
+export default RatingStarPointModel;
