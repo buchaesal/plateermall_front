@@ -1,16 +1,25 @@
 import ShippingSpotListApi from "../api/ShippingSpotListApi"
 
 const state = {
-    shippingSpotList: []
+    shippingSpotList: [],
+    isOpenShippingSpotForm: false,
 }
 
 const getters = {
-
+    getIsOpenShippingSpotForm(){
+        return state.isOpenShippingSpotForm;
+    }
 }
 
 const mutations = {
     setShippingSpotList(state){
         state.shippingSpotList = new ShippingSpotListApi().shippingSpotList;
+    },
+    openShippingSpotForm(state){
+        state.isOpenShippingSpotForm = true;
+    },
+    closeShippingSpotForm(state){
+        state.isOpenShippingSpotForm = false;
     }
 }
 

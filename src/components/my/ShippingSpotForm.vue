@@ -1,10 +1,59 @@
 <template>
     <div class="input-address">
-        <p>
-            <span class="spot-properties">받으시는 분 </span>
+        <div class="row-wrap">
+            <div class="spot-properties">
+                <p class="spot-properties-contents">받으시는 분</p>
+            </div>
+            <div>
             <input type="text">
-        </p>
-       <span class="spot-properties">배송지명 </span><input type="text">
+            </div>
+        </div>
+        
+       <div class="row-wrap">
+            <div class="spot-properties">
+                <p class="spot-properties-contents">배송지명</p>
+            </div>
+            <div>
+            <input type="text">
+            </div>
+        </div>
+        <div class="row-wrap">
+            <div class="spot-properties">
+                <p class="spot-properties-contents">연락처</p>
+            </div>
+            <div>
+            <input type="text" size="5">
+            <input type="text" size="6" style="margin-left:5px;">
+            <input type="text" size="6" style="margin-left:5px;">
+            </div>
+        </div>
+        <div class="row-wrap">
+            <div class="spot-properties">
+                <p class="spot-properties-contents">휴대폰</p>
+            </div>
+            <div>
+            <input type="text" size="5">
+            <input type="text" size="6" style="margin-left:5px;">
+            <input type="text" size="6" style="margin-left:5px;">
+            </div>
+        </div>
+        <div class="row-wrap">
+            <div class="spot-properties">
+                <p class="spot-properties-contents">도로명 주소</p>
+            </div>
+            <div>
+            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;">
+            <button class="address-search-btn">주소검색</button>
+            </div>
+        </div>
+        <div class="row-wrap">
+            <div class="spot-properties">
+                <p class="spot-properties-contents">지번 주소</p>
+            </div>
+            <div>
+            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;">
+            </div>
+        </div>
     </div>
 </template>
 
@@ -17,14 +66,39 @@
 <style scoped>
 input[type="text"]{
     height: 40px;
-    padding: 4px 12px 5px;
+    padding: 4px 12px 2px;
     border: 1px solid #D9D9D9;
     background-color: #FFF;
     color: #000;
     font-size: 14px;
 }
+.row-wrap{
+    margin-top: 10px;
+    vertical-align: middle;
+}
 .spot-properties{
-    min-width: 78px;
-    margin-right: 5px;
+    height: 40px;
+    vertical-align: middle;
+    padding: 4px 12px 5px;
+    display: inline-block;
+    float: left;
+    min-width: 100px;
+    margin-right: 10px;
+}
+.spot-properties-contents{
+    margin-top: 5px;
+    font-weight: bold;
+}
+.address-search-btn{
+    margin-left: 5px;
+    margin-top: 2px;
+    background: white;
+    min-width: 80px;
+    height: 40px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 40px;
+    border: 1px solid #333;
+    color: black;
 }
 </style>
