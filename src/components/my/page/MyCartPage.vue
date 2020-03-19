@@ -60,8 +60,7 @@
                                             <sui-segment>
                                                 <div>
                                                     <sui-button @click="changeState" basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
-                                                    <p>{{getCartListData}}</p>
-                                                    <p>git test</p>
+                                                    <p>{{getCartList}}</p>
                                                 </div>
                                             </sui-segment>
                                         </sui-grid-column>
@@ -284,8 +283,8 @@
 
         },
         computed: {
-            getCartListData() {
-                return this.$store.state.cartListStore.cartListCount;
+            getCartList() {
+                return this.$store.state.cartListStore.cartList;
             }
         }
     }

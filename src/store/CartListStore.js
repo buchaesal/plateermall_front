@@ -1,8 +1,7 @@
-//import cartListApi from '../api/CartListApi'
+import CartListApi from '../api/CartListApi'
 
 const state = {
     cartList: [],
-    cartListCount: 0,
 }
 
 const getters = {
@@ -11,9 +10,9 @@ const getters = {
 
 const mutations = {
     getCartList(state) {
-        //state.cartList = cartListApi.getCartList();
-        //state.cartListCount = state.cartList.length;
-        state.cartListCount = 3;
+        const cartListApi = new CartListApi();
+
+        state.cartList = cartListApi.getCartList();
     }
 }
 
