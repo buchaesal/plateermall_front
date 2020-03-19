@@ -1,3 +1,5 @@
+import CommentApi from '../../src/api/CommentApi';
+
 const state = {
     reviews:[],
     customerCount: 0,
@@ -10,13 +12,16 @@ const getters = {
 
 }
 
-//state가 바뀔 때
+//state를 바꿀 때
 const mutations = {
     getComments(state){
-       state.reviews = CommentApi.reviews;
-       state.customerCount = CommentApi.customerCount;
-       state.averageStarPoint = CommentApi.averageStarPoint;
-       state.averageGrade = CommentApi.averageGrade;
+
+       const commentsApi = new CommentApi();
+        
+       state.reviews = commentsApi.getReviews;
+       state.customerCount = commentsApi.getCustomerCount;
+       state.averageStarPoint = commentsApi.getAverageStarPoint;
+       state.averageGrade = commentsApi.getAverageGrade;
     },
 }
 
@@ -32,5 +37,3 @@ export default {
     mutations,
     actions
   };
-
-import CommentApi from '../../src/api/CommentApi';
