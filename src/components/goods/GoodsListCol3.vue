@@ -2,7 +2,7 @@
     <div class="min_inner">
         <h3 class="section_title ui">{{section_title}}</h3>
         <div>
-            <sui-card-group :items-per-row="3">
+            <sui-card-group :items-per-row="items_per_row">
                 <sui-card v-for="(goodsData, index) in getCardList" :key="index"
                           @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl" width="100%"/>
@@ -34,12 +34,10 @@
         data() {
             return {
                 section_title: "FLEX-Tem",
+                items_per_row: 3,
             }
         },
         methods: {
-            // changeState() {
-            //     this.$store.commit('getGoodsList');
-            // },
             pricing(originalPrice, dcRate) {
                 var price = originalPrice * (100 - dcRate) / 100;
                 price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -50,13 +48,13 @@
             },
         },
         created() {
-            this.$store.commit('getCardList');
+            this.$store.commit('getCardList', this.items_per_row * 2);
         },
         computed: {
             getCardList() {
                 return this.$store.state.goodsStore.goodsModels;
             }
-        }
+        },
     }
 </script>
 

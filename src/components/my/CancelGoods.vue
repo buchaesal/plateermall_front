@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="my-cancel" v-if="cancelCount==0">
+        <div id="my-cancel" v-if="getCancelGoodsInfo.cancelCount==0">
             <i class="huge exclamation icon"></i>
             <br><br>
             <p>해당되는 주문내역이 없습니다.</p>
@@ -9,9 +9,9 @@
         </div>
 
         <div class='cancel-list' v-else>
-            <p id="cancel-info">취소된 상품이 <span>{{cancelCount}}개 있습니다.</span></p>
+            <p id="cancel-info">취소된 상품이 <span>{{getCancelGoodsInfo.cancelCount}}개 있습니다.</span></p>
 
-            <div v-for='(cancelItem, index) in cancelItems' :key='index'>
+            <div v-for='(cancelItem, index) in getCancelGoodsInfo.cancelItems' :key='index'>
                 <div class='summary'>
                     <span class='cancel-info'>{{cancelItem.info}}</span>
                     <span class='cancel-date'>취소일: {{cancelItem.cancelDate}}</span>
@@ -47,29 +47,18 @@
         name: "Sample",
         data(){
             return{
-                cancelCount:2,
-                cancelItems:[
-                    {
-                        brand: '이지함',
-                        itemName: '이지함 스팟케어 블루원 (스팟 케어)',
-                        quantity: 1,
-                        price: '10,000원',
-                        photo: require('../../assets/review.jpg'),
-                        cancelDate: '2020-03-07 16:44',
-                        info: '03월 17일 2020-03-17-3210155',
-                    },
-                    {
-                        brand: '이지함',
-                        itemName: '이지함 스팟케어 블루원 (스팟 케어)',
-                        quantity: 1,
-                        price: '10,000원',
-                        photo: require('../../assets/review.jpg'),
-                        cancelDate: '2020-03-07 16:44',
-                        info: '03월 17일 2020-03-17-3210155',
-                    },
-                ],
+                
             }
-        }
+        },
+        created(){
+            this.$store.commit('loadCancelGoodsInfo', 'testId');
+        },
+        computed: {
+            getCancelGoodsInfo(){
+                return this.$store.state.cancelExchangeReturnStore.cancelInfo;
+            }
+
+        },
     }
 </script>
 
