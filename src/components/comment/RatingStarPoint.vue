@@ -21,6 +21,7 @@
 <script>
 
     export default {
+        props:["goodsCode"],
         name: "RatingStarPoint",
         data(){
             return{
@@ -28,6 +29,12 @@
                 starPoint: 1,
             }
         },
+        created(){
+            console.log("code: " + this.goodsCode);
+        },
+        computed(){
+            
+        }
     }
 </script>
 

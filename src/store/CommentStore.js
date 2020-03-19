@@ -1,6 +1,7 @@
 import CommentApi from '../../src/api/CommentApi';
 
 const state = {
+    goodsCode: '',
     reviews:[],
     customerCount: 0,
     averageStarPoint: 0,
@@ -14,6 +15,13 @@ const getters = {
 
 //state를 바꿀 때
 const mutations = {
+
+    loadCommentByGoodsCode(state, goodsCode){
+        let commentApi = new CommentApi();
+
+        state.reviews = commentApi.getReviews(goodsCode);
+    },
+
     getComments(state){
 
        const commentsApi = new CommentApi();
