@@ -32,7 +32,9 @@ class CommentApi{
         sizeWorst: 0
    };
 
-   getReviews(){
+   getReviews(goodsCode){
+       console.log(goodsCode);
+
        return this.reviews;
    }
 
