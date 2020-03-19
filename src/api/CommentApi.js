@@ -1,3 +1,5 @@
+//import request from './axios';
+
 class CommentApi{
     reviewInfo={
         reviews : [
@@ -18,7 +20,7 @@ class CommentApi{
                 writeDate: '2020.03.16'
             },
         ],
-    
+
         customerCount : 2,
         averageStarPoint : 4,
         averageGrade : {

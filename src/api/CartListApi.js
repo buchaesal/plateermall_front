@@ -1,4 +1,5 @@
 import CartListModel from "../components/my/model/CartListModel"
+//import request from './axios';
 
 class CartListApi {
     cartList = [];

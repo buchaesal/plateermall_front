@@ -1,3 +1,5 @@
+//import request from './axios';
+
 class GoodsApi {
     goodsModels = [
         {
