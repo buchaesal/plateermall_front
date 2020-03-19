@@ -25,7 +25,7 @@
                 </sui-label>
             </div>
             <div>
-                <p @click="totalRemoveGoods" class="cancel-all">
+                <p @click="clearList" class="cancel-all">
                     <sui-icon name="trash alternate outline" size="small"/>
                     전체 삭제
                 </p>
@@ -38,7 +38,7 @@
                         최근 본 쇼핑정보가 없습니다.
                     </div>
                 </li>
-                <li v-show="getRecentGoodsInfo.recentGoodsLength!=0" v-for="(good, index) in getRecentGoodsInfo.recentGoods" v-bind:key="index" class="shopping-info">
+                <li @click="goToDetail(good.goodsCode)" v-show="getRecentGoodsInfo.recentGoodsLength!=0" v-for="(good, index) in getRecentGoodsInfo.recentGoods" v-bind:key="index" class="shopping-info">
                     <div class="banner-item">
                         <div class="banner-item-img">
                             <img :src=good.imgUrl class="goodsImg">
@@ -95,11 +95,17 @@
                     sideBannerContainer.style.width = '400px';
                 }
             },
-            totalRemoveGoods() {
-                this.goods = [];
-            },
+            // totalRemoveGoods() {
+            //     this.goods = [];
+            // },
             scrollToTop() {
                 window.scrollTo(0, 0);
+            },
+            clearList() {
+                this.$store.commit("clearList")
+            },
+            goToDetail(goodsCode) {
+                this.$router.push('/goodsDetail/' + goodsCode);
             }
         },
         // computed: {

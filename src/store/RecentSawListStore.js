@@ -21,8 +21,11 @@ const mutations ={
         let goodsList = state.goodsList;
         goodsList.push(await new GoodsApi().getGoods(goodsCode));
         state.goodsList = goodsList;
-    }
+    },
 
+    clearList(state) {
+        state.goodsList = [];
+    }
 }
 
 export default {
