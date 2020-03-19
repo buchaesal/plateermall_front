@@ -138,16 +138,34 @@
                                           selection
                                           :options="getGoodsData.options"
                                           v-model="current"
+                                          @select="console.log('hi')"
+                                          @click="addOptions(current)"
                             />
                         </div>
                         <div>
                             옵션 선택 목록
+                            <div>
+                                {{selectedOptions}}
+                            </div>
                         </div>
                         <div>
                             가격
                         </div>
                         <div>
-                            배송 방법 선택
+                            <sui-button-group class="shipping-option">
+                                <sui-button toggle
+                                            content="택배"
+                                            :active="radioButtons[0]"
+                                            @click="shippingRadio(0)"></sui-button>
+                                <sui-button toggle
+                                            content="방문 수령"
+                                            :active="radioButtons[1]"
+                                            @click="shippingRadio(1)"></sui-button>
+                                <sui-button toggle
+                                            content="빠른 배송"
+                                            :active="radioButtons[2]"
+                                            @click="shippingRadio(2)"></sui-button>
+                            </sui-button-group>
                         </div>
                         <div>
                             <sui-button-group class="cart-or-now">
@@ -379,6 +397,8 @@
                 isLike: false,
                 tooltip1Display: false,
                 tooltip2Display: false,
+                radioButtons: [true, false, false],
+                selectedOptions: [],
             }
         },
         methods: {
@@ -396,6 +416,17 @@
                 } else {
                     return true;
                 }
+            },
+            shippingRadio(index) {
+                let changedRadio = [false, false, false];
+                changedRadio[index] = true;
+                this.radioButtons = changedRadio;
+            },
+            addOptions(option) {
+                let addedOption = this.selectedOptions;
+                addedOption.push(option);
+                this.selectedOptions = addedOption;
+                console.log(this.selectedOptions);
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -417,14 +448,14 @@
             },
             offTooltip2() {
                 this.tooltip2Display = false;
-            }
+            },
         },
         created() {
             this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
             this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
         },
         computed: {
-            getGoodsData(){
+            getGoodsData() {
                 let goodsData = this.$store.state.goodsStore.goodsModel
 
                 return goodsData;
@@ -679,9 +710,16 @@
         width: 100%;
     }
 
+    .shipping-option {
+        width: 100%;
+        height: 3rem;
+        margin-bottom: 20px;
+    }
+
     .cart-or-now {
         width: 100%;
         height: 5rem;
+        margin-bottom: 20px;
     }
 
     .promotion-banner {
