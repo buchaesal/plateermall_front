@@ -38,8 +38,6 @@
                     <p class="order-state">배송완료</p>
                 </li>
             </ul>
-
-
         </div>
     </div>
 </template>
@@ -61,22 +59,17 @@
         border-bottom: 1px solid rgba(179, 179, 179, 0.58);
     }
 
+    .order-box-div {
+        /*display: inline;*/
+        text-align: center;
+        height: 120px;
+        padding-left: 8%;
+        background-color: GhostWhite;
+        margin-top: 20px;
+    }
     .total-order-box {
         list-style: none;
-        /*display: table-cell;*/
-        vertical-align: top;
-        background: #fafafa;
-        margin: 0;
         padding: 0;
-    }
-
-    .order-box {
-        float: left;
-        text-align: center;
-        height: 150px;
-        padding-top: 35px;
-        position: relative;
-        width: 20%;
     }
 
     .order-quantity {
@@ -86,9 +79,16 @@
         color: black;
     }
 
+    .order-box {
+        float: left;
+        height: 150px;
+        padding-top: 35px;
+        /*position: relative;*/
+        width: 10%;
+    }
+
     .order-state {
         margin-top: 15px;
     }
-
 
 </style>
