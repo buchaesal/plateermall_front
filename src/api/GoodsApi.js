@@ -1,4 +1,14 @@
-//import request from './axios';
+import request, {GOODS_URL} from './axios';
+
+export const requestGoods = function(goodsCode){
+    request.get(GOODS_URL + `/goods/${goodsCode}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
 
 class GoodsApi {
     goodsModels = [
