@@ -30,12 +30,12 @@
                     </sui-table-row>
                 </sui-table-body>
                 <sui-table-body v-else>
-                    <sui-table-row>
-                        <sui-table-cell>John Lilki</sui-table-cell>
-                        <sui-table-cell>September 14, 2013</sui-table-cell>
-                        <sui-table-cell>jhlilk22@yahoo.com</sui-table-cell>
-                        <sui-table-cell>No</sui-table-cell>
-                        <sui-table-cell>No</sui-table-cell>
+                    <sui-table-row v-for="post in answers" :key="post.id">
+                        <sui-table-cell>{{ post.id }}</sui-table-cell>
+                        <sui-table-cell>{{ post.title }}</sui-table-cell>
+                        <sui-table-cell>{{ post.questionDate }}</sui-table-cell>
+                        <sui-table-cell>{{ post.answerDate }}</sui-table-cell>
+                        <sui-table-cell>{{ post.status }}</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
@@ -45,6 +45,7 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
+    import FaqApi from "../../api/FaqApi";
 
     export default {
         name: "InquiryAnswer",
@@ -55,7 +56,10 @@
             return {
                 answers: []
             }
-        }
+        },
+        created(){
+            this.answers = new FaqApi().getFaqList();
+        },
     }
 </script>
 

@@ -140,14 +140,33 @@
                                           v-model="current"
                             />
                         </div>
-                        <div>
-                            옵션 선택 목록
+                        <div class="option-select-box">
+                            <sui-message v-for="(option, index) in selectedOptions"
+                                         :key="index"
+                                    :header="option"
+                                    content="This is a special notification which you can dismiss."
+                                    dismissable
+                                    @dismiss="handleDismiss(index)"
+                            />
                         </div>
                         <div>
                             가격
                         </div>
                         <div>
-                            배송 방법 선택
+                            <sui-button-group class="shipping-option">
+                                <sui-button toggle
+                                            content="택배"
+                                            :active="radioButtons[0]"
+                                            @click="shippingRadio(0)"></sui-button>
+                                <sui-button toggle
+                                            content="방문 수령"
+                                            :active="radioButtons[1]"
+                                            @click="shippingRadio(1)"></sui-button>
+                                <sui-button toggle
+                                            content="빠른 배송"
+                                            :active="radioButtons[2]"
+                                            @click="shippingRadio(2)"></sui-button>
+                            </sui-button-group>
                         </div>
                         <div>
                             <sui-button-group class="cart-or-now">
@@ -379,6 +398,8 @@
                 isLike: false,
                 tooltip1Display: false,
                 tooltip2Display: false,
+                radioButtons: [true, false, false],
+                selectedOptions: ['220', '230'],
             }
         },
         methods: {
@@ -396,6 +417,19 @@
                 } else {
                     return true;
                 }
+            },
+            shippingRadio(index) {
+                let changedRadio = [false, false, false];
+                changedRadio[index] = true;
+                this.radioButtons = changedRadio;
+            },
+            addOptions(option) {
+                let addOptions = this.selectedOptions;
+                addOptions.push(option);
+                this.selectedOptions = addOptions;
+            },
+            handleDismiss(index) {
+                this.visible[index] = false;
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -417,17 +451,21 @@
             },
             offTooltip2() {
                 this.tooltip2Display = false;
-            }
+            },
         },
         created() {
             this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
             this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
         },
         computed: {
-            getGoodsData(){
+            getGoodsData() {
                 let goodsData = this.$store.state.goodsStore.goodsModel
 
                 return goodsData;
+            },
+            changeOption() {
+                this.addOptions(this.current);
+                return this.current;
             },
         },
 
@@ -671,17 +709,28 @@
 
     .option-select {
         margin-top: 32px;
-        margin-bottom: 32px;
+        margin-bottom: 20px;
         width: 100%;
+    }
+
+    .option-select-box {
+        margin-bottom: 20px;
     }
 
     .option-dropdown {
         width: 100%;
     }
 
+    .shipping-option {
+        width: 100%;
+        height: 3rem;
+        margin-bottom: 20px;
+    }
+
     .cart-or-now {
         width: 100%;
         height: 5rem;
+        margin-bottom: 20px;
     }
 
     .promotion-banner {

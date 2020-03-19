@@ -9,18 +9,17 @@
 
 
         <div class='options'>
-            <sui-dropdown text="옵션전체" button>
-                <sui-dropdown-menu>
-                </sui-dropdown-menu>
-            </sui-dropdown>
+            <sui-dropdown style="margin-right: 3%;" text="옵션보기"
+                selection
+                v-model="current"
+            />
 
-            <sui-dropdown text="전체보기" button>
-                <sui-dropdown-menu>
-                    <sui-dropdown-item>높은평점순</sui-dropdown-item>
-                    <sui-dropdown-item>낮은평점순</sui-dropdown-item>
-                    <sui-dropdown-item>사진상품평</sui-dropdown-item>
-                </sui-dropdown-menu>
-            </sui-dropdown>       
+            <sui-dropdown text="전체보기"
+                selection
+                :options="options"
+                v-model="currentOrderRating"
+            />
+      
         </div>
         <br>
         <div class='review-list'>
@@ -54,7 +53,25 @@
         name: "Sample",
         data(){
             return{
-                
+                currentOrderRating: null,
+                options: [
+                    {
+                        text: '전체보기',
+                        value: 1,
+                    },
+                    {
+                        text: '높은평점순',
+                        value: 2,
+                    },
+                    {
+                        text: '낮은평점순',
+                        value: 3,
+                    },
+                    {
+                        text: '사진상품평',
+                        value: 4,
+                    },
+                ],
             }
         },
         computed: {
