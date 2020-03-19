@@ -2,19 +2,25 @@
 
 const state = {
     goodsModels: [],
-    goodsCount: 0
+    goodsModel: {},
 }
 
 const getters = {
+
 }
 
 const mutations = {
-    getGoodsList(state){
-        state.goodsCount = 3;
+    getGoodsModel(state, goodsCode) {
+        let goodsApi = new GoodsApi();
+
+        state.goodsModel = goodsApi.getGoods(goodsCode);
     },
-    getCardList(state, param) {
-        state.goodsModels = [param];
-    }
+    getCardList(state, goodsSet) {
+        let goodsApi = new GoodsApi();
+
+        state.goodsModels = goodsApi.getGoodsList(goodsSet);
+    },
+
 }
 
 const actions = {
@@ -30,3 +36,5 @@ export default {
     mutations,
     actions
   };
+
+import GoodsApi from "../api/GoodsApi";

@@ -29,6 +29,7 @@
     import InquiryAnswer from "../../faq/InquiryAnswer";
     import Wishlist from '../Wishlist';
     import OrderList from "../OrderList";
+    import CancelSearch from "../CancelSearch";
 
     export default {
         name: "Main",
@@ -45,7 +46,8 @@
             UserInfo,
             InquiryAnswer,
             Wishlist,
-            OrderList
+            OrderList,
+            CancelSearch
         }
     }
 </script>

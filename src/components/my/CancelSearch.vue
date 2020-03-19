@@ -1,13 +1,13 @@
 <template>
     <div>
         <h2>취소/교환/반품 조회</h2>
-    
+        <span class='cancel-info'>최근 1개월 간 진행된 취소/교환/반품 및 3개월 이내 진행중인 교환/반품내역만 조회됩니다.</span>    
         <sui-menu pointing secondary>
         <a class="cancel-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item" @click="select(item)"/>
         </sui-menu>
 
         <div v-if="active=='취소'">
-            <Cancel/>
+            <CancelGoods/>
         </div>
         <div v-if="active=='교환'">
         
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import Cancel from './Cancel'
+import CancelGoods from './CancelGoods'
 
     export default {
         name: "Sample",
@@ -39,15 +39,27 @@ import Cancel from './Cancel'
             },
         },
         components:{
-            Cancel,
+            CancelGoods,
         }
     }
 </script>
 
 <style scoped>
 
+    h2{
+        padding: 1%;
+        display: inline-block;
+    }
+
     .cancel-tab{
         padding-left: 16% !important;
         padding-right: 16% !important;
+    }
+
+    .cancel-info{
+        padding-top: 2%;
+        padding-right: 1%;
+        float: right;
+        color: #666;
     }
 </style>

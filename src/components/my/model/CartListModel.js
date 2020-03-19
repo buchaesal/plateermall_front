@@ -11,17 +11,23 @@ class CartListModel {
     dcRate = 0.0 // 할인금액
     saleCnt = 0 // 몇개 팔렸는지
 
-    constructor(goodsCode, cartStock) {
-        this.goodsCode = goodsCode;
+    /*
+    constructor(cartCode, userId, cartStock, imgUrl, goodsCode, seller, title, originalPrice, dcRate, saleCnt) {
+        this.cartCode = cartCode;
+        this.userId = userId;
         this.cartStock = cartStock;
-    }
-
-    constructor(imgUrl, goodsCode, title, originalPrice, cartStock) {
         this.imgUrl = imgUrl;
         this.goodsCode = goodsCode;
+        this.seller = seller;
         this.title = title;
         this.originalPrice = originalPrice;
-        this.cartStock = cartStock;
+        this.dcRate = dcRate;
+        this.saleCnt = saleCnt;
+    }
+    */
+
+    constructor(cartList) {
+        Object.assign(this, cartList);
     }
 }
 

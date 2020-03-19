@@ -25,3 +25,5 @@ class RatingGraphModel{
         this.sizeWorst = sizeWorst;
     }
 }
+
+export default RatingGraphModel;

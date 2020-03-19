@@ -1,23 +1,42 @@
-const state = {
-    reviews:[],
-    customerCount: 0,
-    averageStarPoint: 0,
-    averageGrade:{},
+import CommentApi from '../../src/api/CommentApi';
 
+const state = {
+    reviewInfo:{},
+    unwrittenReviewsInfo:{},
+    myReviewsInfo:{},
+    selectedUnwrittenReview:{},
 }
 
 const getters = {
 
 }
 
-//state가 바뀔 때
+//state를 바꿀 때
 const mutations = {
-    getComments(state){
-       state.reviews = CommentApi.reviews;
-       state.customerCount = CommentApi.customerCount;
-       state.averageStarPoint = CommentApi.averageStarPoint;
-       state.averageGrade = CommentApi.averageGrade;
+    
+    loadCommentByGoodsCode(state, goodsCode){
+
+        let commentApi = new CommentApi();
+        state.reviewInfo = commentApi.getReviewsInfo(goodsCode);
     },
+
+    loadUnwrittenCommentsByUserId(state, userId){
+
+        let commentApi = new CommentApi();
+        state.unwrittenReviewsInfo = commentApi.getUnwrittenReviewsInfo(userId);
+    },
+
+    loadMyCommentsByUserId(state, userId){
+        
+        let commentApi = new CommentApi();
+        state.myReviewsInfo = commentApi.getMyReviewsInfo(userId);
+    },
+
+    loadSelectedUnwrittenComment(state, reviewCode){
+
+        let commentApi = new CommentApi();
+        state.selectedUnwrittenReview = commentApi.getSeletedUnwrittenReview(reviewCode);
+    }
 }
 
 //비동기 통신
@@ -32,5 +51,3 @@ export default {
     mutations,
     actions
   };
-
-import CommentApi from '../../src/api/CommentApi';
