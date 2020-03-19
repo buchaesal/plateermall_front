@@ -22,9 +22,6 @@ const mutations = {
         state.goodsModels = goodsApi.getGoodsList(goodsSet);
         state.goodsModels = goodsApi.getGoodsList();
     },
-    getGoodsList(state){
-        state.goodsCount = this.$store.getters.setListLength();
-    },
 
 }
 

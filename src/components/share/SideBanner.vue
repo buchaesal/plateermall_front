@@ -8,7 +8,7 @@
                 <div @click="handleToggle" class="recent-shopping">
                     <p class="recent-shopping-title">최근 본 쇼핑</p>
 
-                    <p class="recent-shopping-length">{{len}}</p>
+                    <p class="recent-shopping-length">{{getRecentGoodsInfo.recentGoodsLength}}</p>
                 </div>
                 <div class="go-top" @click="scrollToTop">
                     <a inverted>TOP</a>
@@ -21,7 +21,7 @@
                     최근 본 쇼핑정보
                 </h3>
                 <sui-label v-if="isVisible" class="addon-label">
-                    {{len}}
+                    {{getRecentGoodsInfo.recentGoodsLength}}
                 </sui-label>
             </div>
             <div>
@@ -33,12 +33,12 @@
             <!-- 상품 들어갈 곳 -->
 
             <ul class="zzim-list">
-                <li v-show="len==0">
+                <li v-show="getRecentGoodsInfo.recentGoodsLength===0">
                     <div>
                         최근 본 쇼핑정보가 없습니다.
                     </div>
                 </li>
-                <li v-show="len!=0" v-for="(good, index) in goods" v-bind:key="index" class="shopping-info">
+                <li v-show="getRecentGoodsInfo.recentGoodsLength!=0" v-for="(good, index) in getRecentGoodsInfo.recentGoods" v-bind:key="index" class="shopping-info">
                     <div class="banner-item">
                         <div class="banner-item-img">
                             <img :src=good.imgUrl class="goodsImg">
@@ -102,14 +102,6 @@
                 window.scrollTo(0, 0);
             }
         },
-        // created: function () {
-        //     this.goods.push(new SideBannerGoodsModel(
-        //         "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/72/80/04/04/12/1204048072_1.jpg/chg/resize/72x72/extent/72x72/optimize",
-        //         "비에스코스",
-        //         "[정상가 15,900원] BSKOS 아토렌 손소독젤 500ml ★초특가★",
-        //         "6,720"
-        //     ));
-        // },
         // computed: {
         //     getGoodsCount(){
         //         return this.$store.state.goodsStore.goodsCount;
@@ -122,9 +114,17 @@
         //     // }
         //
         // },
-        mounted() {
-            this.len = this.$store.state.recentSawListStore.goodsList.length;
-            this.goods = this.$store.state.recentSawListStore.goodsList;
+        // mounted() {
+        //     this.len = this.$store.state.recentSawListStore.goodsList.length;
+        //     this.goods = this.$store.state.recentSawListStore.goodsList;
+        // }
+        computed: {
+            getRecentGoodsInfo() {
+                return {
+                    recentGoodsLength:this.$store.state.recentSawListStore.goodsList.length,
+                    recentGoods:this.$store.state.recentSawListStore.goodsList
+                }
+            }
         }
     }
 </script>
