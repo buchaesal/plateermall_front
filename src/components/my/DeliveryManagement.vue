@@ -20,7 +20,7 @@
     </sui-table-header>
     <sui-table-body>
 
-        <sui-table-row>
+        <sui-table-row v-if="createNewShippingSpot">
             <sui-table-cell><sui-checkbox/></sui-table-cell>
             <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
             <sui-table-cell text-align="left">
@@ -41,7 +41,10 @@
 
         <sui-table-row v-else v-for="(shippingSpot, index) in shippingSpots" :key="index" text-align="center">
             <sui-table-cell><sui-checkbox/></sui-table-cell>
-            <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
+            
+            <sui-table-cell class="spot-type" v-if="shippingSpot.isDefaultShippingSpot == 'Y'">기본배송지</sui-table-cell>
+            <sui-table-cell class="spot-type" v-else>{{shippingSpot.spotName}}</sui-table-cell>
+
             <sui-table-cell text-align="left">
                 <p class="user-name">{{shippingSpot.receiverName}}</p>
                 <div class="spot-details">
@@ -74,6 +77,7 @@ export default {
   name: "Sample",
     data() {
       return {
+          createNewShippingSpot: false,
           shippingSpotSize: -1,
           shippingSpots: [],
       }

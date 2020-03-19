@@ -11,11 +11,11 @@ const getters = {
 const mutations = {
     setShippingSpotList(state){
         state.shippingSpotList = new ShippingSpotListApi().shippingSpotList;
-    },
+    }
 }
 
 const actions = {
-
+    
 }
 
 export default {

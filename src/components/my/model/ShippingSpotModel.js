@@ -1,13 +1,15 @@
 class ShippingSpotModel {
     isDefaultShippingSpot = '';
+    spotName= '';
     receiverName = '';
     lineNumber = '';
     phoneNumber = '';
     roadAddress = '';
     zipcodeAddress = '';
 
-    constructor(isDefaultShippingSpot, receiverName, lineNumber, phoneNumber, roadAddress, zipcodeAddress){
+    constructor(isDefaultShippingSpot, spotName, receiverName, lineNumber, phoneNumber, roadAddress, zipcodeAddress){
         this.isDefaultShippingSpot = isDefaultShippingSpot;
+        this.spotName = spotName;
         this.receiverName = receiverName;
         this.lineNumber = lineNumber;
         this.phoneNumber = phoneNumber;
