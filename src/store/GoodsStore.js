@@ -13,33 +13,22 @@ const getters = {
 const mutations = {
     getGoodsModel(state, goodsCode) {
         let goodsApi = new GoodsApi();
-
         state.goodsModel = goodsApi.getGoods(goodsCode);
     },
     getCardList(state) {
         let goodsApi = new GoodsApi();
         state.goodsModels = goodsApi.getGoodsList();
     },
-
-
-
     getGoodsList(state){
-        state.goodsCount = 3;
+        state.goodsCount = this.$store.getters.setListLength();
     },
 }
-
-const actions = {
-
-}
-
-
 
 export default {
     namespace: false,
     state,
     getters,
     mutations,
-    actions
   };
 
 import GoodsApi from "../api/GoodsApi";

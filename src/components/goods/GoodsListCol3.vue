@@ -23,8 +23,6 @@
                 </sui-card>
             </sui-card-group>
         </div>
-
-
     </div>
 </template>
 
