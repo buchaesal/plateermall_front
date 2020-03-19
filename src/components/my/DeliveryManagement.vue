@@ -20,6 +20,15 @@
     </sui-table-header>
     <sui-table-body>
 
+        <sui-table-row>
+            <sui-table-cell><sui-checkbox/></sui-table-cell>
+            <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
+            <sui-table-cell text-align="left">
+                <ShippingSpotForm></ShippingSpotForm>
+            </sui-table-cell>
+            <sui-table-cell><button class="modify-btn">수정</button></sui-table-cell>
+        </sui-table-row>
+
       <sui-table-row v-if="shippingSpotSize == 0">
         <sui-table-cell class="no-delivery-spot" colspan="4">
             <br>
@@ -29,18 +38,19 @@
             <br>
         </sui-table-cell>
       </sui-table-row>
+
         <sui-table-row v-else v-for="(shippingSpot, index) in shippingSpots" :key="index" text-align="center">
             <sui-table-cell><sui-checkbox/></sui-table-cell>
             <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
             <sui-table-cell text-align="left">
-                <p class="user-name">{{shippingSpot.userName}}</p>
+                <p class="user-name">{{shippingSpot.receiverName}}</p>
                 <div class="spot-details">
                     <p>{{shippingSpot.lineNumber}}/{{shippingSpot.phoneNumber}}</p>
                     <p>도로명 주소 : {{shippingSpot.roadAddress}}</p>
                     <p>지번 주소 : {{shippingSpot.zipcodeAddress}}</p>
                 </div>
             </sui-table-cell>
-            <sui-table-cell>1</sui-table-cell>
+            <sui-table-cell><button class="modify-btn">수정</button></sui-table-cell>
         </sui-table-row>
     </sui-table-body>
 
@@ -58,22 +68,28 @@
 </template>
 
 <script>
+import ShippingSpotForm from './ShippingSpotForm';
+
 export default {
   name: "Sample",
     data() {
       return {
           shippingSpotSize: -1,
-          shippingSpots: [
-              {
-                  userName: '아무개',
-                  lineNumber: '010-1234-5678',
-                  phoneNumber: '010-1234-5678',
-                  roadAddress: '서울시 송파구 문정동 미안아파트 111-1501',
-                  zipcodeAddress: '서울시 송파구 문정동 미안아파트 111-1501',
-              }, {}
-          ],
+          shippingSpots: [],
       }
+    },
+    components: {
+        ShippingSpotForm,
+    },
+    computed: {
+       
+    },
+    created: function(){
+        this.$store.commit('setShippingSpotList');
+        this.shippingSpots = this.$store.state.shippingSpotListStore.shippingSpotList;
+        this.shippingSpotSize = this.shippingSpots.length;
     }
+
 };
 </script>
 
@@ -134,5 +150,15 @@ export default {
     }
     .spot-type, .spot-details{
         color: #888;
+        font-weight: bold;
+    }
+    .modify-btn{
+        background: white;
+        min-width: 80px;
+        height: 40px;
+        font-size: 14px;
+        line-height: 40px;
+        border: 1px solid #333;
+        color: black;
     }
 </style>
