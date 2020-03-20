@@ -8,6 +8,9 @@ const state = {
 const getters = {
     getIsOpenShippingSpotForm(){
         return state.isOpenShippingSpotForm;
+    },
+    getShippingSpotList() {
+        return state.shippingSpotList;
     }
 }
 
@@ -20,6 +23,9 @@ const mutations = {
     },
     closeShippingSpotForm(state){
         state.isOpenShippingSpotForm = false;
+    },
+    setNewShippingSpotList(state, list){
+        state.shippingSpotList = list;
     }
 }
 

@@ -17,7 +17,7 @@
     <sui-table-body>
 
         <sui-table-row v-if="getIsOpenShippingSpotForm">
-            <sui-table-cell><sui-checkbox/></sui-table-cell>
+            <sui-table-cell></sui-table-cell>
             <sui-table-cell class="spot-type"></sui-table-cell>
             <sui-table-cell text-align="left">
                 <ShippingSpotForm></ShippingSpotForm>
@@ -40,7 +40,7 @@
 
 
         <sui-table-row v-else>
-            <sui-table-cell><sui-checkbox/></sui-table-cell>
+            <sui-table-cell><sui-checkbox radio value="-1" checked v-model="checkedRadio"/></sui-table-cell>
             <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
             <sui-table-cell text-align="left">
                 <p class="user-name">{{defaultShippingSpot.receiverName}}</p>
@@ -54,7 +54,7 @@
         </sui-table-row>
 
         <sui-table-row v-for="(shippingSpot, index) in otherShippingSpots" :key="index" text-align="center">
-            <sui-table-cell><sui-checkbox/></sui-table-cell>
+            <sui-table-cell><sui-checkbox radio :value="''+index" v-model="checkedRadio"/></sui-table-cell>
 
             <sui-table-cell class="spot-type">{{shippingSpot.spotName}}</sui-table-cell>
 
@@ -79,7 +79,7 @@
         </li>
     </div>
       <p class="content-wrap">
-          <button class="default-shipping-spot">기본 배송지 설정</button>
+          <button class="default-shipping-spot" @click="setDefaultShoppingSpot">기본 배송지 설정</button>
       </p>
   </div>
 </template>
@@ -96,15 +96,14 @@ export default {
           defaultShippingSpot: {},
           otherShippingSpots: [],
           shippingSpotSize: -1,
+
+          checkedRadio: '-1',
       }
     },
     components: {
         ShippingSpotForm,
     },
     methods: {
-    //     addNewShippingSpot(){
-    //        this.createNewShippingSpot = true;
-    //    }
         openShippingSpotForm(){
             this.$store.commit('openShippingSpotForm')
             // console.log(this.$store.state.shippingSpotListStore.isOpenShippingSpotForm) 왜 state는 이렇게 하고 getters는 안되냐
@@ -113,16 +112,30 @@ export default {
         closeShippingSpotForm(){
             this.$store.commit('closeShippingSpotForm');
         },
+        setDefaultShoppingSpot() {
+            console.log(this.defaultShippingSpot);
+            this.defaultShippingSpot.isDefaultShippingSpot = 'N';
+            this.otherShippingSpots[this.checkedRadio].isDefaultShippingSpot = 'Y';
+            
+            let shippingSpotList = this.getShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
+            //보내기
+            // this.$store.state.shippingSpotListStore.shippingSpotList = shippingSpotList;
+            this.$store.commit('setNewShippingSpotList', shippingSpotList);
+        },
+        getShippingSpotList(defaultShippingSpot, otherShippingSpots) {
+            return otherShippingSpots.push(defaultShippingSpot);
+        },
     },
     computed: {
-       // 계산된 리턴값이 필요한 경우.
        getIsOpenShippingSpotForm(){
-           //show로 해보기
            console.log('flag에 직접 접근' + this.$store.state.shippingSpotListStore.isOpenShippingSpotForm);
            console.log('getters를 통해 값에 접근' + this.$store.getters.getIsOpenShippingSpotForm);
         //    console.log(this.$store.getters['shippingSpotListStore/getIsOpenShippingSpotForm']); 
         //   return this.$store.state.shippingSpotListStore.getters.getIsOpenShippingSpotForm;
             return this.$store.getters.getIsOpenShippingSpotForm; //값이 바뀌었을 때 getters를 호출할까? 잘 호출한다!
+       },
+       retrieveShippingSpotList() {
+           return this.$store.getters.getShippingSpotList;
        }
     },
     created: function(){
@@ -137,6 +150,8 @@ export default {
                 this.otherShippingSpots.push(shippingSpot);
             }
         });
+        console.log(this.defaultShippingSpot);
+        console.log(this.otherShippingSpots);
     }
 
 };

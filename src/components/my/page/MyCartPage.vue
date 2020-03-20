@@ -48,8 +48,8 @@
                                         <sui-grid-column style="width:15%; padding-bottom:5%;">
                                             <sui-segment>
                                                 <div class="quantity-box">
-                                                    <sui-button class="minus">-</sui-button>
-                                                    <sui-input :value="cart.cartStock" style="margin-left:18px;"/>
+                                                    <sui-button class="minus" @click="cartStockMinus(cart)">-</sui-button>
+                                                    <sui-input :value="cart.cartStock" v-model="cart.cartStock" style="margin-left:18px;"/>
                                                     <sui-button class="plus">+</sui-button>
                                                 </div>
                                             </sui-segment>
@@ -146,7 +146,20 @@
                 <sui-button @click="addCartList">장바구니 추가</sui-button>
             </div>
             <div>
-                <div>{{JSON.stringify(checkedCartList)}}</div>
+                <div>
+                    <hr/>
+                    state에 cartList 값
+                    <br />
+                    {{getCartList}}
+                    <hr/>
+                </div>
+                <div>
+                    <hr/>
+                    data에 cartList 값
+                    <br />
+                    {{checkedCartList}}
+                    <hr/>
+                </div>
             </div>
         <Footer></Footer>
     </div>
@@ -208,6 +221,16 @@
                 });
                 return this.priceFormatting(totalCartPrice);
             },
+            cartStockMinus(cart) {
+                cart.cartStock -= 1;
+            },
+            /*
+            cartStockChange() {
+                let cartList = this.$store.state.cartListStore.cartList;
+                cartList[index].cartStock -= 1;
+                return cartList[index].cartStock;
+            }
+             */
         },
         created() {
             this.$store.commit('getCartList');
