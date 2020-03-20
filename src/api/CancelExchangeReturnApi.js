@@ -34,7 +34,7 @@ class CancelExchangeReturnApi{
                 quantity: 1,
                 price: '10,000원',
                 photo: require('./../assets/review.jpg'),
-                cancelDate: '2020-03-07 16:44',
+                exchangeDate: '2020-03-07 16:44',
                 info: '03월 17일 2020-03-17-3210155',
             },
             

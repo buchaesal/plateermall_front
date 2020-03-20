@@ -14,7 +14,7 @@
             <div v-for='(returnItem, index) in getReturnGoodsInfo.returnItems' :key='index'>
                 <div class='summary'>
                     <span class='item-info'>{{returnItem.info}}</span>
-                    <span class='return-date'>반품일: {{returnItem.cancelDate}}</span>
+                    <span class='return-date'>반품일: {{returnItem.returnDate}}</span>
                 </div>
 
                 <div class='return-item'>
