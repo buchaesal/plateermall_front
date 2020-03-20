@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="my-cancel" v-if="wishProductCount==0">
+    <div class="my-cancel" v-if="goods.length===0">
       <i class="huge exclamation icon"></i>
       <br />
       <br />
@@ -66,14 +66,14 @@
         computed: {
             wishList: function () {
                 console.log('computed 1');
-                return this.$store.state.wishList.wishList;
+                return this.$store.state.wishListStore.wishList;
             },
             goods: function () {
                 console.log('computed 2')
-                console.log(this.wishList());
+                console.log(this.$store.state.wishListStore.wishList);
                 // let wishList = this.wishList;
                 let arr = [];
-                for(var goodsCode in this.wishList()){
+                for(var goodsCode in this.$store.state.wishListStore.wishList){
                     console.log(goodsCode);
                     this.$store.commit('getGoodsModel', goodsCode);
                     arr.push(this.$store.state.goodsStore.goodsModel);
