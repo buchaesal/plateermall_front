@@ -32,7 +32,7 @@
                 <sui-table-body v-else>
                     <sui-table-row v-for="post in answers" :key="post.id">
                         <sui-table-cell>{{ post.id }}</sui-table-cell>
-                        <sui-table-cell>{{ post.title }}</sui-table-cell>
+                        <sui-table-cell><router-link :to="`/answer/${post.id}`">{{ post.title }}</router-link></sui-table-cell>
                         <sui-table-cell>{{ post.questionDate }}</sui-table-cell>
                         <sui-table-cell>{{ post.answerDate }}</sui-table-cell>
                         <sui-table-cell>{{ post.status }}</sui-table-cell>
