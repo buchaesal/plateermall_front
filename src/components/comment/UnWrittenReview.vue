@@ -57,7 +57,6 @@ import ReviewForm from './ReviewForm.vue'
         data(){
             return{
                 open: false,
-                send: false,
                 selectedReview: {},
                 review:{}
             }
@@ -70,7 +69,6 @@ import ReviewForm from './ReviewForm.vue'
                 this.selectedReview = selectedReview;
             },
             closeReviewModal(){
-                this.send = false;
                 this.open = false;
                 this.$store.commit('toggleModalOpen');
 

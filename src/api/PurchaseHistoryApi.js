@@ -37,10 +37,6 @@ class PurchaseHistoryApi{
         return this.selectedUnWrittenReview;
     }
 
-    getSelectedRecommendCount(){
-
-        return this.selectedReviewRecommendCount;
-    }
 }
 
 export default PurchaseHistoryApi;
