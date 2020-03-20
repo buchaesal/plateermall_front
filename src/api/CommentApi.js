@@ -43,6 +43,7 @@ class CommentApi{
     reviewInfo={
         reviews : [
             {
+                reviewCode: '1',
                 starCount: 5,
                 option: '사이즈선택:235',
                 content: '발 볼이 생각보다 좁아서 아프네요. 사이즈는 5mm정도 작게 나온 것 같아요.',
@@ -51,6 +52,7 @@ class CommentApi{
                 writeDate: '2020.03.16'
             },
             {
+                reviewCode: '2',
                 starCount: 3,
                 option: '사이즈선택:245',
                 content: '음 글쎄 잘 모르겠어요',

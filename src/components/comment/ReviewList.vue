@@ -33,7 +33,7 @@
                         <p>{{review.id}} | {{review.writeDate}}</p>
 
                         <span class='recommend-review'><sui-button size="tiny" floated="right" basic content="신고 하기"/></span>
-                        <span class='report-review'><sui-button size="tiny"  icon="thumbs up outline" floated="right" basic content="추천해요"/></span>
+                        <span class='report-review'><sui-button @click="recommendComment(review.reviewCode)" size="tiny"  icon="thumbs up outline" floated="right" basic content="추천해요"/></span>
                     </sui-item-meta>
                 <sui-item-description>
             </sui-item-description>
@@ -77,8 +77,14 @@
         computed: {
             getRequestComments(){
                 return this.$store.state.commentStore.reviewInfo;
-            }
+            },
+
         },
+        methods:{
+            recommendComment(reviewCode){
+                alert(reviewCode);
+            }
+        }
     }
 </script>
 
