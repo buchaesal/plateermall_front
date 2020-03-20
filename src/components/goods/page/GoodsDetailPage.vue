@@ -195,52 +195,6 @@
                                 <dd>1203973748</dd>
                                 <dt>배송정보</dt>
                                 <dd id="deliveryInfoTxt">03/24(화) 이내 택배 도착예정<br>(도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)</dd>
-                                <dd id="deliveryInfoTxtRapid" style="display: none;">
-                                    09:00~16:30<br>(롯데백화점 본점 휴무, 공휴일 제외)
-                                    <!-- 신속배송툴팁 190709 -->
-                                    <div id="rapidDlvTooltip" class="tooltip">
-                                        <button class="btn_info-black btn_tooltip">
-                                            <span class="a11y_sr-only">신속배송 자세히보기</span>
-                                        </button>
-                                        <div role="tooltip" class="tooltip_conts rapidDelivery">
-                                            <p class="desc_tit">신속배송 안내</p>
-                                            <ul class="info">
-                                                <li>
-                                                    <span class="tit">이용 시간</span>
-                                                    <span>09:00~16:30<br>
-														(롯데백화점 본점 휴무, 공휴일 제외)
-													</span>
-                                                </li>
-                                                <li>
-                                                    <span class="tit">가능 지역</span>
-                                                    <span>서울 전지역</span>
-                                                </li>
-                                                <li>
-                                                    <span class="tit">퀵 배송비</span>
-                                                    <span>
-														10만원 미만 주문 시 10,000원<br>
-														10만원 이상 주문 시 5,000원<br>
-														50만원 이상 주문 시 무료배송<br>
-
-													</span>
-                                                </li>
-                                                <li>
-                                                    <span class="tit">배송 소요시간</span>
-                                                    <span>
-														결제완료 후 4시간 이내<br>
-														연휴기간 혹은 기상악화로 인해<br>
-														배송이 지연될 수 있습니다.
-													</span>
-                                                </li>
-                                                <li>
-                                                    <span class="tit">교환/반품</span>
-                                                    <span>교환/반품은 일반 택배만 가능</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- // 신속배송툴팁 190709 -->
-                                </dd>
                             </dl>
                         </div>
                         <div class="review-summary-box">
@@ -470,13 +424,14 @@
                     {
                         name: '220',
                         qauantity: 1,
-                    },{
+                    }, {
                         name: '230',
                         qauantity: 1,
                     },
                 ],
                 orderSumQuantity: 1,
-                orderSumPrice: 199000,
+                orderSumPrice: 0,
+                optionSelectBoxVisible: [],
             }
         },
         methods: {
@@ -508,9 +463,11 @@
                 let addOptions = this.selectedOptions;
                 addOptions.push(option);
                 this.selectedOptions = addOptions;
+
+
             },
             handleDismiss(index) {
-                this.visible[index] = false;
+                this.optionSelectBoxVisible[index] = false;
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -834,6 +791,7 @@
         height: 3rem;
         margin-bottom: 20px;
     }
+
     .output {
         display: inline-block;
         width: 40%;
@@ -844,6 +802,7 @@
         vertical-align: middle;
         background-color: transparent;
     }
+
     .amount {
         display: inline-block;
         position: relative;
@@ -852,7 +811,7 @@
         vertical-align: middle;
     }
 
-    .amount .ico-plus{
+    .amount .ico-plus {
         float: right;
         position: relative;
         display: inline-block;
@@ -867,6 +826,7 @@
         vertical-align: middle;
         font-size: 0.7rem;
     }
+
     .cart-or-now {
         width: 100%;
         height: 5rem;
