@@ -2,7 +2,7 @@
     <div>
         <div class="photo-review">
             <h3>포토<br>상품평</h3>
-            <div class='review-img' v-for='(review, index) in getRequestComments.reviews' :key='index'>
+            <div class='review-img' v-for='(review, index) in getRequestComments' :key='index'>
                 <img :src='review.photo' width='99' height='99' v-if='review.photo != ""'>
             </div>
         </div>
