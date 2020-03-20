@@ -10,7 +10,7 @@
             <div class="point_box">
                 <div class="item" id="lpointDivItem" style="display: block;">
                     <p class="icon">
-                        <sui-icon size="big" name="home"></sui-icon>
+                        <sui-icon size="big" name="ruble sign"></sui-icon>
                     </p>
                     <a href="#">
                         <p class="name">P.POINT</p>
@@ -22,7 +22,7 @@
 
                 <div class="item">
                     <p class="icon">
-                        <sui-icon size="big" name="home"></sui-icon>
+                        <sui-icon size="big" name="chess queen"></sui-icon>
                     </p>
                     <a href="#">
                         <p class="name">플래티어몰 포인트</p>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="item">
                     <p class="icon">
-                        <sui-icon size="big" name="home"></sui-icon>
+                        <sui-icon size="big" name="money bill alternate outline"></sui-icon>
                     </p>
                     <a href="#">
                         <p class="name">보관금</p>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="item">
                     <p class="icon">
-                        <sui-icon size="big" name="home"></sui-icon>
+                        <sui-icon size="big" name="copyright outline"></sui-icon>
                     </p>
                     <a href="#">
                         <p class="name">쿠폰</p>
