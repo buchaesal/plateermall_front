@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="my-cancel" v-if="wishProductCount==0">
+    <div class="my-cancel" v-if="goods.length===0">
       <i class="huge exclamation icon"></i>
       <br />
       <br />
