@@ -44,7 +44,7 @@
         <div>
             <div v-for="(cart, index) in sampleData" v-bind:key="index"  class="goods-list">
                 <div style="background-color:#ededed; height:50px;">
-                    <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
+                    <p style="text-align:left; line-height:50px; margin-right:10px;">무료배송</p>
                 </div>
                 <div>
                     <sui-grid :columns="5">
