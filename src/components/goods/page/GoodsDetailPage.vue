@@ -492,6 +492,7 @@
         created() {
             this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
             this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
+            this.$store.commit('addSawList');
         },
         computed: {
             getGoodsData() {
