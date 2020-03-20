@@ -65,21 +65,6 @@ header {
     padding-left: 22% !important;
     padding-right: 25% !important;
 }
-.no-order {
-    width: 100%;
-    text-align: center;
-    margin-top: 100px;
-}
 
-.no-order-msg {
-    margin-top: 50px;
-    font-weight: bold;
-    color: gray;
-}
-.recent-goods-title {
-    overflow: hidden !important;
-    text-overflow: ellipsis !important;
-    white-space: nowrap !important;
-}
 
 </style>
