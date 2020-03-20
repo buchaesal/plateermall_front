@@ -4,10 +4,7 @@ import GoodsApi from "../api/GoodsApi";
 const state = {
     goodsModels: [],
     goodsModel: {},
-}
-
-const getters = {
-
+    goodsCount: 0
 }
 
 const mutations = {
@@ -20,6 +17,7 @@ const mutations = {
         let goodsApi = new GoodsApi();
 
         state.goodsModels = goodsApi.getGoodsList(goodsSet);
+        state.goodsModels = goodsApi.getGoodsList();
     },
 
 }
@@ -33,7 +31,6 @@ const actions = {
 export default {
     namespace: false,
     state,
-    getters,
     mutations,
     actions
   };
