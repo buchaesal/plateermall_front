@@ -30,6 +30,8 @@
     import Wishlist from '../Wishlist';
     import OrderList from "../OrderList";
     import CancelSearch from "../CancelSearch";
+    import InquiryAnswerPost from "../../faq/InquiryAnswerPost";
+    import MyPageMain from "./MyPageMain";
 
     export default {
         name: "Main",
@@ -47,7 +49,9 @@
             InquiryAnswer,
             Wishlist,
             OrderList,
-            CancelSearch
+            CancelSearch,
+            InquiryAnswerPost,
+            MyPageMain
         }
     }
 </script>
