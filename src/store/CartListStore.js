@@ -1,5 +1,6 @@
 import CartListApi from '../api/CartListApi'
 import CartListModel from "../components/my/model/CartListModel";
+import WishListApi from "../api/WishListApi";
 
 const state = {
     cartList: [],
@@ -42,6 +43,11 @@ const mutations = {
     checkedDeleteCartList(state, checkedCartList) {
         state.cartList = state.cartList.filter(cart => !checkedCartList.includes(cart));
     },
+
+    containWishList(state, goodsCodeArr) {
+        const wishListApi = new WishListApi();
+        wishListApi.setWishList(goodsCodeArr);
+    }
 }
 
 const actions = {

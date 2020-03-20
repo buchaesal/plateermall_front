@@ -21,7 +21,7 @@
                             </div>
                             <div style="display:inline-block; float:right;">
                                 <a @click="checkedDeleteCartList" href="javascript:void(0)" style="margin-right:10px;">선택삭제</a>
-                                <a href="javascript:void(0)">위시담기</a>
+                                <a href="javascript:void(0)" @click="containWishList">위시담기</a>
                             </div>
                         </div>
                         <div v-for="(cart, index) in getCartList" v-bind:key="index"  class="goods-list">
@@ -109,7 +109,7 @@
                                 </div>
                             </div>
                             <div class="goods-price-info">
-                                <sui-button secondary>구매하기</sui-button>
+                                <sui-button secondary @click="buyCartList">구매하기</sui-button>
                             </div>
                             <div class="goods-price-info">
                                 <h3>카드 청구할인 정보</h3>
@@ -249,6 +249,9 @@
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
                     this.$store.commit('deleteCart', deletedCart);
+                    this.checkedCartList = this.checkedCartList.filter(function(cart) {
+                        return cart !== deletedCart;
+                    });
                 }
             },
 
@@ -256,6 +259,7 @@
                 const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
                 if (result) {
                     this.$store.commit('checkedDeleteCartList', this.checkedCartList);
+                    this.checkedCartList = [];
                 }
             },
 
@@ -269,6 +273,18 @@
                     this.checkedCartList.splice(index, 1);
                 }
             },
+
+            containWishList() {
+                let goodsCodeArr = [];
+                this.checkedCartList.map((cart) => {
+                    goodsCodeArr.push(cart.goodsCode);
+                });
+                this.$store.commit('containWishList', goodsCodeArr);
+            },
+
+            buyCartList() {
+
+            }
         },
         created() {
             this.$store.commit('getCartList');
