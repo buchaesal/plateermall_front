@@ -10,8 +10,8 @@ export const getOrderList = function () {
     });
 }
 
-export const cancelOrder = function (order) {
-    request.put(ORDER_URL, order).then(
+export const cancelOrder = function (id) {
+    request.put(ORDER_URL + `/${id}`).then(
         (response) => {
             return response.data;
         }
