@@ -37,15 +37,13 @@
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:20%;">
-                                            <sui-segment>
-                                                <sui-image :src="cart.imgUrl" size="small" class="cart-img" />
+                                            <sui-segment @click="getGoodsDetail(cart.goodsCode)">
+                                                <sui-image :src="cart.imgUrl"  class="cart-img" />
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:40%;">
                                             <sui-segment>
-                                                <p>
-                                                    {{cart.title}}
-                                                </p>
+                                                <p style="font-family:Georgia, serif;">{{cart.title}}</p>
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:15%; padding-bottom:5%;">
@@ -140,6 +138,7 @@
                     </div>
                 </div>
             </sui-container>
+            <!--
             <div>
                 <sui-button @click="addCartList">장바구니 추가</sui-button>
             </div>
@@ -159,6 +158,7 @@
                     <hr/>
                 </div>
             </div>
+            -->
         <Footer></Footer>
     </div>
 </template>
@@ -171,10 +171,9 @@
         name: "MyCart",
         data() {
             return {
+                isTotalChecked:false,
                 isChecked:false,
-                isChecked2:false,
                 checkedCartList:[],
-                tmpCartStock:0,
             }
         },
         components: {
@@ -191,16 +190,16 @@
             checkWholeItem() {
                 this.checkedCartList = [];
 
-                if(!this.isChecked) {
+                if(!this.isTotalChecked) {
                     this.$store.state.cartListStore.cartList.map((cart, index) => {
                         Object.assign(cart, {
                             "index":index
                         });
                         this.checkedCartList.push(cart);
                     });
-                    this.isChecked = true;
+                    this.isTotalChecked = true;
                 } else {
-                    this.isChecked = false;
+                    this.isTotalChecked = false;
                 }
             },
             totalCartCount() {
@@ -236,15 +235,6 @@
                 cart.cartStock += 1;
             },
 
-            /*
-            deleteCart(index) {
-                const result = confirm("해당 상품을 삭제 하시겠습니까?");
-                if (result) {
-                    this.$store.commit('deleteCart', index);
-                }
-            },
-            */
-
             deleteCart(deletedCart) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
@@ -264,7 +254,7 @@
             },
 
             checkCart(index) {
-                if (!this.isChecked2) {
+                if (!this.isChecked) {
                     let checkCart = this.$store.state.cartListStore.cartList[index];
                     Object.assign(checkCart, {
                         "index":index
@@ -281,7 +271,9 @@
                 });
                 this.$store.commit('containWishList', goodsCodeArr);
             },
-
+            getGoodsDetail(goodsCode) {
+                alert(goodsCode);
+            },
             buyCartList() {
 
             }

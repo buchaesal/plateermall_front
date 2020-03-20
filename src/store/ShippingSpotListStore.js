@@ -15,6 +15,9 @@ const mutations = {
     },
     setNewShippingSpotList(state, list){
         state.shippingSpotList = list;
+    },
+    getShippingSpotListFromApi(state){
+        state.shippingSpotList = new ShippingSpotListApi().getShippingSpotList();
     }
 }
 
