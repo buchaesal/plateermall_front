@@ -41,7 +41,7 @@
 
         <sui-table-row v-else>
             <sui-table-cell><sui-checkbox radio value="defaultShippingSpot" checked v-model="checkedRadio"/></sui-table-cell>
-            <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
+            <sui-table-cell class="spot-type">{{defaultShippingSpot.spotName}}<br> (기본배송지)</sui-table-cell>
 
             <sui-table-cell text-align="left" v-if="openModifyShippingSpotFormFlag">
                 <ShippingSpotForm v-bind:target-shipping-spot="defaultShippingSpot"></ShippingSpotForm>
@@ -142,6 +142,10 @@ export default {
         },
         setDefaultShippingSpotList(){
             this.$store.commit('setDefaultShippingSpotList');
+            this.filterDefaultAndOtherSpots();
+        },
+        getShippingSpotListFromApi(){
+            this.$store.commit('getShippingSpotListFromApi');
             this.filterDefaultAndOtherSpots();
         },
         filterDefaultAndOtherSpots(){
