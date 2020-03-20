@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="order_header">
-         <FaqHeader :title="'주문배송조회'"></FaqHeader>
+            <FaqHeader :title="'주문배송조회'"></FaqHeader>
         </div>
         <div class="order-box-div">
             <ul class="total-order-box">
@@ -42,31 +42,35 @@
         <hr>
 
         <div>
-            <div v-for="(cart, index) in sampleData" v-bind:key="index"  class="goods-list">
+            <div v-for="(cart, index) in sampleData" v-bind:key="index" class="goods-list">
                 <div style="background-color:#ededed; height:50px;">
-                    <p style="text-align:left; line-height:50px; margin-right:10px;">무료배송</p>
+                    <p style="text-align:left; line-height:50px; margin-right:10px;">자세히보기 ></p>
                 </div>
                 <div>
                     <sui-grid :columns="5">
                         <sui-grid-row stretched class="cart-grid-row">
                             <sui-grid-column style="width:10%;">
                                 <sui-segment style="position:absolute; top:50%;">
-                                    <sui-checkbox class="goods-checkbox" :id="cart.cartCode" :value="cart.cartCode" v-model="checkedIndexList"/>
+                                    <sui-checkbox class="goods-checkbox" :id="cart.cartCode" :value="cart.cartCode"
+                                                  v-model="checkedIndexList"/>
                                 </sui-segment>
                             </sui-grid-column>
                             <sui-grid-column style="width:20%;">
                                 <sui-segment>
-                                    <sui-image :src="cart.imgUrl" size="small" class="cart-img" />
+                                    <sui-image :src="cart.imgUrl" size="small" class="cart-img"/>
                                 </sui-segment>
                             </sui-grid-column>
                             <sui-grid-column style="width:40%;">
                                 <sui-segment>
                                     <p>
+                                        {{cart.seller}}
+                                    </p>
+                                    <p>
                                         {{cart.title}}
                                     </p>
                                 </sui-segment>
                             </sui-grid-column>
-                            <sui-grid-column style="width:15%; padding-bottom:5%;">
+                            <sui-grid-column style="width:15%;">
                                 <sui-segment>
                                     <div class="quantity-box">
                                         <sui-button class="minus">-</sui-button>
@@ -76,7 +80,8 @@
                                 </sui-segment>
                                 <sui-segment>
                                     <div>
-                                        <sui-button basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
+                                        <sui-button basic content="변경"
+                                                    style="width:100px; margin-top:15px; margin-left:-15px;"/>
                                     </div>
                                 </sui-segment>
                             </sui-grid-column>
@@ -94,6 +99,33 @@
             </div>
         </div>
 
+        <div class="my-order-list">
+            <div v-for="(cart, index) in sampleData" v-bind:key="index" class="goods-list">
+
+                <div class="my-order-list-title">
+                    <p style="float:left;">날짜넣기</p>
+                    <a href="#" style="float:right;">자세히보기 ></a>
+                </div>
+
+                <div class="my-order-list-goods" style="margin: 20px 0; background-color: white; font-size: 0.8rem;">
+                        <sui-checkbox class="goods-checkbox" style="margin: 0px 30px;"/>
+                    <span class="goods-img" style="vertical-align: middle;"><img :src="cart.imgUrl"
+                                                                                 style="width: 150px; height: auto"></span>
+                    <div style="display: inline-block; vertical-align: middle; margin-left: 40px;">
+                        <p>{{cart.seller}}</p>
+                        <p>{{cart.title}}</p>
+                        <p>수량 가져오기</p>
+                        <p>주문 진행상태 보여주기</p>
+                    </div>
+                    <span class="goods-price" style="margin: 0 50px">{{priceFormatting(cart.originalPrice)}}원</span>
+                    <div style="display: inline-block; margin-left: 10px; text-align: center; vertical-align: middle">
+                        <button style="display: block;">배송지변경</button>
+                        <button>주문취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
     </div>
 </template>
 
@@ -105,25 +137,25 @@
         data() {
             return {
                 checkedIndexList: [],
-                sampleData : [
+                sampleData: [
                     {
-                    cartCode: "code1",
-                    userId: "1",
-                    cartStock: 5,
-                    imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
-                    goodsCode: "123",
-                    seller: "판매자1",
-                    title: "필립스(아울렛)\n" +
-                        "필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04\n" +
-                        "모델명:HX9338/04",
-                    originalPrice: 1206000,
-                    dcRate: 3.5,
-                    saleCnt: 5
-                }
+                        cartCode: "code1",
+                        userId: "1",
+                        cartStock: 5,
+                        imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
+                        goodsCode: "123",
+                        seller: "판매자1",
+                        title: "필립스(아울렛)\n" +
+                            "필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04\n" +
+                            "모델명:HX9338/04",
+                        originalPrice: 1206000,
+                        dcRate: 3.5,
+                        saleCnt: 5
+                    }
                 ],
             }
         },
-        methods:{
+        methods: {
             priceFormatting(price) {
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
@@ -135,7 +167,7 @@
 </script>
 
 <style scoped>
-    .order_header{
+    .order_header {
         border-top: 3px solid #000;
         border-bottom: 1px solid rgba(179, 179, 179, 0.58);
     }
@@ -147,6 +179,22 @@
         background-color: GhostWhite;
         margin: 20px 0;
     }
+
+    .my-order-list-title {
+        height: 50px;
+        padding: 0 30px;
+        background-color: GhostWhite;
+    }
+
+    .my-order-list-title > p {
+        margin-top: 15px;
+    }
+
+    .my-order-list-title > a {
+        margin-top: 15px;
+        color: black;
+    }
+
     .total-order-box {
         list-style: none;
         padding: 0;
@@ -172,89 +220,22 @@
     }
 
 
-
-
-
-
-
-
-
     .goods-checkbox {
-        float:left;
-    }
-    .goods-option {
-        float:right;
-    }
-    .goods-options {
-        height:50px;
-        width:100%;
-        padding-top:30px;
-    }
-    .goods-list-container {
-        float:left;
-        width:70%;
-        margin:100px 0px;
-    }
-    .goods-price-container {
-        float:right;
-        width:25%;
-        margin:100px 0px;
-        border:1px solid #ccc;
-        padding:30px 30px 30px 30px;
-    }
-    .goods-main-container {
-        width:100%;
+        float: left;
     }
 
-    .ui.segment {
-        border: 0px;
-        box-shadow: 0 0 0 0;
-    }
-
-    .ui.input {
-        width:37px;
-    }
-
-    .quantity-box {
-        position:relative;
-    }
-
-    .quantity-box .minus {
-        position:absolute;
-        left:-20px;
-        background:#fff;
-    }
-    .quantity-box .plus {
-        position:absolute;
-        left:47px;
-        background:#fff;
-        padding-left: 10px;
-        margin-left: 12px;
-        padding-right: 15px;
-    }
-    .cart-grid-row {
-        /* border:1px solid #ccc; */
-        border-bottom:1px solid #ccc;
-    }
-    #cart-grid-row .column {
-        box-shadow: none;
-    }
-    .goods-list {
-        margin-bottom:50px;
-    }
-    .goods-price-info {
-        margin-bottom:25px;
-    }
-    .goods-price-info-won {
-        display:inline-block;
-    }
-    .goods-price-won {
-        display:inline-block;
-        float:right;
-    }
-
-    .goods-price {
-        font-size:12px;
+    button {
+        border-radius: 8px;
+        background-color: ghostwhite;
+        border: none;
+        color: black;
+        padding: 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 12px;
+        margin: 4px 2px;
+        cursor: pointer;
     }
 
 </style>
