@@ -137,17 +137,50 @@
                                           placeholder="옵션 선택"
                                           selection
                                           :options="getGoodsData.options"
-                                          v-model="current"
+                                          v-model="option"
                             />
                         </div>
-                        <div>
-                            옵션 선택 목록
+                        <div class="option-select-box">
+                            {{option}}
+                            {{selectedOptions}}
+                            <sui-message v-for="(option, index) in selectedOptions"
+                                         :key="index"
+                                         :header="option.name"
+                                         dismissable
+                                         @dismiss="handleDismiss(index)"
+                            >
+                                <div class="amount">
+                                    <sui-button circular icon='plus' class="ico-plus"/>
+                                    <input transparent class="output" :value="option.qauantity">
+                                    <sui-button circular icon='minus' class="ico-minus"/>
+                                </div>
+                            </sui-message>
+                        </div>
+                        <div class="subtotal" id="priceSumInfo">
+                            <input type="hidden" id="orderSumQty" :value="orderSumQuantity">
+                            <p class="price"><span class="item" id="orderSumQtyTxt">총 {{orderSumQuantity}}개 : </span>
+                                <span id="orderDcSumPrcTxt">{{priceFormatting(orderSumPrice)}}</span> <span
+                                        class="unit">원</span></p>
                         </div>
                         <div>
-                            가격
-                        </div>
-                        <div>
-                            배송 방법 선택
+                            <sui-button-group class="shipping-option">
+                                <sui-button toggle
+                                            content="택배"
+                                            basic="basic"
+                                            :color="radioButtonsColor[0]"
+                                            :active="radioButtons[0]"
+                                            @click="shippingRadio(0)"></sui-button>
+                                <sui-button toggle basic
+                                            content="방문 수령"
+                                            :color="radioButtonsColor[1]"
+                                            :active="radioButtons[1]"
+                                            @click="shippingRadio(1)"></sui-button>
+                                <sui-button toggle basic
+                                            content="빠른 배송"
+                                            :color="radioButtonsColor[2]"
+                                            :active="radioButtons[2]"
+                                            @click="shippingRadio(2)"></sui-button>
+                            </sui-button-group>
                         </div>
                         <div>
                             <sui-button-group class="cart-or-now">
@@ -155,17 +188,22 @@
                                 <sui-button color="blue" content="바로구매"></sui-button>
                             </sui-button-group>
                         </div>
-                        <div>
-                            상품 정보
+                        <div class="summary">
+                            <dl class="detail">
+                                <dt>모델번호</dt>
+                                <dd>921733-100</dd>
+                                <dt>상품번호</dt>
+                                <dd>1203973748</dd>
+                                <dt>배송정보</dt>
+                                <dd id="deliveryInfoTxt">03/24(화) 이내 택배 도착예정<br>(도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)</dd>
+                            </dl>
                         </div>
                         <div class="review-summary-box">
                             <RatingStarPoint class="review-summary"/>
                         </div>
+
                     </div>
-
-
                 </div>
-
             </section>
             <div class="promotion-banner">
                 <div class="banner-text">
@@ -346,7 +384,6 @@
                     </sui-tab>
                 </div>
             </div>
-
         </div>
         <Footer></Footer>
         <SideBanner></SideBanner>
@@ -375,10 +412,25 @@
         },
         data() {
             return {
+                option: null,
+                current: null,
                 shareDisplay: false,
                 isLike: false,
                 tooltip1Display: false,
                 tooltip2Display: false,
+                radioButtons: [true, false, false],
+                radioButtonsColor: ["blue", "grey", "grey"],
+                selectedOptions: [
+                    {
+                        name: '220',
+                        qauantity: 1,
+                    }, {
+                        name: '230',
+                        qauantity: 1,
+                    },
+                ],
+                orderSumQuantity: 1,
+                orderSumPrice: 0,
             }
         },
         methods: {
@@ -386,7 +438,7 @@
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
             pricing(originalPrice, dcRate) {
-                var price = originalPrice * (100 - dcRate) / 100;
+                let price = originalPrice * (100 - dcRate) / 100;
                 price = this.priceFormatting(price);
                 return price;
             },
@@ -396,6 +448,23 @@
                 } else {
                     return true;
                 }
+            },
+            shippingRadio(index) {
+                let changedRadio = [false, false, false];
+                changedRadio[index] = true;
+                this.radioButtons = changedRadio;
+
+                let changedRadioColor = ["grey", "grey", "grey"];
+                changedRadioColor[index] = "blue";
+                this.radioButtonsColor = changedRadioColor;
+            },
+            addOptions(option) {
+                let addOptions = this.selectedOptions;
+                addOptions.push({
+                    name: option,
+                    qauantity: 1,
+                });
+                this.selectedOptions = addOptions;
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -417,20 +486,26 @@
             },
             offTooltip2() {
                 this.tooltip2Display = false;
-            }
+            },
+        },
+        created() {
+            this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
+            this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
+            this.$store.commit('addSawList');
         },
         computed: {
-            getGoodsData(){
-                return this.$store.state.goodsStore.goodsModel;
-            }
+            getGoodsData() {
+                let goodsData = this.$store.state.goodsStore.goodsModel
 
+                return goodsData;
+            },
+            changeOption() {
+                console.log("comput")
+                this.addOptions(this.option);
+                return this.option;
+            },
         },
-        created: {
-            getCommentsData(){
-                return this.$store.state.commentStore.getComments;
-            }
 
-        },
     }
 </script>
 
@@ -468,7 +543,7 @@
     .goods-detail {
         position: static;
         margin-bottom: 80px;
-        min-height: 800px;
+        overflow: hidden;
     }
 
     .gallery {
@@ -539,7 +614,7 @@
     }
 
     .share-list:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: -8px;
@@ -569,6 +644,14 @@
         font-size: 12px;
         display: block;
         margin-top: 4px;
+    }
+
+    .summary {
+        padding: 24px 0;
+        border-top: 1px solid #ededed;
+        border-bottom: 1px solid #ededed;
+        font-size: 12px;
+        line-height: 17px;
     }
 
     .detail {
@@ -622,8 +705,11 @@
         color: #000;
     }
 
+    .tooltip .benefit-list .cards p:first-child {
+        margin-top: 0;
+    }
+
     .tooltip .benefit-list {
-        overflow: auto;
         font-size: 14px;
     }
 
@@ -639,28 +725,24 @@
         color: #000;
     }
 
-    .tooltip .benefit-list .cards {
-        float: left;
-    }
-
     .tooltip .benefit-list .list-square {
         margin-bottom: 32px;
         padding-top: 20px;
-        padding-bottom: 12px;
         border-bottom: 0;
     }
 
     .tooltip .tooltip-conts {
         position: absolute;
-        top: 20px;
+        top: 25px;
         right: -160px;
-        z-index: 100;
+        z-index: 50;
         width: 282px;
         padding: 24px;
         border: 1px solid #b3b3b3;
         background: #fff;
         color: #666;
         text-align: left;
+        display: block;
     }
 
     .oners-txt {
@@ -668,20 +750,85 @@
         color: #773dbd;
     }
 
+    .subtotal {
+        overflow: hidden;
+        margin-bottom: 16px;
+    }
+
+    .subtotal .price {
+        float: right;
+        font-size: 32px;
+        text-align: right;
+    }
+
+    .subtotal .price .item {
+        font-size: 14px;
+    }
+
+    .subtotal .price .unit {
+        font-size: 18px;
+    }
 
     .option-select {
         margin-top: 32px;
-        margin-bottom: 32px;
+        margin-bottom: 20px;
         width: 100%;
+    }
+
+    .option-select-box {
+        margin-bottom: 20px;
+        font-size: 16px;
     }
 
     .option-dropdown {
         width: 100%;
     }
 
+    .shipping-option {
+        width: 100%;
+        height: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .output {
+        display: inline-block;
+        width: 40%;
+        height: 32px;
+        padding: 0 5px;
+        border: 0;
+        text-align: center;
+        vertical-align: middle;
+        background-color: transparent;
+    }
+
+    .amount {
+        display: inline-block;
+        position: relative;
+        width: 100px;
+        margin-top: 7px;
+        vertical-align: middle;
+    }
+
+    .amount .ico-plus {
+        float: right;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0.7rem;
+    }
+
+    .amount .ico-minus {
+        float: left;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0.7rem;
+    }
+
     .cart-or-now {
         width: 100%;
         height: 5rem;
+        margin-bottom: 20px;
     }
 
     .promotion-banner {
@@ -742,7 +889,6 @@
 
     .review-summary-box {
         padding: 24px 0 27px;
-        border-bottom: 1px solid #ededed;
         font-size: 18px;
     }
 </style>

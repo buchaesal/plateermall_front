@@ -2,15 +2,15 @@
     <div class='total-review'>
         <div class='total'>
             <p class='count'>
-                총 <span>{{customerCount}}</span> 개 고객 평점
+                총 <span>{{getRequestComments.customerCount}}</span> 개 고객 평점
             </p>
             
             <div>
                 <div id="grade">
-                    <span class="average-grade"><strong>{{starPoint}}</strong></span>
+                    <span class="average-grade"><strong>{{getRequestComments.averageStarPoint}}</strong></span>
                 </div>
                 <div id="star-average">
-                    <span><sui-rating id="starAvg" :rating="starPoint" :max-rating="5" /></span>
+                    <span><sui-rating id="starAvg" :rating="getRequestComments.averageStarPoint" :max-rating="5" /></span>
                 </div>
             </div>
         </div>
@@ -24,10 +24,16 @@
         name: "RatingStarPoint",
         data(){
             return{
-                customerCount: 10,
-                starPoint: 1,
             }
         },
+        created(){
+
+        },
+        computed: {
+            getRequestComments(){
+                return this.$store.state.commentStore.reviewSummary;
+            }
+        }
     }
 </script>
 
