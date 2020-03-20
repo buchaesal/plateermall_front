@@ -282,9 +282,11 @@
                 this.$store.commit('containWishList', goodsCodeArr);
             },
 
+            /*
             buyCartList() {
 
             }
+             */
         },
         created() {
             this.$store.commit('getCartList');

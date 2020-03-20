@@ -60,10 +60,6 @@ class CartListApi {
     getCartList() {
         return this.cartList;
     }
-
-    containWishList(goodsCodeArr) {
-
-    }
 }
 
 export default CartListApi;
