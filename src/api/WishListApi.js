@@ -9,6 +9,10 @@ class WishListApi {
     getWishList(){
         return this.wishList;
     }
+
+    addGoods(goods){
+        this.wishList = goods;
+    }
 }
 
 export default WishListApi;
