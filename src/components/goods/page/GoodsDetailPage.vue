@@ -137,10 +137,12 @@
                                           placeholder="옵션 선택"
                                           selection
                                           :options="getGoodsData.options"
-                                          v-model="current"
+                                          v-model="option"
                             />
                         </div>
                         <div class="option-select-box">
+                            {{option}}
+                            {{selectedOptions}}
                             <sui-message v-for="(option, index) in selectedOptions"
                                          :key="index"
                                          :header="option.name"
@@ -152,7 +154,6 @@
                                     <input transparent class="output" :value="option.qauantity">
                                     <sui-button circular icon='minus' class="ico-minus"/>
                                 </div>
-
                             </sui-message>
                         </div>
                         <div class="subtotal" id="priceSumInfo">
@@ -411,6 +412,7 @@
         },
         data() {
             return {
+                option: null,
                 current: null,
                 shareDisplay: false,
                 isLike: false,
@@ -429,7 +431,6 @@
                 ],
                 orderSumQuantity: 1,
                 orderSumPrice: 0,
-                optionSelectBoxVisible: [],
             }
         },
         methods: {
@@ -459,13 +460,11 @@
             },
             addOptions(option) {
                 let addOptions = this.selectedOptions;
-                addOptions.push(option);
+                addOptions.push({
+                    name: option,
+                    qauantity: 1,
+                });
                 this.selectedOptions = addOptions;
-
-
-            },
-            handleDismiss(index) {
-                this.optionSelectBoxVisible[index] = false;
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -501,8 +500,9 @@
                 return goodsData;
             },
             changeOption() {
-                this.addOptions(this.current);
-                return this.current;
+                console.log("comput")
+                this.addOptions(this.option);
+                return this.option;
             },
         },
 
@@ -543,7 +543,7 @@
     .goods-detail {
         position: static;
         margin-bottom: 80px;
-        min-height: 1000px;
+        overflow: hidden;
     }
 
     .gallery {
@@ -705,8 +705,11 @@
         color: #000;
     }
 
+    .tooltip .benefit-list .cards p:first-child {
+        margin-top: 0;
+    }
+
     .tooltip .benefit-list {
-        overflow: auto;
         font-size: 14px;
     }
 
@@ -722,28 +725,24 @@
         color: #000;
     }
 
-    .tooltip .benefit-list .cards {
-        float: left;
-    }
-
     .tooltip .benefit-list .list-square {
         margin-bottom: 32px;
         padding-top: 20px;
-        padding-bottom: 12px;
         border-bottom: 0;
     }
 
     .tooltip .tooltip-conts {
         position: absolute;
-        top: 20px;
+        top: 25px;
         right: -160px;
-        z-index: 100;
+        z-index: 50;
         width: 282px;
         padding: 24px;
         border: 1px solid #b3b3b3;
         background: #fff;
         color: #666;
         text-align: left;
+        display: block;
     }
 
     .oners-txt {

@@ -50,18 +50,13 @@
                                                 <div class="quantity-box">
                                                     <sui-button class="minus" @click="cartStockMinus(cart)">-</sui-button>
                                                     <sui-input :value="cart.cartStock" v-model="cart.cartStock" style="margin-left:18px;"/>
-                                                    <sui-button class="plus">+</sui-button>
-                                                </div>
-                                            </sui-segment>
-                                            <sui-segment>
-                                                <div>
-                                                    <sui-button basic content="변경" style="width:100px; margin-top:15px; margin-left:-15px;" />
+                                                    <sui-button class="plus" @click="cartStockPlus(cart)">+</sui-button>
                                                 </div>
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:15%; padding-bottom: 6%;">
                                             <sui-segment>
-                                                <div style="text-align:center;"><a href="#">X</a></div>
+                                                <div @click="deleteCart(cart.cartCode)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
                                             </sui-segment>
                                             <sui-segment>
                                                 <div><span class="goods-price">{{priceFormatting(cart.originalPrice)}}원</span></div>
@@ -175,6 +170,7 @@
             return {
                 isChecked:false,
                 checkedCartList:[],
+                tmpCartStock:0,
             }
         },
         components: {
@@ -222,15 +218,19 @@
                 return this.priceFormatting(totalCartPrice);
             },
             cartStockMinus(cart) {
+                if (cart.cartStock === 1) {
+                    alert('최소 1개 구매 가능합니다.');
+                    return;
+                }
                 cart.cartStock -= 1;
             },
-            /*
-            cartStockChange() {
-                let cartList = this.$store.state.cartListStore.cartList;
-                cartList[index].cartStock -= 1;
-                return cartList[index].cartStock;
-            }
-             */
+            cartStockPlus(cart) {
+                cart.cartStock += 1;
+            },
+
+            deleteCart(cartCode) {
+                alert(cartCode);
+            },
         },
         created() {
             this.$store.commit('getCartList');
