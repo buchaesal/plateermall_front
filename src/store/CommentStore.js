@@ -3,9 +3,12 @@ import CommentApi from '../../src/api/CommentApi';
 const state = {
     reviews:[],
     reviewSummary:{},
-    unwrittenReviewsInfo:{},
     myReviewsInfo:{},
     selectedUnwrittenReview:{},
+    isModalOpen: false,
+    writtenReview:{
+
+    },
 }
 
 const getters = {
@@ -22,22 +25,10 @@ const mutations = {
         state.reviewSummary = commentApi.getReviewSummary(goodsCode);
     },
 
-    loadUnwrittenCommentsByUserId(state, userId){
-
-        let commentApi = new CommentApi();
-        state.unwrittenReviewsInfo = commentApi.getUnwrittenReviewsInfo(userId);
-    },
-
     loadMyCommentsByUserId(state, userId){
         
         let commentApi = new CommentApi();
         state.myReviewsInfo = commentApi.getMyReviewsInfo(userId);
-    },
-
-    loadSelectedUnwrittenComment(state, reviewCode){
-
-        let commentApi = new CommentApi();
-        state.selectedUnwrittenReview = commentApi.getSeletedUnwrittenReview(reviewCode);
     },
 
     increaseRecommendCount(state, index){
@@ -47,7 +38,17 @@ const mutations = {
 
         subComment.recommendCount += 1;
         state.reviewInfo = comment;
-    }
+    },
+
+    toggleModalOpen(state){
+        state.isModalOpen ? state.isModalOpen= false : state.isModalOpen=true;
+    },
+
+    changeCommentValue(state, comment){
+        console.log(comment);
+        state.writtenReview = comment;
+    },
+
 }
 
 //비동기 통신

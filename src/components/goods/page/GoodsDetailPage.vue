@@ -91,17 +91,17 @@
                             </dd>
                             <dt>포인트</dt>
                             <dd class="">
-                        <span class="oners-txt mt-none">롯데 오너스 L.POINT 0.5% 적립
+                        <span class="oners-txt mt-none">플래티어 오너스 L.POINT 0.5% 적립
                         <div class="tooltip tooltip-oners-saving">
                                 <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
                                         @mouseleave="offTooltip2"><i class="info icon"></i>
                                 </button>
                             <div role="tooltip" class="tooltip-conts" v-if="tooltip2Display">
-                            <p class="desc-tit">롯데 오너스 적립 안내</p>
+                            <p class="desc-tit">플래티어 오너스 적립 안내</p>
                                 <div class="saving-info">
                                     <dl>
                                         <dt>대상회원</dt>
-                                        <dd>롯데 오너스 유료회원 가입</dd>
+                                        <dd>플래티어 오너스 유료회원 가입</dd>
                                     </dl>
                                     <dl>
                                         <dt>적립유형</dt>
@@ -151,7 +151,7 @@
                                 <div class="amount">
                                     <sui-button circular icon='plus' class="ico-plus"
                                                 @click="OptionQuantityPlus(index)"/>
-                                    <input transparent class="output" :value="option.quantity">
+                                    <input type="number" transparent class="output" :value="option.quantity" disabled>
                                     <sui-button circular icon='minus' class="ico-minus"
                                                 @click="OptionQuantityMinus(index)"/>
                                     <span>{{priceFormatting(selectedOptions[index].price)}}</span>
@@ -225,14 +225,14 @@
                             </sui-accordion-title>
                             <sui-accordion-content active class="accordion-content">
                                 <p>
-                                    MD공지
+                                    {{getGoodsData.notice}}
                                 </p>
                             </sui-accordion-content>
                         </sui-accordion>
                     </div>
                     <h4 class="subheading">상품 상세 설명</h4>
                     <div class="goods-more-detail">
-                        상품상세
+                        {{getGoodsData.goodsDetail}}
                     </div>
                     <div>
                         <sui-accordion exclusive>
@@ -253,7 +253,7 @@
                 </section>
                 <div class="brand-banner">
                     <div class="banner-text">
-                        <a href="#">브랜드 배너</a>
+                        <a href="#">{{getGoodsData.seller}}</a>
                     </div>
                 </div>
                 <div class="detail-tab">
@@ -261,21 +261,13 @@
                         <sui-tab-pane title="구매정보">
                             <table class="ui definition table">
                                 <tbody>
-                                <tr>
-                                    <td class="two wide column">Size</td>
-                                    <td>1" x 2"</td>
+                                <tr class="hidden-tr">
+                                    <td class="two wide column"></td>
                                 </tr>
-                                <tr>
-                                    <td>Weight</td>
-                                    <td>6 ounces</td>
-                                </tr>
-                                <tr>
-                                    <td>Color</td>
-                                    <td>Yellowish</td>
-                                </tr>
-                                <tr>
-                                    <td>Odor</td>
-                                    <td>Not Much Usually</td>
+                                <tr v-for="(row, index) in getGoodsData.infoTable"
+                                    :key="index">
+                                    <td>{{row.head}}</td>
+                                    <td>{{row.body}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -293,14 +285,14 @@
                                 <tbody>
                                 <tr>
                                     <td class="two wide column">배송비</td>
-                                    <td>2,500원 (30,000원이상 무료배송)<br>
+                                    <td>{{priceFormatting(getGoodsData.shippingFee)}}원 (30,000원이상 무료배송)<br>
                                         제주/도서산간 지역의 경우, 추가비용 발생 가능
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>배송정보</td>
                                     <td>택배
-                                        03/20(금) 이내 택배 도착예정<br>
+                                        {{calculateDays(getGoodsData.shippingDays)}} 이내 택배 도착예정<br>
                                         (도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
                                     </td>
                                 </tr>
@@ -315,10 +307,10 @@
                                 교환/반품 접수안내
                             </h3>
                             <div>교환/반품 접수 방법 안내
-                                1. 마이롯데 >주문/배송조회로 이동
+                                1. 마이플래티어 > 주문/배송조회로 이동
                                 2. 주문건에서 '교환/반품접수' 버튼 선택
                                 주문배송조회 바로가기
-                                MY LOTTE에서 접수가 어려우신 경우, 엘롯데 고객만족센터 1899-2500 으로 문의하여 주시기 바랍니다.
+                                MY PLATEER에서 접수가 어려우신 경우, 고객만족센터 02-554-4668 으로 문의하여 주시기 바랍니다.
                             </div>
 
                             <h3 is="sui-header" dividing>
@@ -331,10 +323,12 @@
                                     <td>
                                         <div>
                                             <sui-list bulleted>
-                                                <sui-list-item>예상 반품비 : 5,000원, 예상 교환비 : 7,500원 (주문 상품을 1개씩 각각 반품/교환 시
+                                                <sui-list-item>예상 반품비 : {{priceFormatting(getGoodsData.shippingFee)}}원,
+                                                    예상 교환비 : {{priceFormatting(getGoodsData.shippingFee * 2)}}원 (주문 상품을
+                                                    1개씩 각각 반품/교환 시
                                                     상품 별로 발생하는 비용임)
                                                 </sui-list-item>
-                                                <sui-list-item>정확한 반품/교환비는 MY Lotte에서 반품/교환 접수 시 또는 고객센터로 문의 시 확인
+                                                <sui-list-item>정확한 반품/교환비는 MY PLATEER에서 반품/교환 접수 시 또는 고객센터로 문의 시 확인
                                                     가능합니다.
                                                 </sui-list-item>
                                                 <sui-list-item>고객님의 단순변심으로 인하여 교환/반품을 하시는 경우에는 상품등의 반환에 필요한 비용을 고객님이
@@ -360,13 +354,13 @@
                                             <sui-list-item>상품의 상세정보 등이 표기/광고한 내용과 다르거나, 계약내용이 다르게 이행되어 교환/반품을 하는 경우 상품을
                                                 받으신 날부터 3개월 이내 혹은 사실을 알게 된 날 또는 알 수 있었던 날부터 30일 이내 신청 가능합니다.
                                             </sui-list-item>
-                                            <sui-list-item>롯데쇼핑 상품 교환·반품 안내</sui-list-item>
+                                            <sui-list-item>상품 교환·반품 안내</sui-list-item>
                                             <sui-list-item>식품 7일 이내, 의류·보석 15일 이내, 그 밖의 일반 상품 30일 이내 교환 반품 가능합니다.
                                             </sui-list-item>
                                             <sui-list-item>주문제작 상품 등 일부 상품은 교환·반품 기준이 상이할 수 있습니다.</sui-list-item>
                                             <sui-list-item>전자상거래법에 따른 교환·반품 규정이 상품공급업체가 개별적으로 지정한 교환·반품 조건 보다 우선 합니다.
                                             </sui-list-item>
-                                            <sui-list-item>스마트픽 픽업 배송상품은 해당 스마트픽 픽업 지점에 상품도착일로부터 5일까지 픽업 가능합니다. 픽업가능일 경과
+                                            <sui-list-item>방문 수령 픽업 배송상품은 해당 픽업 지점에 상품도착일로부터 5일까지 픽업 가능합니다. 픽업가능일 경과
                                                 시 자동으로 반품되며 반품배송비 차감 후 환불됩니다.
                                             </sui-list-item>
                                         </sui-list>
@@ -799,7 +793,7 @@
     .tooltip .tooltip-conts {
         position: absolute;
         top: 25px;
-        right: -160px;
+        right: -100px;
         z-index: 50;
         width: 282px;
         padding: 24px;
@@ -955,5 +949,15 @@
     .review-summary-box {
         padding: 24px 0 27px;
         font-size: 18px;
+    }
+
+    .hidden-tr {
+        visibility: hidden !important;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 </style>
