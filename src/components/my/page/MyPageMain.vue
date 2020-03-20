@@ -52,5 +52,9 @@
 </script>
 
 <style scoped>
-
+    .recent-goods-title {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        white-space: nowrap !important;
+    }
 </style>
