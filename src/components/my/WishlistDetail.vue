@@ -12,7 +12,7 @@
     <div v-else>
         <div>
             <sui-card-group :items-per-row="4">
-                <sui-card v-for="(goodsData, index) in wishList" :key="index" @click="goToGoodsDetail">
+                <sui-card v-for="(goodsData, index) in goods" :key="index" @click="goToGoodsDetail">
                     <sui-image :src=" goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
@@ -36,7 +36,7 @@
         data() {
             return {
                 wishProductCount: 1,
-                // goods: [
+                // goodss: [
                 //     {
                 //     imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/00/77/91/03/12/1203917700_1.jpg/chg/resize/308x308/extent/308x308/optimize",
                 //     goodsCode: "1203917700",
@@ -59,11 +59,31 @@
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/'+goodsCode);
             },
+            setWishList() {
+                this.$store.commit('getWishListFromApi');
+            }
         },
         computed: {
             wishList: function () {
-                return this.$store.state.WishList.wishList;
+                console.log('computed 1');
+                return this.$store.state.wishList.wishList;
+            },
+            goods: function () {
+                console.log('computed 2')
+                console.log(this.wishList());
+                // let wishList = this.wishList;
+                let arr = [];
+                for(var goodsCode in this.wishList()){
+                    console.log(goodsCode);
+                    this.$store.commit('getGoodsModel', goodsCode);
+                    arr.push(this.$store.state.goodsStore.goodsModel);
+                }
+                console.log(arr);
+                return arr;
             }
+        },
+        created: function () {
+            this.setWishList();
         }
     }
 </script>

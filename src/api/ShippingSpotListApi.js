@@ -1,5 +1,17 @@
 import ShippingSpotModel from "../components/my/model/ShippingSpotModel";
+import request,{COMMENTS_URL} from './axios';
 
+export const requestShippingSpot = function () {
+
+    request.get(COMMENTS_URL + `/getshippingspotlist`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+
+}
 class ShippingSpotListApi {
     shippingSpotList = [];
 
@@ -10,6 +22,10 @@ class ShippingSpotListApi {
         '서울시 송파구 장지로 32-14', '서울시 송파구 장지동 어떤 빌라'));
         this.shippingSpotList.push(new ShippingSpotModel('N', '남의 회사','무개아', '010-2535-4578', '010-2535-4578', 
         '서울시 송파구 장지로 32-14', '서울시 송파구 장지동 어떤 빌라'));
+    }
+
+    getShippingSpotList() {
+        return this.shippingSpotList;
     }
 }
 

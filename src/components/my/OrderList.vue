@@ -28,7 +28,7 @@
                         </div>
                         <span class="my-order-list-price">{{priceFormatting(cart.originalPrice)}}원</span>
                         <div class="my-order-list-button">
-                            <button class="btn1">배송지변경</button>
+                            <button class="btn1" @click="changeDeliveryAddress">배송지변경</button>
                             <button>주문취소</button>
                         </div>
                     </div>
@@ -86,6 +86,9 @@
             priceFormatting(price) {
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
+            changeDeliveryAddress(){
+                this.$router.push('/deliveryanduserinfomanagement');
+            }
         },
         components: {
             FaqHeader,
