@@ -32,6 +32,16 @@ const mutations = {
         const cartListApi = new CartListApi();
         state.cartList = cartListApi.getCartList();
     },
+
+    deleteCart(state, deletedCart) {
+        state.cartList = state.cartList.filter(function(cart) {
+            return cart !== deletedCart;
+        });
+    },
+
+    checkedDeleteCartList(state, checkedCartList) {
+        state.cartList = state.cartList.filter(cart => !checkedCartList.includes(cart));
+    },
 }
 
 const actions = {
