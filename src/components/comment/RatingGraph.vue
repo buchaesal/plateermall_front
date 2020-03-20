@@ -41,7 +41,7 @@
         },
         computed: {
             getRequestComments(){
-                return this.$store.state.commentStore.reviewInfo;
+                return this.$store.state.commentStore.reviewSummary;
             }
         },
     }

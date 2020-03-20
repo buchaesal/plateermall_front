@@ -14,7 +14,7 @@
             <div v-for='(exchangeItem, index) in getExchangeGoodsInfo.exchangeItems' :key='index'>
                 <div class='summary'>
                     <span class='item-info'>{{exchangeItem.info}}</span>
-                    <span class='exchange-date'>교환일: {{exchangeItem.cancelDate}}</span>
+                    <span class='exchange-date'>교환일: {{exchangeItem.exchangeDate}}</span>
                 </div>
 
                 <div class='exchange-item'>
