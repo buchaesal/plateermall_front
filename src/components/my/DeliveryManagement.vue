@@ -20,7 +20,7 @@
             <sui-table-cell></sui-table-cell>
             <sui-table-cell class="spot-type"></sui-table-cell>
             <sui-table-cell text-align="left">
-                <ShippingSpotForm></ShippingSpotForm>
+                <ShippingSpotForm v-bind:target-shipping-spot="emptyShippingSpotMode"></ShippingSpotForm>
             </sui-table-cell>
             <sui-table-cell>
                 <p><button class="cancel-btn" @click="closeShippingSpotForm">취소</button></p>
@@ -56,7 +56,7 @@
             </sui-table-cell>
             
             <sui-table-cell v-if="openModifyShippingSpotFormFlag">
-                <p><button class="cancel-btn" @click="closeModifyDefultSpotForm">취소</button></p>
+                <p><button class="cancel-btn" @click="closeModifyDefaultSpotForm">취소</button></p>
                 <p><button class="save-btn">저장</button></p>
             </sui-table-cell>
             <sui-table-cell v-else><button class="modify-btn" @click="openModifyDefaultSpotForm">수정</button></sui-table-cell>
@@ -95,13 +95,15 @@
 
 <script>
 import ShippingSpotForm from './ShippingSpotForm';
+import ShippingSpotModel from "./model/ShippingSpotModel";
 
 export default {
-  name: "Sample",
+  name: "DeliveryManagement",
     data() {
       return {
+          emptyShippingSpotMode: new ShippingSpotModel(),
+
           createNewShippingSpot: false,
-          shippingSpots: [],
           defaultShippingSpot: {},
           otherShippingSpots: [],
           shippingSpotSize: -1,
@@ -118,41 +120,31 @@ export default {
     methods: {
         openShippingSpotForm(){
             this.openShippingSpotFormFlag = true;
-            // this.$store.commit('openShippingSpotForm')
-            // console.log(this.$store.state.shippingSpotListStore.isOpenShippingSpotForm) 왜 state는 이렇게 하고 getters는 안되냐
-            console.log(this.$store.state.shippingSpotListStore.isOpenShippingSpotForm)
         },
         closeShippingSpotForm(){
             this.openShippingSpotFormFlag = false;
-            // this.$store.commit('closeShippingSpotForm');
         },
         setDefaultShoppingSpot() {
-            //
-            console.log(this.defaultShippingSpot);
             if(this.checkedRadio == "defaultShippingSpot"){
                 alert("기본 배송지입니다.")
                 return;
             }
             this.defaultShippingSpot.isDefaultShippingSpot = 'N';
             this.otherShippingSpots[this.checkedRadio].isDefaultShippingSpot = 'Y';
-            let shippingSpotList = this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
-            // this.$store.state.shippingSpotListStore.shippingSpotList = shippingSpotList;
-            this.$store.commit('setNewShippingSpotList', shippingSpotList);
-            this.filterDefaultAndOtherSpots();
+            this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
             alert('기본 배송지로 설정하였습니다.')
             this.checkedRadio = 'defaultShippingSpot';
         },
         updateShippingSpotList(defaultShippingSpot, otherShippingSpots) {
             otherShippingSpots.push(defaultShippingSpot);
-            return otherShippingSpots;
+            this.$store.commit('setNewShippingSpotList', otherShippingSpots);
+            this.filterDefaultAndOtherSpots();
         },
-        setShippingSpotList(){
-            this.$store.commit('setShippingSpotList');
+        setDefaultShippingSpotList(){
+            this.$store.commit('setDefaultShippingSpotList');
             this.filterDefaultAndOtherSpots();
         },
         filterDefaultAndOtherSpots(){
-            //
-            this.shippingSpots = this.$store.state.shippingSpotListStore.shippingSpotList;
             this.shippingSpotSize = this.shippingSpots.length;
             this.otherShippingSpots = [];
             this.shippingSpots.filter((shippingSpot) => {
@@ -166,33 +158,23 @@ export default {
         openModifyDefaultSpotForm(){
             this.openModifyShippingSpotFormFlag = true;
         },
-        closeModifyDefultSpotForm(){
+        closeModifyDefaultSpotForm(){
             this.openModifyShippingSpotFormFlag = false;
         },
         deleteShippingSpot(index){
-            // alert(index);
             this.otherShippingSpots.splice(index, 1);
-            // 값이 변경되면 바로 업데이트하는지 확인해보기
-
+            this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
+            alert('배송지가 삭제되었습니다.');
         },
+
     },
     computed: {
-    //    getIsOpenShippingSpotForm(){
-    //        console.log('flag에 직접 접근' + this.$store.state.shippingSpotListStore.isOpenShippingSpotForm);
-    //        console.log('getters를 통해 값에 접근' + this.$store.getters.getIsOpenShippingSpotForm);
-    //     //    console.log(this.$store.getters['shippingSpotListStore/getIsOpenShippingSpotForm']); 
-    //     //   return this.$store.state.shippingSpotListStore.getters.getIsOpenShippingSpotForm;
-    //         return this.$store.getters.getIsOpenShippingSpotForm; //값이 바뀌었을 때 getters를 호출할까? 잘 호출한다!
-    //    },
-    //    retrieveShippingSpotList() {
-    //        return this.$store.getters.getShippingSpotList;
-    //    }
-
+      shippingSpots: function () {
+          return this.$store.state.shippingSpotListStore.shippingSpotList;
+      }
     },
     created: function(){
-        this.setShippingSpotList();
-        console.log(this.defaultShippingSpot);
-        console.log(this.otherShippingSpots);
+        this.setDefaultShippingSpotList();
     }
 
 };

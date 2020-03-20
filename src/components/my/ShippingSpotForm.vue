@@ -23,8 +23,6 @@
             </div>
             <div>
             <input type="text" v-model="targetShippingSpot.lineNumber">
-            <!-- <input type="text" size="6" style="margin-left:5px;">
-            <input type="text" size="6" style="margin-left:5px;"> -->
             </div>
         </div>
         <div class="row-wrap">
@@ -33,8 +31,6 @@
             </div>
             <div>
             <input type="text" v-model="targetShippingSpot.phoneNumber">
-            <!-- <input type="text" size="6" style="margin-left:5px;">
-            <input type="text" size="6" style="margin-left:5px;"> -->
             </div>
         </div>
         <div class="row-wrap">
@@ -65,14 +61,7 @@
         ],
         data() {
             return {
-                // targetShippingSpot: {},
-                isDefaultShippingSpot: 'N',
-                spotName: '',
-                receiverName: '',
-                lineNumber: '',
-                phoneNumber: '',
-                roadAddress: '',
-                zipcodeAddress: '',
+
             }
         }
     }
