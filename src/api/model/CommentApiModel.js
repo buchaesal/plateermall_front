@@ -14,6 +14,7 @@ class CommentApiModel{
     sizeBest= 0;
     sizeWorst= 0;
 
+    reviewList=[];
 }
 
 export default CommentApiModel;

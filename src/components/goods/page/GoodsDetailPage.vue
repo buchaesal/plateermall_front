@@ -183,17 +183,26 @@
                                 <sui-button color="blue" content="바로구매"></sui-button>
                             </sui-button-group>
                         </div>
-                        <div>
-                            상품 정보
+                        <div class="summary">
+                            <dl class="detail">
+                                <dt>모델번호</dt>
+                                <dd>921733-100</dd>
+                                <dt>상품번호</dt>
+                                <dd>1203973748</dd>
+                                <dt>배송정보</dt>
+                                <dd id="deliveryInfoTxt">03/24(화) 이내 택배 도착예정<br>(도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)</dd>
+                            </dl>
+                            <div>
+                                상품 정보
+                            </div>
+                            <div class="review-summary-box">
+                                <RatingStarPoint class="review-summary"/>
+                            </div>
                         </div>
-                        <div class="review-summary-box">
-                            <RatingStarPoint class="review-summary"/>
-                        </div>
+
+
                     </div>
-
-
                 </div>
-
             </section>
             <div class="promotion-banner">
                 <div class="banner-text">
@@ -408,7 +417,19 @@
                 tooltip1Display: false,
                 tooltip2Display: false,
                 radioButtons: [true, false, false],
-                selectedOptions: [],
+                radioButtonsColor: ["blue", "grey", "grey"],
+                selectedOptions: [
+                    {
+                        name: '220',
+                        qauantity: 1,
+                    }, {
+                        name: '230',
+                        qauantity: 1,
+                    },
+                ],
+                orderSumQuantity: 1,
+                orderSumPrice: 0,
+                optionSelectBoxVisible: [],
             }
         },
         methods: {
@@ -433,10 +454,14 @@
                 this.radioButtons = changedRadio;
             },
             addOptions(option) {
-                let addedOption = this.selectedOptions;
-                addedOption.push(option);
-                this.selectedOptions = addedOption;
-                console.log(this.selectedOptions);
+                let addOptions = this.selectedOptions;
+                addOptions.push(option);
+                this.selectedOptions = addOptions;
+
+
+            },
+            handleDismiss(index) {
+                this.optionSelectBoxVisible[index] = false;
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -724,6 +749,41 @@
         width: 100%;
         height: 3rem;
         margin-bottom: 20px;
+    }
+
+    .output {
+        display: inline-block;
+        width: 40%;
+        height: 32px;
+        padding: 0 5px;
+        border: 0;
+        text-align: center;
+        vertical-align: middle;
+        background-color: transparent;
+    }
+
+    .amount {
+        display: inline-block;
+        position: relative;
+        width: 100px;
+        margin-top: 7px;
+        vertical-align: middle;
+    }
+
+    .amount .ico-plus {
+        float: right;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0.7rem;
+    }
+
+    .amount .ico-minus {
+        float: left;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0.7rem;
     }
 
     .cart-or-now {
