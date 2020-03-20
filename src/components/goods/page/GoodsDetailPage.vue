@@ -225,14 +225,14 @@
                             </sui-accordion-title>
                             <sui-accordion-content active class="accordion-content">
                                 <p>
-                                    MD공지
+                                    {{getGoodsData.notice}}
                                 </p>
                             </sui-accordion-content>
                         </sui-accordion>
                     </div>
                     <h4 class="subheading">상품 상세 설명</h4>
                     <div class="goods-more-detail">
-                        상품상세
+                        {{getGoodsData.goodsDetail}}
                     </div>
                     <div>
                         <sui-accordion exclusive>
@@ -264,21 +264,10 @@
                                 <tr class="hidden-tr">
                                     <td class="two wide column"></td>
                                 </tr>
-                                <tr>
-                                    <td>Size</td>
-                                    <td>1" x 2"</td>
-                                </tr>
-                                <tr>
-                                    <td>Weight</td>
-                                    <td>6 ounces</td>
-                                </tr>
-                                <tr>
-                                    <td>Color</td>
-                                    <td>Yellowish</td>
-                                </tr>
-                                <tr>
-                                    <td>Odor</td>
-                                    <td>Not Much Usually</td>
+                                <tr v-for="(row, index) in getGoodsData.infoTable"
+                                    :key="index">
+                                    <td>{{row.head}}</td>
+                                    <td>{{row.body}}</td>
                                 </tr>
                                 </tbody>
                             </table>
