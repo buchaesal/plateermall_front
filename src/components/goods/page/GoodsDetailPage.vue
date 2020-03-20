@@ -151,7 +151,7 @@
                                 <div class="amount">
                                     <sui-button circular icon='plus' class="ico-plus"
                                                 @click="OptionQuantityPlus(index)"/>
-                                    <input transparent class="output" :value="option.quantity">
+                                    <input type="number" transparent class="output" :value="option.quantity" disabled>
                                     <sui-button circular icon='minus' class="ico-minus"
                                                 @click="OptionQuantityMinus(index)"/>
                                     <span>{{priceFormatting(selectedOptions[index].price)}}</span>
@@ -953,5 +953,11 @@
 
     .hidden-tr {
         visibility: hidden !important;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 </style>
