@@ -25,6 +25,7 @@ const mutations = {
         state.isOpenShippingSpotForm = false;
     },
     setNewShippingSpotList(state, list){
+        console.log('setNewShippingSpotList')
         state.shippingSpotList = list;
     }
 }

@@ -40,7 +40,7 @@
 
 
         <sui-table-row v-else>
-            <sui-table-cell><sui-checkbox radio value="-1" checked v-model="checkedRadio"/></sui-table-cell>
+            <sui-table-cell><sui-checkbox radio value="defaultShippingSpot" checked v-model="checkedRadio"/></sui-table-cell>
             <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
             <sui-table-cell text-align="left">
                 <p class="user-name">{{defaultShippingSpot.receiverName}}</p>
@@ -97,7 +97,7 @@ export default {
           otherShippingSpots: [],
           shippingSpotSize: -1,
 
-          checkedRadio: '-1',
+          checkedRadio: 'defaultShippingSpot',
       }
     },
     components: {
@@ -114,16 +114,38 @@ export default {
         },
         setDefaultShoppingSpot() {
             console.log(this.defaultShippingSpot);
+            if(this.checkedRadio == "defaultShippingSpot"){
+                alert("기본 배송지입니다.")
+                return;
+            }
             this.defaultShippingSpot.isDefaultShippingSpot = 'N';
             this.otherShippingSpots[this.checkedRadio].isDefaultShippingSpot = 'Y';
-            
-            let shippingSpotList = this.getShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
-            //보내기
+            let shippingSpotList = this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
             // this.$store.state.shippingSpotListStore.shippingSpotList = shippingSpotList;
             this.$store.commit('setNewShippingSpotList', shippingSpotList);
+            this.filterDefaultAndOtherSpots();
+            alert('기본 배송지로 설정하였습니다.')
+            this.checkedRadio = 'defaultShippingSpot';
         },
-        getShippingSpotList(defaultShippingSpot, otherShippingSpots) {
-            return otherShippingSpots.push(defaultShippingSpot);
+        updateShippingSpotList(defaultShippingSpot, otherShippingSpots) {
+            otherShippingSpots.push(defaultShippingSpot);
+            return otherShippingSpots;
+        },
+        setShippingSpotList(){
+            this.$store.commit('setShippingSpotList');
+            this.filterDefaultAndOtherSpots();
+        },
+        filterDefaultAndOtherSpots(){
+            this.shippingSpots = this.$store.state.shippingSpotListStore.shippingSpotList;
+            this.shippingSpotSize = this.shippingSpots.length;
+            this.otherShippingSpots = [];
+            this.shippingSpots.filter((shippingSpot) => {
+            if(shippingSpot.isDefaultShippingSpot === 'Y'){
+                this.defaultShippingSpot = shippingSpot;
+            }  
+            else{
+                this.otherShippingSpots.push(shippingSpot);
+            }});
         },
     },
     computed: {
@@ -139,17 +161,7 @@ export default {
        }
     },
     created: function(){
-        this.$store.commit('setShippingSpotList');
-        this.shippingSpots = this.$store.state.shippingSpotListStore.shippingSpotList;
-        this.shippingSpotSize = this.shippingSpots.length;
-        this.shippingSpots.filter((shippingSpot) => {
-            if(shippingSpot.isDefaultShippingSpot === 'Y'){
-                this.defaultShippingSpot = shippingSpot;
-            }  
-            else{
-                this.otherShippingSpots.push(shippingSpot);
-            }
-        });
+        this.setShippingSpotList();
         console.log(this.defaultShippingSpot);
         console.log(this.otherShippingSpots);
     }
