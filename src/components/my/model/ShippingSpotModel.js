@@ -1,5 +1,5 @@
 class ShippingSpotModel {
-    isDefaultShippingSpot = '';
+    isDefaultShippingSpot = 'N';
     spotName= '';
     receiverName = '';
     lineNumber = '';
