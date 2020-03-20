@@ -31,6 +31,7 @@
                 </sui-grid-column>
             </sui-grid>
     </div>
+    </div>
 </template>
 
 <script>
