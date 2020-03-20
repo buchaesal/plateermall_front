@@ -1,7 +1,21 @@
 import request, {GOODS_URL} from './axios';
 
 export const requestGoods = function(goodsCode){
+
+    //상품 코드로 상품 조회
     request.get(GOODS_URL + `/goods/${goodsCode}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
+
+export const requestGoodsList = function(goodsSet){
+
+    //상품 리스트 조회
+    request.get(GOODS_URL + `/goodslist/${goodsSet}`).then(
         (response) => {
             return response.data
         }

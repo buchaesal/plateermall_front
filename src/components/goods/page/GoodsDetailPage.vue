@@ -137,10 +137,12 @@
                                           placeholder="옵션 선택"
                                           selection
                                           :options="getGoodsData.options"
-                                          v-model="current"
+                                          v-model="option"
                             />
                         </div>
                         <div class="option-select-box">
+                            {{option}}
+                            {{selectedOptions}}
                             <sui-message v-for="(option, index) in selectedOptions"
                                          :key="index"
                                          :header="option.name"
@@ -410,6 +412,7 @@
         },
         data() {
             return {
+                option: null,
                 current: null,
                 shareDisplay: false,
                 isLike: false,
@@ -457,10 +460,11 @@
             },
             addOptions(option) {
                 let addOptions = this.selectedOptions;
-                addOptions.push(option);
+                addOptions.push({
+                    name: option,
+                    qauantity: 1,
+                });
                 this.selectedOptions = addOptions;
-
-
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -496,8 +500,9 @@
                 return goodsData;
             },
             changeOption() {
-                this.addOptions(this.current);
-                return this.current;
+                console.log("comput")
+                this.addOptions(this.option);
+                return this.option;
             },
         },
 
@@ -538,7 +543,7 @@
     .goods-detail {
         position: static;
         margin-bottom: 80px;
-        min-height: 1000px;
+        overflow: hidden;
     }
 
     .gallery {
