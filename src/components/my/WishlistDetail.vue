@@ -61,7 +61,7 @@
         },
         computed: {
             wishList: function () {
-                return this.$store.state.WishList.wishList;
+                return this.$store.state.wishList.wishList;
             }
         }
     }

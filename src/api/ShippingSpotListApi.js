@@ -11,6 +11,10 @@ class ShippingSpotListApi {
         this.shippingSpotList.push(new ShippingSpotModel('N', '남의 회사','무개아', '010-2535-4578', '010-2535-4578', 
         '서울시 송파구 장지로 32-14', '서울시 송파구 장지동 어떤 빌라'));
     }
+
+    getShippingSpotList() {
+        return this.shippingSpotList;
+    }
 }
 
 export default ShippingSpotListApi;

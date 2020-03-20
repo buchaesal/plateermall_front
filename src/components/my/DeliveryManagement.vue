@@ -174,7 +174,7 @@ export default {
       }
     },
     created: function(){
-        this.setDefaultShippingSpotList();
+        this.getShippingSpotListFromApi();
     }
 
 };
