@@ -1,59 +1,70 @@
 <template>
     <div class="userinfo">
-            <div class="user_box charge_box">
-                <div class="user">
-                    <p class="name charge">
-                        <span>최단비님의 마이페이지 입니다.</span>
-                    </p>
-                </div>
-            </div>
-            <div class="point_box">
-                <div class="item" id="lpointDivItem" style="display: block;">
-                    <p class="icon">
-                        <sui-icon size="big" name="ruble sign"></sui-icon>
-                    </p>
-                    <a href="#">
-                        <p class="name">P.POINT</p>
-                    </a>
-                    <p class="point">
-                        <span id="lPoint"><em id="usablePoint">2,027</em>점</span>
-                    </p>
-                </div>
-
-                <div class="item">
-                    <p class="icon">
-                        <sui-icon size="big" name="chess queen"></sui-icon>
-                    </p>
-                    <a href="#">
-                        <p class="name">플래티어몰 포인트</p>
-                    </a>
-                    <p class="point"><em id="pointBlnc">0</em>점</p>
-                </div>
-                <div class="item">
-                    <p class="icon">
-                        <sui-icon size="big" name="money bill alternate outline"></sui-icon>
-                    </p>
-                    <a href="#">
-                        <p class="name">보관금</p>
-                    </a>
-                    <p class="point"><em id="deposits">0</em>점</p>
-                </div>
-                <div class="item">
-                    <p class="icon">
-                        <sui-icon size="big" name="copyright outline"></sui-icon>
-                    </p>
-                    <a href="#">
-                        <p class="name">쿠폰</p>
-                    </a>
-                    <p class="point"><em id="couponCnt">0</em>장</p>
-                </div>
+        <div class="user_box charge_box">
+            <div class="user">
+                <p class="name charge">
+                    <span>{{user.name}}님의 마이페이지 입니다.</span>
+                </p>
             </div>
         </div>
-</template>
+        <div class="point_box">
+            <div class="item" id="lpointDivItem" style="display: block;">
+                <p class="icon">
+                    <sui-icon size="big" name="ruble sign"></sui-icon>
+                </p>
+                <a href="#">
+                    <p class="name">P.POINT</p>
+                </a>
+                <p class="point">
+                    <span id="lPoint"><em id="usablePoint">{{user.pPoint.toLocaleString()}}</em>점</span>
+                </p>
+            </div>
 
+            <div class="item">
+                <p class="icon">
+                    <sui-icon size="big" name="chess queen"></sui-icon>
+                </p>
+                <a href="#">
+                    <p class="name">플래티어몰 포인트</p>
+                </a>
+                <p class="point"><em id="pointBlnc">{{user.localPoint.toLocaleString()}}</em>점</p>
+            </div>
+            <div class="item">
+                <p class="icon">
+                    <sui-icon size="big" name="money bill alternate outline"></sui-icon>
+                </p>
+                <a href="#">
+                    <p class="name">보관금</p>
+                </a>
+                <p class="point"><em id="deposits">{{user.keepMoney.toLocaleString()}}</em>점</p>
+            </div>
+            <div class="item">
+                <p class="icon">
+                    <sui-icon size="big" name="copyright outline"></sui-icon>
+                </p>
+                <a href="#">
+                    <p class="name">쿠폰</p>
+                </a>
+                <p class="point"><em id="couponCnt">{{user.coupon.length}}</em>장</p>
+            </div>
+        </div>
+    </div>
+</template>
+i
 <script>
     export default {
-        name: "UserInfo"
+        name: "UserInfo",
+        data() {
+            return {
+                user: {
+                    name: '김뫄뫄',
+                    pPoint: 2022,
+                    localPoint: 101,
+                    keepMoney: 10000,
+                    coupon: ['할인', '50%']
+                }
+            }
+        }
     }
 </script>
 
@@ -61,15 +72,18 @@
     .userinfo .user_box.charge_box {
         padding: 0;
     }
+
     .userinfo .user_box {
         float: left;
         width: 308px;
         height: 128px;
         background: #000;
     }
+
     .userinfo .user_box.charge_box .user {
         margin: 24px 24px 0 24px;
     }
+
     .userinfo .user_box .name {
         display: -webkit-box;
         overflow: hidden;
@@ -84,11 +98,13 @@
         -webkit-box-orient: vertical;
         line-height: 20px;
     }
+
     .userinfo .user_box .name.charge span {
         display: block;
         font-weight: 300;
         text-align: center;
     }
+
     .userinfo .point_box {
         float: left;
         width: 892px;
@@ -96,6 +112,7 @@
         border-left: 3px;
         margin-bottom: 50px;
     }
+
     .userinfo .point_box .item {
         float: left;
         position: relative;
@@ -104,17 +121,20 @@
         padding: 24px 0;
         text-align: center;
     }
-    .userinfo .point_box .item>a:not(.btn_info) {
+
+    .userinfo .point_box .item > a:not(.btn_info) {
         display: inline-block;
         position: relative;
         z-index: 1;
     }
+
     .userinfo .point_box .icon {
         width: 40px;
         height: 40px;
         margin: 0 auto;
     }
-    a{
+
+    a {
         color: #666666;
     }
 </style>

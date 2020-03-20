@@ -37,6 +37,15 @@ export const requestComments = function(item){
     ).catch(function(error){
         console.log(error);
     });
+
+    //리뷰 작성
+    request.post(COMMENTS_URL + `/postComment`, item).then(
+        (response) => {
+            console.log(response);
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
 }
 
 class CommentApi{
