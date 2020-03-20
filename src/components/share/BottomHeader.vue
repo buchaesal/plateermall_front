@@ -1,39 +1,39 @@
 <template>
-        <div class="menu_bar">
-            <div class="inner_bar">
-                <div class="left_bar">
-                    <span class="item"><a @click="goToHome">HOME</a></span>
-                    <span class="item"><a>OUTLET</a></span>
-                    <span class="item"><a>BEAUTY</a></span>
-                    <span class="item"><a>BAG & ACC</a></span>
-                    <span class="item"><a>SHOES</a></span>
-                    <span class="item"><a>WOMEN</a></span>
-                    <span class="item"><a>MEN</a></span>
-                    <span class="item"><a>CASUAL</a></span>
-                    <span class="item"><a>SPORTS</a></span>
-                    <span class="item"><a>KIDS</a></span>
-                    <span class="item"><a>LIVING</a></span>
-                    <span class="item"><a>FOODS</a></span>
+    <div class="menu_bar">
+        <div class="inner_bar">
+            <div class="left_bar">
+                <span class="item"><a @click="goToHome">HOME</a></span>
+                <span class="item"><a>OUTLET</a></span>
+                <span class="item"><a>BEAUTY</a></span>
+                <span class="item"><a>BAG & ACC</a></span>
+                <span class="item"><a>SHOES</a></span>
+                <span class="item"><a>WOMEN</a></span>
+                <span class="item"><a>MEN</a></span>
+                <span class="item"><a>CASUAL</a></span>
+                <span class="item"><a>SPORTS</a></span>
+                <span class="item"><a>KIDS</a></span>
+                <span class="item"><a>LIVING</a></span>
+                <span class="item"><a>FOODS</a></span>
 
-                </div>
+            </div>
 
-                <div class="right_bar">
-                    <span class="item"><a>3D 쇼핑</a></span>
-                    <span class="item"><a>ZIPSA</a></span>
-                    <span class="item"><a>온앤더뷰티</a></span>
-                    <a href="#">
-                        <sui-icon size="big" name="plus square"/>
-                    </a>
-                </div>
+            <div class="right_bar">
+                <span class="item"><a>3D 쇼핑</a></span>
+                <span class="item"><a>ZIPSA</a></span>
+                <span class="item"><a>온앤더뷰티</a></span>
+                <a href="#">
+                    <sui-icon size="big" name="plus square"/>
+                </a>
             </div>
         </div>
+    </div>
 </template>
 
 <script>
     export default {
         name: "BottomHeader.vue",
         methods: {
-            goToHome(){
+            goToHome() {
                 this.$router.push('/');
             }
         }

@@ -16,8 +16,8 @@
                             {{getGoodsData.dcRate}}<span class="unit">%</span>
                         </p>
                         <p class="price">
-                            {{pricing(getGoodsData.originalPrice,
-                            getGoodsData.dcRate)}}<span class="unit">원</span>
+                            {{priceFormatting(pricing(getGoodsData.originalPrice, getGoodsData.dcRate))}}<span
+                                class="unit">원</span>
                         </p>
                         <ul class="utils">
                             <li class="share" @mouseover="onShareList" @mouseleave="offShareList">
@@ -140,19 +140,22 @@
                                           v-model="option"
                             />
                         </div>
-                        <div class="option-select-box">
-                            {{option}}
-                            {{selectedOptions}}
-                            <sui-message v-for="(option, index) in selectedOptions"
-                                         :key="index"
-                                         :header="option.name"
-                                         dismissable
-                                         @dismiss="handleDismiss(index)"
+                        <div class="selected-list">
+                            <sui-message
+                                    v-for="(option, index) in selectedOptions"
+                                    :key="index"
+                                    :header="option.name"
+                                    dismissable
+                                    @dismiss="handleDismiss(index)"
                             >
                                 <div class="amount">
-                                    <sui-button circular icon='plus' class="ico-plus"/>
-                                    <input transparent class="output" :value="option.qauantity">
-                                    <sui-button circular icon='minus' class="ico-minus"/>
+                                    <sui-button circular icon='plus' class="ico-plus"
+                                                @click="OptionQuantityPlus(index)"/>
+                                    <input transparent class="output" :value="option.quantity">
+                                    <sui-button circular icon='minus' class="ico-minus"
+                                                @click="OptionQuantityMinus(index)"/>
+                                    <span>{{priceFormatting(selectedOptions[index].price)}}</span>
+                                    <span class="unit">원</span>
                                 </div>
                             </sui-message>
                         </div>
@@ -191,11 +194,13 @@
                         <div class="summary">
                             <dl class="detail">
                                 <dt>모델번호</dt>
-                                <dd>921733-100</dd>
+                                <dd>{{getGoodsData.modelNo}}</dd>
                                 <dt>상품번호</dt>
-                                <dd>1203973748</dd>
+                                <dd>{{getGoodsData.goodsCode}}</dd>
                                 <dt>배송정보</dt>
-                                <dd id="deliveryInfoTxt">03/24(화) 이내 택배 도착예정<br>(도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)</dd>
+                                <dd id="deliveryInfoTxt">{{calculateDays(getGoodsData.shippingDays)}} 이내 택배 도착예정<br>(도착
+                                    예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
+                                </dd>
                             </dl>
                         </div>
                         <div class="review-summary-box">
@@ -420,17 +425,10 @@
                 tooltip2Display: false,
                 radioButtons: [true, false, false],
                 radioButtonsColor: ["blue", "grey", "grey"],
-                selectedOptions: [
-                    {
-                        name: '220',
-                        qauantity: 1,
-                    }, {
-                        name: '230',
-                        qauantity: 1,
-                    },
-                ],
-                orderSumQuantity: 1,
+                selectedOptions: [],
+                orderSumQuantity: 0,
                 orderSumPrice: 0,
+                discountedPrice: 0,
             }
         },
         methods: {
@@ -438,9 +436,8 @@
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
             pricing(originalPrice, dcRate) {
-                let price = originalPrice * (100 - dcRate) / 100;
-                price = this.priceFormatting(price);
-                return price;
+                this.discountedPrice = originalPrice * (100 - dcRate) / 100;
+                return this.discountedPrice;
             },
             isDiscount(dcRate) {
                 if (dcRate !== "0" && dcRate !== null && dcRate !== 0) {
@@ -460,11 +457,73 @@
             },
             addOptions(option) {
                 let addOptions = this.selectedOptions;
-                addOptions.push({
-                    name: option,
-                    qauantity: 1,
-                });
-                this.selectedOptions = addOptions;
+
+                if (addOptions.filter(optionObject => optionObject.name === option).length === 0) {
+                    let data = {
+                        name: option,
+                        quantity: 1,
+                        price: this.discountedPrice,
+                    };
+
+                    addOptions.push(data);
+                    this.selectedOptions = addOptions;
+                }
+            },
+            calculateDays(days) {
+                let week = ['일', '월', '화', '수', '목', '금', '토'];
+
+                let date = new Date();
+                let weekday = date.getDay();
+
+                if (weekday === 0 || weekday === 1) {
+                    days += 2;
+                }
+
+                date.setDate(date.getDate() + days);
+
+                let month = '' + (date.getMonth() + 1);
+                let day = '' + date.getDate();
+
+                if (month.length < 2) {
+                    month = '0' + month;
+                }
+
+                if (day.length < 2) {
+                    day = '0' + day;
+                }
+
+                return month + "/" + day + "(" + week[date.getDay()] + ")";
+            },
+            handleDismiss(index) {
+                if (index > -1) {
+                    this.selectedOptions.splice(index, 1);
+                }
+            },
+            OptionQuantityPlus(index) {
+                this.selectedOptions[index].quantity++;
+                this.optionPricing(index);
+                this.calculateOrderSum();
+            },
+            OptionQuantityMinus(index) {
+                if (this.selectedOptions[index].quantity > 1) {
+                    this.selectedOptions[index].quantity--;
+                    this.optionPricing(index);
+                    this.calculateOrderSum();
+                }
+            },
+            optionPricing(index) {
+                this.selectedOptions[index].price =
+                    this.discountedPrice *
+                    this.selectedOptions[index].quantity
+            },
+            calculateOrderSum() {
+                this.orderSumPrice = 0;
+                this.orderSumQuantity = 0;
+                for (let i = 0; i < this.selectedOptions.length; i++) {
+                    this.orderSumPrice += this.selectedOptions[i].price;
+                    this.orderSumQuantity += this.selectedOptions[i].quantity;
+                }
+                console.log("orderSum: " + this.orderSumPrice)
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -499,13 +558,19 @@
 
                 return goodsData;
             },
-            changeOption() {
-                console.log("comput")
-                this.addOptions(this.option);
-                return this.option;
-            },
         },
-
+        watch: {
+            option: function () {
+                this.addOptions(this.option);
+            },
+            selectedOptions: function () {
+                this.calculateOrderSum();
+            },
+            orderSumPrice: function () {
+            },
+            orderSumQuantity: function () {
+            },
+        }
     }
 </script>
 
@@ -775,7 +840,7 @@
         width: 100%;
     }
 
-    .option-select-box {
+    .selected-list {
         margin-bottom: 20px;
         font-size: 16px;
     }

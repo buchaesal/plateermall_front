@@ -238,6 +238,8 @@
     }
 
     .zzim-list {
+        max-height: 500px;
+        overflow: scroll;
         padding-right: 40px;
     }
 
