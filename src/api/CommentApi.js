@@ -62,17 +62,16 @@ class CommentApi{
 
         customerCount : 2,
         averageStarPoint : 4,
-        averageGrade : {
-            deliveryCommon: 60,
-            deliveryBest: 0,
-            deliveryWorst: 0,
-            designCommon: 20,
-            designBest: 50,
-            designWorst: 0,
-            sizeCommon: 20,
-            sizeBest: 50,
-            sizeWorst: 0
-       },
+        
+        deliveryCommon: 60,
+        deliveryBest: 0,
+        deliveryWorst: 0,
+        designCommon: 20,
+        designBest: 50,
+        designWorst: 0,
+        sizeCommon: 20,
+        sizeBest: 50,
+        sizeWorst: 0
     }
 
     unWrittenReviewsInfo= {
