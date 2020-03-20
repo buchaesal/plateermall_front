@@ -165,14 +165,18 @@
                             <sui-button-group class="shipping-option">
                                 <sui-button toggle
                                             content="택배"
+                                            basic="basic"
+                                            :color="radioButtonsColor[0]"
                                             :active="radioButtons[0]"
                                             @click="shippingRadio(0)"></sui-button>
-                                <sui-button toggle
+                                <sui-button toggle basic
                                             content="방문 수령"
+                                            :color="radioButtonsColor[1]"
                                             :active="radioButtons[1]"
                                             @click="shippingRadio(1)"></sui-button>
-                                <sui-button toggle
+                                <sui-button toggle basic
                                             content="빠른 배송"
+                                            :color="radioButtonsColor[2]"
                                             :active="radioButtons[2]"
                                             @click="shippingRadio(2)"></sui-button>
                             </sui-button-group>
@@ -192,14 +196,10 @@
                                 <dt>배송정보</dt>
                                 <dd id="deliveryInfoTxt">03/24(화) 이내 택배 도착예정<br>(도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)</dd>
                             </dl>
-                            <div>
-                                상품 정보
-                            </div>
-                            <div class="review-summary-box">
-                                <RatingStarPoint class="review-summary"/>
-                            </div>
                         </div>
-
+                        <div class="review-summary-box">
+                            <RatingStarPoint class="review-summary"/>
+                        </div>
 
                     </div>
                 </div>
@@ -452,6 +452,10 @@
                 let changedRadio = [false, false, false];
                 changedRadio[index] = true;
                 this.radioButtons = changedRadio;
+
+                let changedRadioColor = ["grey", "grey", "grey"];
+                changedRadioColor[index] = "blue";
+                this.radioButtonsColor = changedRadioColor;
             },
             addOptions(option) {
                 let addOptions = this.selectedOptions;
@@ -495,6 +499,10 @@
 
                 return goodsData;
             },
+            changeOption() {
+                this.addOptions(this.current);
+                return this.current;
+            },
         },
 
     }
@@ -534,7 +542,7 @@
     .goods-detail {
         position: static;
         margin-bottom: 80px;
-        min-height: 800px;
+        min-height: 1000px;
     }
 
     .gallery {
@@ -605,7 +613,7 @@
     }
 
     .share-list:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: -8px;
@@ -635,6 +643,14 @@
         font-size: 12px;
         display: block;
         margin-top: 4px;
+    }
+
+    .summary {
+        padding: 24px 0;
+        border-top: 1px solid #ededed;
+        border-bottom: 1px solid #ededed;
+        font-size: 12px;
+        line-height: 17px;
     }
 
     .detail {
@@ -734,11 +750,34 @@
         color: #773dbd;
     }
 
+    .subtotal {
+        overflow: hidden;
+        margin-bottom: 16px;
+    }
+
+    .subtotal .price {
+        float: right;
+        font-size: 32px;
+        text-align: right;
+    }
+
+    .subtotal .price .item {
+        font-size: 14px;
+    }
+
+    .subtotal .price .unit {
+        font-size: 18px;
+    }
 
     .option-select {
         margin-top: 32px;
-        margin-bottom: 32px;
+        margin-bottom: 20px;
         width: 100%;
+    }
+
+    .option-select-box {
+        margin-bottom: 20px;
+        font-size: 16px;
     }
 
     .option-dropdown {
@@ -850,7 +889,6 @@
 
     .review-summary-box {
         padding: 24px 0 27px;
-        border-bottom: 1px solid #ededed;
         font-size: 18px;
     }
 </style>
