@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="faq_list_header">
-            <FaqHeader :title="'FAQ배송'"></FaqHeader>
+            <FaqHeader :title="'FAQ'"></FaqHeader>
         </div>
         <sui-menu pointing secondary>
             <a

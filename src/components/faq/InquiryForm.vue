@@ -65,11 +65,19 @@
                         <li>- 최근 3개월의 주문 내역 입니다. 이전의 상품은 기간별 조회를 통해 가능합니다.</li>
                         <li>- 하나의 주문번호만 선택 가능하며, 동일한 주문번호의 상품은 복수 선택 가능합니다.</li>
                     </ul>
+                    <div class="date_box">
+                        <input type="date">
+                        ~
+                        <input type="date">
+                        <sui-button basic secondary>조회</sui-button>
+                    </div>
+                    <p style="text-align: center">주문 내역이 없습니다.</p>
                 </sui-modal-description>
             </sui-modal-content>
             <sui-modal-actions>
-                <sui-button positive @click.native="toggle">
-                    OK
+                <sui-button positive>등록</sui-button>
+                <sui-button secondary @click.native="toggle">
+                    취소
                 </sui-button>
             </sui-modal-actions>
         </sui-modal>
@@ -87,7 +95,8 @@
         },
         data() {
             return {
-                open: false
+                open: false,
+                today: new Date()
             }
         },
         methods: {
@@ -139,5 +148,8 @@
 
     #buttons {
         text-align: center;
+    }
+    .date_box{
+        margin-bottom: 20px;
     }
 </style>

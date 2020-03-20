@@ -16,10 +16,13 @@
                 <div class="goods-main-container">
                     <div class="goods-list-container">
                         <div class="goods-options">
-                            <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송"  />
-                            <a href="#" class="goods-option" >선택삭제</a>
-                            <a href="#" class="goods-option" style="margin-right:10px;">품절삭제</a>
-                            <a href="#" class="goods-option" style="margin-right:10px;">위시담기</a>
+                            <div style="display:inline-block;">
+                                <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송"  />
+                            </div>
+                            <div style="display:inline-block; float:right;">
+                                <a @click="checkedDeleteCartList" href="javascript:void(0)" style="margin-right:10px;">선택삭제</a>
+                                <a href="javascript:void(0)">위시담기</a>
+                            </div>
                         </div>
                         <div v-for="(cart, index) in getCartList" v-bind:key="index"  class="goods-list">
                             <div style="background-color:#ededed; height:50px;">
@@ -30,7 +33,7 @@
                                     <sui-grid-row stretched class="cart-grid-row">
                                         <sui-grid-column style="width:10%;">
                                             <sui-segment style="position:absolute; top:50%;">
-                                                <sui-checkbox class="goods-checkbox" :id="cart.cartCode" :value="cart" v-model="checkedCartList"/>
+                                                <sui-checkbox @change="checkCart(index)" class="goods-checkbox" :id="index" :value="cart" v-model="checkedCartList"/>
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:20%;">
@@ -56,7 +59,7 @@
                                         </sui-grid-column>
                                         <sui-grid-column style="width:15%; padding-bottom: 6%;">
                                             <sui-segment>
-                                                <div @click="deleteCart(cart.cartCode)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
+                                                <div @click="deleteCart(cart)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
                                             </sui-segment>
                                             <sui-segment>
                                                 <div><span class="goods-price">{{priceFormatting(cart.originalPrice)}}원</span></div>
@@ -169,6 +172,7 @@
         data() {
             return {
                 isChecked:false,
+                isChecked2:false,
                 checkedCartList:[],
                 tmpCartStock:0,
             }
@@ -185,13 +189,17 @@
                 this.$store.commit('addCartList');
             },
             checkWholeItem() {
+                this.checkedCartList = [];
+
                 if(!this.isChecked) {
-                    this.$store.state.cartListStore.cartList.map((cart) => {
+                    this.$store.state.cartListStore.cartList.map((cart, index) => {
+                        Object.assign(cart, {
+                            "index":index
+                        });
                         this.checkedCartList.push(cart);
                     });
                     this.isChecked = true;
                 } else {
-                    this.checkedCartList = [];
                     this.isChecked = false;
                 }
             },
@@ -228,8 +236,38 @@
                 cart.cartStock += 1;
             },
 
-            deleteCart(cartCode) {
-                alert(cartCode);
+            /*
+            deleteCart(index) {
+                const result = confirm("해당 상품을 삭제 하시겠습니까?");
+                if (result) {
+                    this.$store.commit('deleteCart', index);
+                }
+            },
+            */
+
+            deleteCart(deletedCart) {
+                const result = confirm("해당 상품을 삭제 하시겠습니까?");
+                if (result) {
+                    this.$store.commit('deleteCart', deletedCart);
+                }
+            },
+
+            checkedDeleteCartList() {
+                const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
+                if (result) {
+                    this.$store.commit('checkedDeleteCartList', this.checkedCartList);
+                }
+            },
+
+            checkCart(index) {
+                if (!this.isChecked2) {
+                    let checkCart = this.$store.state.cartListStore.cartList[index];
+                    Object.assign(checkCart, {
+                        "index":index
+                    });
+                } else {
+                    this.checkedCartList.splice(index, 1);
+                }
             },
         },
         created() {
@@ -244,12 +282,6 @@
 </script>
 
 <style scoped>
-    .goods-checkbox {
-        float:left;
-    }
-    .goods-option {
-        float:right;
-    }
     .goods-options {
         height:50px;
         width:100%;
