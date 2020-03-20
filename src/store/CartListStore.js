@@ -1,6 +1,6 @@
 import CartListApi from '../api/CartListApi'
 import CartListModel from "../components/my/model/CartListModel";
-//import WishListApi from "../api/WishListApi";
+import WishListApi from "../api/WishListApi";
 
 const state = {
     cartList: [],
@@ -45,9 +45,10 @@ const mutations = {
     },
 
     containWishList(state, goodsCodeArr) {
-        //const wishListApi = new WishListApi();
-        //wishListApi.setWishList(goodsCodeArr);
-        return null;
+        console.log("containWishList : " + goodsCodeArr);
+
+        const wishListApi = new WishListApi();
+        wishListApi.addGoods(goodsCodeArr);
     }
 }
 
