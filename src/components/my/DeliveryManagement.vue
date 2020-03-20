@@ -16,7 +16,7 @@
     </sui-table-header>
     <sui-table-body>
 
-        <sui-table-row v-if="getIsOpenShippingSpotForm">
+        <sui-table-row v-if="openShippingSpotFormFlag">
             <sui-table-cell></sui-table-cell>
             <sui-table-cell class="spot-type"></sui-table-cell>
             <sui-table-cell text-align="left">
@@ -42,7 +42,11 @@
         <sui-table-row v-else>
             <sui-table-cell><sui-checkbox radio value="defaultShippingSpot" checked v-model="checkedRadio"/></sui-table-cell>
             <sui-table-cell class="spot-type">기본배송지</sui-table-cell>
-            <sui-table-cell text-align="left">
+
+            <sui-table-cell text-align="left" v-if="openModifyShippingSpotFormFlag">
+                <ShippingSpotForm v-bind:target-shipping-spot="defaultShippingSpot"></ShippingSpotForm>
+            </sui-table-cell>
+            <sui-table-cell text-align="left" v-else>
                 <p class="user-name">{{defaultShippingSpot.receiverName}}</p>
                 <div class="spot-details">
                     <p>{{defaultShippingSpot.lineNumber}}/{{defaultShippingSpot.phoneNumber}}</p>
@@ -50,7 +54,12 @@
                     <p>지번 주소 : {{defaultShippingSpot.zipcodeAddress}}</p>
                 </div>
             </sui-table-cell>
-            <sui-table-cell><button class="modify-btn">수정</button></sui-table-cell>
+            
+            <sui-table-cell v-if="openModifyShippingSpotFormFlag">
+                <p><button class="cancel-btn" @click="closeModifyDefultSpotForm">취소</button></p>
+                <p><button class="save-btn">저장</button></p>
+            </sui-table-cell>
+            <sui-table-cell v-else><button class="modify-btn" @click="openModifyDefaultSpotForm">수정</button></sui-table-cell>
         </sui-table-row>
 
         <sui-table-row v-for="(shippingSpot, index) in otherShippingSpots" :key="index" text-align="center">
@@ -66,7 +75,7 @@
                     <p>지번 주소 : {{shippingSpot.zipcodeAddress}}</p>
                 </div>
             </sui-table-cell>
-            <sui-table-cell><button class="modify-btn">수정</button></sui-table-cell>
+            <sui-table-cell><button class="modify-btn">삭제</button></sui-table-cell>
         </sui-table-row>
 
     </sui-table-body>
@@ -98,6 +107,9 @@ export default {
           shippingSpotSize: -1,
 
           checkedRadio: 'defaultShippingSpot',
+          
+          openShippingSpotFormFlag: false,
+          openModifyShippingSpotFormFlag: false,
       }
     },
     components: {
@@ -105,12 +117,14 @@ export default {
     },
     methods: {
         openShippingSpotForm(){
-            this.$store.commit('openShippingSpotForm')
+            this.openShippingSpotFormFlag = true;
+            // this.$store.commit('openShippingSpotForm')
             // console.log(this.$store.state.shippingSpotListStore.isOpenShippingSpotForm) 왜 state는 이렇게 하고 getters는 안되냐
             console.log(this.$store.state.shippingSpotListStore.isOpenShippingSpotForm)
         },
         closeShippingSpotForm(){
-            this.$store.commit('closeShippingSpotForm');
+            this.openShippingSpotFormFlag = false;
+            // this.$store.commit('closeShippingSpotForm');
         },
         setDefaultShoppingSpot() {
             console.log(this.defaultShippingSpot);
@@ -146,6 +160,12 @@ export default {
             else{
                 this.otherShippingSpots.push(shippingSpot);
             }});
+        },
+        openModifyDefaultSpotForm(){
+            this.openModifyShippingSpotFormFlag = true;
+        },
+        closeModifyDefultSpotForm(){
+            this.openModifyShippingSpotFormFlag = false;
         },
     },
     computed: {

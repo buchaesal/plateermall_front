@@ -6,9 +6,9 @@ const state = {
 }
 
 const getters = {
-    getIsOpenShippingSpotForm(){
-        return state.isOpenShippingSpotForm;
-    },
+    // getIsOpenShippingSpotForm(){
+    //     return state.isOpenShippingSpotForm;
+    // },
     getShippingSpotList() {
         return state.shippingSpotList;
     }
@@ -18,12 +18,12 @@ const mutations = {
     setShippingSpotList(state){
         state.shippingSpotList = new ShippingSpotListApi().shippingSpotList;
     },
-    openShippingSpotForm(state){
-        state.isOpenShippingSpotForm = true;
-    },
-    closeShippingSpotForm(state){
-        state.isOpenShippingSpotForm = false;
-    },
+    // openShippingSpotForm(state){
+    //     state.isOpenShippingSpotForm = true;
+    // },
+    // closeShippingSpotForm(state){
+    //     state.isOpenShippingSpotForm = false;
+    // },
     setNewShippingSpotList(state, list){
         console.log('setNewShippingSpotList')
         state.shippingSpotList = list;
