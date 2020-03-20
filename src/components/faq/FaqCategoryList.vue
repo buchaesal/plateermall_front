@@ -10,7 +10,7 @@
                      <router-link to="#">배송확인</router-link>
                  </li>
                  <li>
-                     <router-link to="#">배송지변경</router-link>
+                     <router-link to="/deliveryanduserinfomanagement">배송지변경</router-link>
                  </li>
                  <li>
                      <router-link to="/cca-fo/faq/viewFAQ/P00001/P00012">배송비</router-link>
