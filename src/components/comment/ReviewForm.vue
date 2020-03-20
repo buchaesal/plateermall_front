@@ -1,23 +1,24 @@
 <template>
+
     <div id="review-modal">
         <header><h2 id='write-review'>상품평 작성</h2></header>
-    
+        <h6>{{clearValue}}</h6>
         <ul>
             <li>고객님께서 작성해주신 상품평은 등록 즉시 바로 사이트에 게재되며, 모두 공개를 원칙으로 합니다.</li>
             <li>- 상품평에 적합하지 않은 내용, 미풍양속을 해치는 글, 상품기능 및 효과에 대한 오해의 소지가 있는 내용은 통보 없이 삭제될 수 있으며,</li>
             <li> L.POINT는 지급되지 않습니다.</li>
             <li>- 단순상품문의, 교환/반품 요청, 제품이상 등 불편사항은 1:1 E-mail 상담을 이용해주세요.</li>
         </ul>
-        {{reviewCode}}
+
         <div id="selected-item">
             <sui-item-group divided>
                 <sui-item>
-                    <sui-item-image size="tiny" :src='getSelectedUnwrittenReview.photo'/>
+                    <img :src='selectedReview.photo' width='99' height='99'/>
                     <sui-item-content class='review'>                        
-                    <sui-item-header>{{getSelectedUnwrittenReview.brand}}</sui-item-header>
+                    <sui-item-header>{{selectedReview.brand}}</sui-item-header>
                         <sui-item-meta>
-                            <p class="goodsName">{{getSelectedUnwrittenReview.itemName}}</p>
-                            <p class="goodsOption">{{getSelectedUnwrittenReview.option}}</p>
+                            <p class="goodsName">{{selectedReview.itemName}}</p>
+                            <p class="goodsOption">{{selectedReview.option}}</p>
                         </sui-item-meta>
 
                     </sui-item-content>
@@ -31,7 +32,7 @@
                     <sui-table-row>
                         <sui-table-cell>별점</sui-table-cell>
                         <sui-table-cell>
-                            <sui-rating :rating="myGrade" :max-rating="5" @rate="handleRate" />
+                            <sui-rating :rating="writeReview.myGrade" :max-rating="5" @rate="handleRate" />
                         </sui-table-cell>
                     </sui-table-row>
       
@@ -42,39 +43,39 @@
                                 <sui-form-fields inline>
                                     <label>배송</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="deleveryValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" v-model="writeReview.deleveryValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 빨라요" radio value="2" v-model="deleveryValue"/>
+                                    <sui-checkbox label="생각보다 빨라요" radio value="2" v-model="writeReview.deleveryValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 느려요" radio value="3" v-model="deleveryValue" />
+                                        <sui-checkbox label="생각보다 느려요" radio value="3" v-model="writeReview.deleveryValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                
                                 <sui-form-fields inline>
                                     <label>디자인</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="designValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" v-model="writeReview.designValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 예뻐요" radio value="2" v-model="designValue"/>
+                                    <sui-checkbox label="생각보다 예뻐요" radio value="2" v-model="writeReview.designValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 별로에요" radio value="3" v-model="designValue" />
+                                        <sui-checkbox label="생각보다 별로에요" radio value="3" v-model="writeReview.designValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
 
                                 <sui-form-fields inline>
                                     <label>사이즈</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="sizeValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" v-model="writeReview.sizeValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 커요" radio value="2" v-model="sizeValue"/>
+                                    <sui-checkbox label="생각보다 커요" radio value="2" v-model="writeReview.sizeValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 작아요" radio value="3" v-model="sizeValue" />
+                                        <sui-checkbox label="생각보다 작아요" radio value="3" v-model="writeReview.sizeValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                 
@@ -99,55 +100,92 @@
 
                     <sui-table-row>
                         <sui-table-cell>상품평 작성</sui-table-cell>
-                        <sui-table-cell><textarea id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
+                        <sui-table-cell><textarea v-model="writeReview.reviewContent" id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
 이 곳에 작성하시면 답변을 받지 못합니다.">
                         </textarea></sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
         </div>
-       
     </div>
+
+
+    
 </template>
 
 <script>
     export default {
-        props:['reviewCode'],
+        props:['selectedReview'],
         name: "Sample",
         data(){
             return{
-                myGrade: 0,
-                payload: {},
-                deleveryValue:'',
-                designValue:'',
-                sizeValue:'',
+                writeReview:{
+                    userId: 'testId',
+                    goodsCode: '',
+                    myGrade: 0,
+                    payload: {},
+                    deleveryValue:'',
+                    designValue:'',
+                    sizeValue:'',
+                    reviewContent:'',
+                }
             }
         },
-        created(){
-            this.$store.commit('loadSelectedUnwrittenComment', '1');
-        },
+        
         computed: {
             formattedPayload() {
-                return JSON.stringify(this.payload, null, 2);
+                return JSON.stringify(this.writeReview.payload, null, 2);
+            },
+            isModalOpen(){
+                return this.$store.state.commentStore.isModalOpen;
             },
 
-            getSelectedUnwrittenReview(){
-                return this.$store.state.commentStore.selectedUnwrittenReview.myGoods;
-            }
+            clearValue(){
+                if(!this.$store.state.commentStore.isModalOpen){
+                    this.clearPlease();
+                }
+
+                return this.$store.state.commentStore.isModalOpen;
+            },
         },
         methods: {
+            closeReviewModal(){
+                this.open = false;
+            },
             handleRate(evt, props) {
-                this.myGrade = props.rating;
-                this.payload = props;
+                this.writeReview.myGrade = props.rating;
+                this.writeReview.payload = props;
             },
             inputPhoto(){
                 alert('click');
             },
-  },
+            clearPlease(){
+                    this.writeReview = {
+                        myGrade: 0,
+                        payload: {},
+                        deleveryValue:'',
+                        designValue:'',
+                        sizeValue:'',
+                        reviewContent:'',
+                    };
+            }
+        },
+        mounted(){
+            
+        },
+        watch:{
+            writeReview:function(){
+                this.$emit('setReview',this.writeReview);
+            }
+        }
     }
 </script>
 
 <style scoped>
+    h6{
+        display: none;
+    }
+
     #write-review{
         padding: 2% 2% 3% 2%;
         margin-left: 2%;
@@ -179,6 +217,10 @@
         width: 95%;
         height: 100px;
         resize: none;
+    }
+
+    img{
+        margin-right: 2%;
     }
 
 </style>
