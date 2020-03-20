@@ -5,7 +5,7 @@
                 <p class="spot-properties-contents">받으시는 분</p>
             </div>
             <div>
-            <input type="text">
+            <input type="text" v-model="targetShippingSpot.receiverName">
             </div>
         </div>
         
@@ -14,7 +14,7 @@
                 <p class="spot-properties-contents">배송지명</p>
             </div>
             <div>
-            <input type="text">
+            <input type="text" v-model="targetShippingSpot.spotName">
             </div>
         </div>
         <div class="row-wrap">
@@ -22,9 +22,7 @@
                 <p class="spot-properties-contents">연락처</p>
             </div>
             <div>
-            <input type="text" size="5">
-            <input type="text" size="6" style="margin-left:5px;">
-            <input type="text" size="6" style="margin-left:5px;">
+            <input type="text" v-model="targetShippingSpot.lineNumber">
             </div>
         </div>
         <div class="row-wrap">
@@ -32,9 +30,7 @@
                 <p class="spot-properties-contents">휴대폰</p>
             </div>
             <div>
-            <input type="text" size="5">
-            <input type="text" size="6" style="margin-left:5px;">
-            <input type="text" size="6" style="margin-left:5px;">
+            <input type="text" v-model="targetShippingSpot.phoneNumber">
             </div>
         </div>
         <div class="row-wrap">
@@ -42,7 +38,7 @@
                 <p class="spot-properties-contents">도로명 주소</p>
             </div>
             <div>
-            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;">
+            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" v-model="targetShippingSpot.roadAddress">
             <button class="address-search-btn">주소검색</button>
             </div>
         </div>
@@ -51,7 +47,7 @@
                 <p class="spot-properties-contents">지번 주소</p>
             </div>
             <div>
-            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;">
+            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" v-model="targetShippingSpot.zipcodeAddress">
             </div>
         </div>
     </div>
@@ -59,7 +55,15 @@
 
 <script>
     export default {
-        name: "ShippingSpotForm"
+        name: "ShippingSpotForm",
+        props: [
+            'targetShippingSpot',
+        ],
+        data() {
+            return {
+
+            }
+        }
     }
 </script>
 

@@ -13,16 +13,18 @@ const routes = [
     {path: '/', component: MainPage},
     {path: '/login', component: LoginForm},
     {path: '/signup', component: SignUpPage},
-    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent'}},
-    {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm', userInfo: true}},
-    {path: '/inquiryAnswer', component: MyPage, props:{selectedComponent:'InquiryAnswer', userInfo: true}},
-    {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview',userInfo: true}},
+    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent', userInfo:false}},
+    {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'}},
+    {path: '/inquiryAnswer', component: MyPage, props:{selectedComponent:'InquiryAnswer'}},
+    {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
     {path: '/goodsDetail/:goodsCode', component: GoodsDetailPage},
     {path: '/cart', component: MyCart},
     {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}},
     {path: '/wishlist', component: MyPage, props:{selectedComponent: 'Wishlist'}},
-    {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList', userInfo:true}},
-    {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch', userInfo: true}}
+    {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList'}},
+    {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch'}},
+    {path: '/answer/:id', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'}},
+    {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'}}
 ]
 
 export default new VueRouter({

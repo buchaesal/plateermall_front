@@ -5,6 +5,8 @@ import RecentSawListStore from "./RecentSawListStore";
 import ShippingSpotListStore from './ShippingSpotListStore';
 import CancelExchangeReturnStore from './CancelExchangeReturnStore';
 import PurchaseHistoryStore from './PurchaseHistoryStore';
+import WishListStore from "./WishListStore";
+
 import Vuex from 'vuex';
 import Vue from 'vue';
 
@@ -19,5 +21,7 @@ export default new Vuex.Store({
         shippingSpotListStore: ShippingSpotListStore,
         cancelExchangeReturnStore: CancelExchangeReturnStore,
         purchaseHistoryStore: PurchaseHistoryStore,
+        wishListStore: WishListStore,
+
     }
 })

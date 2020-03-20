@@ -2,7 +2,7 @@
        <div id='unwritten-review'>
         <p>- 구매하신 상품의 상품평을 등록하실 수 있습니다. 판매가 종료된 상품은 목록에서 보이지 않습니다.</p>
         <p>- 상품평을 작성하시면 L.POINT를 적립하여 드립니다.</p>
-        <h1>{{isModalOpen}}</h1>
+        <h6>{{isModalOpen}}</h6>
         <div class='unwritten-summary'>
             <p id='unwritten-count'>미작성 상품평 <strong>{{getRequestUnWrittenReviews.unWrittenCount}}</strong>건</p>
         </div>
@@ -79,7 +79,7 @@ import ReviewForm from './ReviewForm.vue'
                 this.$store.commit('changeCommentValue', this.review);
                 this.closeReviewModal();
             },
-            
+
             settingReview(sendReview){
                 this.review = sendReview;
             }
@@ -102,6 +102,10 @@ import ReviewForm from './ReviewForm.vue'
 </script>
 
 <style scoped>
+    h6{
+        display: none;
+    }
+
     #unwritten-review{
         padding: 2%;
     }

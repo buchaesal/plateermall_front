@@ -30,10 +30,18 @@
     import Wishlist from '../Wishlist';
     import OrderList from "../OrderList";
     import CancelSearch from "../CancelSearch";
+    import InquiryAnswerPost from "../../faq/InquiryAnswerPost";
+    import MyPageMain from "./MyPageMain";
 
     export default {
         name: "Main",
-        props: ['selectedComponent', 'userInfo'],
+        props: {
+            userInfo:{
+                type: Boolean,
+                default: true
+            },
+            selectedComponent: String
+        },
         components: {
             Header,
             Footer,
@@ -47,7 +55,9 @@
             InquiryAnswer,
             Wishlist,
             OrderList,
-            CancelSearch
+            CancelSearch,
+            InquiryAnswerPost,
+            MyPageMain
         }
     }
 </script>
