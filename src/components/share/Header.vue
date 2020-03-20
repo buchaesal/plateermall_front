@@ -32,9 +32,14 @@
         z-index: 100;
     }
 
+    MidHeader {
+        min-width: 1500px;
+    }
+
     .bottom-header {
         background-color: black;
         height: 60px;
+        min-width: 1500px;
     }
 
 </style>
