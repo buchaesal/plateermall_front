@@ -58,6 +58,11 @@
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/'+goodsCode);
             },
+        },
+        computed: {
+            wishList: function () {
+                //store 등록
+            }
         }
     }
 </script>
