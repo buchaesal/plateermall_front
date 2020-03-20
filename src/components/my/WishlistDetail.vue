@@ -56,9 +56,6 @@
                     price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 return price;
             },
-            goToGoodsDetail(goodsCode) {
-                this.$router.push('/goodsDetail/'+goodsCode);
-            },
         },
         computed: {
             wishList: function () {
