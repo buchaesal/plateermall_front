@@ -75,7 +75,7 @@
                     <p>지번 주소 : {{shippingSpot.zipcodeAddress}}</p>
                 </div>
             </sui-table-cell>
-            <sui-table-cell><button class="modify-btn">삭제</button></sui-table-cell>
+            <sui-table-cell><button class="modify-btn" @click="deleteShippingSpot(index)">삭제</button></sui-table-cell>
         </sui-table-row>
 
     </sui-table-body>
@@ -101,7 +101,7 @@ export default {
     data() {
       return {
           createNewShippingSpot: false,
-
+          shippingSpots: [],
           defaultShippingSpot: {},
           otherShippingSpots: [],
           shippingSpotSize: -1,
@@ -127,6 +127,7 @@ export default {
             // this.$store.commit('closeShippingSpotForm');
         },
         setDefaultShoppingSpot() {
+            //
             console.log(this.defaultShippingSpot);
             if(this.checkedRadio == "defaultShippingSpot"){
                 alert("기본 배송지입니다.")
@@ -150,6 +151,7 @@ export default {
             this.filterDefaultAndOtherSpots();
         },
         filterDefaultAndOtherSpots(){
+            //
             this.shippingSpots = this.$store.state.shippingSpotListStore.shippingSpotList;
             this.shippingSpotSize = this.shippingSpots.length;
             this.otherShippingSpots = [];
@@ -167,18 +169,25 @@ export default {
         closeModifyDefultSpotForm(){
             this.openModifyShippingSpotFormFlag = false;
         },
+        deleteShippingSpot(index){
+            // alert(index);
+            this.otherShippingSpots.splice(index, 1);
+            // 값이 변경되면 바로 업데이트하는지 확인해보기
+
+        },
     },
     computed: {
-       getIsOpenShippingSpotForm(){
-           console.log('flag에 직접 접근' + this.$store.state.shippingSpotListStore.isOpenShippingSpotForm);
-           console.log('getters를 통해 값에 접근' + this.$store.getters.getIsOpenShippingSpotForm);
-        //    console.log(this.$store.getters['shippingSpotListStore/getIsOpenShippingSpotForm']); 
-        //   return this.$store.state.shippingSpotListStore.getters.getIsOpenShippingSpotForm;
-            return this.$store.getters.getIsOpenShippingSpotForm; //값이 바뀌었을 때 getters를 호출할까? 잘 호출한다!
-       },
-       retrieveShippingSpotList() {
-           return this.$store.getters.getShippingSpotList;
-       }
+    //    getIsOpenShippingSpotForm(){
+    //        console.log('flag에 직접 접근' + this.$store.state.shippingSpotListStore.isOpenShippingSpotForm);
+    //        console.log('getters를 통해 값에 접근' + this.$store.getters.getIsOpenShippingSpotForm);
+    //     //    console.log(this.$store.getters['shippingSpotListStore/getIsOpenShippingSpotForm']); 
+    //     //   return this.$store.state.shippingSpotListStore.getters.getIsOpenShippingSpotForm;
+    //         return this.$store.getters.getIsOpenShippingSpotForm; //값이 바뀌었을 때 getters를 호출할까? 잘 호출한다!
+    //    },
+    //    retrieveShippingSpotList() {
+    //        return this.$store.getters.getShippingSpotList;
+    //    }
+
     },
     created: function(){
         this.setShippingSpotList();
