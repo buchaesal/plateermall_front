@@ -37,12 +37,12 @@
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:20%;">
-                                            <sui-segment @click="getGoodsDetail(cart.goodsCode)">
+                                            <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
                                                 <sui-image :src="cart.imgUrl"  class="cart-img" />
                                             </sui-segment>
                                         </sui-grid-column>
                                         <sui-grid-column style="width:40%;">
-                                            <sui-segment>
+                                            <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
                                                 <p style="font-family:Georgia, serif;">{{cart.title}}</p>
                                             </sui-segment>
                                         </sui-grid-column>
@@ -271,8 +271,8 @@
                 });
                 this.$store.commit('containWishList', goodsCodeArr);
             },
-            getGoodsDetail(goodsCode) {
-                alert(goodsCode);
+            goToGoodsDetail(goodsCode) {
+                this.$router.push('/goodsDetail/' + goodsCode);
             },
             buyCartList() {
 
