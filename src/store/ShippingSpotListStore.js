@@ -2,7 +2,6 @@ import ShippingSpotListApi from "../api/ShippingSpotListApi"
 
 const state = {
     shippingSpotList: [],
-    isOpenShippingSpotForm: false,
 }
 
 const getters = {
@@ -10,10 +9,7 @@ const getters = {
 }
 
 const mutations = {
-    setDefaultShippingSpotList(state){
-        state.shippingSpotList = new ShippingSpotListApi().shippingSpotList;
-    },
-    setNewShippingSpotList(state, list){
+    updateShippingSpotList(state, list){
         state.shippingSpotList = list;
     },
     getShippingSpotListFromApi(state){

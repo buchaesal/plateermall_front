@@ -1,7 +1,7 @@
 import WishListApi from "../api/WishListApi"
 
 const state = {
-    wishList: [],
+    wishListGoodsCodes: [],
 }
 
 const getters = {
@@ -11,9 +11,7 @@ const getters = {
 const mutations = {
     getWishListFromApi(state){
         let wishListApi = new WishListApi();
-        // console.log('WishListApi' + wishListApi)
-        state.wishList = wishListApi.getWishList();
-        // console.log('WishListStore' + state.wishList);
+        state.wishListGoodsCodes = wishListApi.getWishListGoodsCodes();
     }
 }
 
