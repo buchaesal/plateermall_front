@@ -148,14 +148,19 @@
                                     dismissable
                                     @dismiss="handleDismiss(index)"
                             >
-                                <div class="amount">
-                                    <sui-button circular icon='plus' class="ico-plus"
-                                                @click="OptionQuantityPlus(index)"/>
-                                    <input type="number" transparent class="output" :value="option.quantity" disabled>
-                                    <sui-button circular icon='minus' class="ico-minus"
-                                                @click="OptionQuantityMinus(index)"/>
-                                    <span>{{priceFormatting(selectedOptions[index].price)}}</span>
-                                    <span class="unit">원</span>
+                                <div class="option-body">
+                                    <div class="amount">
+                                        <sui-button circular icon='plus' class="ico-plus"
+                                                    @click="OptionQuantityPlus(index)"/>
+                                        <input type="number" transparent class="output" :value="option.quantity"
+                                               disabled>
+                                        <sui-button circular icon='minus' class="ico-minus"
+                                                    @click="OptionQuantityMinus(index)"/>
+                                    </div>
+                                    <div class="option-price">
+                                        <span>{{priceFormatting(selectedOptions[index].price)}}</span>
+                                        <span class="unit">원</span>
+                                    </div>
                                 </div>
                             </sui-message>
                         </div>
@@ -864,7 +869,7 @@
         display: inline-block;
         position: relative;
         width: 100px;
-        margin-top: 7px;
+        margin-top: 20px;
         vertical-align: middle;
     }
 
@@ -874,6 +879,7 @@
         display: inline-block;
         vertical-align: middle;
         font-size: 0.7rem;
+        margin-top: 5px;
     }
 
     .amount .ico-minus {
@@ -882,6 +888,15 @@
         display: inline-block;
         vertical-align: middle;
         font-size: 0.7rem;
+        margin-top: 5px;
+    }
+
+    .option-price {
+        display: inline-block;
+        float: right;
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: right;
     }
 
     .cart-or-now {
