@@ -1,4 +1,4 @@
-class CancelGoodsModel{
+class ExchangeGoodsModel{
     
     userId='';
     brand= '';
@@ -6,18 +6,18 @@ class CancelGoodsModel{
     quantity= 0;
     price= '';
     photo= '';
-    cancelDate= '';
+    exchangeDate= '';
     info= '';
 
-    constructor(brand, itemName, quantity, price, photo, cancelDate, info){
+    constructor(brand, itemName, quantity, price, photo, exchangeDate, info){
         this.brand= brand;
         this.itemName = itemName;
         this.quantity = quantity;
         this.price = price;
         this.photo = photo;
-        this.cancelDate = cancelDate;
+        this.exchangeDate = exchangeDate;
         this.info = into;
     }
 }
 
-export default CancelGoodsModel;
+export default ExchangeGoodsModel;

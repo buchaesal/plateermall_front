@@ -1,7 +1,8 @@
 import CommentApi from '../../src/api/CommentApi';
 
 const state = {
-    reviewInfo:{},
+    reviews:[],
+    reviewSummary:{},
     unwrittenReviewsInfo:{},
     myReviewsInfo:{},
     selectedUnwrittenReview:{},
@@ -17,7 +18,8 @@ const mutations = {
     loadCommentByGoodsCode(state, goodsCode){
 
         let commentApi = new CommentApi();
-        state.reviewInfo = commentApi.getReviewsInfo(goodsCode);
+        state.reviews = commentApi.getReviews(goodsCode);
+        state.reviewSummary = commentApi.getReviewSummary(goodsCode);
     },
 
     loadUnwrittenCommentsByUserId(state, userId){
@@ -36,6 +38,15 @@ const mutations = {
 
         let commentApi = new CommentApi();
         state.selectedUnwrittenReview = commentApi.getSeletedUnwrittenReview(reviewCode);
+    },
+
+    increaseRecommendCount(state, index){
+
+        let comment =  state.reviews;
+        let subComment = comment[index];
+
+        subComment.recommendCount += 1;
+        state.reviewInfo = comment;
     }
 }
 
