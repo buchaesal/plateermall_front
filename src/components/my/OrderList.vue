@@ -7,10 +7,7 @@
         <hr>
 
         <div class="my-order-list">
-            <div v-if="sampleData.length<1" class="no-order">
-                <sui-icon name="info" size="huge" circular color="grey"/>
-                <p class="no-order-msg">데이터가 없습니다.</p>
-            </div>
+            <NoItem v-if="sampleData.length<1"></NoItem>
             <div v-else>
                 <div v-for="(cart, index) in sampleData" v-bind:key="index" class="goods-list">
                     <div class="my-order-list-title">
@@ -45,6 +42,7 @@
 <script>
     import FaqHeader from "../faq/FaqHeader";
     import OrderStatusBox from "./OrderStatusBox";
+    import NoItem from "../share/NoItem";
 
     export default {
         name: "OrderList",
@@ -91,7 +89,8 @@
         },
         components: {
             FaqHeader,
-            OrderStatusBox
+            OrderStatusBox,
+            NoItem
         }
     }
 </script>
@@ -102,18 +101,6 @@
         border-bottom: 1px solid rgba(179, 179, 179, 0.58);
     }
 
-
-    .no-order {
-        width: 100%;
-        text-align: center;
-        margin-top: 100px;
-    }
-
-    .no-order-msg {
-        margin-top: 50px;
-        font-weight: bold;
-        color: gray;
-    }
 
     .my-order-list-title {
         background-color: GhostWhite;

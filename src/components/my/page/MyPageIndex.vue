@@ -35,7 +35,13 @@
 
     export default {
         name: "Main",
-        props: ['selectedComponent', 'userInfo'],
+        props: {
+            userInfo:{
+                type: Boolean,
+                default: true
+            },
+            selectedComponent: String
+        },
         components: {
             Header,
             Footer,
