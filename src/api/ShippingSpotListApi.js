@@ -1,5 +1,17 @@
 import ShippingSpotModel from "../components/my/model/ShippingSpotModel";
+import request,{COMMENTS_URL} from './axios';
 
+export const requestShippingSpot = function () {
+
+    request.get(COMMENTS_URL + `/getshippingspotlist`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+
+}
 class ShippingSpotListApi {
     shippingSpotList = [];
 
