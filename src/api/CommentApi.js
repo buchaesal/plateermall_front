@@ -40,8 +40,8 @@ export const requestComments = function(item){
 }
 
 class CommentApi{
-    reviewInfo={
-        reviews : [
+
+        reviews= [
             {
                 reviewCode: '1',
                 starCount: 5,
@@ -49,7 +49,8 @@ class CommentApi{
                 content: '발 볼이 생각보다 좁아서 아프네요. 사이즈는 5mm정도 작게 나온 것 같아요.',
                 photo: require('./../assets/review.jpg'),
                 id: '선경',
-                writeDate: '2020.03.16'
+                writeDate: '2020.03.16',
+                recommendCount: 30,
             },
             {
                 reviewCode: '2',
@@ -58,23 +59,26 @@ class CommentApi{
                 content: '음 글쎄 잘 모르겠어요',
                 photo: require('./../assets/review.jpg'),
                 id: 'testreview',
-                writeDate: '2020.03.16'
+                writeDate: '2020.03.16',
+                recommendCount: 20,
             },
-        ],
+        ]
 
-        customerCount : 2,
-        averageStarPoint : 4,
+        reviewSummary={
+            customerCount : 2,
+            averageStarPoint : 4,
+            
+            deliveryCommon: 60,
+            deliveryBest: 0,
+            deliveryWorst: 0,
+            designCommon: 20,
+            designBest: 50,
+            designWorst: 0,
+            sizeCommon: 20,
+            sizeBest: 50,
+            sizeWorst: 0,
+        }
         
-        deliveryCommon: 60,
-        deliveryBest: 0,
-        deliveryWorst: 0,
-        designCommon: 20,
-        designBest: 50,
-        designWorst: 0,
-        sizeCommon: 20,
-        sizeBest: 50,
-        sizeWorst: 0
-    }
 
     unWrittenReviewsInfo= {
         unWrittenCount: 2,
@@ -131,11 +135,16 @@ class CommentApi{
         },
     }
 
-    getReviewsInfo(goodsCode){
+    getReviews(goodsCode){
         console.log(goodsCode);
-        return this.reviewInfo;
+        return this.reviews;
     }
 
+    getReviewSummary(goodsCode){
+        console.log(goodsCode);
+        return this.reviewSummary;
+    }
+    
     getUnwrittenReviewsInfo(userId){
 
         console.log(userId);
@@ -152,6 +161,12 @@ class CommentApi{
         
         console.log(reviewCode);
         return this.selectedUnWrittenReview;
+    }
+
+    getSelectedRecommendCount(reviewCode){
+
+        console.log(reviewCode);
+        return this.selectedReviewRecommendCount;
     }
 }
 

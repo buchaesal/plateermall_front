@@ -11,7 +11,7 @@
         <div class='options'>
             <sui-dropdown style="margin-right: 3%;" text="옵션보기"
                 selection
-                v-model="current"
+                v-model="currentOption"
             />
 
             <sui-dropdown text="전체보기"
@@ -24,7 +24,7 @@
         <br>
         <div class='review-list'>
             <sui-item-group divided>
-                <sui-item v-for='(review, index) in getRequestComments.reviews' :key='index'>
+                <sui-item v-for='(review, index) in getRequestComments' :key='index'>
                     <sui-item-content>
                     <sui-item-header><sui-rating id="starAvg" :rating="review.starCount" :max-rating="5" /> {{review.option}}</sui-item-header>
                     <sui-item-meta>
@@ -33,7 +33,7 @@
                         <p>{{review.id}} | {{review.writeDate}}</p>
 
                         <span class='recommend-review'><sui-button size="tiny" floated="right" basic content="신고 하기"/></span>
-                        <span class='report-review'><sui-button @click="recommendComment(review.reviewCode)" size="tiny"  icon="thumbs up outline" floated="right" basic content="추천해요"/></span>
+                        <span class='report-review'><sui-button @click="recommendComment(index)" size="tiny"  icon="thumbs up outline" floated="right" basic>추천하기{{review.recommendCount}}</sui-button></span>
                     </sui-item-meta>
                 <sui-item-description>
             </sui-item-description>
@@ -54,6 +54,7 @@
         data(){
             return{
                 currentOrderRating: null,
+                currentOption: null,
                 options: [
                     {
                         text: '전체보기',
@@ -76,13 +77,13 @@
         },
         computed: {
             getRequestComments(){
-                return this.$store.state.commentStore.reviewInfo;
+                return this.$store.state.commentStore.reviews;
             },
 
         },
         methods:{
-            recommendComment(reviewCode){
-                alert(reviewCode);
+            recommendComment(index){
+                this.$store.commit('increaseRecommendCount', index);
             }
         }
     }
