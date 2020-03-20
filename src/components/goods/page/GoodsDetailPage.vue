@@ -152,7 +152,6 @@
                                     <input transparent class="output" :value="option.qauantity">
                                     <sui-button circular icon='minus' class="ico-minus"/>
                                 </div>
-
                             </sui-message>
                         </div>
                         <div class="subtotal" id="priceSumInfo">
@@ -429,7 +428,6 @@
                 ],
                 orderSumQuantity: 1,
                 orderSumPrice: 0,
-                optionSelectBoxVisible: [],
             }
         },
         methods: {
@@ -463,9 +461,6 @@
                 this.selectedOptions = addOptions;
 
 
-            },
-            handleDismiss(index) {
-                this.optionSelectBoxVisible[index] = false;
             },
             onShareList() {
                 this.shareDisplay = true;
@@ -704,8 +699,11 @@
         color: #000;
     }
 
+    .tooltip .benefit-list .cards p:first-child {
+        margin-top: 0;
+    }
+
     .tooltip .benefit-list {
-        overflow: auto;
         font-size: 14px;
     }
 
@@ -721,28 +719,24 @@
         color: #000;
     }
 
-    .tooltip .benefit-list .cards {
-        float: left;
-    }
-
     .tooltip .benefit-list .list-square {
         margin-bottom: 32px;
         padding-top: 20px;
-        padding-bottom: 12px;
         border-bottom: 0;
     }
 
     .tooltip .tooltip-conts {
         position: absolute;
-        top: 20px;
+        top: 25px;
         right: -160px;
-        z-index: 100;
+        z-index: 50;
         width: 282px;
         padding: 24px;
         border: 1px solid #b3b3b3;
         background: #fff;
         color: #666;
         text-align: left;
+        display: block;
     }
 
     .oners-txt {
