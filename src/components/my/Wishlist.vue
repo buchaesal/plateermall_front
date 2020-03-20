@@ -10,7 +10,10 @@
         <div v-if="active=='상품'">
             <WishlistDetail/>
         </div>
-        <NoItem v-if="active=='브랜드'"></NoItem>
+        <div v-if="active=='브랜드'">
+            <NoItem></NoItem>
+        </div>
+
 
         <br><br>
 
