@@ -288,6 +288,7 @@ class GoodsApi {
         copy: "새 신을 신고 뛰어보자 폴짝",
         title: "W 에어 맥스 97 트리플 화이트 921733-100",
         originalPrice: 199000,
+        shippingFee: 3000,
         dcRate: 10,
         saleCnt: 53,
         shippingDays: 3,
