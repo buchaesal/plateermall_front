@@ -138,6 +138,7 @@
                     </div>
                 </div>
             </sui-container>
+            <!--
             <div>
                 <sui-button @click="addCartList">장바구니 추가</sui-button>
             </div>
@@ -157,6 +158,7 @@
                     <hr/>
                 </div>
             </div>
+            -->
         <Footer></Footer>
     </div>
 </template>
