@@ -4,26 +4,24 @@
             <div class="min_inner">
                 <ul class="foot_links">
                     <li>
-                        <a href="https://www.lotteshopping.com" target="_blank" title="(주)롯데쇼핑">
-                            <strong>롯데쇼핑(주)</strong>
+                        <a href="javascript:void(0);" title="(주)플래티어쇼핑">
+                            <strong>플래티어쇼핑(주)</strong>
                         </a>
                     </li>
-                    <li><a href="http://www.lpoint.com/view/interface/link.jsp?reUrl=/app/affiliate/HPAA100100.do?tracking=EL_FOOTER_02" target="_blank" title="LPOINT 회원소개">LPOINT 회원소개</a></li>
-                    <li class="privacy"><a href="//members.ellotte.com/members-fo/join/privacy" target="_self" title="개인정보처리방침"><strong>개인정보처리방침</strong></a></li>
-                    <li><a href="//members.ellotte.com/members-fo/join/youthProtection" target="_self" title="청소년보호방침">청소년보호방침</a></li>
-                    <li><a href="//common.ellotte.com/common-fo/feedback/customer?bypass" target="_blank" title="고객의견" id="cm_customer-feedback">고객의견</a></li>
-                    <li><a href="//members.ellotte.com/members-fo/staff/execJoin" target="_self" title="임직원인증">임직원인증</a></li>
+                    <li><a href="javascript:void(0);" title="LPOINT 회원소개">LPOINT 회원소개</a></li>
+                    <li class="privacy"><a href="javascript:void(0);" title="개인정보처리방침"><strong>개인정보처리방침</strong></a></li>
+                    <li><a href="javascript:void(0);" title="청소년보호방침">청소년보호방침</a></li>
+                    <li><a href="javascript:void(0);" title="고객의견" id="cm_customer-feedback">고객의견</a></li>
+                    <li><a href="javascript:void(0);" title="임직원인증">임직원인증</a></li>
                     <li id="dpsLocationReceiptPopup"><a href="javascript:void(0);">입점상담</a></li>
                 </ul>
                 <div class="dropdown_list">
                     <sui-dropdown text="패밀리 사이트">
                         <sui-dropdown-menu>
-                            <sui-dropdown-item>롯데지주</sui-dropdown-item>
-                            <sui-dropdown-item>롯데건설</sui-dropdown-item>
-                            <sui-dropdown-item>롯데글로벌로지스</sui-dropdown-item>
-                            <sui-dropdown-item>롯데기공</sui-dropdown-item>
-                            <sui-dropdown-item>롯데비피화학</sui-dropdown-item>
-                            <sui-dropdown-item>롯데렌탈</sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://plateer.com">(주)플래티어</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://www.mousoft.co.kr/">모우소프트</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://sys4u.kr/">플래티어 모바일</a></sui-dropdown-item>
+                            <sui-dropdown-item><a href="http://wiki.sys4u.co.kr/#all-updates">SYS4U OPEN WIKI</a></sui-dropdown-item>
                         </sui-dropdown-menu>
                     </sui-dropdown>
                 </div>
@@ -31,20 +29,21 @@
         </div>
 
         <div class="foot_info">
-            <div class="inner-info-img"><img class="lotteDepartmentStoreLogo" src="https://1.cms.s81c.com/sites/default/files/2018-11-12/image_lottedpt_logo%20copy.png"></div>
+            <div class="inner-info-img"><img class="lotteDepartmentStoreLogo" src="../../assets/intro_logo.png"></div>
             <div class="inner-info">
                 <div class="inner-1st">
-                    <p class="shopping-title">롯데쇼핑주식회사</p>
-                    롯데쇼핑(주) 대표이사 강희태, 서울시 중구 소공동 1번지<br>
-                    사업자등록번호 : 104-81-26067(롯데쇼핑㈜ 백화점 사업본부)<br>
-                    통신판매업신고 : 중구 01243호<br>
-                    개인정보보호책임자: 박광석 청소년보호책임자 : 김진수 <br><br>
-                    Copyright 2018. LOTTESHOPPING Co., LTD. All rights reserved.<br>
+                    <p class="shopping-title">(주)플래티어</p>
+                    서울시 송파구 법원로9길 26 H Business Park D동 6층<br><br>
+                    통신판매업신고 : 송파 01234호<br><br>
+                    개인정보보호책임자 : 손성관 책임<br>
+                    교육총괄담당자 : Nextree 박상현 선임<br>
+                    신입사원보호책임자 : 손성관 책임<br><br>
+                    Copyright ⓒ 2020 PLATEER. All rights reserved.<br>
                 </div>
                 <div class="inner-2st">
-                    고객만족센터 : 1899-2500 (FAX: 02-3675-2500/E-mail: ellotte@lotte.net)<br>
-                    운영시간 : 평일(09시-18시) 주말/공휴일(휴무)<br>
-                    호스팅 서비스 사업자 : 롯데쇼핑㈜ e커머스 사업본부<br>
+                    전화 :
+                    TEL  02-554-4668,
+                    FAX  02-554-4583<br>
                 </div>
                 <div class="inner-3st">
                     <br>
@@ -209,5 +208,11 @@
     .awards-list li>img {
         vertical-align: center;
     }
+
+    /*#footer {*/
+    /*    position:absolute;*/
+    /*    bottom:0;*/
+    /*    width:100%;*/
+    /*}*/
 
 </style>

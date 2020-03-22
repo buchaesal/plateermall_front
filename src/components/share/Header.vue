@@ -28,14 +28,18 @@
         position: -webkit-sticky;
         position: sticky;
         top: 0;
-        background-color: white;
         z-index: 100;
+        background-color: white;
+    }
+
+    MidHeader {
+        min-width: 1500px;
     }
 
     .bottom-header {
-
         background-color: black;
         height: 60px;
+        min-width: 1500px;
     }
 
 </style>

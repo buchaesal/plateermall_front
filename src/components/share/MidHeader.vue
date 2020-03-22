@@ -1,17 +1,17 @@
 <template>
     <div class="search_box">
-        <img @click="goToHome" class="ellotte-img" src="https://image.ellotte.com/ellt.static.lotteeps.com/common/logo/logo_01231535202.png">
+        <img @click="goToHome" class="logo-img" src="../../assets/PlateerMall.png">
 
         <div class="util">
             <div class="search_area">
-                <input type="text" placeholder="아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
+                <input type="text" placeholder="  아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
                 <sui-icon name="search" class="search_btn" size="large"/>
             </div>
         </div>
 
         <div class="my_info">
-            <a href="#"><sui-icon name="user" size="large"/></a>
-            <a href="#"><sui-icon name="heart" size="large"/></a>
+            <router-link to="/myPageMain"><sui-icon name="user" size="large"/></router-link>
+            <router-link to="/wishlist"><sui-icon name="heart" size="large"/></router-link>
             <router-link to="/cart"><sui-icon name="shopping bag" size="large"/></router-link>
         </div>
     </div>
@@ -30,7 +30,7 @@
 
 <style scoped>
 
-    .ellotte-img {
+    .logo-img {
         cursor: pointer;
     }
 
@@ -56,6 +56,7 @@
         vertical-align: bottom;
         top: 5px;
         margin: 0;
+        margin-right: 20px;
         padding: 0;
         min-width: 52px;
         max-width: 128px;

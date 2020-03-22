@@ -3,15 +3,15 @@
         <p>- 작성하신 상품평 내역을 조회하실 수 있습니다. 판매가 종료된 상품은 목록에서 보이지 않습니다.
 
         <div class='summary'>
-            <p id='my-review-count'>작성한 상품평 <strong>{{reviewCount}}</strong>건</p>
+            <p id='my-review-count'>작성한 상품평 <strong>{{getRequestMyReviews.reviewCount}}</strong>건</p>
         </div>
-        
+
         <div class='my-review-list'>
-            <p id='no-review' v-if='reviewCount == 0'>작성한 상품평이 없습니다.</p>
-        
+            <p id='no-review' v-if='getRequestMyReviews.reviewCount == 0'>작성한 상품평이 없습니다.</p>
+
             <div v-else>
                 <sui-item-group divided>
-                    <sui-item class='review-item'  v-for='(review, index) in myReviews' :key='index'>
+                    <sui-item class='review-item'  v-for='(review, index) in getRequestMyReviews.myReviews' :key='index'>
                     <sui-item-image size="tiny" :src='review.photo'/>
                     <sui-item-content class='review'>
                         <sui-item-header>{{review.brand}}</sui-item-header>
@@ -27,13 +27,11 @@
                         </sui-item-description>
                     </sui-item-content>
                     </sui-item>
-                </sui-item-group>            
+                </sui-item-group>
             </div>
 
         </div>
     </div>
-
-
 </template>
 
 <script>
@@ -41,23 +39,15 @@
         name: "Sample",
         data(){
             return{
-                reviewCount: 2,
-                myReviews:[
-                    {
-                        brand: '나이키',
-                        itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
-                        option: '사이즈 선택: 235',
-                        content: '발 볼이 생각보다 좁아서 아프네요. 사이즈는 5mm정도 작게 나온 것 같아요.',
-                        photo: require('./img/review.jpg'),
-                    },
-                    {
-                        brand: '나이키',
-                        itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
-                        option: '사이즈 선택: 235',
-                        content: '발 볼이 생각보다 좁아서 아프네요. 사이즈는 5mm정도 작게 나온 것 같아요.',
-                        photo: require('./img/review.jpg'),
-                    }
-                ],
+                
+            }
+        },
+        created(){
+            this.$store.commit('loadMyCommentsByUserId', 'testId');
+        },
+        computed:{
+            getRequestMyReviews(){
+                return this.$store.state.commentStore.myReviewsInfo;
             }
         }
     }
@@ -101,7 +91,7 @@
         padding: 1%;
         border-bottom: 1px solid #ededed;
     }
-    
+
     .itemName{
         font-size: 13px;
     }

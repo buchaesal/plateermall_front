@@ -4,24 +4,24 @@
         <div class="fix-inner">
             <section class="goods-detail">
                 <div class="gallery">
-                    <img :src="goodsData.imgUrl" width="714px">
+                    <img :src="getGoodsData.imgUrl" width="714px">
                 </div>
                 <div class="info">
                     <p class="seller">
-                        <a href="#">{{goodsData.seller}}</a>
+                        <a href="#">{{getGoodsData.seller}}</a>
                     </p>
-                    <h3 class="title">{{goodsData.title}}</h3>
+                    <h3 class="title">{{getGoodsData.title}}</h3>
                     <div class="price-area">
-                        <p class="discount" v-if="isDiscount(goodsData.dcRate)">
-                            {{goodsData.dcRate}}<span class="unit">%</span>
+                        <p class="discount" v-if="isDiscount(getGoodsData.dcRate)">
+                            {{getGoodsData.dcRate}}<span class="unit">%</span>
                         </p>
                         <p class="price">
-                            {{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}<span class="unit">원</span>
+                            {{priceFormatting(pricing(getGoodsData.originalPrice, getGoodsData.dcRate))}}<span
+                                class="unit">원</span>
                         </p>
                         <ul class="utils">
-                            <li class="share">
-                                <button class="circular ui icon basic button btn-share" @click="shareBtnClick">
+                            <li class="share" @mouseover="onShareList" @mouseleave="offShareList">
+                                <button class="circular ui icon basic button btn-share">
                                     <i class="share alternate icon"></i>
                                 </button>
                                 <ul class="share-list" v-if="shareDisplay">
@@ -61,19 +61,27 @@
                     <div class="summary">
                         <dl class="detail">
                             <dt>카드할인</dt>
-                            <dd><span id="dcMaxInfoTxt">KB국민카드 10%청구할인</span>
+                            <dd><span id="dcMaxInfoTxt">{{getGoodsData.cardPromotions[0].card}} {{getGoodsData.cardPromotions[0].percentage}}% 청구할인</span>
                                 <div class="tooltip">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
                                             @mouseleave="offTooltip1"><i class="info icon"></i>
                                     </button>
                                     <div role="tooltip" class="tooltip-conts" v-if="tooltip1Display">
                                         <p class="desc-tit">카드 할인 혜택</p>
-                                        <ul class="benefit_list">
+                                        <ul class="benefit-list">
                                             <li><p class="item">청구할인</p>
-                                                <div class="conts"><p>KB국민카드 10%</p>
-                                                    <ul class="bull_list-square">
-                                                        <li>70,000원 이상 10% 청구할인</li>
-                                                        <li>1일 할인한도 최대 70,000원</li>
+                                                <div class="cards"
+                                                     v-for="(cardPromotion, index) in getGoodsData.cardPromotions"
+                                                     :key="index">
+                                                    <p>{{cardPromotion.card}}
+                                                        {{cardPromotion.percentage}}%</p>
+                                                    <ul class="list-square">
+                                                        <li>- {{priceFormatting(cardPromotion.minimum)}}원 이상
+                                                            {{cardPromotion.percentage}}% 청구할인
+                                                        </li>
+                                                        <li>- 1일 할인한도 최대
+                                                            {{priceFormatting(cardPromotion.maximum)}}원
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </li>
@@ -83,17 +91,17 @@
                             </dd>
                             <dt>포인트</dt>
                             <dd class="">
-                        <span class="oners-txt mt-none">롯데 오너스 L.POINT 0.5% 적립
+                        <span class="oners-txt mt-none">플래티어 오너스 L.POINT 0.5% 적립
                         <div class="tooltip tooltip-oners-saving">
                                 <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
                                         @mouseleave="offTooltip2"><i class="info icon"></i>
                                 </button>
                             <div role="tooltip" class="tooltip-conts" v-if="tooltip2Display">
-                            <p class="desc_tit">롯데 오너스 적립 안내</p>
-                                <div class="saving_info">
+                            <p class="desc-tit">플래티어 오너스 적립 안내</p>
+                                <div class="saving-info">
                                     <dl>
                                         <dt>대상회원</dt>
-                                        <dd>롯데 오너스 유료회원 가입</dd>
+                                        <dd>플래티어 오너스 유료회원 가입</dd>
                                     </dl>
                                     <dl>
                                         <dt>적립유형</dt>
@@ -124,37 +132,88 @@
                         </dl>
                     </div>
                     <div class="goods-option">
-                        <div>
-                            <sui-dropdown class="option-select option-dropdown"
+                        <div class="option-select">
+                            <sui-dropdown class="option-dropdown"
                                           placeholder="옵션 선택"
                                           selection
-                                          :options="options"
-                                          v-model="current"
+                                          :options="getGoodsData.options"
+                                          v-model="option"
                             />
                         </div>
-                        <div style="height:64px;">
-                            옵션 선택 목록
+                        <div class="selected-list">
+                            <sui-message
+                                    v-for="(option, index) in selectedOptions"
+                                    :key="index"
+                                    :header="option.name"
+                                    dismissable
+                                    @dismiss="handleDismiss(index)"
+                            >
+                                <div class="option-body">
+                                    <div class="amount">
+                                        <sui-button circular icon='plus' class="ico-plus"
+                                                    @click="OptionQuantityPlus(index)"/>
+                                        <input type="number" transparent class="output" :value="option.quantity"
+                                               disabled>
+                                        <sui-button circular icon='minus' class="ico-minus"
+                                                    @click="OptionQuantityMinus(index)"/>
+                                    </div>
+                                    <div class="option-price">
+                                        <span>{{priceFormatting(selectedOptions[index].price)}}</span>
+                                        <span class="unit">원</span>
+                                    </div>
+                                </div>
+                            </sui-message>
                         </div>
-                        <div style="height:64px;">
-                            가격
+                        <div class="subtotal" id="priceSumInfo">
+                            <input type="hidden" id="orderSumQty" :value="orderSumQuantity">
+                            <p class="price"><span class="item" id="orderSumQtyTxt">총 {{orderSumQuantity}}개 : </span>
+                                <span id="orderDcSumPrcTxt">{{priceFormatting(orderSumPrice)}}</span> <span
+                                        class="unit">원</span></p>
                         </div>
-                        <div style="height:64px;">
-                            배송 방법 선택
+                        <div>
+                            <sui-button-group class="shipping-option">
+                                <sui-button toggle
+                                            content="택배"
+                                            basic="basic"
+                                            :color="radioButtonsColor[0]"
+                                            :active="radioButtons[0]"
+                                            @click="shippingRadio(0)"></sui-button>
+                                <sui-button toggle basic
+                                            content="방문 수령"
+                                            :color="radioButtonsColor[1]"
+                                            :active="radioButtons[1]"
+                                            @click="shippingRadio(1)"></sui-button>
+                                <sui-button toggle basic
+                                            content="빠른 배송"
+                                            :color="radioButtonsColor[2]"
+                                            :active="radioButtons[2]"
+                                            @click="shippingRadio(2)"></sui-button>
+                            </sui-button-group>
                         </div>
-                        <div style="height:64px;">
-                            쇼핑백 / 바로구매
+                        <div>
+                            <sui-button-group class="cart-or-now">
+                                <sui-button color="black" content="쇼핑백"></sui-button>
+                                <sui-button color="blue" content="바로구매"></sui-button>
+                            </sui-button-group>
                         </div>
-                        <div style="height:64px;">
-                            상품 정보
+                        <div class="summary">
+                            <dl class="detail">
+                                <dt>모델번호</dt>
+                                <dd>{{getGoodsData.modelNo}}</dd>
+                                <dt>상품번호</dt>
+                                <dd>{{getGoodsData.goodsCode}}</dd>
+                                <dt>배송정보</dt>
+                                <dd id="deliveryInfoTxt">{{calculateDays(getGoodsData.shippingDays)}} 이내 택배 도착예정<br>(도착
+                                    예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
+                                </dd>
+                            </dl>
                         </div>
-                        <div style="height:64px;">
-                            상품평
+                        <div class="review-summary-box">
+                            <RatingStarPoint class="review-summary"/>
                         </div>
+
                     </div>
-
-
                 </div>
-
             </section>
             <div class="promotion-banner">
                 <div class="banner-text">
@@ -171,14 +230,14 @@
                             </sui-accordion-title>
                             <sui-accordion-content active class="accordion-content">
                                 <p>
-                                    MD공지
+                                    {{getGoodsData.notice}}
                                 </p>
                             </sui-accordion-content>
                         </sui-accordion>
                     </div>
                     <h4 class="subheading">상품 상세 설명</h4>
                     <div class="goods-more-detail">
-                        상품상세
+                        {{getGoodsData.goodsDetail}}
                     </div>
                     <div>
                         <sui-accordion exclusive>
@@ -188,8 +247,9 @@
                             </sui-accordion-title>
                             <sui-accordion-content active class="review-content">
                                 <div>
-                                    <Rating/>
-                                    <ReviewList />
+                                    <RatingStarPoint/>
+                                    <RatingGraph/>
+                                    <ReviewList/>
                                 </div>
                             </sui-accordion-content>
                         </sui-accordion>
@@ -198,7 +258,7 @@
                 </section>
                 <div class="brand-banner">
                     <div class="banner-text">
-                        <a href="#">브랜드 배너</a>
+                        <a href="#">{{getGoodsData.seller}}</a>
                     </div>
                 </div>
                 <div class="detail-tab">
@@ -206,21 +266,13 @@
                         <sui-tab-pane title="구매정보">
                             <table class="ui definition table">
                                 <tbody>
-                                <tr>
-                                    <td class="two wide column">Size</td>
-                                    <td>1" x 2"</td>
+                                <tr class="hidden-tr">
+                                    <td class="two wide column"></td>
                                 </tr>
-                                <tr>
-                                    <td>Weight</td>
-                                    <td>6 ounces</td>
-                                </tr>
-                                <tr>
-                                    <td>Color</td>
-                                    <td>Yellowish</td>
-                                </tr>
-                                <tr>
-                                    <td>Odor</td>
-                                    <td>Not Much Usually</td>
+                                <tr v-for="(row, index) in getGoodsData.infoTable"
+                                    :key="index">
+                                    <td>{{row.head}}</td>
+                                    <td>{{row.body}}</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -238,14 +290,14 @@
                                 <tbody>
                                 <tr>
                                     <td class="two wide column">배송비</td>
-                                    <td>2,500원 (30,000원이상 무료배송)<br>
+                                    <td>{{priceFormatting(getGoodsData.shippingFee)}}원 (30,000원이상 무료배송)<br>
                                         제주/도서산간 지역의 경우, 추가비용 발생 가능
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>배송정보</td>
                                     <td>택배
-                                        03/20(금) 이내 택배 도착예정<br>
+                                        {{calculateDays(getGoodsData.shippingDays)}} 이내 택배 도착예정<br>
                                         (도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
                                     </td>
                                 </tr>
@@ -260,10 +312,10 @@
                                 교환/반품 접수안내
                             </h3>
                             <div>교환/반품 접수 방법 안내
-                                1. 마이롯데 >주문/배송조회로 이동
+                                1. 마이플래티어 > 주문/배송조회로 이동
                                 2. 주문건에서 '교환/반품접수' 버튼 선택
                                 주문배송조회 바로가기
-                                MY LOTTE에서 접수가 어려우신 경우, 엘롯데 고객만족센터 1899-2500 으로 문의하여 주시기 바랍니다.
+                                MY PLATEER에서 접수가 어려우신 경우, 고객만족센터 02-554-4668 으로 문의하여 주시기 바랍니다.
                             </div>
 
                             <h3 is="sui-header" dividing>
@@ -276,10 +328,12 @@
                                     <td>
                                         <div>
                                             <sui-list bulleted>
-                                                <sui-list-item>예상 반품비 : 5,000원, 예상 교환비 : 7,500원 (주문 상품을 1개씩 각각 반품/교환 시
+                                                <sui-list-item>예상 반품비 : {{priceFormatting(getGoodsData.shippingFee)}}원,
+                                                    예상 교환비 : {{priceFormatting(getGoodsData.shippingFee * 2)}}원 (주문 상품을
+                                                    1개씩 각각 반품/교환 시
                                                     상품 별로 발생하는 비용임)
                                                 </sui-list-item>
-                                                <sui-list-item>정확한 반품/교환비는 MY Lotte에서 반품/교환 접수 시 또는 고객센터로 문의 시 확인
+                                                <sui-list-item>정확한 반품/교환비는 MY PLATEER에서 반품/교환 접수 시 또는 고객센터로 문의 시 확인
                                                     가능합니다.
                                                 </sui-list-item>
                                                 <sui-list-item>고객님의 단순변심으로 인하여 교환/반품을 하시는 경우에는 상품등의 반환에 필요한 비용을 고객님이
@@ -305,13 +359,13 @@
                                             <sui-list-item>상품의 상세정보 등이 표기/광고한 내용과 다르거나, 계약내용이 다르게 이행되어 교환/반품을 하는 경우 상품을
                                                 받으신 날부터 3개월 이내 혹은 사실을 알게 된 날 또는 알 수 있었던 날부터 30일 이내 신청 가능합니다.
                                             </sui-list-item>
-                                            <sui-list-item>롯데쇼핑 상품 교환·반품 안내</sui-list-item>
+                                            <sui-list-item>상품 교환·반품 안내</sui-list-item>
                                             <sui-list-item>식품 7일 이내, 의류·보석 15일 이내, 그 밖의 일반 상품 30일 이내 교환 반품 가능합니다.
                                             </sui-list-item>
                                             <sui-list-item>주문제작 상품 등 일부 상품은 교환·반품 기준이 상이할 수 있습니다.</sui-list-item>
                                             <sui-list-item>전자상거래법에 따른 교환·반품 규정이 상품공급업체가 개별적으로 지정한 교환·반품 조건 보다 우선 합니다.
                                             </sui-list-item>
-                                            <sui-list-item>스마트픽 픽업 배송상품은 해당 스마트픽 픽업 지점에 상품도착일로부터 5일까지 픽업 가능합니다. 픽업가능일 경과
+                                            <sui-list-item>방문 수령 픽업 배송상품은 해당 픽업 지점에 상품도착일로부터 5일까지 픽업 가능합니다. 픽업가능일 경과
                                                 시 자동으로 반품되며 반품배송비 차감 후 환불됩니다.
                                             </sui-list-item>
                                         </sui-list>
@@ -334,7 +388,6 @@
                     </sui-tab>
                 </div>
             </div>
-
         </div>
         <Footer></Footer>
         <SideBanner></SideBanner>
@@ -343,57 +396,47 @@
 
 <script>
 
-    import Header from "../share/Header";
-    import Footer from "../share/Footer";
-    import SideBanner from "../share/SideBanner";
-    import Rating from "../comment/Rating";
+    import Header from "../../share/Header";
+    import Footer from "../../share/Footer";
+    import SideBanner from "../../share/SideBanner";
+    import RatingStarPoint from "../../comment/RatingStarPoint";
+    import RatingGraph from "../../comment/RatingGraph";
+    import ReviewList from "../../comment/ReviewList";
 
 
     export default {
         name: "GoodsDetail",
         components: {
-            Rating,
+            RatingStarPoint,
+            RatingGraph,
             Header,
             Footer,
             SideBanner,
+            ReviewList,
         },
         data() {
             return {
-                goodsData: {
-                    imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/00/77/91/03/12/1203917700_1.jpg/chg/resize/308x308/extent/308x308/optimize",
-                    goodsCode: "1203917700",
-                    seller: "SOUP",
-                    copy: "플라워 패턴이 예쁜 원피스",
-                    title: "플라워 원피스",
-                    originalPrice: 49000,
-                    dcRate: 20,
-                    saleCnt: 14,
-                },
-                options: [
-                    {
-                        text: 'S',
-                        value: 1,
-                    },
-                    {
-                        text: 'M',
-                        value: 2,
-                    },
-                    {
-                        text: 'L',
-                        value: 3,
-                    },
-                ],
+                option: null,
+                current: null,
                 shareDisplay: false,
                 isLike: false,
                 tooltip1Display: false,
                 tooltip2Display: false,
+                radioButtons: [true, false, false],
+                radioButtonsColor: ["blue", "grey", "grey"],
+                selectedOptions: [],
+                orderSumQuantity: 0,
+                orderSumPrice: 0,
+                discountedPrice: 0,
             }
         },
         methods: {
+            priceFormatting(price) {
+                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            },
             pricing(originalPrice, dcRate) {
-                var price = originalPrice * (100 - dcRate) / 100;
-                price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                return price;
+                this.discountedPrice = originalPrice * (100 - dcRate) / 100;
+                return this.discountedPrice;
             },
             isDiscount(dcRate) {
                 if (dcRate !== "0" && dcRate !== null && dcRate !== 0) {
@@ -402,8 +445,90 @@
                     return true;
                 }
             },
-            shareBtnClick() {
-                this.shareDisplay = !this.shareDisplay;
+            shippingRadio(index) {
+                let changedRadio = [false, false, false];
+                changedRadio[index] = true;
+                this.radioButtons = changedRadio;
+
+                let changedRadioColor = ["grey", "grey", "grey"];
+                changedRadioColor[index] = "blue";
+                this.radioButtonsColor = changedRadioColor;
+            },
+            addOptions(option) {
+                let addOptions = this.selectedOptions;
+
+                if (addOptions.filter(optionObject => optionObject.name === option).length === 0) {
+                    let data = {
+                        name: option,
+                        quantity: 1,
+                        price: this.discountedPrice,
+                    };
+
+                    addOptions.push(data);
+                    this.selectedOptions = addOptions;
+                }
+            },
+            calculateDays(days) {
+                let week = ['일', '월', '화', '수', '목', '금', '토'];
+
+                let date = new Date();
+                let weekday = date.getDay();
+
+                if (weekday === 0 || weekday === 1) {
+                    days += 2;
+                }
+
+                date.setDate(date.getDate() + days);
+
+                let month = '' + (date.getMonth() + 1);
+                let day = '' + date.getDate();
+
+                if (month.length < 2) {
+                    month = '0' + month;
+                }
+
+                if (day.length < 2) {
+                    day = '0' + day;
+                }
+
+                return month + "/" + day + "(" + week[date.getDay()] + ")";
+            },
+            handleDismiss(index) {
+                if (index > -1) {
+                    this.selectedOptions.splice(index, 1);
+                }
+            },
+            OptionQuantityPlus(index) {
+                this.selectedOptions[index].quantity++;
+                this.optionPricing(index);
+                this.calculateOrderSum();
+            },
+            OptionQuantityMinus(index) {
+                if (this.selectedOptions[index].quantity > 1) {
+                    this.selectedOptions[index].quantity--;
+                    this.optionPricing(index);
+                    this.calculateOrderSum();
+                }
+            },
+            optionPricing(index) {
+                this.selectedOptions[index].price =
+                    this.discountedPrice *
+                    this.selectedOptions[index].quantity
+            },
+            calculateOrderSum() {
+                this.orderSumPrice = 0;
+                this.orderSumQuantity = 0;
+                for (let i = 0; i < this.selectedOptions.length; i++) {
+                    this.orderSumPrice += this.selectedOptions[i].price;
+                    this.orderSumQuantity += this.selectedOptions[i].quantity;
+                }
+                console.log("orderSum: " + this.orderSumPrice)
+            },
+            onShareList() {
+                this.shareDisplay = true;
+            },
+            offShareList() {
+                this.shareDisplay = false;
             },
             likeBtnClick() {
                 this.isLike = !this.isLike;
@@ -411,18 +536,40 @@
             onTooltip1() {
                 this.tooltip1Display = true;
             },
-
             offTooltip1() {
                 this.tooltip1Display = false;
             },
             onTooltip2() {
                 this.tooltip2Display = true;
             },
-
             offTooltip2() {
                 this.tooltip2Display = false;
-            }
+            },
         },
+        created() {
+            this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
+            this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
+            this.$store.commit('addSawList');
+        },
+        computed: {
+            getGoodsData() {
+                let goodsData = this.$store.state.goodsStore.goodsModel
+
+                return goodsData;
+            },
+        },
+        watch: {
+            option: function () {
+                this.addOptions(this.option);
+            },
+            selectedOptions: function () {
+                this.calculateOrderSum();
+            },
+            orderSumPrice: function () {
+            },
+            orderSumQuantity: function () {
+            },
+        }
     }
 </script>
 
@@ -448,7 +595,6 @@
 
     .fix-inner {
         width: 1200px;
-        height: 1800px;
         margin: 0 auto;
         min-height: 600px;
         padding-top: 80px;
@@ -459,9 +605,9 @@
     }
 
     .goods-detail {
-        position: relative;
+        position: static;
         margin-bottom: 80px;
-        height: 45%;
+        overflow: hidden;
     }
 
     .gallery {
@@ -473,7 +619,6 @@
         margin-bottom: 5px;
         font-size: 16px;
         color: #666;
-        position: relative;
     }
 
     .info {
@@ -522,8 +667,8 @@
 
     .share-list {
         position: absolute;
-        top: 40px;
-        right: 0;
+        top: 50px;
+        right: -45px;
         z-index: 11;
         width: 314px;
         padding: 24px 20px 16px;
@@ -533,7 +678,7 @@
     }
 
     .share-list:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         top: -8px;
@@ -565,10 +710,19 @@
         margin-top: 4px;
     }
 
+    .summary {
+        padding: 24px 0;
+        border-top: 1px solid #ededed;
+        border-bottom: 1px solid #ededed;
+        font-size: 12px;
+        line-height: 17px;
+    }
+
     .detail {
         content: "";
         display: block;
         clear: both;
+        height: 90px;
     }
 
 
@@ -594,7 +748,7 @@
 
     .summary button {
         display: inline-block;
-        font-size: 3px;
+        font-size: 0.7em;
     }
 
     .btn-tooltip {
@@ -615,42 +769,44 @@
         color: #000;
     }
 
-    .tooltip .benefit_list {
+    .tooltip .benefit-list .cards p:first-child {
+        margin-top: 0;
+    }
+
+    .tooltip .benefit-list {
         font-size: 14px;
     }
 
-    .tooltip .benefit_list > li {
+    .tooltip .benefit-list > li {
         margin-top: 24px;
         padding-bottom: 16px;
         border-bottom: 1px solid #e6e6e6;
     }
 
-    .tooltip .benefit_list .item {
+    .tooltip .benefit-list .item {
         float: left;
         width: 80px;
         color: #000;
     }
 
-    .benefit_list .conts {
-        float: left;
-    }
-
-    .tooltip .benefit-list .bull-list-square {
+    .tooltip .benefit-list .list-square {
+        margin-bottom: 32px;
         padding-top: 20px;
         border-bottom: 0;
     }
 
     .tooltip .tooltip-conts {
         position: absolute;
-        top: 20px;
-        right: 0;
-        z-index: 100;
+        top: 25px;
+        right: -100px;
+        z-index: 50;
         width: 282px;
         padding: 24px;
         border: 1px solid #b3b3b3;
         background: #fff;
         color: #666;
         text-align: left;
+        display: block;
     }
 
     .oners-txt {
@@ -658,20 +814,101 @@
         color: #773dbd;
     }
 
+    .subtotal {
+        overflow: hidden;
+        margin-bottom: 16px;
+    }
+
+    .subtotal .price {
+        float: right;
+        font-size: 32px;
+        text-align: right;
+    }
+
+    .subtotal .price .item {
+        font-size: 14px;
+    }
+
+    .subtotal .price .unit {
+        font-size: 18px;
+    }
+
     .option-select {
         margin-top: 32px;
+        margin-bottom: 20px;
         width: 100%;
+    }
+
+    .selected-list {
+        margin-bottom: 20px;
+        font-size: 16px;
     }
 
     .option-dropdown {
         width: 100%;
-        margin-bottom: 32px;
+    }
+
+    .shipping-option {
+        width: 100%;
+        height: 3rem;
+        margin-bottom: 20px;
+    }
+
+    .output {
+        display: inline-block;
+        width: 40%;
+        height: 32px;
+        padding: 0 5px;
+        border: 0;
+        text-align: center;
+        vertical-align: middle;
+        background-color: transparent;
+    }
+
+    .amount {
+        display: inline-block;
+        position: relative;
+        width: 100px;
+        margin-top: 20px;
+        vertical-align: middle;
+    }
+
+    .amount .ico-plus {
+        float: right;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0.7rem;
+        margin-top: 5px;
+    }
+
+    .amount .ico-minus {
+        float: left;
+        position: relative;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 0.7rem;
+        margin-top: 5px;
+    }
+
+    .option-price {
+        display: inline-block;
+        float: right;
+        margin-top: 20px;
+        font-size: 18px;
+        text-align: right;
+    }
+
+    .cart-or-now {
+        width: 100%;
+        height: 5rem;
+        margin-bottom: 20px;
     }
 
     .promotion-banner {
-        position: static;
         background-color: rgb(125, 115, 103);
     }
+
     .brand-banner {
         background-color: rgb(125, 115, 103);
     }
@@ -683,11 +920,6 @@
         font-size: 32px;
         line-height: 44px;
         text-align: center;
-    }
-
-    .detail {
-        position: relative;
-        height: 90px;
     }
 
     .accordion-title {
@@ -716,10 +948,31 @@
 
     .detail-tab {
         margin-top: 40px;
+        margin-bottom: 40px;
     }
 
     .summary .detail > dt:not(:first-of-type),
     .summary .detail > dd:not(:first-of-type) {
         padding-top: 16px;
+    }
+
+    .review-summary {
+        float: none !important;
+        overflow: auto;
+    }
+
+    .review-summary-box {
+        padding: 24px 0 27px;
+        font-size: 18px;
+    }
+
+    .hidden-tr {
+        visibility: hidden !important;
+    }
+
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
     }
 </style>

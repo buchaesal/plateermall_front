@@ -3,8 +3,8 @@
     <header>
         <h3 class="page_title">{{ title }}</h3>
         <p class="title_button" v-if="isButton">
-            <a href="https://order.ellotte.com/order-fo/claim/orderDelivery?bypass" class="btn_normal">주문배송조회</a>
-            <a href="https://order.ellotte.com/order-fo/claim/claims?claimType=cancel&amp;bypass" class="btn_normal">취소/교환/반품 조회</a>
+            <router-link to="/orderList" class="btn_normal">주문배송조회</router-link>
+            <router-link to="/cancelSearch" class="btn_normal">취소/교환/반품 조회</router-link>
         </p>
     </header>
     </div>

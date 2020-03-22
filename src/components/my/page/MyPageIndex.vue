@@ -3,7 +3,7 @@
         <Header></Header>
         <div id="container">
             <div class="fix_inner">
-                <div id="user_info">
+                <div id="user_info" v-if="userInfo">
                     <UserInfo></UserInfo>
                 </div>
                 <FaqNav></FaqNav>
@@ -26,10 +26,22 @@
     import FaqCategoryList from "../../faq/FaqCategoryList";
     import DeliveryAndUserInfoManagementTaps from "../DeliveryAndUserInfoManagementTaps";
     import UserInfo from '../UserInfo';
+    import InquiryAnswer from "../../faq/InquiryAnswer";
+    import Wishlist from '../Wishlist';
+    import OrderList from "../OrderList";
+    import CancelSearch from "../CancelSearch";
+    import InquiryAnswerPost from "../../faq/InquiryAnswerPost";
+    import MyPageMain from "./MyPageMain";
 
     export default {
         name: "Main",
-        props: ['selectedComponent'],
+        props: {
+            userInfo:{
+                type: Boolean,
+                default: true
+            },
+            selectedComponent: String
+        },
         components: {
             Header,
             Footer,
@@ -39,7 +51,13 @@
             InquiryForm,
             FaqCategoryList,
             DeliveryAndUserInfoManagementTaps,
-            UserInfo
+            UserInfo,
+            InquiryAnswer,
+            Wishlist,
+            OrderList,
+            CancelSearch,
+            InquiryAnswerPost,
+            MyPageMain
         }
     }
 </script>
@@ -56,7 +74,7 @@
 
     #container {
         width: 100%;
-        min-height: 600px;
+        min-height: 1500px;
         padding-top: 80px;
     }
 
@@ -64,8 +82,5 @@
         float: left;
         width: 996px;
         font-size: 14px;
-    }
-    #user_info{
-
     }
 </style>

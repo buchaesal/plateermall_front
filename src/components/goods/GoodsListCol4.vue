@@ -2,80 +2,19 @@
     <div class="min_inner">
         <h3 class="section_title ui">{{section_title}}</h3>
         <div>
-            <sui-card-group :items-per-row="4">
-                <sui-card v-for="(goodsData, index) in goods" :key="index">
-                    <sui-image :src=" goodsData.imgUrl" width="100%"/>
+            <sui-card-group :items-per-row="items_per_row">
+                <sui-card v-for="(goodsData, index) in getCardList" :key="index"
+                          @click="goToGoodsDetail(goodsData.goodsCode)">
+                    <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                         <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                        <sui-card-description class="price">
-                            {{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}<span class="unit">원</span>
-                        </sui-card-description>
-                    </sui-card-content>
-                </sui-card>
-                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src=" goodsData.imgUrl" width="100%"/>
-                    <sui-card-content>
-                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                        <sui-card-description>
-
-                        </sui-card-description>
+                        <sui-card-description></sui-card-description>
                     </sui-card-content>
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
                         <span class="price">{{pricing(goodsData.originalPrice,
                             goodsData.dcRate)}}</span>
-
-                    </sui-card-content>
-                </sui-card>
-                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src=" goodsData.imgUrl" width="100%"/>
-                    <sui-card-content>
-                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                        <sui-card-description>
-
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra class="price">
-                        <sui-icon name="won sign icon"/>
-                        <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
-
-                    </sui-card-content>
-                </sui-card>
-                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src=" goodsData.imgUrl" width="100%"/>
-                    <sui-card-content>
-                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                        <sui-card-description>
-
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra class="price">
-                        <sui-icon name="won sign icon"/>
-                        <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
-
-                    </sui-card-content>
-                </sui-card>
-                <sui-card @click="goToGoodsDetail(goodsData.goodsCode)">
-                    <sui-image :src=" goodsData.imgUrl" width="100%"/>
-                    <sui-card-content>
-                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                        <sui-card-description>
-
-                        </sui-card-description>
-                    </sui-card-content>
-                    <sui-card-content extra class="price">
-                        <sui-icon name="won sign icon"/>
-                        <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
-
                     </sui-card-content>
                 </sui-card>
             </sui-card-group>
@@ -91,27 +30,27 @@
         data() {
             return {
                 section_title: "New Arrival",
-                goodsData: {
-                    imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/00/77/91/03/12/1203917700_1.jpg/chg/resize/308x308/extent/308x308/optimize",
-                    goodsCode: "1203917700",
-                    seller: "SOUP",
-                    copy: "플라워 패턴이 예쁜 원피스",
-                    title: "플라워 원피스",
-                    originalPrice: 49000,
-                    dcRate: 20,
-                },
+                items_per_row: 4,
             }
         },
         methods: {
             pricing(originalPrice, dcRate) {
                 var price = originalPrice * (100 - dcRate) / 100;
-                    price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
                 return price;
             },
             goToGoodsDetail(goodsCode) {
-                this.$router.push('/goodsDetail/'+goodsCode);
+                this.$router.push('/goodsDetail/' + goodsCode);
             },
-        }
+        },
+        created() {
+            this.$store.commit('getCardList', this.items_per_row);
+        },
+        computed: {
+            getCardList() {
+                return this.$store.state.goodsStore.goodsModels;
+            }
+        },
     }
 </script>
 
@@ -129,6 +68,10 @@
         font-size: 32px;
         line-height: 44px;
         font-weight: 400;
+        text-align: center;
+    }
+
+    .price {
         text-align: center;
     }
 </style>

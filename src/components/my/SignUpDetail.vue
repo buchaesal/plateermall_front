@@ -63,12 +63,6 @@
 </script>
 
 <style scoped>
-/* .signup-detail-main {
-    margin-top: 3%;
-    margin-left: 30%;
-    margin-right: 30%;
-    color: #888;
-} */
 .password-input {
     width: 100%;
     margin-right: 3px;

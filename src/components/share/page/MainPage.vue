@@ -2,9 +2,10 @@
     <div id="main-page-container">
         <Header></Header>
         <Slide></Slide>
+        <VuetifySlide></VuetifySlide>
         <Contents></Contents>
-        <Footer></Footer>
         <SideBanner></SideBanner>
+        <Footer></Footer>
     </div>
 </template>
 
@@ -14,12 +15,14 @@
     import Contents from '../Contents.vue'
     import Footer from '../Footer.vue'
     import SideBanner from '../SideBanner.vue'
+    import VuetifySlide from "../VuetifySlide";
 
     export default {
         name: "MainPage.vue",
         components: {
             Header,
             Slide,
+            VuetifySlide,
             Contents,
             Footer,
             SideBanner
@@ -32,4 +35,5 @@
     #main-page-container {
         height: 300%;
     }
+
 </style>

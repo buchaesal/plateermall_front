@@ -82,7 +82,7 @@
         components:{
             MyReviewList,
             UnWrittenReview,
-        }
+        },
     }
 </script>
 

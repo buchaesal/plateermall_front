@@ -16,7 +16,7 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button>주문 상품 선택</sui-button>
+                                        <sui-button @click.native="toggle">주문 상품 선택</sui-button>
                                         <sui-checkbox label="상품 외 문의"/>
                                     </sui-table-cell>
                                 </sui-table-row>
@@ -35,7 +35,9 @@
                                     <sui-table-cell class="form_head">답변 알림</sui-table-cell>
                                     <sui-table-cell>
                                         <sui-checkbox label="010-4726-4128"/>
-                                        <sui-button style="float: right">회원 정보 수정</sui-button>
+                                        <router-link to="/deliveryanduserinfomanagement">
+                                            <sui-button style="float: right">회원 정보 수정</sui-button>
+                                        </router-link>
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
@@ -54,6 +56,32 @@
                 </sui-form>
             </div>
         </div>
+        <!--모달모달-->
+        <sui-modal v-model="open">
+            <sui-modal-header>주문 상품 선택</sui-modal-header>
+            <sui-modal-content>
+                <sui-modal-description>
+                    <ul class="bull_list-dash">
+                        <li>- 최근 3개월의 주문 내역 입니다. 이전의 상품은 기간별 조회를 통해 가능합니다.</li>
+                        <li>- 하나의 주문번호만 선택 가능하며, 동일한 주문번호의 상품은 복수 선택 가능합니다.</li>
+                    </ul>
+                    <div class="date_box">
+                        <input type="date">
+                        ~
+                        <input type="date">
+                        <sui-button basic secondary>조회</sui-button>
+                    </div>
+                    <p style="text-align: center">주문 내역이 없습니다.</p>
+                </sui-modal-description>
+            </sui-modal-content>
+            <sui-modal-actions>
+                <sui-button positive>등록</sui-button>
+                <sui-button secondary @click.native="toggle">
+                    취소
+                </sui-button>
+            </sui-modal-actions>
+        </sui-modal>
+        <!--모달모달 끝-->
     </div>
 </template>
 
@@ -64,7 +92,18 @@
         name: "InquiryForm",
         components: {
             FaqHeader
-        }
+        },
+        data() {
+            return {
+                open: false,
+                today: new Date()
+            }
+        },
+        methods: {
+            toggle() {
+                this.open = !this.open;
+            },
+        },
     }
 </script>
 
@@ -104,9 +143,13 @@
 
     .ui.checkbox {
         margin-left: 10px;
+        margin-top: 7px;
     }
 
     #buttons {
         text-align: center;
+    }
+    .date_box{
+        margin-bottom: 20px;
     }
 </style>
