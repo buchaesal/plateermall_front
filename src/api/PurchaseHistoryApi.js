@@ -1,4 +1,53 @@
-//import request,{COMMENTS_URL} from './axios';
+import request,{PURCHASEHISTORY_URL} from './axios';
+
+export const requestUnWrittenComment = function(userId){
+
+    //미작성
+    request.get(PURCHASEHISTORY_URL + `/getunWrittenlist/${userId}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
+
+export const requestCancelHistory = function(userId){
+
+    //취소
+    request.get(PURCHASEHISTORY_URL + `/getcancellist/${userId}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
+
+export const requestExchangeHistory = function(userId){
+
+    //교환
+    request.get(PURCHASEHISTORY_URL + `/getexchangelist/${userId}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
+    
+export const requestReturnHistory = function(userId){
+
+    //반품
+    request.get(PURCHASEHISTORY_URL + `/getreturnlist/${userId}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
+    
 
 class PurchaseHistoryApi{
 
@@ -6,7 +55,7 @@ class PurchaseHistoryApi{
         unWrittenCount: 2,
         unWrittenReviews:[
             {
-                goodsCode: '1',
+                goodsCode: '1203973748',
                 brand: '나이키',
                 itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
                 option: '사이즈 선택: 235',
@@ -15,7 +64,7 @@ class PurchaseHistoryApi{
                 dueDate: '2020-06-10',
             },
             {
-                goodsCode: '2',
+                goodsCode: '1203973748',
                 brand: '나이키22',
                 itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
                 option: '사이즈 선택: 235',
