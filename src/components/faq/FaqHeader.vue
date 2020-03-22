@@ -33,9 +33,11 @@
     h3{
         margin:0
     }
+
     header{
         position: relative;
     }
+
     .sub_cont header .title_button {
         position: absolute;
         right: 0;

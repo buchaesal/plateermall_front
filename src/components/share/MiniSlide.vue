@@ -25,6 +25,7 @@
 <style scoped>
 
     .slide{
+        width: 100%;
         margin-left: 17%;
         height:180px;
         overflow:hidden;

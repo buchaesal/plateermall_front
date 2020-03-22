@@ -74,6 +74,11 @@
 </script>
 
 <style scoped>
+
+    .bull_list-dash, #table_form {
+        margin-bottom: 40px;
+    }
+
     .inquiry_header {
         position: relative;
         border-top: 3px solid #000;
@@ -81,5 +86,14 @@
 
     #answer_header {
         border-bottom: 2px solid #000;
+    }
+
+    .form_head {
+        height: 60px !important;
+        text-align: center !important;
+    }
+
+    td {
+        padding: 11px 20px !important;
     }
 </style>
