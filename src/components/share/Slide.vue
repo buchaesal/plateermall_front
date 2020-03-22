@@ -35,6 +35,7 @@
     }
 
     .slide{
+        width: 100%;
         height:640px;
         overflow:hidden;
         margin-bottom: 4%;

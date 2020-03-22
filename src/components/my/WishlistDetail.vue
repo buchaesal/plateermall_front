@@ -12,7 +12,7 @@
     <div v-else>
         <div>
             <sui-card-group :items-per-row="4">
-                <sui-card v-for="(goodsData, index) in goods" :key="index" @click="goToGoodsDetail">
+                <sui-card class="goods-card" v-for="(goodsData, index) in goods" :key="index" @click="goToGoodsDetail">
                     <sui-image :src=" goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
                         <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
@@ -97,4 +97,10 @@
 .my-cancel > p {
   font-size: 15px;
 }
+
+    .goods-card {
+        cursor: pointer;
+    }
+
+
 </style>
