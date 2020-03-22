@@ -3,7 +3,6 @@ import CartListStore from "./CartListStore";
 import CommentStore from './CommentStore';
 import RecentSawListStore from "./RecentSawListStore";
 import ShippingSpotListStore from './ShippingSpotListStore';
-import CancelExchangeReturnStore from './CancelExchangeReturnStore';
 import PurchaseHistoryStore from './PurchaseHistoryStore';
 import WishListStore from "./WishListStore";
 
@@ -19,7 +18,6 @@ export default new Vuex.Store({
         commentStore: CommentStore,
         recentSawListStore: RecentSawListStore,
         shippingSpotListStore: ShippingSpotListStore,
-        cancelExchangeReturnStore: CancelExchangeReturnStore,
         purchaseHistoryStore: PurchaseHistoryStore,
         wishListStore: WishListStore,
 

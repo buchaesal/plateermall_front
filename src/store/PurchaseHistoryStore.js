@@ -2,6 +2,9 @@ import PurchaseHistoryApi from '../../src/api/PurchaseHistoryApi';
 
 const state = {
     unwrittenReviewsInfo:{},
+    cancelInfo:{},
+    exchangeInfo:{},
+    returnInfo:{},
 }
 
 const getters = {
@@ -21,6 +24,25 @@ const mutations = {
 
         let purchaseHistoryApi = new PurchaseHistoryApi();
         state.selectedUnwrittenReview = purchaseHistoryApi.getSeletedUnwrittenReview(reviewCode);
+    },
+
+    loadCancelGoodsInfo(state, userId){
+
+        let purchaseHistoryApi = new PurchaseHistoryApi();
+        state.cancelInfo = purchaseHistoryApi.getCancelInfo(userId);
+    },
+
+    loadExchangeGoodsInfo(state, userId){
+
+        let purchaseHistoryApi = new PurchaseHistoryApi();
+        state.exchangeInfo = purchaseHistoryApi.getExchangeInfo(userId);
+
+    },
+
+    loadReturnGoodsInfo(state, userId){
+
+        let purchaseHistoryApi = new PurchaseHistoryApi();
+        state.returnInfo = purchaseHistoryApi.getReturnInfo(userId);
     },
 }
 
