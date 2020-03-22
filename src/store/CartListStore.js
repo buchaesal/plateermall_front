@@ -36,12 +36,12 @@ const mutations = {
 
     deleteCart(state, deletedCart) {
         state.cartList = state.cartList.filter(function(cart) {
-            return cart !== deletedCart;
+            return cart.cartCode !== deletedCart.cartCode;
         });
     },
 
     checkedDeleteCartList(state, checkedCartList) {
-        state.cartList = state.cartList.filter(cart => !checkedCartList.includes(cart));
+        state.cartList = state.cartList.filter(cart => !checkedCartList.some(checkedCart => cart.cartCode === checkedCart.cartCode));
     },
 
     containWishList(state, goodsCodeArr) {
@@ -49,6 +49,11 @@ const mutations = {
 
         const wishListApi = new WishListApi();
         wishListApi.addGoods(goodsCodeArr);
+    },
+
+    changeStock(state, changeCart) {
+        let index = state.cartList.findIndex((cart) => cart.cartCode === changeCart.cartCode);
+        state.cartList[index].cartStock = Number(changeCart.cartStock);
     }
 }
 
