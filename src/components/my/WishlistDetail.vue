@@ -78,4 +78,7 @@
 .my-cancel > p {
   font-size: 15px;
 }
+.goods-card {
+    cursor: pointer;
+}
 </style>
