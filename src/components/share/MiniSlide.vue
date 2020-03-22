@@ -9,6 +9,8 @@
             </li>
             <li>
                 <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/displaySpecialPlan/displaySpecialPlan_0311114421.jpg/chg/resize/1600/cropcenter/1600x240+0+0/optimize">
+            </li><li>
+                <img src="https://image.ellotte.com/ellt.static.lotteeps.com/display/banner/banner_03091130150.jpg/chg/resize/1600/cropcenter/1600x240+0+0/optimize">
             </li>
         </ul>
     </div>
@@ -22,15 +24,11 @@
 
 <style scoped>
 
-    * {
-        margin:0;
-        padding:0;
-    }
-
     .slide{
+        margin-left: 17%;
         height:180px;
         overflow:hidden;
-        margin-bottom: 4%;
+        margin-bottom: 6%;
     }
     .slide ul{
         list-style: none;
@@ -44,13 +42,9 @@
     }
     @keyframes slide {
         0% {margin-left: 0;}
-        /* 0 ~ 10  : 정지 */
         10% {margin-left: 0;}
-        /* 10 ~ 25 : 변이 */
         25% {margin-left: -100%;}
-        /* 25 ~ 35 : 정지 */
         35% {margin-left: -100%;}
-        /* 35 ~ 50 : 변이 */
         50% {margin-left: -200%;}
         60% {margin-left: -200%;}
         75% {margin-left: -300%;}
@@ -62,7 +56,7 @@
         display: inline;
         float: left;
         width: 1200px;
-        height: 180px;
+        height: auto;
     }
 
 </style>
