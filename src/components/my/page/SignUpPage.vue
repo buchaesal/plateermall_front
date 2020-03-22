@@ -12,19 +12,18 @@
     <br>
     <br>
     <div>
-        <sui-input v-model="userName" class="id-input" type="text" placeholder="이름"/>
+        <sui-input v-model="userName" class="id-input" type="text" placeholder="이름" :disabled="isNotDuplicated"/>
         <br>
         <br>
-        <sui-input v-model="userEmail" class="email-input" type="text" placeholder="이메일"/>
+        <sui-input v-model="userEmail" class="email-input" type="text" placeholder="이메일" :disabled="isNotDuplicated"/>
         @
-        <sui-input v-model="userEmailDomain" class="email-input" type="text" placeholder="직접입력"/>
-        <!-- <sui-input class="email-input" type="text" placeholder="아이디"/> -->
+        <sui-input v-if="currentEmailDomain === '직접입력'" v-model="currentEmailDomain" class="email-input" type="text" placeholder="직접입력" :disabled="isNotDuplicated"/>
+        <sui-input v-else v-model="currentEmailDomain" class="email-input" type="text" :disabled="true"/>
         <sui-dropdown class="email-input"
           placeholder="직접입력"
           selection
           :options="emailDomain"
-          v-model="currentEmailDomain"
-          @change="emailDomainChange"
+          v-model="currentEmailDomain" :disabled="isNotDuplicated"
         />
         <br>
         <br>
@@ -33,10 +32,10 @@
           placeholder="State"
           selection
           :options="headNumber"
-          v-model="currentHeadNumber"
+          v-model="currentHeadNumber" :disabled="isNotDuplicated"
         />
         <!-- <sui-input class="phone-input-front" type="text"/> -->
-        <sui-input class="phone-input-back" type="list"/>
+        <sui-input class="phone-input-back" :disabled="isNotDuplicated" type="list"/>
     </div>
     <br>
     <sui-button @click="signUp" class="signup-btn">중복확인</sui-button>
@@ -59,7 +58,6 @@ export default {
       isNotDuplicated: false,
       userName: '',
       userEmail: '',
-      userEmailDomain: '',
       currentEmailDomain: '직접입력',
       currentHeadNumber: '010',
       emailDomain: [
@@ -86,9 +84,6 @@ export default {
     signUp() {
       //
       this.isNotDuplicated = true;
-    },
-    emailDomainChange(){
-      alert("ge")
     },
   },
   components: {

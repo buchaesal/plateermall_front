@@ -1,6 +1,6 @@
 <template>
     <div class="signup-detail-main">
-        <sui-input class="password-input" type="text" placeholder="비밀번호"/>
+        <sui-input class="password-input" type="password" placeholder="비밀번호"/>
         <br>
         <br>
         <p>* 영문, 숫자, 특수문자를 혼합한 8자 이상 ~15자 이내</p>
@@ -37,15 +37,15 @@
                 <label for="emailAgree"> 동의 </label>
                 
                 <input class="email-comp" type="radio" id="emailDisagree" value="N" checked="true">
-                <label for="emailAgree"> 동의안함 </label>
+                <label for="emailDisagree"> 동의안함 </label>
             </div>
             <div class="sms-checkbox-wrap">
                 <span class="sms-comp">SMS 수신</span>
-                <input class="sms-comp" type="radio" id="emailAgree" value="Y">
-                <label for="emailAgree"> 동의 </label>
+                <input class="sms-comp" type="radio" id="smsAgree" value="Y">
+                <label for="smsAgree"> 동의 </label>
                 
-                <input class="sms-comp-disagree" type="radio" id="emailDisagree" value="N" checked="true">
-                <label for="emailAgree"> 동의안함 </label>
+                <input class="sms-comp-disagree" type="radio" id="smsDisagree" value="N" checked="true">
+                <label for="smsDisagree"> 동의안함 </label>
             </div>
         </div>
         <div class="sign-in">
@@ -58,7 +58,15 @@
 
 <script>
     export default {
-        name: "SignUpDetail"
+        name: "SignUpDetail",
+        props: {
+
+        },
+        data: function () {
+            return {
+
+            }
+        }
     }
 </script>
 

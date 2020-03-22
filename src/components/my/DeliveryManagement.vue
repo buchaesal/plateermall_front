@@ -20,6 +20,7 @@
             <sui-table-cell></sui-table-cell>
             <sui-table-cell class="spot-type"></sui-table-cell>
             <sui-table-cell text-align="left">
+<!--                props 객체로 생성해서 디폴트 옵션 넣고 그렇게 만들어보기 -->
                 <ShippingSpotForm v-bind:target-shipping-spot="emptyShippingSpotMode"></ShippingSpotForm>
             </sui-table-cell>
             <sui-table-cell>
@@ -43,6 +44,7 @@
             <sui-table-cell><sui-checkbox radio value="defaultShippingSpot" checked v-model="checkedRadio"/></sui-table-cell>
             <sui-table-cell class="spot-type">{{defaultShippingSpot.spotName}}<br> (기본배송지)</sui-table-cell>
 
+<!--            여기 같은 플래그들 보는데 묶어보기 -->
             <sui-table-cell text-align="left" v-if="openModifyShippingSpotFormFlag">
                 <ShippingSpotForm v-bind:target-shipping-spot="defaultShippingSpot"></ShippingSpotForm>
             </sui-table-cell>
@@ -139,7 +141,8 @@ export default {
             alert('배송지가 삭제되었습니다.');
         },
         setDefaultShippingSpot() {
-            if(this.checkedRadio == "defaultShippingSpot"){
+            console.log('setDefaultShippingSpot')
+            if(this.checkedRadio === "defaultShippingSpot"){
                 alert("기본 배송지입니다.")
                 return;
             }

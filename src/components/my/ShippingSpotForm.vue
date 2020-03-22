@@ -97,7 +97,7 @@ input[type="text"]{
     margin-left: 5px;
     margin-top: 2px;
     background: white;
-    min-width: 80px;
+    min-width: 75px;
     height: 40px;
     font-size: 14px;
     font-weight: bold;
