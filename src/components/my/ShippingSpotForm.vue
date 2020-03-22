@@ -38,8 +38,8 @@
                 <p class="spot-properties-contents">도로명 주소</p>
             </div>
             <div>
-            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" v-model="targetShippingSpot.roadAddress">
-            <button class="address-search-btn">주소검색</button>
+            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" :value="roadAddress">
+            <button class="address-search-btn" @click="openFindAddressComponent">주소검색</button>
             </div>
         </div>
         <div class="row-wrap">
@@ -47,21 +47,53 @@
                 <p class="spot-properties-contents">지번 주소</p>
             </div>
             <div>
-            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" v-model="targetShippingSpot.zipcodeAddress">
+            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" :value="zipcodeAddress">
+            </div>
+        </div>
+        <div class="row-wrap">
+            <FindAddress v-if="openFindAddress" @complete="closeFindAddressComponent"></FindAddress>
+        </div>
+            <div class="row-wrap">
+            <div class="spot-properties">
+                <p class="spot-properties-contents">나머지 주소</p>
+            </div>
+            <div>
+            <input type="text" size="45" v-model="targetShippingSpot.remainAddress">
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import FindAddress from "./page/FindAddressPage";
+
     export default {
         name: "ShippingSpotForm",
         props: [
             'targetShippingSpot',
         ],
+        components: {
+          FindAddress,
+        },
         data() {
             return {
-
+                openFindAddress: false,
+            }
+        },
+        computed: {
+          roadAddress: function () {
+              return this.$store.state.shippingSpotListStore.roadAddress;
+          },
+          zipcodeAddress: function () {
+              return this.$store.state.shippingSpotListStore.zipcodeAddress;
+          }
+        },
+        methods: {
+            openFindAddressComponent() {
+                this.openFindAddress = true;
+            },
+            closeFindAddressComponent() {
+                this.openFindAddress = false;
             }
         }
     }

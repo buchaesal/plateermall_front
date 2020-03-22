@@ -88,7 +88,6 @@
                 this.user.acceptSms = 'N';
             },
             signUp(){
-                //TODO signIn
                 console.log(this.user);
                 // UserApi.signUp(this.user)
                 // .then((result) => {

@@ -8,6 +8,7 @@ export const FAQ_URL = process.env.VUE_APP_BASE_URL+'/api/faq';
 export const ORDER_URL = process.env.VUE_APP_BASE_URL+'/api/order';
 
 export const USER_URL = process.env.VUE_APP_BASE_URL+'/api/user';
+export const SHIPPINGSPOT_URL = process.env.VUE_APP_BASE_URL+'/api/shippingspot';
 
 
 const instance = axios.create({
