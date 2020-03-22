@@ -2,7 +2,9 @@
   <div class="signup-main">
     <!-- <AgreementPage/> -->
     <div>
-      <sui-image @click="backToMain" src="https://simage.lotte.com/ellotte/images/login/newel_icon_top_logo.jpg" size="small" />
+        <router-link to="/">
+            <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_icon_top_logo.jpg" size="small" />
+        </router-link>
     </div>
     <div>
       <label>
@@ -15,7 +17,7 @@
         <sui-input v-model="userName" class="id-input" type="text" placeholder="이름" :disabled="isNotDuplicated"/>
         <br>
         <br>
-        <sui-input v-model="userEmail" class="email-input" type="text" placeholder="이메일" :disabled="isNotDuplicated"/>
+        <sui-input v-model="userEmailId" class="email-input" type="text" placeholder="이메일" :disabled="isNotDuplicated"/>
         @
         <sui-input v-if="currentEmailDomain === '직접입력'" v-model="currentEmailDomain" class="email-input" type="text" placeholder="직접입력" :disabled="isNotDuplicated"/>
         <sui-input v-else v-model="currentEmailDomain" class="email-input" type="text" :disabled="true"/>
@@ -35,13 +37,13 @@
           v-model="currentHeadNumber" :disabled="isNotDuplicated"
         />
         <!-- <sui-input class="phone-input-front" type="text"/> -->
-        <sui-input class="phone-input-back" :disabled="isNotDuplicated" type="list"/>
+        <sui-input class="phone-input-back" v-model="backPhoneNumber" :disabled="isNotDuplicated" type="list"/>
     </div>
     <br>
-    <sui-button @click="signUp" class="signup-btn">중복확인</sui-button>
+    <sui-button @click="duplicateCheck" class="signup-btn">중복확인</sui-button>
     <br>
     <br>
-    <SignUpDetail v-if="isNotDuplicated"></SignUpDetail>
+    <SignUpDetail v-if="isNotDuplicated" v-bind:user="user"></SignUpDetail>
     <br>
     <br>
   </div>
@@ -49,17 +51,21 @@
 
 <script>
 import SignUpDetail from '../SignUpDetail';
-// import AgreementPage from './AgreementPage';
+import UserModel from "../model/UserModel";
+// import UserApi from "../../../api/UserApi";
 
 export default {
   name: "Sample",
   data() {
     return {
+        user: {},
+
       isNotDuplicated: false,
       userName: '',
-      userEmail: '',
+      userEmailId: '',
       currentEmailDomain: '직접입력',
       currentHeadNumber: '010',
+        backPhoneNumber: '',
       emailDomain: [
         { text: 'gmail.com', value: 'gmail.com'},
         { text: 'naver.com', value: 'naver.com'},
@@ -81,15 +87,27 @@ export default {
     backToMain() {
       //메인 링크
     },
-    signUp() {
+      duplicateCheck() {
       //
+          this.user = new UserModel();
+          this.user.username = this.userName;
+          this.user.email = this.userEmailId + '@' + this.currentEmailDomain;
+          this.user.phone = this.currentHeadNumber + '-' + this.backPhoneNumber;
+          console.log(this.user);
+
+          // UserApi.duplicateCheck(this.user)
+          // .then((result) => {
+          //     if(result === true){
+          //         this.isNotDuplicated = true;
+          //     }
+          // })
+
       this.isNotDuplicated = true;
     },
   },
   components: {
     SignUpDetail,
-    // AgreementPage,
-  }
+  },
 };
 </script>
 
