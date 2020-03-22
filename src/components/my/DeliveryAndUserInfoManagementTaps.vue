@@ -3,6 +3,7 @@
         <header>
 				<h3 class="page_title">배송지/회원정보 관리</h3>
 		</header>
+        <hr>
         <div>
         <sui-menu pointing secondary>
         <a class="cancel-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item" @click="select(item)"/>
