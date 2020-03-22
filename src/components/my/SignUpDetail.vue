@@ -41,10 +41,10 @@
             </div>
             <div class="sms-checkbox-wrap">
                 <span class="sms-comp">SMS 수신</span>
-                <input class="sms-comp" type="radio" id="smsAgree" value="Y" :checked="smsAgree">
+                <input class="sms-comp" type="radio" id="smsAgree" value="Y" :checked="smsAgree" @click="smsAgreeRadio">
                 <label for="smsAgree"> 동의 </label>
                 
-                <input class="sms-comp-disagree" type="radio" id="smsDisagree" value="N" :checked="!smsAgree">
+                <input class="sms-comp-disagree" type="radio" id="smsDisagree" value="N" :checked="!smsAgree" @click="smsDisagreeRadio">
                 <label for="smsDisagree"> 동의안함 </label>
             </div>
         </div>
