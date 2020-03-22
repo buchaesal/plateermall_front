@@ -3,7 +3,7 @@
         <h3 class="section_title ui">{{section_title}}</h3>
         <div>
             <sui-card-group :items-per-row="items_per_row">
-                <sui-card v-for="(goodsData, index) in getCardList" :key="index"
+                <sui-card class="goods-card" v-for="(goodsData, index) in getCardList" :key="index"
                           @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
@@ -73,5 +73,9 @@
 
     .price {
         text-align: center;
+    }
+
+    .goods-card {
+        cursor: pointer;
     }
 </style>

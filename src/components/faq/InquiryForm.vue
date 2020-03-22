@@ -16,7 +16,7 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button @click.native="toggle">주문 상품 선택</sui-button>
+                                        <sui-button @click.native="toggle" class="select-order-goods-button">주문 상품 선택</sui-button>
                                         <sui-checkbox label="상품 외 문의"/>
                                     </sui-table-cell>
                                 </sui-table-row>
@@ -49,8 +49,8 @@
                             </sui-table-body>
                         </sui-table>
                         <div id="buttons">
-                            <sui-button basic secondary>취소</sui-button>
                             <sui-button secondary>등록</sui-button>
+                            <sui-button basic secondary>취소</sui-button>
                         </div>
                     </sui-form-field>
                 </sui-form>
@@ -58,27 +58,26 @@
         </div>
         <!--모달모달-->
         <sui-modal v-model="open">
-            <sui-modal-header>주문 상품 선택</sui-modal-header>
+            <sui-modal-header class="modal-header">주문 상품 선택</sui-modal-header>
             <sui-modal-content>
                 <sui-modal-description>
-                    <ul class="bull_list-dash">
+                    <ul class="modal-msg">
                         <li>- 최근 3개월의 주문 내역 입니다. 이전의 상품은 기간별 조회를 통해 가능합니다.</li>
                         <li>- 하나의 주문번호만 선택 가능하며, 동일한 주문번호의 상품은 복수 선택 가능합니다.</li>
                     </ul>
                     <div class="date_box">
-                        <input type="date">
+                        <input type="date" class="modal-date-input">
                         ~
-                        <input type="date">
-                        <sui-button basic secondary>조회</sui-button>
+                        <input type="date" class="modal-date-input">
+                        <sui-button class="date-check-btn" basic secondary>조회</sui-button>
                     </div>
+                    <hr>
                     <p style="text-align: center">주문 내역이 없습니다.</p>
                 </sui-modal-description>
             </sui-modal-content>
             <sui-modal-actions>
-                <sui-button positive>등록</sui-button>
-                <sui-button secondary @click.native="toggle">
-                    취소
-                </sui-button>
+                <sui-button secondary>등록</sui-button>
+                <sui-button basic secondary  @click.native="toggle">취소</sui-button>
             </sui-modal-actions>
         </sui-modal>
         <!--모달모달 끝-->
@@ -125,11 +124,8 @@
     }
 
     .form_head {
-        width: 25%;
-    }
-
-    tr {
-        height: 60px;
+        height: 60px !important;
+        text-align: center !important;
     }
 
     #table_form {
@@ -137,13 +133,13 @@
         border-top: black solid 1px;
     }
 
-    .ui.input {
-        width: 100%;
+    td {
+        padding: 11px 20px !important;
     }
 
     .ui.checkbox {
         margin-left: 10px;
-        margin-top: 7px;
+        margin-top: 8px;
     }
 
     #buttons {
@@ -152,4 +148,32 @@
     .date_box{
         margin-bottom: 20px;
     }
+
+    .select-order-goods-button {
+        margin-right: 20px;
+    }
+
+    .modal-header {
+        padding: 30px 40px !important;
+    }
+
+    .modal-msg {
+    }
+
+    .date_box {
+        padding: 20px 40px;
+    }
+
+    .modal-date-input {
+        height: 35px;
+        border-radius: 3px;
+        border: solid 1px black;
+        margin: 0 15px;
+        padding: 0 15px;
+    }
+
+    hr {
+        margin: 30px;
+    }
+
 </style>
