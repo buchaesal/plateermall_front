@@ -24,6 +24,9 @@
                             {{review.content}}
                             </p>
                             <span class='detail-review'><sui-button @click="goDetail(review.goodsCode)" size="tiny" icon="chevron down" floated="right" basic content="상세 보기"/></span>
+                            <div id='detail'>
+                                detail
+                            </div>
                         </sui-item-description>
                     </sui-item-content>
                     </sui-item>
@@ -103,5 +106,9 @@
 
     .option{
         font-size: 13px;
+    }
+
+    #detail{
+        display: none;
     }
 </style>
