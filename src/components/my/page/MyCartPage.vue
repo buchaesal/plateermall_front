@@ -37,13 +37,13 @@
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:20%;">
-                                        <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
-                                            <sui-image :src="cart.imgUrl"  class="cart-img" />
+                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
+                                            <sui-image :src="cart.goods.imgUrl"  class="cart-img" />
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:40%;">
-                                        <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
-                                            <p style="font-family:Georgia, serif;">{{cart.title}}</p>
+                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
+                                            <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:15%; padding-bottom:5%;">
@@ -63,7 +63,7 @@
                                             <div @click="deleteCart(cart)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
                                         </sui-segment>
                                         <sui-segment>
-                                            <div><span class="goods-price">{{priceFormatting(cart.originalPrice)}}원</span></div>
+                                            <div><span class="goods-price">{{priceFormatting(cart.goods.originalPrice)}}원</span></div>
                                         </sui-segment>
                                     </sui-grid-column>
                                 </sui-grid-row>
@@ -218,7 +218,7 @@
                 let totalGoodsPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalGoodsPrice += this.pricingCalculation(cart.originalPrice, cart.cartStock);
+                    totalGoodsPrice += this.pricingCalculation(cart.goods.originalPrice, cart.cartStock);
                 });
                 return this.priceFormatting(totalGoodsPrice);
             },
@@ -226,7 +226,7 @@
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalCartPrice += this.pricingCalculation(cart.originalPrice, cart.cartStock);
+                    totalCartPrice += this.pricingCalculation(cart.goods.originalPrice, cart.cartStock);
                 });
                 return this.priceFormatting(totalCartPrice);
             },
@@ -260,7 +260,7 @@
             containWishList() {
                 let goodsCodeArr = [];
                 this.checkedCartList.map((cart) => {
-                    goodsCodeArr.push(cart.goodsCode);
+                    goodsCodeArr.push(cart.goods.goodsCode);
                 });
                 this.$store.commit('containWishList', goodsCodeArr);
             },
