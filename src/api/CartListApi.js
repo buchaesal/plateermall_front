@@ -31,6 +31,26 @@ export const requestDeleteCart = function(cartCode) {
     })
 }
 
+export const requestCheckedDeleteCartList = function(cartList) {
+    request.delete(CART_URL, cartList).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function(error) {
+        console.log(error);
+    })
+}
+
+export const requestChangeStock = function(cart) {
+    request.put(CART_URL, cart).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function(error) {
+        console.log(error);
+    })
+}
+
 class CartListApi {
     cartList = [];
 
