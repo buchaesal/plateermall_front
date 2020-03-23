@@ -27,8 +27,10 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button class="select-order-goods-button" @click.native="toggle" disabled>주문 상품 선택</sui-button>
-                                        <sui-checkbox class="inquiry-btn" label="상품 외 문의"/>
+                                        <sui-button class="select-order-goods-button" @click.native="toggle" :disabled="isChecked==true">
+                                            주문 상품 선택
+                                        </sui-button>
+                                        <sui-checkbox label="상품 외 문의" v-model="isChecked"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
@@ -108,6 +110,7 @@
                 open: false,
                 today: new Date(),
                 current: null,
+                isChecked : false,
                 options: [
                     {
                         text: '주문내역확인',

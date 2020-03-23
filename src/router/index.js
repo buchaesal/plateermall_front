@@ -6,7 +6,6 @@ import SignUpPage from '../components/my/page/SignUpPage' ;
 import MyPage from '../components/my/page/MyPageIndex';
 import GoodsDetailPage from '../components/goods/page/GoodsDetailPage';
 import MyCart from "../components/my/page/MyCartPage";
-import FindAddressPage from "../components/my/page/FindAddressPage";
 
 Vue.use(VueRouter);
 
@@ -26,7 +25,6 @@ const routes = [
     {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch'}},
     {path: '/answer/:id', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'}},
     {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'}},
-    {path: '/findaddress', component: FindAddressPage},
 
 ]
 
