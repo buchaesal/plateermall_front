@@ -24,7 +24,7 @@ class FaqApi {
     faqList = [
         {
             id: 1,
-            title: '질문 드립니다.',
+            title: '진짜 장난하시나요???',
             questionDate: '2020.03.19',
             answerDate: '2020.03.19',
             status: '완료'

@@ -27,8 +27,8 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button @click.native="toggle" class="select-order-goods-button">주문 상품 선택</sui-button>
-                                        <sui-checkbox label="상품 외 문의"/>
+                                        <sui-button class="select-order-goods-button" @click.native="toggle" disabled>주문 상품 선택</sui-button>
+                                        <sui-checkbox class="inquiry-btn" label="상품 외 문의"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
