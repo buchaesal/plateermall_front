@@ -55,7 +55,7 @@
         },
         computed: {
             getCancelGoodsInfo(){
-                return this.$store.state.cancelExchangeReturnStore.cancelInfo;
+                return this.$store.state.purchaseHistoryStore.cancelInfo;
             }
 
         },

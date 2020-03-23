@@ -1,45 +1,30 @@
 import request,{COMMENTS_URL} from './axios';
 
-export const requestComments = function(item){
-    
-    //상품코드에 대한 리뷰리스트 조회
-    request.get(COMMENTS_URL + `/getCommentList/${item}`).then(
-        (response) => {
-            return response.data
-        }
-    ).catch(function (error) {
-        console.log(error);
-    });
+export const requestComments = function(goodsCode){
 
-    //미작성 리뷰리스트 조회
-    request.get(COMMENTS_URL + `/getUnWrittenList/${item}`).then(
+    request.get(COMMENTS_URL + `/getcommentlist/${goodsCode}`).then(
         (response) => {
-            return response.data
-        }
-    ).catch(function (error) {
-        console.log(error);
-    });
-
-    //내가 작성한 리뷰리스트 조회
-    request.get(COMMENTS_URL + `/getMyCommentList/${item}`).then(
-        (response) =>{
             return response.data
         }
     ).catch(function(error){
         console.log(error);
     });
+}
 
-    //선택한 미작성 리뷰 조회
-    request.get(COMMENTS_URL + `/getSelectedComment/${item}`).then(
-        (response) =>{
+export const requestMyComments = function(userId){
+
+    request.get(COMMENTS_URL + `/getmycomment/${userId}`).then(
+        (response) => {
             return response.data
         }
     ).catch(function(error){
         console.log(error);
     });
+}
 
-    //리뷰 작성
-    request.post(COMMENTS_URL + `/postComment`, item).then(
+export const requestAddComment = function(comment){
+
+    request.post(COMMENTS_URL, comment).then(
         (response) => {
             console.log(response);
         }
@@ -92,6 +77,7 @@ class CommentApi{
         reviewCount: 2,
         myReviews:[
             {
+                goodsCode:'1203973748',
                 brand: '나이키',
                 itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
                 option: '사이즈 선택: 235',
@@ -99,6 +85,7 @@ class CommentApi{
                 photo: require('./../assets/review.jpg'),
             },
             {
+                goodsCode:'1203973748',
                 brand: '나이키',
                 itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
                 option: '사이즈 선택: 235',

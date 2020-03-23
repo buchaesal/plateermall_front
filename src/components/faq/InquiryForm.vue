@@ -14,10 +14,21 @@
                         <sui-table definition>
                             <sui-table-body>
                                 <sui-table-row>
+                                    <sui-table-cell class="form_head">문의 영역</sui-table-cell>
+                                    <sui-table-cell>
+                                        <sui-dropdown
+                                                placeholder="문의 영역 선택"
+                                                selection
+                                                :options="options"
+                                                v-model="current"
+                                        />
+                                    </sui-table-cell>
+                                </sui-table-row>
+                                <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button @click.native="toggle" class="select-order-goods-button">주문 상품 선택</sui-button>
-                                        <sui-checkbox label="상품 외 문의"/>
+                                        <sui-button class="select-order-goods-button" @click.native="toggle" disabled>주문 상품 선택</sui-button>
+                                        <sui-checkbox class="inquiry-btn" label="상품 외 문의"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
@@ -95,7 +106,27 @@
         data() {
             return {
                 open: false,
-                today: new Date()
+                today: new Date(),
+                current: null,
+                options: [
+                    {
+                        text: '주문내역확인',
+                        value: 1,
+                    },
+                    {
+                        text: '배송확인',
+                        value: 2,
+                    },{
+                        text: 'L.POINT',
+                        value: 3,
+                    },{
+                        text: '반품접수',
+                        value: 4,
+                    },{
+                        text: '교환접수',
+                        value: 5,
+                    },
+                ]
             }
         },
         methods: {

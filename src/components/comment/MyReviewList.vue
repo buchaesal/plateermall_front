@@ -23,7 +23,10 @@
                             <p>
                             {{review.content}}
                             </p>
-                            <span class='detail-review'><sui-button size="tiny" icon="chevron down" floated="right" basic content="상세 보기"/></span>
+                            <span class='detail-review'><sui-button @click="goDetail(review.goodsCode)" size="tiny" icon="chevron down" floated="right" basic content="상세 보기"/></span>
+                            <div id='detail'>
+                                detail
+                            </div>
                         </sui-item-description>
                     </sui-item-content>
                     </sui-item>
@@ -48,6 +51,11 @@
         computed:{
             getRequestMyReviews(){
                 return this.$store.state.commentStore.myReviewsInfo;
+            }
+        },
+        methods:{
+            goDetail(goodsCode){
+                this.$router.push('/goodsDetail/' + goodsCode);
             }
         }
     }
@@ -98,5 +106,9 @@
 
     .option{
         font-size: 13px;
+    }
+
+    #detail{
+        display: none;
     }
 </style>
