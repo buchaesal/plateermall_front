@@ -1,12 +1,12 @@
 <template>
     <div>
         <header>
-				<h3 class="page_title">위시리스트</h3>
-		</header>
+            <h3 class="page_title">위시리스트</h3>
+        </header>
         <sui-menu pointing secondary>
-        <a class="select-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item" @click="select(item)"/>
+            <a class="select-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item" @click="select(item)"/>
         </sui-menu>
-
+.
         <div v-if="active=='상품'">
             <WishlistDetail/>
         </div>
@@ -34,37 +34,37 @@
         },
         methods: {
             isActive(name) {
-            return this.active === name;
+                return this.active === name;
             },
-        select(name) {
-            this.active = name;
+            select(name) {
+                this.active = name;
             },
         },
         components: {
             WishlistDetail,
             NoItem
         },
-        computed: {
-
-        }
+        computed: {}
     }
-    
+
 </script>
 
 <style scoped>
-header {
-    position: relative;
-    border-top: 3px solid #000;
-}
-.page_title {
-    padding: 16px 0 14px;
-    font-size: 24px;
-    font-weight: normal;
-}
-.select-tab{
-    padding-left: 22% !important;
-    padding-right: 25% !important;
-}
+    header {
+        position: relative;
+        border-top: 3px solid #000;
+    }
+
+    .page_title {
+        padding: 16px 0 14px;
+        font-size: 24px;
+        font-weight: normal;
+    }
+
+    .select-tab {
+        padding-left: 22% !important;
+        padding-right: 25% !important;
+    }
 
 
 </style>
