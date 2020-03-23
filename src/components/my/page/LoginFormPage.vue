@@ -9,17 +9,17 @@
     <h2 class="member_title">로그인</h2>
     <sui-form>
       <sui-form-field>
-        <input placeholder="아이디" size="20" />
+        <input placeholder="아이디" size="20" v-model="useremail"/>
       </sui-form-field>
       <sui-form-field>
-        <input type="password" placeholder="비밀번호" />
+        <input type="password" placeholder="비밀번호" v-model="password"/>
       </sui-form-field>
 
 
       <!-- <sui-button type="submit" width="50%">로그인</sui-button> -->
     </sui-form>
     <p class="btns-wrap">
-      <button type="button" class="loginBtn">로그인</button>
+      <button type="button" class="loginBtn" @click="login">로그인</button>
     </p>
         <sui-checkbox label="아이디 저장" />
     <div class="link_box">
@@ -39,12 +39,33 @@
 
 <script>
 
+// import UserApi from "../../../api/UserApi";
+// import UserModel from "../model/UserModel";
+
 export default {
   name: "LoginFormPage",
+  data() {
+    return {
+      useremail: '',
+      password: '',
+    }
+  },
   methods: {
     goToSignUpPage(){
       this.$router.push('/signup');
-    }
+    },
+    login(){
+      // let user = new UserModel(this.useremail, this.password);
+      // UserApi.login(user)
+      // .then((result) => {
+      //   if(result){
+      //     //성공
+      //   }
+      //   else{
+      //     //실패 아이디 또는 비밀번호가 일치하지 않는다.
+      //   }
+      // })
+    },
   }
 };
 </script>

@@ -9,7 +9,7 @@
             <div v-if="getRecentGoodsInfo.recentGoodsLength > 0">
                 <sui-grid :columns="5">
                     <sui-grid-column v-for="(good, index) in getRecentGoodsInfo.recentGoods" v-bind:key="index">
-                        <sui-card class="fluid">
+                        <sui-card class="fluid" @click="goToGoodsDetail(good.goodsCode)">
                             <sui-image :src="good.imgUrl" style="width: 200px; height: auto"/>
                             <sui-card-content>
                                 <sui-card-header class="recent-goods-title">{{good.title}}</sui-card-header>
@@ -39,6 +39,10 @@
             OrderStatusBox,
             Wishlist,
             NoItem
+        },methods : {
+            goToGoodsDetail(goodsCode) {
+                this.$router.push('/goodsDetail/'+goodsCode);
+            },
         },
         computed: {
             getRecentGoodsInfo() {
@@ -56,5 +60,9 @@
         overflow: hidden !important;
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
+    }
+    
+    .fluid {
+        cursor: pointer;
     }
 </style>
