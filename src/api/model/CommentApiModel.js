@@ -1,8 +1,8 @@
 class CommentApiModel{
     
     goodsCode='';
-    averageStarPoint='';
-    customerCount='';
+    averageStarPoint=0;
+    customerCount=0;
 
     deliveryCommon= 0;
     deliveryBest= 0;
