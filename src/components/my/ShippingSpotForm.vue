@@ -65,7 +65,7 @@
 </template>
 
 <script>
-    import FindAddress from "./page/FindAddressPage";
+    import FindAddress from "./FindAddressPage";
 
     export default {
         name: "ShippingSpotForm",
