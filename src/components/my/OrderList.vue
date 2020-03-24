@@ -43,6 +43,7 @@
     import FaqHeader from "../faq/FaqHeader";
     import OrderStatusBox from "./OrderStatusBox";
     import NoItem from "../share/NoItem";
+    import OrderApi from "../../api/OrderApi";
 
     export default {
         name: "OrderList",
@@ -88,6 +89,11 @@
             },
             changeDeliveryAddress(){
                 this.$router.push('/deliveryanduserinfomanagement');
+            },
+            test(){
+                let orderApi = new OrderApi();
+                orderApi.getOrderList()
+                .then((result) => console.log(result));
             }
         },
         components: {
