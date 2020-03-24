@@ -82,12 +82,24 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
+    import {getFaqList, getFaq} from "../../api/FaqApi";
 
     export default {
         name: "InquiryAnswerPost",
+        data() {
+            return {
+                faqDetail: {},
+                faqList: [],
+            }
+        },
         components: {
             FaqHeader
-        }
+        },
+        async created() {
+            // this.answers = new FaqApi().getFaqList();
+            this.faqList = await getFaqList();
+            this.faqDetail = await getFaq();
+        },
     }
 </script>
 

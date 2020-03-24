@@ -18,26 +18,21 @@
                 <sui-table-header>
                     <sui-table-row>
 <!--                        <sui-table-header-cell>순번</sui-table-header-cell>-->
+                        <sui-table-header-cell>id</sui-table-header-cell>
                         <sui-table-header-cell>territory</sui-table-header-cell>
                         <sui-table-header-cell>title</sui-table-header-cell>
-                        <sui-table-header-cell>goodsCode</sui-table-header-cell>
-<!--                        <sui-table-header-cell>문의일</sui-table-header-cell>-->
-<!--                        <sui-table-header-cell>답변일</sui-table-header-cell>-->
-<!--                        <sui-table-header-cell>문의상태</sui-table-header-cell>-->
                     </sui-table-row>
                 </sui-table-header>
-                <sui-table-body v-if="faqList.length===0">
+                <sui-table-body v-if="questionList.length===0">
                     <sui-table-row>
                         <sui-table-cell colspan="5" style="text-align:center;">문의 내역이 없습니다.</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
                 <sui-table-body v-else>
-                    <sui-table-row v-for="(post, index) in faqList" :key="index">
+                    <sui-table-row v-for="(post, index) in questionList" :key="index">
+                        <sui-table-cell><router-link :to="`/answer/${post.id}`">{{post.id}}</router-link></sui-table-cell>
                         <sui-table-cell>{{post.territory}}</sui-table-cell>
-                        <sui-table-cell><router-link :to="`/answer/${post.id}`">{{ post.title }}</router-link></sui-table-cell>
-                        <sui-table-cell>{{ post.goodsCode }}</sui-table-cell>
-<!--                        <sui-table-cell><router-link :to="`/answer/${post.id}`">{{ post.title }}</router-link></sui-table-cell>-->
-<!--                        <sui-table-cell>{{ post.answerDate }}</sui-table-cell>-->
+                        <sui-table-cell>{{ post.title }}</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
@@ -48,7 +43,7 @@
 <script>
     import FaqHeader from "./FaqHeader";
     // import FaqApi from "../../api/FaqApi";
-    import {getFaqList} from "../../api/FaqApi";
+    import {getQeustionList, getQuestion} from "../../api/FaqApi";
 
     export default {
         name: "InquiryAnswer",
@@ -57,12 +52,14 @@
         },
         data() {
             return {
-                faqList: [],
+                faqDetail: {},
+                questionList: [],
             }
         },
         async created() {
             // this.answers = new FaqApi().getFaqList();
-            this.faqList = await getFaqList();
+            this.faqList = await getQeustionList();
+            this.faqDetail = await getQuestion();
         },
     }
 </script>

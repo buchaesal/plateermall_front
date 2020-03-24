@@ -1,4 +1,4 @@
-import request, {FAQ_URL} from './axios';
+import request from './axios';
 
 export const getFaqList = function () {
     return request.get("http://localhost:9999/api/faq/list").then(
@@ -11,7 +11,7 @@ export const getFaqList = function () {
 }
 
 export const getFaq = function (id) {
-    request.get(FAQ_URL + `/${id}`).then(
+    return request.get("http://localhost:9999/api/faq/detail" + `/${id}`).then(
         (response) => {
             return response.data;
         }
