@@ -1,10 +1,10 @@
 class SubCommentApiModel{
     
-    reviewCode='';
+    purchaseCode='';
     goodsCode='';
     userId='';
-    option='';
-    photo='';
+    selectedOption='';
+    myPhoto='';
     quantity=0;
     recommendCount=''; //추천수
 

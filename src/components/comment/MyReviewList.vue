@@ -7,7 +7,7 @@
     </div>
 
     <div class='my-review-list'>
-        <p id='no-review' v-if='getRequestMyReviews.reviewCount == 0'>작성한 상품평이 없습니다.</p>
+        <p id='no-review' v-if='getRequestMyReviews.myReviews == 0'>작성한 상품평이 없습니다.</p>
 
         <div v-else style="min-height: 500px">
             <sui-item-group divided>
@@ -61,8 +61,8 @@
         data() {
             return {}
         },
-        created() {
-            this.$store.commit('loadMyCommentsByUserId', 'testId');
+        async created() {
+            await this.$store.commit('loadMyCommentsByUserId', 'testId');
         },
         computed: {
             getRequestMyReviews() {
