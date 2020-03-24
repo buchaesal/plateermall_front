@@ -12,6 +12,11 @@ import Vue from 'vue';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+    state: {
+        authentication: null,
+        token: null,
+        userDetail: null,
+    },
     modules: {
         goodsStore: GoodsStore,
         cartListStore: CartListStore,
