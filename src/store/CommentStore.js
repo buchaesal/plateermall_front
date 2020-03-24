@@ -4,7 +4,7 @@ const state = {
     reviews:{},
     reviewSummary:{},
     myReviewsInfo:{
-        reviewCount:0,
+        reviewCount:2,
         myReviews:[]
     },
     selectedUnwrittenReview:{},
@@ -33,7 +33,7 @@ const mutations = {
         
         console.log(testId);
         state.myReviewsInfo.myReviews = await requestMyComments('testId');
-        state.myReviewsInfo.reviewCount = state.myReviewsInfo.myReviews.length;
+        //state.myReviewsInfo.reviewCount = state.myReviewsInfo.myReviews.length;
     },
 
     increaseRecommendCount(state, index){
