@@ -31,7 +31,7 @@
         },
         computed: {
             getRequestComments(){
-                return this.$store.state.commentStore.reviewSummary;
+                return this.$store.state.commentStore.reviews;
             }
         }
     }

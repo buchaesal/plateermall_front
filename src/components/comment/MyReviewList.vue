@@ -7,41 +7,52 @@
     </div>
 
     <div class='my-review-list'>
-        <p id='no-review' v-if='getRequestMyReviews.reviewCount == 0'>작성한 상품평이 없습니다.</p>
+        <p id='no-review' v-if='getRequestMyReviews.myReviews == 0'>작성한 상품평이 없습니다.</p>
 
         <div v-else style="min-height: 500px">
             <sui-item-group divided>
                 <sui-item class='review-item' v-for='(review, index) in getRequestMyReviews.myReviews' :key='index'>
-                    <sui-item-image size="tiny" :src='review.photo'/>
+                    <sui-item-image size="tiny" :src='photo'/>
                     <sui-item-content class='review'>
                         <sui-item-header>{{review.brand}}</sui-item-header>
                         <sui-item-meta>
                             <p class="itemName">{{review.itemName}}</p>
-                            <p class="option">{{review.option}}</p>
+                            <p class="option">{{review.selectedOption}}</p>
                         </sui-item-meta>
                         <sui-item-description>
-                            <p>
-                                {{review.content}}
-                            </p>
-                            <!--                            <span class='detail-review'><sui-button @click="goDetail(review.goodsCode)" size="tiny" icon="chevron down" floated="right" basic content="상세 보기"/></span>-->
-                            <!--                            <div id='detail'>-->
-                            <!--                                detail-->
-                            <!--                            </div>-->
+                            <p>{{review.reviewContent}}</p>
 
                             <sui-form-field>
                                 <sui-accordion>
-                                    <a is="sui-accordion-title">
+                                    <a is="sui-accordion-title" style="float:right; padding-right: 5%;">
                                         <sui-icon name="dropdown"/>
                                         상세보기
                                     </a>
 
                                     <sui-accordion-content>
                                         <div class="review-detail">
-                                            <img src="https://via.placeholder.com/150">
-                                            <img src="https://via.placeholder.com/600x150">
+                                            <sui-item-group divided>
+                                                <sui-item>
+                                                <sui-item-content>
+                                                <sui-item-header>{{review.starPoint}}<sui-rating id="starAvg" :rating="review.starPoint" :max-rating="5" /></sui-item-header>
+                                                <sui-item-meta>
+                                                    <img class='detail-image' style="margin-right: 3%;" :src='photo' width='99' height='99'>    
+                                                </sui-item-meta>
+                                                    
+                                                <sui-item-description>
+                                                <span>배송:<span v-if="review.deliveryValue==1">적당해요</span><span v-if="review.deliveryValue==2">생각보다 빨라요</span><span v-if="review.deliveryValue==3">생각보다 느려요</span></span>
+                                                    <span style="margin-left: 3%;">디자인:<span v-if="review.designValue==1">적당해요</span><span v-if="review.designValue==2">생각보다 예뻐요</span><span v-if="review.designValue==3">생각보다 별로에요</span></span>
+                                                    <span style="margin-left: 3%;">사이즈:<span v-if="review.sizeValue==1">적당해요</span><span v-if="review.sizeValue==2">생각보다 커요</span><span v-if="review.sizeValue==3">생각보다 작아요</span></span>
+                                                    <p style="margin-top: 1%;">{{review.reviewContent}}</p>
+                                                </sui-item-description>
+
+                                                    <sui-button @click='updateReview()' class="modify-button" size="tiny">수정</sui-button>
+                                                    <sui-button @click='deleteReview()' class="delete-button" size="tiny">삭제</sui-button>
+                                                </sui-item-content>
+                                                </sui-item>
+                                            </sui-item-group>
                                         </div>
                                     </sui-accordion-content>
-
                                 </sui-accordion>
                             </sui-form-field>
 
@@ -59,10 +70,12 @@
     export default {
         name: "Sample",
         data() {
-            return {}
+            return {
+                photo: require('../../assets/review.jpg'),
+            }
         },
-        created() {
-            this.$store.commit('loadMyCommentsByUserId', 'testId');
+        async created() {
+            await this.$store.commit('loadMyCommentsByUserId', 'testId');
         },
         computed: {
             getRequestMyReviews() {
@@ -70,9 +83,13 @@
             }
         },
         methods: {
-            goDetail(goodsCode) {
-                this.$router.push('/goodsDetail/' + goodsCode);
-            }
+            updateReview(){
+                alert('수정');
+            },
+
+            deleteReview(){
+                alert('삭제');
+            },
         }
     }
 </script>
@@ -129,14 +146,27 @@
     }
 
     .review-detail {
-        background-color: lightgray;
+        background-color: #fafafa;
         width: 95%;
-        height: 180px;
-        padding: 15px;
+        padding: 2%;
         float: left;
     }
 
-    .review-detail img {
-        margin-right: 10px;
+    .detail-image{
+        float: left;
+    }
+
+    .modify-button{
+        margin-top: 4%;
+        float: right;
+    }
+
+    .delete-button{
+        margin-top: 4%;
+        float: right;
+    }
+
+    span{
+        font-weight: bold;
     }
 </style>

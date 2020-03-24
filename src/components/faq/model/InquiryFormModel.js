@@ -1,16 +1,20 @@
 class InquiryFormModel {
+    id = '';
+    territory = '';
     goods = '';
     title = '';
-    content = '';
-    answerAlarm = false;
-    emailReceive = false;
+    description = '';
+    smsAlarm = false;
+    emailAlarm = false;
 
-    constructor(goods, title, content, answerAlarm, emailReceive) {
+    constructor(id, territory, goods, title, description, smsAlarm, emailAlarm) {
+        this.id = id;
+        this.territory = territory;
         this.goods = goods;
         this.title = title;
-        this.content = content;
-        this.answerAlarm = answerAlarm;
-        this.emailReceive = emailReceive;
+        this.description = description;
+        this.smsAlarm = smsAlarm;
+        this.emailAlarm = emailAlarm;
     }
 }
 

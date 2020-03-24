@@ -1,9 +1,12 @@
-import CommentApi from '../../src/api/CommentApi';
+import {requestComments, requestMyComments} from '../../src/api/CommentApi';
 
 const state = {
-    reviews:[],
+    reviews:{},
     reviewSummary:{},
-    myReviewsInfo:{},
+    myReviewsInfo:{
+        reviewCount:2,
+        myReviews:[]
+    },
     selectedUnwrittenReview:{},
     isModalOpen: false,
     writtenReview:{
@@ -18,22 +21,24 @@ const getters = {
 //state를 바꿀 때
 const mutations = {
     
-    loadCommentByGoodsCode(state, goodsCode){
+    async loadCommentByGoodsCode(state, goodsCode){
 
-        let commentApi = new CommentApi();
-        state.reviews = commentApi.getReviews(goodsCode);
-        state.reviewSummary = commentApi.getReviewSummary(goodsCode);
+        let reviewInfo = await requestComments('1203973748');
+        console.log(goodsCode);
+        state.reviews = reviewInfo;
+        state.reviewSummary = reviewInfo.sumEvaluation;
     },
 
-    loadMyCommentsByUserId(state, userId){
+    async loadMyCommentsByUserId(state, testId){
         
-        let commentApi = new CommentApi();
-        state.myReviewsInfo = commentApi.getMyReviewsInfo(userId);
+        console.log(testId);
+        state.myReviewsInfo.myReviews = await requestMyComments('testId');
+        //state.myReviewsInfo.reviewCount = state.myReviewsInfo.myReviews.length;
     },
 
     increaseRecommendCount(state, index){
 
-        let comment =  state.reviews;
+        let comment =  state.reviews.commentList;
         let subComment = comment[index];
 
         subComment.recommendCount += 1;
