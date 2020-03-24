@@ -1,164 +1,175 @@
 <template>
     <div id="main-page-container">
         <Header></Header>
-            <sui-container>
-                <div style="margin-top:30px; margin-bottom:30px;">
-                    <h1>쇼핑백</h1>
-                </div>
+        <sui-container>
+            <div style="margin-top:30px; margin-bottom:30px;">
+                <h1>쇼핑백</h1>
+            </div>
 
-                <div>
-                    <sui-menu :widths="3">
-                        <sui-menu-item active>일반배송</sui-menu-item>
-                        <sui-menu-item>스마트픽</sui-menu-item>
-                        <sui-menu-item>해외직구</sui-menu-item>
-                    </sui-menu>
-                </div>
-                <div class="goods-main-container">
-                    <div class="goods-list-container">
-                        <div class="goods-options">
-                            <div style="display:inline-block;">
-                                <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송"  />
-                            </div>
-                            <div style="display:inline-block; float:right;">
-                                <a @click="checkedDeleteCartList" href="javascript:void(0)" style="margin-right:10px;">선택삭제</a>
-                                <a href="javascript:void(0)" @click="containWishList">위시담기</a>
-                            </div>
+            <div>
+                <sui-menu :widths="3">
+                    <sui-menu-item active>일반배송</sui-menu-item>
+                    <sui-menu-item>스마트픽</sui-menu-item>
+                    <sui-menu-item>해외직구</sui-menu-item>
+                </sui-menu>
+            </div>
+            <div class="goods-main-container">
+                <div class="goods-list-container">
+                    <div class="goods-options">
+                        <div style="display:inline-block;">
+                            <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송"  />
                         </div>
-                        <div v-for="(cart, index) in getCartList" v-bind:key="index"  class="goods-list">
-                            <div style="background-color:#ededed; height:50px;">
-                                <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
-                            </div>
-                            <div>
-                                <sui-grid :columns="5">
-                                    <sui-grid-row stretched class="cart-grid-row">
-                                        <sui-grid-column style="width:10%;">
-                                            <sui-segment style="position:absolute; top:50%;">
-                                                <sui-checkbox @change="checkCart(index)" class="goods-checkbox" :id="index" :value="cart" v-model="checkedCartList"/>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:20%;">
-                                            <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
-                                                <sui-image :src="cart.imgUrl"  class="cart-img" />
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:40%;">
-                                            <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
-                                                <p style="font-family:Georgia, serif;">{{cart.title}}</p>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:15%; padding-bottom:5%;">
-                                            <sui-segment>
-                                                <div class="quantity-box">
-                                                    <sui-button class="minus" @click="cartStockMinus(cart)">-</sui-button>
-                                                    <sui-input :value="cart.cartStock" v-model="cart.cartStock" style="margin-left:18px;"/>
-                                                    <sui-button class="plus" @click="cartStockPlus(cart)">+</sui-button>
-                                                </div>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:15%; padding-bottom: 6%;">
-                                            <sui-segment>
-                                                <div @click="deleteCart(cart)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
-                                            </sui-segment>
-                                            <sui-segment>
-                                                <div><span class="goods-price">{{priceFormatting(cart.originalPrice)}}원</span></div>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                    </sui-grid-row>
-                                </sui-grid>
-                            </div>
+                        <div style="display:inline-block; float:right;">
+                            <a @click="checkedDeleteCartList" href="javascript:void(0)" style="margin-right:10px;">선택삭제</a>
+                            <a href="javascript:void(0)" @click="containWishList">위시담기</a>
                         </div>
                     </div>
-
-                    <div class="goods-price-container">
+                    <div v-for="(cart, index) in cartList" v-bind:key="index"  class="goods-list">
+                        <div style="background-color:#ededed; height:50px;">
+                            <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
+                        </div>
                         <div>
-                            <h3>상품 {{totalCartCount()}}개</h3>
-                            <sui-divider />
-                            <div class="goods-price-info">
-                                <div class="goods-price-info-won">
-                                    <span>상품금액</span>
-                                </div>
-                                <div class="goods-price-won">
-                                    <span>{{totalGoodsPrice()}}원</span>
-                                </div>
-                            </div>
-                            <div class="goods-price-info">
-                                <div class="goods-price-info-won">
-                                    <span>배송비</span>
-                                </div>
-                                <div class="goods-price-won">
-                                    <span>+0원</span>
-                                </div>
-                            </div>
-                            <div class="goods-price-info">
-                                <div class="goods-price-info-won">
-                                    <span>할인금액</span>
-                                </div>
-                                <div class="goods-price-won">
-                                    <span>-0원</span>
-                                </div>
-                            </div>
-                            <sui-divider />
-                            <div class="goods-price-info">
-                                <div class="goods-price-info-won">
-                                    <span>결제예정금액</span>
-                                </div>
-                                <div class="goods-price-won">
-                                    <span>{{totalCartPrice()}}원</span>
-                                </div>
-                            </div>
-                            <div class="goods-price-info">
-                                <sui-button secondary @click="buyCartList">구매하기</sui-button>
-                            </div>
-                            <div class="goods-price-info">
-                                <h3>카드 청구할인 정보</h3>
-                            </div>
-                            <div class="goods-price-info">
-                                <h3>롯데카드</h3>
-                                <p>
-                                    - 70,000원 이상 결제시 10% (~03/17)
-                                    - 1일 할인한도 최대 70,000원
-                                </p>
-                            </div>
-                            <sui-divider />
-                            <div class="goods-price-info">
-                                <h3>KB국민카드</h3>
-                                <p>
-                                    - 70,000원 이상 결제시 10% (~03/17)
-                                    - 1일 할인한도 최대 70,000원
-                                </p>
-                            </div>
-                            <sui-divider />
-                            <div class="goods-price-info">
-                                <span>* 체크/법인/기프트/선불카드 제외</span>
-                            </div>
-                            <div class="goods-price-info">
-                                <sui-button>카드 무이자 할부 안내</sui-button>
-                            </div>
+                            <sui-grid :columns="5">
+                                <sui-grid-row stretched class="cart-grid-row">
+                                    <sui-grid-column style="width:10%;">
+                                        <sui-segment style="position:absolute; top:50%;">
+                                            <sui-checkbox class="goods-checkbox" :id="index" :value="cart" v-model="checkedCartList"/>
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                    <sui-grid-column style="width:20%;">
+                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
+                                            <sui-image :src="cart.goods.imgUrl"  class="cart-img" />
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                    <sui-grid-column style="width:40%;">
+                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
+                                            <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                    <sui-grid-column style="width:15%; padding-bottom:5%;">
+                                        <sui-segment>
+                                            <div class="quantity-box">
+                                                <sui-button class="minus" @click="cartStockMinus(index)">-</sui-button>
+                                                <sui-input :value="cart.cartStock" v-model="cart.cartStock" style="margin-left:18px; width:40px;" />
+                                                <sui-button class="plus" @click="cartStockPlus(index)">+</sui-button>
+                                            </div>
+                                            <div>
+                                                <sui-button @click="changeStock(index)" class="stock-change-btn" basic secondary>변경</sui-button>
+                                            </div>
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                    <sui-grid-column style="width:15%; padding-bottom: 6%;">
+                                        <sui-segment>
+                                            <div @click="deleteCart(cart)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
+                                        </sui-segment>
+                                        <sui-segment>
+                                            <div><span class="goods-price">{{priceFormatting(cart.goods.originalPrice)}}원</span></div>
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                </sui-grid-row>
+                            </sui-grid>
                         </div>
                     </div>
                 </div>
-            </sui-container>
-            <!--
+
+                <div class="goods-price-container">
+                    <div>
+                        <h3>상품 {{totalCartCount()}}개</h3>
+                        <sui-divider />
+                        <div class="goods-price-info">
+                            <div class="goods-price-info-won">
+                                <span>상품금액</span>
+                            </div>
+                            <div class="goods-price-won">
+                                <span>{{totalGoodsPrice()}}원</span>
+                            </div>
+                        </div>
+                        <div class="goods-price-info">
+                            <div class="goods-price-info-won">
+                                <span>배송비</span>
+                            </div>
+                            <div class="goods-price-won">
+                                <span>+0원</span>
+                            </div>
+                        </div>
+                        <div class="goods-price-info">
+                            <div class="goods-price-info-won">
+                                <span>할인금액</span>
+                            </div>
+                            <div class="goods-price-won">
+                                <span>-0원</span>
+                            </div>
+                        </div>
+                        <sui-divider />
+                        <div class="goods-price-info">
+                            <div class="goods-price-info-won">
+                                <span>결제예정금액</span>
+                            </div>
+                            <div class="goods-price-won">
+                                <span>{{totalCartPrice()}}원</span>
+                            </div>
+                        </div>
+                        <div class="goods-price-info">
+                            <sui-button secondary @click="buyCartList">구매하기</sui-button>
+                        </div>
+                        <div class="goods-price-info">
+                            <h3>카드 청구할인 정보</h3>
+                        </div>
+                        <div class="goods-price-info">
+                            <h3>롯데카드</h3>
+                            <p>
+                                - 70,000원 이상 결제시 10% (~03/17)
+                                - 1일 할인한도 최대 70,000원
+                            </p>
+                        </div>
+                        <sui-divider />
+                        <div class="goods-price-info">
+                            <h3>KB국민카드</h3>
+                            <p>
+                                - 70,000원 이상 결제시 10% (~03/17)
+                                - 1일 할인한도 최대 70,000원
+                            </p>
+                        </div>
+                        <sui-divider />
+                        <div class="goods-price-info">
+                            <span>* 체크/법인/기프트/선불카드 제외</span>
+                        </div>
+                        <div class="goods-price-info">
+                            <sui-button>카드 무이자 할부 안내</sui-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </sui-container>
+        <!--
+        <div>
+            <sui-button @click="addCartList">장바구니 추가</sui-button>
+        </div>
+        <div>
             <div>
-                <sui-button @click="addCartList">장바구니 추가</sui-button>
+                <hr/>
+                state에 cartList 값
+                <br />
+                {{getCartList}}
+                <hr/>
             </div>
             <div>
-                <div>
-                    <hr/>
-                    state에 cartList 값
-                    <br />
-                    {{getCartList}}
-                    <hr/>
-                </div>
-                <div>
-                    <hr/>
-                    data에 cartList 값
-                    <br />
-                    {{checkedCartList}}
-                    <hr/>
-                </div>
+                <hr/>
+                data에 cartList 값
+                <br />
+                {{cartList}}
+                <hr/>
             </div>
-            -->
+
+            <div>
+                <hr/>
+                data에 checkedCartList 값
+                <br />
+                {{checkedCartList}}
+                <hr/>
+            </div>
+        </div>
+        -->
         <Footer></Footer>
     </div>
 </template>
@@ -172,8 +183,9 @@
         data() {
             return {
                 isTotalChecked:false,
-                isChecked:false,
+                isChecked:[],
                 checkedCartList:[],
+                cartList:[],
             }
         },
         components: {
@@ -188,17 +200,11 @@
                 this.$store.commit('addCartList');
             },
             checkWholeItem() {
-                this.checkedCartList = [];
-
                 if(!this.isTotalChecked) {
-                    this.$store.state.cartListStore.cartList.map((cart, index) => {
-                        Object.assign(cart, {
-                            "index":index
-                        });
-                        this.checkedCartList.push(cart);
-                    });
+                    this.checkedCartList = this.cartList;
                     this.isTotalChecked = true;
                 } else {
+                    this.checkedCartList = [];
                     this.isTotalChecked = false;
                 }
             },
@@ -212,7 +218,7 @@
                 let totalGoodsPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalGoodsPrice += this.pricingCalculation(cart.originalPrice, cart.cartStock);
+                    totalGoodsPrice += this.pricingCalculation(cart.goods.originalPrice, cart.cartStock);
                 });
                 return this.priceFormatting(totalGoodsPrice);
             },
@@ -220,28 +226,26 @@
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalCartPrice += this.pricingCalculation(cart.originalPrice, cart.cartStock);
+                    totalCartPrice += this.pricingCalculation(cart.goods.originalPrice, cart.cartStock);
                 });
                 return this.priceFormatting(totalCartPrice);
             },
-            cartStockMinus(cart) {
-                if (cart.cartStock === 1) {
+            cartStockMinus(index) {
+                if (this.cartList[index].cartStock === 1) {
                     alert('최소 1개 구매 가능합니다.');
                     return;
                 }
-                cart.cartStock -= 1;
+                this.cartList[index].cartStock -= 1;
             },
-            cartStockPlus(cart) {
-                cart.cartStock += 1;
+            cartStockPlus(index) {
+                this.cartList[index].cartStock += 1;
             },
 
             deleteCart(deletedCart) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
                     this.$store.commit('deleteCart', deletedCart);
-                    this.checkedCartList = this.checkedCartList.filter(function(cart) {
-                        return cart !== deletedCart;
-                    });
+                    this.$router.go();
                 }
             },
 
@@ -249,31 +253,26 @@
                 const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
                 if (result) {
                     this.$store.commit('checkedDeleteCartList', this.checkedCartList);
-                    this.checkedCartList = [];
-                }
-            },
-
-            checkCart(index) {
-                if (!this.isChecked) {
-                    let checkCart = this.$store.state.cartListStore.cartList[index];
-                    Object.assign(checkCart, {
-                        "index":index
-                    });
-                } else {
-                    this.checkedCartList.splice(index, 1);
+                    this.$router.go();
                 }
             },
 
             containWishList() {
                 let goodsCodeArr = [];
                 this.checkedCartList.map((cart) => {
-                    goodsCodeArr.push(cart.goodsCode);
+                    goodsCodeArr.push(cart.goods.goodsCode);
                 });
                 this.$store.commit('containWishList', goodsCodeArr);
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);
             },
+
+            changeStock(index) {
+                this.$store.commit('changeStock', this.cartList[index]);
+                this.$router.go();
+            },
+
             buyCartList() {
 
             }
@@ -281,11 +280,15 @@
         created() {
             this.$store.commit('getCartList');
         },
+        mounted() {
+            this.cartList = JSON.parse ( JSON.stringify ( this.$store.state.cartListStore.cartList ) );
+            this.isChecked = new Array(this.cartList.length).fill(false);
+        },
         computed: {
             getCartList() {
-                return this.$store.state.cartListStore.cartList;
+                  return this.$store.state.cartListStore.cartList;
             },
-        }
+        },
     }
 </script>
 
@@ -360,5 +363,10 @@
 
     .goods-price {
         font-size:12px;
+    }
+
+    .stock-change-btn {
+        width: 83px;
+        margin-top: 40%;
     }
 </style>

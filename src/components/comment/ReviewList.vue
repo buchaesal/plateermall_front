@@ -26,11 +26,11 @@
             <sui-item-group divided>
                 <sui-item v-for='(review, index) in getRequestComments' :key='index'>
                     <sui-item-content>
-                    <sui-item-header><sui-rating id="starAvg" :rating="review.starCount" :max-rating="5" /> {{review.option}}</sui-item-header>
+                    <sui-item-header><sui-rating id="starAvg" :rating="review.starPoint" :max-rating="5" /> {{review.selectedOption}}</sui-item-header>
                     <sui-item-meta>
-                        <p>{{review.content}}</p>
-                        <img :src='review.photo' width='99' height='99'>
-                        <p>{{review.id}} | {{review.writeDate}}</p>
+                        <p>{{review.reviewContent}}</p>
+                        <img :src='review.myPhoto' width='99' height='99'>
+                        <p>{{review.userId}} | {{review.writtenDate}}</p>
 
                         <span class='recommend-review'><sui-button size="tiny" floated="right" basic content="신고 하기"/></span>
                         <span class='report-review'><sui-button @click="recommendComment(index)" size="tiny"  icon="thumbs up outline" floated="right" basic>추천하기{{review.recommendCount}}</sui-button></span>
@@ -77,7 +77,7 @@
         },
         computed: {
             getRequestComments(){
-                return this.$store.state.commentStore.reviews;
+                return this.$store.state.commentStore.reviews.commentList;
             },
 
         },

@@ -1,19 +1,18 @@
 class SubCommentApiModel{
     
-    reviewCode='';
+    purchaseCode='';
     goodsCode='';
     userId='';
-    brand='';
-    itemName='';
-    option='';
-    photo='';
+    selectedOption='';
+    myPhoto='';
+    quantity=0;
     recommendCount=''; //추천수
 
     deliveryValue=0;
     designValue=0;
     sizeValue=0;
     starPoint=0;
-    reviewContents='';
+    reviewContent='';
 }
 
 export default SubCommentApiModel;

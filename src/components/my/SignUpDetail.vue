@@ -1,6 +1,6 @@
 <template>
     <div class="signup-detail-main">
-        <sui-input class="password-input" type="text" placeholder="비밀번호"/>
+        <sui-input class="password-input" type="password" placeholder="비밀번호" v-model="user.password"/>
         <br>
         <br>
         <p>* 영문, 숫자, 특수문자를 혼합한 8자 이상 ~15자 이내</p>
@@ -33,23 +33,23 @@
         <div class="checkbox-wrap">
             <div class="email-checkbox-wrap">
                 <span class="email-comp">이메일 수신</span>
-                <input class="email-comp" type="radio" id="emailAgree" value="Y">
+                <input class="email-comp" type="radio" id="emailAgree" value="Y" :checked="emailAgree" @click="emailAgreeRadio">
                 <label for="emailAgree"> 동의 </label>
                 
-                <input class="email-comp" type="radio" id="emailDisagree" value="N" checked="true">
-                <label for="emailAgree"> 동의안함 </label>
+                <input class="email-comp" type="radio" id="emailDisagree" value="N" :checked="!emailAgree" @click="emailDisagreeRadio">
+                <label for="emailDisagree"> 동의안함 </label>
             </div>
             <div class="sms-checkbox-wrap">
                 <span class="sms-comp">SMS 수신</span>
-                <input class="sms-comp" type="radio" id="emailAgree" value="Y">
-                <label for="emailAgree"> 동의 </label>
+                <input class="sms-comp" type="radio" id="smsAgree" value="Y" :checked="smsAgree" @click="smsAgreeRadio">
+                <label for="smsAgree"> 동의 </label>
                 
-                <input class="sms-comp-disagree" type="radio" id="emailDisagree" value="N" checked="true">
-                <label for="emailAgree"> 동의안함 </label>
+                <input class="sms-comp-disagree" type="radio" id="smsDisagree" value="N" :checked="!smsAgree" @click="smsDisagreeRadio">
+                <label for="smsDisagree"> 동의안함 </label>
             </div>
         </div>
         <div class="sign-in">
-            <a class="sign-in-btn" href="#">
+            <a class="sign-in-btn" href="#" @click="signUp">
                 <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_btn_login_create.gif" size="large" />
             </a>
         </div>
@@ -57,8 +57,49 @@
 </template>
 
 <script>
+    // import UserApi from "../../api/UserApi";
+
     export default {
-        name: "SignUpDetail"
+        name: "SignUpDetail",
+        props: {
+            user: Object,
+        },
+        data: function () {
+            return {
+                emailAgree: false,
+                smsAgree: false,
+            }
+        },
+        methods: {
+            emailAgreeRadio(){
+              this.emailAgree = true;
+              this.user.acceptEmail = 'Y';
+            },
+            emailDisagreeRadio(){
+              this.emailAgree = false;
+              this.user.acceptEmail = 'N';
+            },
+            smsAgreeRadio() {
+                this.smsAgree = true;
+                this.user.acceptSms = 'Y';
+            },
+            smsDisagreeRadio() {
+                this.smsAgree = false;
+                this.user.acceptSms = 'N';
+            },
+            signUp(){
+                console.log(this.user);
+                // UserApi.signUp(this.user)
+                // .then((result) => {
+                //     if(result === true){
+                //         this.$router.push('/')
+                //     }
+                //     else {
+                //         alert('실패')
+                //     }
+                // });
+            }
+        },
     }
 </script>
 

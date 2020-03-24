@@ -24,7 +24,8 @@ const routes = [
     {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList'}},
     {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch'}},
     {path: '/answer/:id', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'}},
-    {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'}}
+    {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'}},
+
 ]
 
 export default new VueRouter({

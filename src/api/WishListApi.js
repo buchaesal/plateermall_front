@@ -6,7 +6,7 @@ class WishListApi {
         this.wishList.push('1203917700')
     }
 
-    getWishList(){
+    getWishListGoodsCodes(){
         return this.wishList;
     }
 
