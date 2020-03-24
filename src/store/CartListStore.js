@@ -1,4 +1,4 @@
-import CartListApi from '../api/CartListApi'
+import {requestCartList} from '../api/CartListApi'
 import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
 
@@ -31,9 +31,15 @@ const mutations = {
 
         state.cartList.push(new CartListModel((cartList)));
     },
-    getCartList(state) {
-        const cartListApi = new CartListApi();
-        state.cartList = cartListApi.getCartList();
+    async getCartList(state) {
+        const cartList = await requestCartList();
+        state.cartList = cartList;
+        console.log(state.cartList);
+        // const goods = await requestGoods();
+
+        // for (var i=0; i<cartList.length; i++) {
+        //     state.cartList = new CartListModel(cartList, goods[i]);
+        // }
     },
 
     deleteCart(state, deletedCart) {

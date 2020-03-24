@@ -277,8 +277,8 @@
 
             }
         },
-        created() {
-            this.$store.commit('getCartList');
+        async created() {
+            await this.$store.commit('getCartList');
         },
         mounted() {
             this.cartList = JSON.parse ( JSON.stringify ( this.$store.state.cartListStore.cartList ) );

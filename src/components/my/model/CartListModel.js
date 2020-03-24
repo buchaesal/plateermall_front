@@ -2,7 +2,8 @@ class CartListModel {
     cartCode = ''
     userId = ''
     cartStock = 0
-
+    //goods = []
+    
     goods = {
         imgUrl : '',
         goodsCode : '',
