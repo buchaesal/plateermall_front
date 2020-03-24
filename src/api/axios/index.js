@@ -5,7 +5,7 @@ export const COMMENTS_URL = process.env.COMMENTS_APP_BASE_URL + '/api/comments';
 export const CART_URL = process.env.CART_APP_BASE_URL + '/api/cart';
 
 export const FAQ_URL = process.env.VUE_APP_BASE_URL+'/api/faq';
-export const ORDER_URL = process.env.VUE_APP_BASE_URL+'/api/order';
+export const ORDER_URL = 'http://localhost:9999/api/order';
 export const PURCHASEHISTORY_URL = process.env.PURCHASEHISTORY_APP_BASE_URL+'api/purchasehistory';
 
 export const USER_URL = process.env.VUE_APP_BASE_URL+'/api/user';

@@ -1,7 +1,7 @@
 import request, {ORDER_URL} from './axios';
 
 export const getOrderList = function () {
-    request.get(ORDER_URL+ `normalorderlist`).then(
+    return request.get(ORDER_URL + `/normalorderlist`).then(
         (response) => {
             return response.data;
         }

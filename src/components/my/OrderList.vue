@@ -7,26 +7,26 @@
         <hr>
 
         <div class="my-order-list">
-            <NoItem v-if="sampleData.length<1"></NoItem>
+            <NoItem v-if="orderList.length<1"></NoItem>
             <div v-else>
-                <div v-for="(cart, index) in sampleData" v-bind:key="index" class="goods-list">
+                <div v-for="(order, index) in orderList" v-bind:key="index" class="goods-list">
                     <div class="my-order-list-title">
-                        <p class="order-date">날짜넣기</p>
-                        <a href="#" class="order-detail">자세히보기 ></a>
+                        <p class="order-date">{{order.orderState.stateChangeDate}}</p>
+                        <a href="#" class="order-detail" @click="test">자세히보기 ></a>
                     </div>
 
                     <div class="my-order-list-goods">
                         <sui-checkbox class="goods-checkbox"/>
                         <span class="goods-img">
-                        <img :src="cart.imgUrl">
+                        <img :src="order.imgUrl">
                     </span>
                         <div class="my-order-list-info">
-                            <p>{{cart.seller}}</p>
-                            <p>{{cart.title}}</p>
+                            <p>판매자정보</p>
+                            <p>상품이름</p>
                             <p>수량 가져오기</p>
-                            <p>주문 진행상태 보여주기</p>
+                            <p>{{order.orderState.orderState}}</p>
                         </div>
-                        <span class="my-order-list-price">{{priceFormatting(cart.originalPrice)}}원</span>
+                        <span class="my-order-list-price">{{order.orderPrice}}원</span>
                         <div class="my-order-list-button">
                             <button class="btn1" @click="changeDeliveryAddress">배송지변경</button>
                             <button>주문취소</button>
@@ -43,63 +43,80 @@
     import FaqHeader from "../faq/FaqHeader";
     import OrderStatusBox from "./OrderStatusBox";
     import NoItem from "../share/NoItem";
-    import OrderApi from "../../api/OrderApi";
+    import {getOrderList} from "../../api/OrderApi";
 
     export default {
         name: "OrderList",
         data() {
             return {
                 checkedIndexList: [],
-                sampleData: [
-                    {
-                        cartCode: "code1",
-                        userId: "1",
-                        cartStock: 5,
-                        imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
-                        goodsCode: "123",
-                        seller: "판매자1",
-                        title: "필립스(아울렛)\n" +
-                            "필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04\n" +
-                            "모델명:HX9338/04",
-                        originalPrice: 1206000,
-                        dcRate: 3.5,
-                        saleCnt: 5
-                    }
-                    ,
-                    {
-                        cartCode: "code1",
-                        userId: "1",
-                        cartStock: 5,
-                        imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
-                        goodsCode: "123",
-                        seller: "판매자1",
-                        title: "필립스(아울렛)\n" +
-                            "필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04\n" +
-                            "모델명:HX9338/04",
-                        originalPrice: 1206000,
-                        dcRate: 3.5,
-                        saleCnt: 5
-                    }
-                ],
+                // orderList
+
+                orderList: [{
+                    orderId : '',
+                    userId : '',
+                    goodsId : '',
+                    orderPrice : '',
+                    orderState : {
+                        orderId : '',
+                        stateChangeDate : '',
+                        orderState : '',
+                    },
+                }],
+                // orderList: [
+                //     {
+                //         cartCode: "code1",
+                //         userId: "1",
+                //         cartStock: 5,
+                //         imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
+                //         goodsCode: "123",
+                //         seller: "판매자1",
+                //         title: "필립스(아울렛)\n" +
+                //             "필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04\n" +
+                //             "모델명:HX9338/04",
+                //         originalPrice: 1206000,
+                //         dcRate: 3.5,
+                //         saleCnt: 5
+                //     }
+                //     ,
+                //     {
+                //         cartCode: "code1",
+                //         userId: "1",
+                //         cartStock: 5,
+                //         imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
+                //         goodsCode: "123",
+                //         seller: "판매자1",
+                //         title: "필립스(아울렛)\n" +
+                //             "필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04\n" +
+                //             "모델명:HX9338/04",
+                //         originalPrice: 1206000,
+                //         dcRate: 3.5,
+                //         saleCnt: 5
+                //     }
+                // ],
             }
         },
         methods: {
-            priceFormatting(price) {
-                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            priceFormatting() {
+                //price
+                // return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
             changeDeliveryAddress(){
                 this.$router.push('/deliveryanduserinfomanagement');
             },
-            test(){
-                let orderApi = new OrderApi();
-                orderApi.getOrderList()
-                .then((result) => console.log(result));
-            }
+            async test(){
+                var model = await getOrderList();
+                console.log(model);
+                this.orderList =model;
+            },
         },
         components: {
             FaqHeader,
             OrderStatusBox,
             NoItem
+        },
+        created: function() {
+            this.test();
         }
     }
 </script>
