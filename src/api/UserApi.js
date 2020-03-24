@@ -19,6 +19,13 @@ export const signUp = function(user) {
         .catch((err) => console.log(err));
 }
 
+export const getUser = function (email) {
+    return request.get(`http://localhost:9999/api/user/${email}`)
+        .then((response)=>{return response.data})
+        .catch((err)=>console.log(err));
+
+}
+
 class UserApi {
 
 }
