@@ -56,7 +56,7 @@
                                 </sui-table-cell>
                             </sui-table-row>
                             <sui-table-row>
-                                <sui-table-cell class="form_head">답변 등록 일시</sui-table-cell>
+                                <sui-table-cell class="form_head">작성자</sui-table-cell>
                                 <sui-table-cell>[GM] 아이번</sui-table-cell>
                             </sui-table-row>
                             <sui-table-row>
