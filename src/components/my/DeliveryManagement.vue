@@ -161,8 +161,8 @@
                 this.$store.commit('cleanAddress');
             },
             modifyShippingSpot() {
-                this.defaultShippingSpot.roadAddress = this.$store.state.shippingSpotListStore.roadAddress;
-                this.defaultShippingSpot.zipcodeAddress = this.$store.state.shippingSpotListStore.zipcodeAddress;
+                // this.defaultShippingSpot.roadAddress = this.$store.state.shippingSpotListStore.roadAddress;
+                // this.defaultShippingSpot.zipcodeAddress = this.$store.state.shippingSpotListStore.zipcodeAddress;
                 this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
                 this.closeModifyDefaultSpotForm();
             },
@@ -210,8 +210,8 @@
                 });
             },
             registerNewShippingSpot() {
-                this.newShippingSpotModel.roadAddress = this.$store.state.shippingSpotListStore.roadAddress;
-                this.newShippingSpotModel.zipcodeAddress = this.$store.state.shippingSpotListStore.zipcodeAddress;
+                // this.newShippingSpotModel.roadAddress = this.$store.state.shippingSpotListStore.roadAddress;
+                // this.newShippingSpotModel.zipcodeAddress = this.$store.state.shippingSpotListStore.zipcodeAddress;
                 console.log(this.newShippingSpotModel);
                 this.$store.commit('addShippingSpotList', this.newShippingSpotModel);
                 this.filterDefaultAndOtherSpots();

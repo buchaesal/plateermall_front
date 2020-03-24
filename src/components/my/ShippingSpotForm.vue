@@ -38,7 +38,7 @@
                 <p class="spot-properties-contents">도로명 주소</p>
             </div>
             <div>
-            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" :value="roadAddress">
+            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" :value="targetShippingSpot.roadAddress">
             <button class="address-search-btn" @click="openFindAddressComponent">주소검색</button>
             </div>
         </div>
@@ -47,11 +47,11 @@
                 <p class="spot-properties-contents">지번 주소</p>
             </div>
             <div>
-            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" :value="zipcodeAddress">
+            <input type="text" size="45" disabled="disabled" style="background-color:#ebebe0;" :value="targetShippingSpot.zipcodeAddress">
             </div>
         </div>
         <div class="row-wrap">
-            <FindAddress v-if="openFindAddress" @complete="closeFindAddressComponent"></FindAddress>
+            <FindAddress v-if="openFindAddress" v-bind:target-shipping-spot="targetShippingSpot" @complete="closeFindAddressComponent"></FindAddress>
         </div>
             <div class="row-wrap">
             <div class="spot-properties">
