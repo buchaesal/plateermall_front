@@ -553,9 +553,7 @@
         },
         computed: {
             getGoodsData() {
-                let goodsData = this.$store.state.goodsStore.goodsModel
-
-                return goodsData;
+                return this.$store.state.goodsStore.goodsModel;
             },
         },
         watch: {
