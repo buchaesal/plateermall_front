@@ -9,7 +9,7 @@
                 </ul>
             </div>
             <ul class="status" id="div_countDetail">
-                <li>총 문의 건 : <span>0</span>건</li>
+                <li>총 문의 건 : <span>{{questionList.length}}</span>건</li>
                 <li>답변완료 : <span>0</span>건</li>
                 <li>처리중 건 : <span>0</span>건</li>
                 <li>접수 건 : <span>0</span>건</li>
@@ -17,10 +17,11 @@
             <sui-table single-line>
                 <sui-table-header>
                     <sui-table-row>
-<!--                        <sui-table-header-cell>순번</sui-table-header-cell>-->
-                        <sui-table-header-cell>id</sui-table-header-cell>
-                        <sui-table-header-cell>territory</sui-table-header-cell>
-                        <sui-table-header-cell>title</sui-table-header-cell>
+<!--                        <sui-table-header-cell>POST ID</sui-table-header-cell>-->
+                        <sui-table-header-cell>상태</sui-table-header-cell>
+                        <sui-table-header-cell>무슨영역질문?</sui-table-header-cell>
+                        <sui-table-header-cell>제목</sui-table-header-cell>
+                        <sui-table-header-cell>등록일</sui-table-header-cell>
                     </sui-table-row>
                 </sui-table-header>
                 <sui-table-body v-if="questionList.length===0">
@@ -30,9 +31,11 @@
                 </sui-table-body>
                 <sui-table-body v-else>
                     <sui-table-row v-for="(post, index) in questionList" :key="index">
-                        <sui-table-cell><router-link :to="`/answer/${post.id}`">{{post.id}}</router-link></sui-table-cell>
+                        <sui-table-cell v-if="post.state==true">답변완료</sui-table-cell>
+                        <sui-table-cell v-else>답변대기</sui-table-cell>
                         <sui-table-cell>{{post.territory}}</sui-table-cell>
-                        <sui-table-cell>{{ post.title }}</sui-table-cell>
+                        <sui-table-cell><router-link :to="`/answer/${post.postId}`">{{ post.title }}</router-link></sui-table-cell>
+                        <sui-table-cell>{{post.date}}</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
@@ -43,7 +46,7 @@
 <script>
     import FaqHeader from "./FaqHeader";
     // import FaqApi from "../../api/FaqApi";
-    import {getQeustionList, getQuestion} from "../../api/FaqApi";
+    import {getQuestionList, getQuestion} from "../../api/FaqApi";
 
     export default {
         name: "InquiryAnswer",
@@ -52,14 +55,14 @@
         },
         data() {
             return {
-                faqDetail: {},
                 questionList: [],
+                questionDetail: {},
             }
         },
         async created() {
             // this.answers = new FaqApi().getFaqList();
-            this.faqList = await getQeustionList();
-            this.faqDetail = await getQuestion();
+            this.questionList = await getQuestionList();
+            this.questionDetail = await getQuestion();
         },
     }
 </script>
