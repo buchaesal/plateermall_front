@@ -12,6 +12,17 @@ export const requestUnWrittenComment = function(userId){
     });
 }
 
+//구매내역 가져오기
+export const requestPurchaseData = function(purchaseCode){
+    request.get(PURCHASEHISTORY_URL + `/getpurchasedata/${purchaseCode}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function (error) {
+        console.log(error);
+    });
+}
+
 export const requestCancelHistory = function(userId){
 
     //취소
@@ -55,6 +66,7 @@ class PurchaseHistoryApi{
         unWrittenCount: 2,
         unWrittenReviews:[
             {
+                purchaseCode: '123123',
                 goodsCode: '1203973748',
                 brand: '나이키',
                 itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
@@ -64,6 +76,7 @@ class PurchaseHistoryApi{
                 dueDate: '2020-06-10',
             },
             {
+                purchaseCode:'25244',
                 goodsCode: '1203973748',
                 brand: '나이키22',
                 itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
@@ -120,6 +133,22 @@ class PurchaseHistoryApi{
         returnItems:[
             
         ],
+    }
+
+    purchaseData = {
+        purchaseCode: '1142t35',
+        goodsCode: '1203973748',
+        brand: '나이키',
+        itemName: 'W 에어 맥스 97 트리플 화이트 921733-100',
+        option: '사이즈 선택: 235',
+        photo: require('./../assets/review.jpg'),
+        purchaseDate: '2020-03-11',
+    }
+
+    getPurchaseData(purchaseCode){
+
+        console.log(purchaseCode);
+        return this.purchaseData;
     }
 
     getUnwrittenReviewsInfo(userId){

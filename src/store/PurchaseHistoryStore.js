@@ -5,6 +5,7 @@ const state = {
     cancelInfo:{},
     exchangeInfo:{},
     returnInfo:{},
+    purchaseData:{},
 }
 
 const getters = {
@@ -13,6 +14,13 @@ const getters = {
 
 //state를 바꿀 때
 const mutations = {
+
+    loadPurchaseData(state, purchaseCode){
+        let purchaseHistoryApi = new PurchaseHistoryApi();
+        state.purchaseData = purchaseHistoryApi.getPurchaseData(purchaseCode);
+        
+        console.log(state.purchaseData);
+    },
 
     loadUnwrittenCommentsByUserId(state, userId){
 
