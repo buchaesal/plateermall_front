@@ -1,13 +1,8 @@
 import axios from 'axios';
 
-export const GOODS_URL = process.env.GOODS_APP_BASE_URL + '/api/goods';
-<<<<<<< HEAD
 export const COMMENTS_URL = 'http://localhost:9999/api/comments';
-=======
 export const GOODS_URL_TEST= 'http://localhost:9999/api/goods';
 
-export const COMMENTS_URL = process.env.COMMENTS_APP_BASE_URL + '/api/comments';
->>>>>>> 005253b9af0171c1b6d8a93bcc7f085b2ad35a7c
 export const CART_URL = process.env.CART_APP_BASE_URL + '/api/cart';
 
 export const FAQ_URL = process.env.VUE_APP_BASE_URL+'/api/faq';
