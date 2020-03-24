@@ -8,18 +8,16 @@ const state = {
 }
 
 const mutations = {
-    getGoodsModel(state, goodsCode) {
+    async getGoodsModel(state, goodsCode) {
         let goodsApi = new GoodsApi();
 
-        state.goodsModel = goodsApi.getGoods(goodsCode);
+        state.goodsModel = await goodsApi.getGoods(goodsCode);
     },
-    getCardList(state, goodsSet) {
+    async getGoodsModelList(state, goodsSet) {
         let goodsApi = new GoodsApi();
 
-        state.goodsModels = goodsApi.getGoodsList(goodsSet);
-        state.goodsModels = goodsApi.getGoodsList();
+        state.goodsModels = await goodsApi.getGoodsList(goodsSet);
     },
-
 }
 
 const actions = {
