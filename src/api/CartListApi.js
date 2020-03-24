@@ -1,7 +1,7 @@
 import request,{CART_URL} from './axios';
 
 export const requestCartList = function(){
-    return request.get("http://localhost:8081/api/cart").then(
+    return request.get(CART_URL).then(
         (response) => {
             return response.data;
         }
@@ -11,7 +11,7 @@ export const requestCartList = function(){
 }
 
 export const requestAddCart = function(cart) {
-    request.post(CART_URL, cart).then(
+    request.post(CART_URL + `/addCart`, cart).then(
         (response) => {
             return response.data;
         }
@@ -21,7 +21,7 @@ export const requestAddCart = function(cart) {
 }
 
 export const requestDeleteCart = function(cartCode) {
-    request.delete(CART_URL + `/${cartCode}`).then(
+    request.delete(CART_URL + `/deleteCart` + `/${cartCode}`).then(
         (response) => {
             return response.data;
         }
@@ -31,7 +31,7 @@ export const requestDeleteCart = function(cartCode) {
 }
 
 export const requestCheckedDeleteCartList = function(cartList) {
-    request.delete(CART_URL, cartList).then(
+    request.delete(CART_URL + `/deleteCartList`, cartList).then(
         (response) => {
             return response.data;
         }
@@ -41,7 +41,7 @@ export const requestCheckedDeleteCartList = function(cartList) {
 }
 
 export const requestChangeStock = function(cart) {
-    request.put(CART_URL, cart).then(
+    request.put(CART_URL + `/changeStock`, cart).then(
         (response) => {
             return response.data;
         }

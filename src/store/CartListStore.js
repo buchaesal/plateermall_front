@@ -1,5 +1,6 @@
-import {requestCartList} from '../api/CartListApi'
-import CartListModel from "../components/my/model/CartListModel";
+import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, requestChangeStock} from '../api/CartListApi'
+import {getGoodsList} from '../api/GoodsApi'
+//import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
 
 const state = {
@@ -11,45 +12,42 @@ const getters = {
 }
 
 const mutations = {
-    addCartList() {
-        const cartList = {
-            cartCode: "code3",
-            userId: "1",
-            cartStock: 5,
-            goods : {
-                imgUrl: "https://image.ellotte.com/ellt.static.lotteeps.com/goods/img/71/17/50/01/12/1201501771_mast.jpg/chg/resize/160x160/extent/160x160/optimize",
-                goodsCode: "123",
-                seller: "판매자1",
-                title: "필립스(아울렛)\n" +
-                    "필립스 소닉케어 다이아몬드 클린 매트화이트 HX9338/04\n" +
-                    "모델명:HX9338/04",
-                originalPrice: 1206000,
-                dcRate: 3.5,
-                saleCnt: 5
-            }
-        };
-
-        state.cartList.push(new CartListModel((cartList)));
-    },
     async getCartList(state) {
         const cartList = await requestCartList();
-        state.cartList = cartList;
-        console.log(state.cartList);
-        // const goods = await requestGoods();
-
-        // for (var i=0; i<cartList.length; i++) {
-        //     state.cartList = new CartListModel(cartList, goods[i]);
-        // }
-    },
-
-    deleteCart(state, deletedCart) {
-        state.cartList = state.cartList.filter(function(cart) {
-            return cart.cartCode !== deletedCart.cartCode;
+        let goodsCodeArr = [];
+        
+        cartList.map((cart) => {
+            goodsCodeArr.push(cart.goodsCode);
         });
+        console.log("goodsCodeArr : " + goodsCodeArr);
+
+        const goodsList = await getGoodsList(goodsCodeArr);
+        
+        console.log("goodsList : " + goodsList);
+
+        for (var i=0; i<cartList.length; i++) {
+            cartList[i].goods = goodsList[i];
+        }
+
+        console.log(cartList);
+
+        state.cartList = cartList;
     },
 
-    checkedDeleteCartList(state, checkedCartList) {
-        state.cartList = state.cartList.filter(cart => !checkedCartList.some(checkedCart => cart.cartCode === checkedCart.cartCode));
+    async deleteCart(deletedCart) {
+        const result = await requestDeleteCart(deletedCart.goodsCode);
+        console.log(result);
+    },
+
+    async checkedDeleteCartList(checkedCartList) {
+        let goodsCodeArr = [];
+
+        checkedCartList.map((cart) => {
+            goodsCodeArr.push(cart.goodsCode);
+        });
+
+        const result = await requestCheckedDeleteCartList(goodsCodeArr);
+        console.log(result);
     },
 
     containWishList(state, goodsCodeArr) {
@@ -59,9 +57,9 @@ const mutations = {
         wishListApi.addGoods(goodsCodeArr);
     },
 
-    changeStock(state, changeCart) {
-        let index = state.cartList.findIndex((cart) => cart.cartCode === changeCart.cartCode);
-        state.cartList[index].cartStock = Number(changeCart.cartStock);
+    async changeStock(state, changeCart) {
+        const result = await requestChangeStock(changeCart);
+        console.log(result);
     }
 }
 
