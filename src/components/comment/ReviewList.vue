@@ -6,11 +6,10 @@
                 <img :src='review.photo' width='99' height='99' v-if='review.photo != ""'>
             </div>
         </div>
-
-
         <div class='options'>
             <sui-dropdown style="margin-right: 3%;" text="옵션보기"
                 selection
+                :options="goodsOption"
                 v-model="currentOption"
             />
 
@@ -19,7 +18,6 @@
                 :options="options"
                 v-model="currentOrderRating"
             />
-      
         </div>
         <br>
         <div class='review-list'>
@@ -53,45 +51,56 @@
         name: "Sample",
         data(){
             return{
+                goods:{},
                 currentOrderRating: null,
                 currentOption: null,
+                goodsOption:['옵션보기'],
                 options: [
                     {
                         text: '전체보기',
-                        value: 1,
+                        value: '전체보기',
                     },
                     {
                         text: '높은평점순',
-                        value: 2,
+                        value: '높은평점순',
                     },
                     {
                         text: '낮은평점순',
-                        value: 3,
+                        value: '낮은평점순',
                     },
                     {
                         text: '사진상품평',
-                        value: 4,
+                        value: '사진상품평',
                     },
                 ],
             }
         },
         created(){
-            this.$store.commit('loadGoodsInfo', this.$store.state.commentStore.reviews.goodsCode);
+            this.goods = this.$store.state.goodsStore.goodsModel;
+            console.log(this.goods);
+            for(let index in this.goods.options){
+                this.goodsOption.push(this.goods.options[index]);
+            }
         },
         computed: {
             getRequestComments(){
+               
                 return this.$store.state.commentStore.reviews.commentList;
-            },
-            // getGoodsOptions(){
-            //     return this.$store.state.commentStore.goods;
-            // }
-
+            },     
         },
         methods:{
             recommendComment(index){
                 this.$store.commit('increaseRecommendCount', index);
-            }
-        }
+            },
+        },
+        watch:{
+            currentOption:function(){
+                this.$store.commit('loadCommentByFilter', this.goods.goodsCode, this.currentOption, this.currentOrderRating);
+            },
+            currentOrderRating:function(){
+                this.$store.commit('loadCommentByFilter', this.goods.goodsCode, this.currentOption, this.currentOrderRating);
+            },
+        },
     }
 </script>
 
