@@ -1,12 +1,12 @@
 <template>
     <div>
         <header>
-				<h3 class="page_title">배송지/회원정보 관리</h3>
-		</header>
-        <hr>
-        <div>
+    <h3 class="page_title">배송지/회원정보 관리</h3>
+</header>
+    <hr>
+    <div>
         <sui-menu pointing secondary>
-        <a class="cancel-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item" @click="select(item)"/>
+            <a class="cancel-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item" @click="select(item)"/>
         </sui-menu>
 
         <div v-if="active=='배송지관리'">
@@ -15,7 +15,7 @@
         <div v-if="active=='비밀번호변경'">
             <PasswordChange></PasswordChange>
         </div>
-        </div>
+    </div>
     </div>
 </template>
 

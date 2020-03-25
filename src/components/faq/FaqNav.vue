@@ -26,6 +26,9 @@
                     <router-link to="/deliveryanduserinfomanagement"><span>배송지/회원정보</span></router-link>
                 </li>
                 <li class="inquiry_area">
+                    <router-link to="/board"><span>질문/답변 게시판</span></router-link>
+                </li>
+                <li class="inquiry_area">
                     <router-link to="/faq"><span>FAQ</span></router-link>
                 </li>
             </ul>

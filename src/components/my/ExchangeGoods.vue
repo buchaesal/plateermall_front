@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="my-exchange" v-if="getExchangeGoodsInfo.exchangeCount==0">
+        <div id="my-exchange" v-if="exchangeOrderList.length==0">
             <i class="huge exclamation icon"></i>
             <br><br>
             <p>해당되는 주문내역이 없습니다.</p>
@@ -9,22 +9,22 @@
         </div>
 
         <div class='exchange-list' v-else>
-            <p id="exchange-info">교환된 상품이 <span>{{getExchangeGoodsInfo.exchangeCount}}개 있습니다.</span></p>
+            <p id="exchange-info">교환된 상품이 <span>{{exchangeOrderList.length}}개 있습니다.</span></p>
 
-            <div v-for='(exchangeItem, index) in getExchangeGoodsInfo.exchangeItems' :key='index'>
+            <div v-for='(exchangeItem, index) in exchangeOrderList' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>{{exchangeItem.info}}</span>
-                    <span class='exchange-date'>교환일: {{exchangeItem.exchangeDate}}</span>
+                    <span class='item-info'>{{exchangeItem.orderDate}}</span>
+                    <span class='exchange-date'>교환 신청일: {{exchangeItem.orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='exchange-item'>
-                    <span><img :src='exchangeItem.photo' width='130' height='130'></span>
+                    <span><img :src='goodsInExchangeList[index].imgUrl' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{exchangeItem.brand}}</strong></span>
+                        <span><strong>{{goodsInExchangeList[index].seller}}</strong></span>
                         <br>
-                        <span>{{exchangeItem.itemName}}</span>
+                        <span>{{goodsInExchangeList[index].title}}</span>
                         <br><br>
-                        <span>수량: {{exchangeItem.quantity}}개</span>
+                        <span>수량: {{exchangeItem.goodsCount}}개</span>
                     </div>
 
                     <div class='process'>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class='result'>
-                        <span class='exchange-price'>{{exchangeItem.price}}</span>
+                        <span class='exchange-price'>{{exchangeItem.orderPrice}}</span>
                     </div>
                 </div>
                 <br>
@@ -43,21 +43,40 @@
 </template>
 
 <script>
+    import GoodsApi from "../../api/GoodsApi";
+    import {getExchangeOrderList} from "../../api/OrderApi";
+
     export default {
         name: "Sample",
         data(){
             return{
-                
+                exchangeOrderList: [],
+                goodsInExchangeList: [],
+                goodsApi : new GoodsApi(),
             }
         },
         created(){
             this.$store.commit('loadExchangeGoodsInfo', 'testId');
+            this.getExchangeOrder();
         },
         computed: {
             getExchangeGoodsInfo(){
                 return this.$store.state.purchaseHistoryStore.exchangeInfo;
             }
-
+        },
+        methods: {
+            async getExchangeOrder() {
+                this.exchangeOrderList = await getExchangeOrderList('testUserId');
+                console.log(this.exchangeOrderList);
+                await this.setGoodsList(this.exchangeOrderList);
+            },
+            async setGoodsList(exchangeOrderList){
+                console.log("setGoodsList");
+                for(var order in exchangeOrderList){
+                    this.goodsInExchangeList.push(await this.goodsApi.getGoods(order.goodsId));
+                }
+                console.log(this.goodsInExchangeList);
+            },
         },
     }
 </script>

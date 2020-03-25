@@ -1,8 +1,8 @@
 import request,{USER_URL} from './axios';
 
 
-export const login = function (formData) {
-    return request.post(`http://localhost:9999/login`, formData, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
+export const login = function (user) {
+    return request.post(`http://localhost:9999/api/user/login`, user)
         .then((response) => {return response.data})
         .catch((err) => console.log(err))
 }
@@ -25,6 +25,10 @@ export const getUser = function (email) {
         .catch((err)=>console.log(err));
 
 }
+
+// export const validateToken(token){
+//
+// }
 
 class UserApi {
 

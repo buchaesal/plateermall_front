@@ -1,4 +1,5 @@
 import PurchaseHistoryApi from '../../src/api/PurchaseHistoryApi';
+import {getCancelOrderList} from "../api/OrderApi";
 
 const state = {
     unwrittenReviewsInfo:{},
@@ -34,10 +35,12 @@ const mutations = {
         state.selectedUnwrittenReview = purchaseHistoryApi.getSeletedUnwrittenReview(reviewCode);
     },
 
-    loadCancelGoodsInfo(state, userId){
+    async loadCancelGoodsInfo(state, userId){
 
-        let purchaseHistoryApi = new PurchaseHistoryApi();
-        state.cancelInfo = purchaseHistoryApi.getCancelInfo(userId);
+        // let purchaseHistoryApi = new PurchaseHistoryApi();
+
+        state.cancelInfo = await getCancelOrderList(userId);
+        console.log(state.cancelInfo);
     },
 
     loadExchangeGoodsInfo(state, userId){

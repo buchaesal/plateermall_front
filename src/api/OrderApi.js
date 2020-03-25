@@ -10,8 +10,8 @@ export const getOrderList = function () {
     });
 }
 
-export const getCancelOrder = function () {
-    request.put(ORDER_URL + `/cancelorderlist`).then(
+export const getCancelOrderList = function (userid) {
+    return request.get(ORDER_URL + `/list/cancel/${userid}`).then(
         (response) => {
             return response.data;
         }
@@ -20,7 +20,27 @@ export const getCancelOrder = function () {
     })
 }
 
-export const getReturnlOrder = function () {
+export const getExchangeOrderList = function (userid) {
+    return request.get(ORDER_URL + `/list/exchange/${userid}`).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function (err) {
+        console.log(err);
+    })
+}
+
+export const getReturnOrderList = function (userid) {
+    return request.get(ORDER_URL + `/list/return/${userid}`).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function (err) {
+        console.log(err);
+    })
+}
+
+export const getReturnOrder = function () {
     request.put(ORDER_URL + `/returnorderlist`).then(
         (response) => {
             return response.data;
