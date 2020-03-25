@@ -42,7 +42,13 @@
         </div>
 
         <div>
-            <sui-form>
+
+            <div class="no-answer" v-if="!answer">
+                <sui-icon name="info" size="huge" circular color="grey"/>
+                <p class="no-answer-msg">등록된 답변이 없습니다.</p>
+            </div>
+
+            <sui-form v-else>
                 <sui-form-field>
                     <sui-table definition>
                         <sui-table-body>
@@ -119,5 +125,17 @@
 
     .answer-content {
         line-height: 200%;
+    }
+
+    .no-answer {
+        width: 100%;
+        text-align: center;
+        margin-top: 100px;
+    }
+
+    .no-answer-msg {
+        margin-top: 50px;
+        font-weight: bold;
+        color: gray;
     }
 </style>

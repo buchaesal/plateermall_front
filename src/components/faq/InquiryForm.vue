@@ -123,23 +123,11 @@
                 },
                 isChecked: false,
                 options: [
-                    {
-                        text: '주문내역확인',
-                        value: '주문내역확인',
-                    },
-                    {
-                        text: '배송확인',
-                        value: '배송확인',
-                    }, {
-                        text: 'L.POINT',
-                        value: 'L.POINT',
-                    }, {
-                        text: '반품접수',
-                        value: '반품접수',
-                    }, {
-                        text: '교환접수',
-                        value: '교환접수',
-                    },
+                    {text: '주문내역확인', value: '주문내역확인',},
+                    {text: '배송확인', value: '배송확인',},
+                    {text: 'L.POINT', value: 'L.POINT',},
+                    {text: '반품접수', value: '반품접수',},
+                    {text: '교환접수', value: '교환접수',},
                 ]
             }
         },
@@ -151,7 +139,6 @@
                 await registrationQuestion(this.questionObject);
                 alert("등록이 완료되었습니다.");
                 this.$router.push("/myPageMain");
-
             },
         },
     }
