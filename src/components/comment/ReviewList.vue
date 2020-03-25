@@ -75,10 +75,16 @@
                 ],
             }
         },
+        created(){
+            this.$store.commit('loadGoodsInfo', this.$store.state.commentStore.reviews.goodsCode);
+        },
         computed: {
             getRequestComments(){
                 return this.$store.state.commentStore.reviews.commentList;
             },
+            // getGoodsOptions(){
+            //     return this.$store.state.commentStore.goods;
+            // }
 
         },
         methods:{
