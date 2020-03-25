@@ -50,7 +50,6 @@
         },
         computed: {
             getGoodsModelList() {
-                console.log("main" + this.$store.state.goodsStore.goodsModels)
                 return this.$store.state.goodsStore.goodsModels;
             }
         },

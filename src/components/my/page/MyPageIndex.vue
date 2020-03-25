@@ -25,6 +25,7 @@
     import InquiryForm from "../../faq/InquiryForm";
     import FaqCategoryList from "../../faq/FaqCategoryList";
     import DeliveryAndUserInfoManagementTaps from "../DeliveryAndUserInfoManagementTaps";
+    import Board from "../Board";
     import UserInfo from '../UserInfo';
     import InquiryAnswer from "../../faq/InquiryAnswer";
     import Wishlist from '../Wishlist';
@@ -50,6 +51,7 @@
             MyReview,
             InquiryForm,
             FaqCategoryList,
+            Board,
             DeliveryAndUserInfoManagementTaps,
             UserInfo,
             InquiryAnswer,

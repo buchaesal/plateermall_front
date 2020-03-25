@@ -13,9 +13,12 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        authentication: null,
-        token: null,
-        userDetail: null,
+        jwtToken: null
+    },
+    mutations:{
+        setToken(state, token){
+            state.jwtToken = token;
+        }
     },
     modules: {
         goodsStore: GoodsStore,

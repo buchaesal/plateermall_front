@@ -20,10 +20,11 @@ const routes = [
     {path: '/goodsDetail/:goodsCode', component: GoodsDetailPage},
     {path: '/cart', component: MyCart},
     {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}},
+    {path: '/board' ,component: MyPage, props:{selectedComponent: 'Board'}},
     {path: '/wishlist', component: MyPage, props:{selectedComponent: 'Wishlist'}},
     {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList'}},
     {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch'}},
-    {path: '/answer/:id', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'}},
+    {path: '/answer/:postId', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'}},
     {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'}},
 
 ]
