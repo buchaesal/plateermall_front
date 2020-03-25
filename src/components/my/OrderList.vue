@@ -44,6 +44,7 @@
     import OrderStatusBox from "./OrderStatusBox";
     import NoItem from "../share/NoItem";
     import {getOrderList, getOrder} from "../../api/OrderApi";
+    import GoodsApi from "../../api/GoodsApi";
 
     export default {
         name: "OrderList",
@@ -51,7 +52,7 @@
             return {
                 checkedIndexList: [],
                 // orderList
-
+                goodsApi : new GoodsApi(),
                 orderList: [{
                     orderId : '',
                     userId : '',
@@ -64,6 +65,7 @@
                         orderState : '',
                     },
                 }],
+                goodsInOrderList: [],
                 // orderList: [
                 //     {
                 //         cartCode: "code1",
@@ -111,6 +113,8 @@
                 this.orderList =model;
                 console.log(await getOrder(3));
                 //192.168.0.65
+                var goodsApi = new GoodsApi();
+                console.log(await goodsApi.getGoods(1));
             },
         },
         components: {
