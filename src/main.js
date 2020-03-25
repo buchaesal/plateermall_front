@@ -9,7 +9,12 @@ import VueDaumPostCode from 'vue-daum-postcode';
 Vue.use(SemanticUI);
 Vue.use(VueDaumPostCode);
 
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
+
+router.beforeEach(function (to, from, next) {
+  console.log('페이지 이동함');
+  next();
+});
 
 new Vue({
   router,
