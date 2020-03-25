@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 export const COMMENTS_URL = 'http://localhost:9999/api/comments';
-export const GOODS_URL_TEST= 'http://localhost:9999/api/goods';
+export const GOODS_URL_TEST= 'http://192.168.0.65:9999/api/goods';
 
-export const CART_URL = 'http://localhost:8081/api/cart';
+export const CART_URL = 'http://192.168.0.199:9999/api/cart';
 
 export const FAQ_URL = process.env.VUE_APP_BASE_URL+'/api/faq';
 export const ORDER_URL = 'http://localhost:9999/api/order';
