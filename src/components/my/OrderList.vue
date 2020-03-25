@@ -43,7 +43,7 @@
     import FaqHeader from "../faq/FaqHeader";
     import OrderStatusBox from "./OrderStatusBox";
     import NoItem from "../share/NoItem";
-    import {getOrderList, getOrder} from "../../api/OrderApi";
+    import {getOrderList} from "../../api/OrderApi";
     import GoodsApi from "../../api/GoodsApi";
 
     export default {
@@ -111,17 +111,21 @@
                 var model = await getOrderList();
                 console.log(model);
                 this.orderList =model;
-                console.log(await getOrder(3));
+                // console.log(await getOrder(3));
                 // var goodsApi = new GoodsApi();
-                // console.log(await goodsApi.getGoods(1));
+                // console.log(await goodsApi.getGoods(1203917700));
+                console.log(this.orderList);
                 this.setGoodsList(this.orderList);
             },
             async setGoodsList(orderList){
                 console.log("setGoodsList");
-                for(var order in orderList){
-                    this.goodsInOrderList.push(await this.goodsApi.getGoods(order.goodsId));
+                console.log(orderList[0].goodsId);
+                // console.log(await this.goodsApi.getGoods(orderList[0].imgUrl));
+                for(let order in orderList){
+                    console.log(orderList[order].goodsId);
+                    this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
-                console.log(this.goodsInOrderList);
+                console.log("this.goddsInOrderList" + this.goodsInOrderList);
             },
         },
         components: {
