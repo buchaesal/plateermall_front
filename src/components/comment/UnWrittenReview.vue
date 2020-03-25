@@ -18,7 +18,7 @@
                         <sui-item-header>{{unwritten.brand}}</sui-item-header>
                         <sui-item-meta>
                             <p class="itemName">{{unwritten.itemName}}</p>
-                            <p class="option">{{unwritten.option}}</p>
+                            <p class="option">{{unwritten.selectedOptions}}</p>
                         </sui-item-meta>
                         <br>
                         <sui-item-description>

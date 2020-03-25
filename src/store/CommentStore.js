@@ -1,5 +1,6 @@
 import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, requestUnwrittenOrderId} from '../../src/api/CommentApi';
 import {getOrder,} from '../../src/api/OrderApi';
+import GoodsApi from '../../src/api/GoodsApi';
 
 const state = {
     reviews:{},
@@ -16,6 +17,7 @@ const state = {
     unwrittenCount:2,
     unwrittenOrderList:[], //미작성 리뷰 구매내역
 
+    goods:{},
 }
 
 const getters = {
@@ -45,6 +47,12 @@ const mutations = {
 
         state.currentReview = await requestWrittenComment(purchaseCode);
         console.log(state.currentReview);
+    },
+
+    async loadGoodsInfo(state, goodsCode){
+
+        let goodsApi = new GoodsApi();
+        state.goods = await goodsApi.getGoods(goodsCode);
     },
 
     increaseRecommendCount(state, index){
