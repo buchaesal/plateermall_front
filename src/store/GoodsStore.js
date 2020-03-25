@@ -7,23 +7,22 @@ const state = {
     goodsCount: 0
 }
 
+let goodsApi = new GoodsApi();
+
 const mutations = {
     async getGoodsModel(state, goodsCode) {
-        let goodsApi = new GoodsApi();
-
         state.goodsModel = await goodsApi.getGoods(goodsCode);
     },
     async getGoodsModelList(state, goodsSet) {
-        let goodsApi = new GoodsApi();
-
         state.goodsModels = await goodsApi.getGoodsList(goodsSet);
     },
+    async getCartGoodsModelList(state, goodsCodeList) {
+        state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
+    },
+
 }
 
-const actions = {
-
-}
-
+const actions = {}
 
 
 export default {
@@ -31,4 +30,4 @@ export default {
     state,
     mutations,
     actions
-  };
+};

@@ -2,7 +2,8 @@ class CartListModel {
     cartCode = ''
     userId = ''
     cartStock = 0
-
+    //goods = []
+    
     goods = {
         imgUrl : '',
         goodsCode : '',
@@ -13,8 +14,8 @@ class CartListModel {
         saleCnt : 0, // 몇개 팔렸는지
     }
 
-    constructor(cartList) {
-        Object.assign(this, cartList);
+    constructor(cart) {
+        Object.assign(this, cart);
     }
 }
 

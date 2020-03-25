@@ -147,18 +147,18 @@
             closeShippingSpotForm() {
                 this.openShippingSpotFormFlag = false;
                 this.newShippingSpotModel = new ShippingSpotModel();
-                this.$store.commit('cleanAddress');
+                // this.$store.commit('cleanAddress');
             },
             openModifyDefaultSpotForm() {
                 this.openModifyShippingSpotFormFlag = true;
-                this.$store.commit('setAddress', {
-                    roadAddress: this.defaultShippingSpot.roadAddress,
-                    zipcodeAddress: this.defaultShippingSpot.zipcodeAddress
-                });
+                // this.$store.commit('setAddress', {
+                //     roadAddress: this.defaultShippingSpot.roadAddress,
+                //     zipcodeAddress: this.defaultShippingSpot.zipcodeAddress
+                // });
             },
             closeModifyDefaultSpotForm() {
                 this.openModifyShippingSpotFormFlag = false;
-                this.$store.commit('cleanAddress');
+                // this.$store.commit('cleanAddress');
             },
             modifyShippingSpot() {
                 // this.defaultShippingSpot.roadAddress = this.$store.state.shippingSpotListStore.roadAddress;

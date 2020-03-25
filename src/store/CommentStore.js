@@ -1,4 +1,6 @@
-import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment} from '../../src/api/CommentApi';
+import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, requestUnwrittenOrderId} from '../../src/api/CommentApi';
+import {getOrder,} from '../../src/api/OrderApi';
+import GoodsApi from '../../src/api/GoodsApi';
 
 const state = {
     reviews:{},
@@ -8,24 +10,14 @@ const state = {
         myReviews:[]
     },
     isModalOpen: false,
-    writtenReview:{
+    writtenReview:{}, //바뀐 리뷰
+    currentReview:{}, //현재 선택된 리뷰
+    orderIdList:[], //미작성 리뷰번호
 
-    },
-    currentReview:{
-        purchaseCode:'',
-        goodsCode:'',
-        userId:'',
-        selectedOption:'',
-        myPhoto:'',
-        quantity:0,
-        recommendCount:0,
-        deliveryValue:0,
-        designValue:0,
-        sizeValue:0,
-        starPoint: 0,
-        reviewContent:'',
-        writtenDate:'',
-    },
+    unwrittenCount:2,
+    unwrittenOrderList:[], //미작성 리뷰 구매내역
+
+    goods:{},
 }
 
 const getters = {
@@ -57,6 +49,12 @@ const mutations = {
         console.log(state.currentReview);
     },
 
+    async loadGoodsInfo(state, goodsCode){
+
+        let goodsApi = new GoodsApi();
+        state.goods = await goodsApi.getGoods(goodsCode);
+    },
+
     increaseRecommendCount(state, index){
 
         let comment =  state.reviews.commentList;
@@ -80,6 +78,16 @@ const mutations = {
         state.writtenReview = await requestModifyComment(comment);
     },
 
+    async loadUnWrittenOrderId(state, userId){
+        state.orderIdList = await requestUnwrittenOrderId(userId);
+
+        for(let orderId in state.orderIdList){
+
+            state.unwrittenOrderList.push(await getOrder(state.orderIdList[orderId]));
+            //state.unwrittenCount = orderId+1;
+         }
+         console.log(state.unwrittenOrderList);
+    }
 }
 
 //비동기 통신

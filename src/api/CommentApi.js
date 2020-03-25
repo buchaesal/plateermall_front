@@ -56,6 +56,20 @@ export const requestModifyComment = function(comment){
     });
 }
 
+export const requestUnwrittenOrderId = function(userId){
+
+    return request.get(COMMENTS_URL+ `/getunwrittenorderid/${userId}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
+// export const increaseRecommend = function(){
+
+// }
 
 class CommentApi{
 
