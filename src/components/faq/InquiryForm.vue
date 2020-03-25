@@ -135,9 +135,13 @@
                 this.open = !this.open;
             },
             async registration() {
-                await registrationQuestion(this.questionObject);
-                alert("등록이 완료되었습니다.");
-                this.$router.push("/inquiryAnswer");
+                if(!(this.questionObject.territory) || !(this.questionObject.title) || !(this.questionObject.description)) {
+                    alert("문의내용을 채워주세요.")
+                } else {
+                    await registrationQuestion(this.questionObject);
+                    alert("등록이 완료되었습니다.");
+                    this.$router.push("/inquiryAnswer");
+                }
             },
         },
         // created() {
