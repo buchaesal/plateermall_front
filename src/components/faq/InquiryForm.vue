@@ -27,7 +27,8 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button class="select-order-goods-button" @click.native="toggle" :disabled="isChecked==true">
+                                        <sui-button class="select-order-goods-button" @click.native="toggle"
+                                                    :disabled="isChecked==true">
                                             주문 상품 선택
                                         </sui-button>
                                         <sui-checkbox label="상품 외 문의" v-model="isChecked"/>
@@ -42,7 +43,8 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 내용</sui-table-cell>
                                     <sui-table-cell>
-                                        <textarea placeholder="반품 및 교환 접수 상태 문의는 택배사 및 송장번호를 입력해 주시기 바랍니다." style="resize: none"  v-model="questionObject.description"></textarea>
+                                        <textarea placeholder="반품 및 교환 접수 상태 문의는 택배사 및 송장번호를 입력해 주시기 바랍니다."
+                                                  style="resize: none" v-model="questionObject.description"></textarea>
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
@@ -57,7 +59,7 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">이메일 수신</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-checkbox label="eks4116@gmail.com"  v-model="questionObject.emailAlarm"/>
+                                        <sui-checkbox label="eks4116@gmail.com" v-model="questionObject.emailAlarm"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                             </sui-table-body>
@@ -91,7 +93,7 @@
             </sui-modal-content>
             <sui-modal-actions>
                 <sui-button secondary>등록</sui-button>
-                <sui-button basic secondary  @click.native="toggle">취소</sui-button>
+                <sui-button basic secondary @click.native="toggle">취소</sui-button>
             </sui-modal-actions>
         </sui-modal>
         <!--모달모달 끝-->
@@ -110,7 +112,7 @@
         data() {
             return {
                 open: false,
-                questionObject:{
+                questionObject: {
                     territory: '',
                     date: new Date(),
                     goodsCode: '',
@@ -119,7 +121,7 @@
                     smsAlarm: '',
                     emailAlarm: '',
                 },
-                isChecked : false,
+                isChecked: false,
                 options: [
                     {
                         text: '주문내역확인',
@@ -128,13 +130,13 @@
                     {
                         text: '배송확인',
                         value: '배송확인',
-                    },{
+                    }, {
                         text: 'L.POINT',
                         value: 'L.POINT',
-                    },{
+                    }, {
                         text: '반품접수',
                         value: '반품접수',
-                    },{
+                    }, {
                         text: '교환접수',
                         value: '교환접수',
                     },
@@ -147,6 +149,9 @@
             },
             async registration() {
                 await registrationQuestion(this.questionObject);
+                alert("등록이 완료되었습니다.");
+                this.$router.push("/myPageMain");
+
             },
         },
     }
@@ -191,7 +196,8 @@
     #buttons {
         text-align: center;
     }
-    .date_box{
+
+    .date_box {
         margin-bottom: 20px;
     }
 
