@@ -26,6 +26,10 @@ export const getUser = function (email) {
 
 }
 
+// export const validateToken(token){
+//
+// }
+
 class UserApi {
 
 }

@@ -63,7 +63,7 @@
                 if(token === 'failed'){
                     alert('로그인 실패');
                 }else{
-                    this.$store.commit('setToken');
+                    this.$store.commit('setToken',token);
                     this.$router.push('/');
                 }
             },
