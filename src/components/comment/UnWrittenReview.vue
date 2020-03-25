@@ -4,15 +4,15 @@
         <p>- 상품평을 작성하시면 L.POINT를 적립하여 드립니다.</p>
         <h6>{{isModalOpen}}</h6>
         <div class='unwritten-summary'>
-            <p id='unwritten-count'>미작성 상품평 <strong>{{getRequestUnWrittenReviews.unWrittenCount}}</strong>건</p>
+            <p id='unwritten-count'>미작성 상품평 <strong>{{getRequestUnWrittenCount}}</strong>건</p>
         </div>
         
         <div class='unwritten-list'>
-            <p id='no-unwritten' v-if='getRequestUnWrittenReviews.unWrittenCount == 0'>작성하실 상품평이 없습니다.</p>
+            <p id='no-unwritten' v-if='getRequestUnWrittenCount == 0'>작성하실 상품평이 없습니다.</p>
 
             <div v-else>
                 <sui-item-group divided>
-                    <sui-item class='unwritten-item' v-for='(unwritten, index) in getRequestUnWrittenReviews.unWrittenReviews' :key='index'>
+                    <sui-item class='unwritten-item' v-for='(unwritten, index) in getRequestUnWrittenReviews' :key='index'>
                     <sui-item-image size="tiny" :src='unwritten.photo'/>
                     <sui-item-content class='unwritten'>
                         <sui-item-header>{{unwritten.brand}}</sui-item-header>
@@ -22,7 +22,7 @@
                         </sui-item-meta>
                         <br>
                         <sui-item-description>
-                            <span class='purchase-date'>구매일자: {{unwritten.purchaseDate}}</span>
+                            <span class='purchase-date'>구매일자: {{unwritten.orderDate}}</span>
                             <span class='due-date'>작성기한: {{unwritten.dueDate}}</span>
                             <sui-button @click='openReviewModal(unwritten)' size="tiny" floated="right" basic content="상품평 작성" />
                         
@@ -58,7 +58,7 @@ import ReviewForm from './ReviewForm.vue'
             return{
                 open: false,
                 currentReview:{
-                    purchaseCode:'',
+                    orderId:'',
                     goodsCode:'',
                     userId:'',
                     selectedOption:'',
@@ -82,7 +82,7 @@ import ReviewForm from './ReviewForm.vue'
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
                 this.selectedReview = selectedReview;
-                this.currentReview.purchaseCode = selectedReview.purchaseCode;
+                this.currentReview.orderId = selectedReview.orderId;
             },
             closeReviewModal(){
                 this.open = false;
@@ -109,7 +109,11 @@ import ReviewForm from './ReviewForm.vue'
                 return this.$store.state.commentStore.orderIdList;
             },
             getRequestUnWrittenReviews(){
-                return this.$store.state.purchaseHistoryStore.unwrittenReviewsInfo;
+                return this.$store.state.commentStore.unwrittenOrderList;
+
+            },
+            getRequestUnWrittenCount(){
+                return this.$store.state.commentStore.unwrittenCount;
             },
             isModalOpen(){
                 return this.$store.state.commentStore.isModalOpen;

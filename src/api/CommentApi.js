@@ -58,9 +58,9 @@ export const requestModifyComment = function(comment){
 
 export const requestUnwrittenOrderId = function(userId){
 
-    return request.get(COMMENTS_URL+ `/getgetunwrittenorderid/${userId}`).then(
+    return request.get(COMMENTS_URL+ `/getunwrittenorderid/${userId}`).then(
         (response) => {
-            console.log(response);
+            return response.data
         }
     ).catch(function(error){
         console.log(error);

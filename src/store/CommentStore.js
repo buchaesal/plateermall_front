@@ -1,5 +1,5 @@
 import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, requestUnwrittenOrderId} from '../../src/api/CommentApi';
-import {} from '../../src/api/OrderApi';
+import {getOrder,} from '../../src/api/OrderApi';
 
 const state = {
     reviews:{},
@@ -12,7 +12,10 @@ const state = {
     writtenReview:{}, //바뀐 리뷰
     currentReview:{}, //현재 선택된 리뷰
     orderIdList:[], //미작성 리뷰번호
+
+    unwrittenCount:2,
     unwrittenOrderList:[], //미작성 리뷰 구매내역
+
 }
 
 const getters = {
@@ -70,9 +73,12 @@ const mutations = {
     async loadUnWrittenOrderId(state, userId){
         state.orderIdList = await requestUnwrittenOrderId(userId);
 
-        // for(orderId in state.orderIdList){
-        //     unwrittenOrderList.
-        // }
+        for(let orderId in state.orderIdList){
+
+            state.unwrittenOrderList.push(await getOrder(state.orderIdList[orderId]));
+            //state.unwrittenCount = orderId+1;
+         }
+         console.log(state.unwrittenOrderList);
     }
 }
 
