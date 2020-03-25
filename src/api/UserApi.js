@@ -1,8 +1,8 @@
 import request,{USER_URL} from './axios';
 
 
-export const login = function (user) {
-    request.post(USER_URL + `/login`, user)
+export const login = function (formData) {
+    return request.post(`http://localhost:9999/login`, formData, {headers: {'Content-Type': 'application/x-www-form-urlencoded'}})
         .then((response) => {return response.data})
         .catch((err) => console.log(err))
 }

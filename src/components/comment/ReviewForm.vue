@@ -9,7 +9,7 @@
             <li> L.POINT는 지급되지 않습니다.</li>
             <li>- 단순상품문의, 교환/반품 요청, 제품이상 등 불편사항은 1:1 E-mail 상담을 이용해주세요.</li>
         </ul>
-
+        {{currentReview}}
         <div id="selected-item">
             <sui-item-group divided>
                 <sui-item>
@@ -18,7 +18,7 @@
                     <sui-item-header>{{selectedReview.brand}}</sui-item-header>
                         <sui-item-meta>
                             <p class="goodsName">{{selectedReview.itemName}}</p>
-                            <p class="goodsOption">{{selectedReview.option}}</p>
+                            <p class="goodsOption">{{selectedReview.selectedOption}}</p>
                         </sui-item-meta>
 
                     </sui-item-content>
@@ -32,7 +32,7 @@
                     <sui-table-row>
                         <sui-table-cell>별점</sui-table-cell>
                         <sui-table-cell>
-                            <sui-rating :rating="writeReview.myGrade" :max-rating="5" @rate="handleRate" />
+                            <sui-rating :rating="currentReview.starPoint" :max-rating="5" @rate="handleRate" />
                         </sui-table-cell>
                     </sui-table-row>
       
@@ -43,39 +43,39 @@
                                 <sui-form-fields inline>
                                     <label>배송</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="writeReview.deleveryValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 빨라요" radio value="2" v-model="writeReview.deleveryValue"/>
+                                    <sui-checkbox label="생각보다 빨라요" radio value="2" v-model="currentReview.deliveryValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 느려요" radio value="3" v-model="writeReview.deleveryValue" />
+                                        <sui-checkbox label="생각보다 느려요" radio value="3" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                
                                 <sui-form-fields inline>
                                     <label>디자인</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="writeReview.designValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" v-model="currentReview.designValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 예뻐요" radio value="2" v-model="writeReview.designValue"/>
+                                    <sui-checkbox label="생각보다 예뻐요" radio value="2" v-model="currentReview.designValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 별로에요" radio value="3" v-model="writeReview.designValue" />
+                                        <sui-checkbox label="생각보다 별로에요" radio value="3" v-model="currentReview.designValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
 
                                 <sui-form-fields inline>
                                     <label>사이즈</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="writeReview.sizeValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" v-model="currentReview.sizeValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 커요" radio value="2" v-model="writeReview.sizeValue"/>
+                                    <sui-checkbox label="생각보다 커요" radio value="2" v-model="currentReview.sizeValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 작아요" radio value="3" v-model="writeReview.sizeValue" />
+                                        <sui-checkbox label="생각보다 작아요" radio value="3" v-model="currentReview.sizeValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                 
@@ -100,7 +100,7 @@
 
                     <sui-table-row>
                         <sui-table-cell>상품평 작성</sui-table-cell>
-                        <sui-table-cell><textarea v-model="writeReview.reviewContent" id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
+                        <sui-table-cell><textarea v-model="currentReview.reviewContent" id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
 이 곳에 작성하시면 답변을 받지 못합니다.">
                         </textarea></sui-table-cell>
                     </sui-table-row>
@@ -108,33 +108,22 @@
             </sui-table>
         </div>
     </div>
-
-
     
 </template>
 
 <script>
     export default {
-        props:['selectedReview'],
+        props:['selectedReview', 'currentReview'],
         name: "Sample",
         data(){
             return{
-                writeReview:{
-                    userId: 'testId',
-                    goodsCode: '',
-                    myGrade: 0,
-                    payload: {},
-                    deleveryValue:'',
-                    designValue:'',
-                    sizeValue:'',
-                    reviewContent:'',
-                }
+                writeReview: this.currentReview,
             }
         },
         
         computed: {
             formattedPayload() {
-                return JSON.stringify(this.writeReview.payload, null, 2);
+                return JSON.stringify(this.currentReview.payload, null, 2);
             },
             isModalOpen(){
                 return this.$store.state.commentStore.isModalOpen;
@@ -153,30 +142,37 @@
                 this.open = false;
             },
             handleRate(evt, props) {
-                this.writeReview.myGrade = props.rating;
-                this.writeReview.payload = props;
+                this.currentReview.starPoint = props.rating;
+                this.currentReview.payload = props;
             },
             inputPhoto(){
                 alert('click');
             },
             clearPlease(){
-                    this.writeReview = {
-                        myGrade: 0,
-                        payload: {},
-                        deleveryValue:'',
-                        designValue:'',
-                        sizeValue:'',
-                        reviewContent:'',
-                    };
+                this.currentReview = {
+                    purchaseCode:'',
+                    goodsCode:'',
+                    userId:'',
+                    selectedOption:'',
+                    myPhoto:'',
+                    quantity:0,
+                    recommendCount:0,
+                    deliveryValue:0,
+                    designValue:0,
+                    sizeValue:0,
+                    starPoint:0,
+                    reviewContent:'',
+                    writtenDate:'',
+                }
             }
         },
         mounted(){
             
         },
         watch:{
-            writeReview:function(){
-                this.$emit('setReview',this.writeReview);
-            }
+            currentReview:function(){
+                 this.$emit('setReview',this.currentReview);
+             }
         }
     }
 </script>

@@ -23,9 +23,20 @@ export const requestMyComments = function(userId){
     });
 }
 
+export const requestWrittenComment = function(purchaseCode){
+    
+    return request.get(COMMENTS_URL + `/getwrittencomment/${purchaseCode}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
 export const requestAddComment = function(comment){
 
-    request.post(COMMENTS_URL, comment).then(
+    return request.post(COMMENTS_URL, comment).then(
         (response) => {
             console.log(response);
         }
@@ -33,6 +44,18 @@ export const requestAddComment = function(comment){
         console.log(error);
     });
 }
+
+export const requestModifyComment = function(comment){
+
+    return request.put(COMMENTS_URL, comment).then(
+        (response) => {
+            console.log(response);
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
 
 class CommentApi{
 

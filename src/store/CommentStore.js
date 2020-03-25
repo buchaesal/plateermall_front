@@ -1,4 +1,4 @@
-import {requestComments, requestMyComments} from '../../src/api/CommentApi';
+import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment} from '../../src/api/CommentApi';
 
 const state = {
     reviews:{},
@@ -7,10 +7,24 @@ const state = {
         reviewCount:2,
         myReviews:[]
     },
-    selectedUnwrittenReview:{},
     isModalOpen: false,
     writtenReview:{
 
+    },
+    currentReview:{
+        purchaseCode:'',
+        goodsCode:'',
+        userId:'',
+        selectedOption:'',
+        myPhoto:'',
+        quantity:0,
+        recommendCount:0,
+        deliveryValue:0,
+        designValue:0,
+        sizeValue:0,
+        starPoint: 0,
+        reviewContent:'',
+        writtenDate:'',
     },
 }
 
@@ -33,7 +47,14 @@ const mutations = {
         
         console.log(testId);
         state.myReviewsInfo.myReviews = await requestMyComments('testId');
+        //console.log(state.myReviewsInfo.myReviews);
         //state.myReviewsInfo.reviewCount = state.myReviewsInfo.myReviews.length;
+    },
+    
+    async loadCommentByPurchaseCode(state, purchaseCode){
+
+        state.currentReview = await requestWrittenComment(purchaseCode);
+        console.log(state.currentReview);
     },
 
     increaseRecommendCount(state, index){
@@ -49,9 +70,14 @@ const mutations = {
         state.isModalOpen ? state.isModalOpen= false : state.isModalOpen=true;
     },
 
-    changeCommentValue(state, comment){
-        console.log(comment);
-        state.writtenReview = comment;
+    async addCommentValue(state, comment){
+        
+        state.writtenReview = await requestAddComment(comment);
+    },
+
+    async modifyCommentValue(state, comment){
+        
+        state.writtenReview = await requestModifyComment(comment);
     },
 
 }

@@ -29,7 +29,7 @@
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :selectedReview='selectedReview' @setReview="settingReview"/>
+                                <ReviewForm :selectedReview='selectedReview' :currentReview='currentReview' @setReview="settingReview"/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
@@ -57,6 +57,21 @@ import ReviewForm from './ReviewForm.vue'
         data(){
             return{
                 open: false,
+                currentReview:{
+                    purchaseCode:'',
+                    goodsCode:'',
+                    userId:'',
+                    selectedOption:'',
+                    myPhoto:'',
+                    quantity:0,
+                    recommendCount:0,
+                    deliveryValue:0,
+                    designValue:0,
+                    sizeValue:0,
+                    starPoint:0,
+                    reviewContent:'',
+                    writtenDate:'',
+                },
                 selectedReview: {},
                 review:{}
             }
@@ -67,6 +82,7 @@ import ReviewForm from './ReviewForm.vue'
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
                 this.selectedReview = selectedReview;
+                this.currentReview.purchaseCode = selectedReview.purchaseCode;
             },
             closeReviewModal(){
                 this.open = false;
@@ -74,7 +90,7 @@ import ReviewForm from './ReviewForm.vue'
 
             },
             setReview(){
-                this.$store.commit('changeCommentValue', this.review);
+                this.$store.commit('addCommentValue', this.review);
                 this.closeReviewModal();
             },
 

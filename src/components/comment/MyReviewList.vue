@@ -24,11 +24,11 @@
 
                             <sui-form-field>
                                 <sui-accordion>
-                                    <a is="sui-accordion-title" style="float:right; padding-right: 5%;">
+                                    <a @click='findCurrentReview(review.purchaseCode)' is="sui-accordion-title" style="float:right; padding-right: 5%;">
                                         <sui-icon name="dropdown"/>
                                         상세보기
                                     </a>
-
+                                   
                                     <sui-accordion-content>
                                         <div class="review-detail">
                                             <sui-item-group divided>
@@ -46,14 +46,28 @@
                                                     <p style="margin-top: 1%;">{{review.reviewContent}}</p>
                                                 </sui-item-description>
 
-                                                    <sui-button @click='updateReview()' class="modify-button" size="tiny">수정</sui-button>
+                                                    <sui-button @click='openReviewModal(review)' class="modify-button" size="tiny">수정</sui-button>
                                                     <sui-button @click='deleteReview()' class="delete-button" size="tiny">삭제</sui-button>
+
+                                                    
                                                 </sui-item-content>
                                                 </sui-item>
                                             </sui-item-group>
                                         </div>
                                     </sui-accordion-content>
                                 </sui-accordion>
+                                            <!--모달모달-->
+                                <sui-modal v-model="open">
+                                    <sui-modal-content scrolling image>
+                                        <ReviewForm :selectedReview='selectedReview' :currentReview='getCurrentReviews' @setReview="settingReview"/>
+                                    </sui-modal-content>
+
+                                    <sui-modal-actions>
+                                        <sui-button basic @click="closeReviewModal()">취소</sui-button>
+                                        <sui-button @click='setReview()' color="black">작성완료</sui-button>
+                                    </sui-modal-actions>
+                                </sui-modal>    
+                                                    <!--모달 끝-->
                             </sui-form-field>
 
                         </sui-item-description>
@@ -67,10 +81,15 @@
 </template>
 
 <script>
+import ReviewForm from './ReviewForm.vue'
+
     export default {
         name: "Sample",
         data() {
             return {
+                open: false,
+                currentReview:{},
+                selectedReview:{},
                 photo: require('../../assets/review.jpg'),
             }
         },
@@ -80,7 +99,11 @@
         computed: {
             getRequestMyReviews() {
                 return this.$store.state.commentStore.myReviewsInfo;
-            }
+            },
+
+            getCurrentReviews(){
+                return this.$store.state.commentStore.currentReview;
+            },
         },
         methods: {
             updateReview(){
@@ -90,7 +113,37 @@
             deleteReview(){
                 alert('삭제');
             },
-        }
+            findCurrentReview(purchaseCode){
+                this.$store.commit('loadCommentByPurchaseCode', purchaseCode);
+                this.currentReview = this.$store.state.commentStore.currentReview;
+                console.log(this.currentReview);
+            },
+            openReviewModal(review){
+                
+                this.open = true;
+                this.$store.commit('toggleModalOpen');
+
+                this.selectedReview = review
+
+                
+            },
+            closeReviewModal(){
+                this.open = false;
+                this.$store.commit('toggleModalOpen');
+
+            },
+            setReview(){
+                this.$store.commit('modifyCommentValue', this.review);
+                this.closeReviewModal();
+            },
+
+            settingReview(sendReview){
+                this.review = sendReview;
+            },
+        },
+        components:{
+            ReviewForm,
+        },
     }
 </script>
 

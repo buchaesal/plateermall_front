@@ -1,7 +1,7 @@
 import request from './axios';
 
-export const getFaqList = function () {
-    return request.get("http://localhost:9999/api/faq/list").then(
+export const getQuestionList = function () {
+    return request.get("http://localhost:9999/api/faq/question/list").then(
         (response) => {
             return response.data;
         }
@@ -10,8 +10,8 @@ export const getFaqList = function () {
     });
 }
 
-export const getFaq = function (id) {
-    return request.get("http://localhost:9999/api/faq/detail" + `/${id}`).then(
+export const getQuestion = function (id) {
+    return request.get("http://localhost:9999/api/faq/question/detail" + `/${id}`).then(
         (response) => {
             return response.data;
         }
