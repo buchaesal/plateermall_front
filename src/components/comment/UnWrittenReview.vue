@@ -102,9 +102,12 @@ import ReviewForm from './ReviewForm.vue'
             ReviewForm,
         },
         created(){
-            this.$store.commit('loadUnwrittenCommentsByUserId', 'testId');
+            this.$store.commit('loadUnWrittenOrderId', 'testId');
         },
         computed:{
+            getUnWrittenOrderList(){
+                return this.$store.state.commentStore.orderIdList;
+            },
             getRequestUnWrittenReviews(){
                 return this.$store.state.purchaseHistoryStore.unwrittenReviewsInfo;
             },
