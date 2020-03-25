@@ -2,7 +2,7 @@
     <div>
         <div>
             <div class="inquiry_header">
-                <FaqHeader :title="'1:1 답변확인'"></FaqHeader>
+                <FaqHeader :title="'질문/답변 게시판'"></FaqHeader>
                 <ul class="bull_list-dash">
                     <li>- 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
                     <li>- 문의 상태가 ‘처리중’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
@@ -38,17 +38,21 @@
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
+            <div class="search-box">
+                <sui-input class="search-input"/>
+                <sui-button secondary class="search-btn">검색</sui-button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import FaqHeader from "./FaqHeader";
-    // import FaqApi from "../../api/FaqApi";
+
+    import FaqHeader from "../faq/FaqHeader";
     import {getQuestionList, getQuestion} from "../../api/FaqApi";
 
     export default {
-        name: "InquiryAnswer",
+        name: "Board",
         components: {
             FaqHeader,
         },
@@ -67,6 +71,17 @@
 </script>
 
 <style scoped>
+    header {
+        position: relative;
+        border-top: 3px solid #000;
+    }
+
+    /*.page_title {*/
+    /*    padding: 16px 0 14px;*/
+    /*    font-size: 24px;*/
+    /*    font-weight: normal;*/
+    /*}*/
+
     .inquiry_header {
         position: relative;
         border-top: 3px solid #000;
@@ -83,9 +98,9 @@
         list-style: none;
     }
 
-    .form_head {
-        width: 25%;
-    }
+    /*.form_head {*/
+    /*    width: 25%;*/
+    /*}*/
 
     tr {
         height: 60px;
@@ -110,7 +125,19 @@
         position: relative;
     }
 
-    .ui.table {
-        margin: 0
+    /*.ui.table {*/
+    /*    margin: 0*/
+    /*}*/
+
+    .search-box {
+        width: 100%;
+        text-align: center;
     }
+
+    .search-input {
+        margin-right: 10px;
+        height: 36px;
+        vertical-align: middle;
+    }
+
 </style>
