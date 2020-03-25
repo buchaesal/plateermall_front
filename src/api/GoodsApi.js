@@ -22,6 +22,16 @@ class GoodsApi {
         });
     }
 
+    getCartGoodsList(goodsCodeList) {
+        return request.get(GOODS_URL_TEST + `/goodslist/cart/${goodsCodeList}`).then(
+            (response) => {
+                return response.data
+            }
+        ).catch(function (error) {
+            console.log(error);
+        });
+    }
+
 }
 
 export default GoodsApi;
