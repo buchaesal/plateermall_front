@@ -18,7 +18,7 @@
                 <sui-table-header>
                     <sui-table-row>
                         <sui-table-header-cell>상태</sui-table-header-cell>
-                        <sui-table-header-cell>무슨영역질문?</sui-table-header-cell>
+                        <sui-table-header-cell>카테고리</sui-table-header-cell>
                         <sui-table-header-cell>제목</sui-table-header-cell>
                         <sui-table-header-cell>등록일</sui-table-header-cell>
                     </sui-table-row>
@@ -61,7 +61,6 @@
             }
         },
         async created() {
-            // this.answers = new FaqApi().getFaqList();
             this.questionList = await getQuestionList();
             this.questionDetail = await getQuestion();
         },

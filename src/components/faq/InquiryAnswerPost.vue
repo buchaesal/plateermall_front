@@ -14,19 +14,19 @@
                     <sui-table definition>
                         <sui-table-body>
                             <sui-table-row>
-                                <sui-table-cell class="form_head">문의 영역</sui-table-cell>
+                                <sui-table-cell class="form_head">카테고리</sui-table-cell>
                                 <sui-table-cell>
                                     <p>{{questionDetail.territory}}</p>
                                 </sui-table-cell>
                             </sui-table-row>
                             <sui-table-row>
-                                <sui-table-cell class="form_head">문의 제목</sui-table-cell>
+                                <sui-table-cell class="form_head">제목</sui-table-cell>
                                 <sui-table-cell>
                                     <p>{{questionDetail.title}}</p>
                                 </sui-table-cell>
                             </sui-table-row>
                             <sui-table-row>
-                                <sui-table-cell class="form_head">문의 내용</sui-table-cell>
+                                <sui-table-cell class="form_head">내용</sui-table-cell>
                                 <sui-table-cell class="answer-content">
                                     {{questionDetail.description}}
                                 </sui-table-cell>
@@ -35,6 +35,10 @@
                     </sui-table>
                 </sui-form-field>
             </sui-form>
+            <div class="btn-box">
+                <sui-button basic secondary>수정</sui-button>
+                <sui-button basic secondary @click="questionDelete">삭제</sui-button>
+            </div>
         </div>
 
         <div id="answer_header">
@@ -42,7 +46,6 @@
         </div>
 
         <div>
-
             <div class="no-answer" v-if="!answer">
                 <sui-icon name="info" size="huge" circular color="grey"/>
                 <p class="no-answer-msg">등록된 답변이 없습니다.</p>
@@ -78,7 +81,7 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
-    import {getQuestion, getAnswer} from "../../api/FaqApi";
+    import {getQuestion, getAnswer, questionDelete} from "../../api/FaqApi";
 
     export default {
         name: "InquiryAnswerPost",
@@ -95,6 +98,21 @@
             const postId = this.$route.params.postId;
             this.questionDetail = await getQuestion(postId);
             this.answer = await getAnswer(postId);
+        },
+        methods : {
+            questionDelete() {
+                const postId = this.$route.params.postId;
+
+                console.log(postId);
+
+                if (questionDelete(postId)) {
+                    alert("답변이 완료된 문의는 삭제할 수 없습니다.");
+                    this.$router.push("/inquiryAnswer");
+                } else {
+                    alert("문의 삭제 완료.");
+                    this.$router.push("/inquiryAnswer");
+                }
+            },
         },
     }
 </script>
@@ -116,6 +134,7 @@
 
     .form_head {
         height: 60px !important;
+        width: 200px !important;
         text-align: center !important;
     }
 
@@ -137,5 +156,10 @@
         margin-top: 50px;
         font-weight: bold;
         color: gray;
+    }
+
+    .btn-box {
+        text-align: right;
+        margin: 15px 0;
     }
 </style>

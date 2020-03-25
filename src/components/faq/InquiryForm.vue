@@ -14,10 +14,10 @@
                         <sui-table definition>
                             <sui-table-body>
                                 <sui-table-row>
-                                    <sui-table-cell class="form_head">문의 영역</sui-table-cell>
+                                    <sui-table-cell class="form_head">카테고리</sui-table-cell>
                                     <sui-table-cell>
                                         <sui-dropdown
-                                                placeholder="문의 영역 선택"
+                                                placeholder="카테고리 선택"
                                                 selection
                                                 :options="options"
                                                 v-model="questionObject.territory"
@@ -27,21 +27,20 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button class="select-order-goods-button" @click.native="toggle"
-                                                    :disabled="isChecked==true">
+                                        <sui-button class="select-order-goods-button" @click.native="toggle" :disabled="isChecked==true">
                                             주문 상품 선택
                                         </sui-button>
                                         <sui-checkbox label="상품 외 문의" v-model="isChecked"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
-                                    <sui-table-cell class="form_head">문의 제목</sui-table-cell>
+                                    <sui-table-cell class="form_head">제목</sui-table-cell>
                                     <sui-table-cell>
                                         <sui-input v-model="questionObject.title"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
-                                    <sui-table-cell class="form_head">문의 내용</sui-table-cell>
+                                    <sui-table-cell class="form_head">내용</sui-table-cell>
                                     <sui-table-cell>
                                         <textarea placeholder="반품 및 교환 접수 상태 문의는 택배사 및 송장번호를 입력해 주시기 바랍니다."
                                                   style="resize: none" v-model="questionObject.description"></textarea>
@@ -114,7 +113,7 @@
                 open: false,
                 questionObject: {
                     territory: '',
-                    date: new Date(),
+                    date: new Date().getFullYear()+' - '+ (new Date().getMonth()+1) + ' - ' + new Date().getDate(),
                     goodsCode: '',
                     title: '',
                     description: '',
@@ -138,9 +137,12 @@
             async registration() {
                 await registrationQuestion(this.questionObject);
                 alert("등록이 완료되었습니다.");
-                this.$router.push("/myPageMain");
+                this.$router.push("/inquiryAnswer");
             },
         },
+        // created() {
+        //     this.questionObject.date = new Date().getFullYear()+'-'+new Date().getMonth() + '-' + new Date().getDay();
+        // }
     }
 </script>
 

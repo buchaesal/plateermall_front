@@ -39,3 +39,13 @@ export const registrationQuestion = function(questionObject) {
         console.log(err);
     });
 }
+
+export const questionDelete = function (postId) {
+    return request.get(`http://localhost:9999/api/faq/question/delete/${postId}`).then(
+        (response)=>{
+            return response.data;
+        }
+    ).catch(function (err) {
+        console.log(err);
+    });
+}

@@ -20,6 +20,7 @@
                         <sui-table-header-cell>상태</sui-table-header-cell>
                         <sui-table-header-cell>무슨영역질문?</sui-table-header-cell>
                         <sui-table-header-cell>제목</sui-table-header-cell>
+                        <sui-table-header-cell>작성자</sui-table-header-cell>
                         <sui-table-header-cell>등록일</sui-table-header-cell>
                     </sui-table-row>
                 </sui-table-header>
@@ -34,6 +35,7 @@
                         <sui-table-cell v-else>답변대기</sui-table-cell>
                         <sui-table-cell>{{post.territory}}</sui-table-cell>
                         <sui-table-cell><router-link :to="`/answer/${post.postId}`">{{ post.title }}</router-link></sui-table-cell>
+                        <sui-table-cell>{{post.writer}}</sui-table-cell>
                         <sui-table-cell>{{post.date}}</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
@@ -63,7 +65,6 @@
             }
         },
         async created() {
-            // this.answers = new FaqApi().getFaqList();
             this.questionList = await getQuestionList();
             this.questionDetail = await getQuestion();
         },
