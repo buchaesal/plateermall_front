@@ -18,11 +18,11 @@
                     <div class="my-order-list-goods">
                         <sui-checkbox class="goods-checkbox"/>
                         <span class="goods-img">
-                        <img :src="order.imgUrl">
+                        <img :src="goodsInOrderList[index].imgUrl">
                     </span>
                         <div class="my-order-list-info">
-                            <p>판매자정보</p>
-                            <p>상품이름</p>
+                            <p>{{goodsInOrderList[index].seller}}</p>
+                            <p>{{goodsInOrderList[index].title}}</p>
                             <p>{{order.goodsCount}}</p>
                             <p>{{order.orderState.orderState}}</p>
                         </div>
@@ -112,9 +112,16 @@
                 console.log(model);
                 this.orderList =model;
                 console.log(await getOrder(3));
-                //192.168.0.65
-                var goodsApi = new GoodsApi();
-                console.log(await goodsApi.getGoods(1));
+                // var goodsApi = new GoodsApi();
+                // console.log(await goodsApi.getGoods(1));
+                this.setGoodsList(this.orderList);
+            },
+            async setGoodsList(orderList){
+                console.log("setGoodsList");
+                for(var order in orderList){
+                    this.goodsInOrderList.push(await this.goodsApi.getGoods(order.goodsId));
+                }
+                console.log(this.goodsInOrderList);
             },
         },
         components: {
