@@ -56,6 +56,7 @@
                     orderId : '',
                     userId : '',
                     goodsId : '',
+                    goodsCount: -1,
                     orderPrice : '',
                     orderState : {
                         orderId : '',

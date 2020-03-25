@@ -4,6 +4,9 @@ const state = {
     shippingSpotList: new ShippingSpotListApi().getShippingSpotList(),
     roadAddress: '',
     zipcodeAddress: '',
+
+    newShippingSpotForm: {},
+    modifyShippingSPotForm: {},
 }
 
 const getters = {
