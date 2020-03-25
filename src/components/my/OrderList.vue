@@ -12,7 +12,7 @@
                 <div v-for="(order, index) in orderList" v-bind:key="index" class="goods-list">
                     <div class="my-order-list-title">
                         <p class="order-date">{{order.orderState.stateChangeDate}}</p>
-                        <a href="#" class="order-detail" @click="test">자세히보기 ></a>
+                        <a href="#" class="order-detail">자세히보기 ></a>
                     </div>
 
                     <div class="my-order-list-goods">
@@ -23,7 +23,7 @@
                         <div class="my-order-list-info">
                             <p>판매자정보</p>
                             <p>상품이름</p>
-                            <p>수량 가져오기</p>
+                            <p>{{order.goodsCount}}</p>
                             <p>{{order.orderState.orderState}}</p>
                         </div>
                         <span class="my-order-list-price">{{order.orderPrice}}원</span>
@@ -43,7 +43,7 @@
     import FaqHeader from "../faq/FaqHeader";
     import OrderStatusBox from "./OrderStatusBox";
     import NoItem from "../share/NoItem";
-    import {getOrderList} from "../../api/OrderApi";
+    import {getOrderList, getOrder} from "../../api/OrderApi";
 
     export default {
         name: "OrderList",
@@ -105,10 +105,12 @@
             changeDeliveryAddress(){
                 this.$router.push('/deliveryanduserinfomanagement');
             },
-            async test(){
+            async getOrderList(){
                 var model = await getOrderList();
                 console.log(model);
                 this.orderList =model;
+                console.log(await getOrder(3));
+                //192.168.0.65
             },
         },
         components: {
@@ -117,7 +119,7 @@
             NoItem
         },
         created: function() {
-            this.test();
+            this.getOrderList();
         }
     }
 </script>

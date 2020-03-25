@@ -31,7 +31,7 @@ export const getReturnlOrder = function () {
 }
 
 export const getOrder = function (orderId) {
-    return request.get(ORDER_URL + `order/${orderId}`)
+    return request.get(ORDER_URL + `/order/${orderId}`)
         .then((response) => {return response.data})
         .catch((err) => console.log(err));
 }
