@@ -1,5 +1,5 @@
 import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, requestChangeStock} from '../api/CartListApi'
-import {getGoodsList} from '../api/GoodsApi'
+import {getCartGoodsList} from '../api/GoodsApi'
 //import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
 
@@ -21,8 +21,8 @@ const mutations = {
         });
         console.log("goodsCodeArr : " + goodsCodeArr);
 
-        const goodsList = await getGoodsList(goodsCodeArr);
-        
+        const goodsList = await getCartGoodsList(goodsCodeArr);
+
         console.log("goodsList : " + goodsList);
 
         for (var i=0; i<cartList.length; i++) {
