@@ -86,7 +86,8 @@
           },
           zipcodeAddress: function () {
               return this.$store.state.shippingSpotListStore.zipcodeAddress;
-          }
+          },
+
         },
         methods: {
             openFindAddressComponent() {

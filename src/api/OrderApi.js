@@ -29,3 +29,9 @@ export const getReturnlOrder = function () {
         console.log(err);
     })
 }
+
+export const getOrder = function (orderId) {
+    return request.get(ORDER_URL + `order/${orderId}`)
+        .then((response) => {return response.data})
+        .catch((err) => console.log(err));
+}

@@ -1,4 +1,5 @@
-import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment} from '../../src/api/CommentApi';
+import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, requestUnwrittenOrderId} from '../../src/api/CommentApi';
+import {} from '../../src/api/OrderApi';
 
 const state = {
     reviews:{},
@@ -8,24 +9,10 @@ const state = {
         myReviews:[]
     },
     isModalOpen: false,
-    writtenReview:{
-
-    },
-    currentReview:{
-        purchaseCode:'',
-        goodsCode:'',
-        userId:'',
-        selectedOption:'',
-        myPhoto:'',
-        quantity:0,
-        recommendCount:0,
-        deliveryValue:0,
-        designValue:0,
-        sizeValue:0,
-        starPoint: 0,
-        reviewContent:'',
-        writtenDate:'',
-    },
+    writtenReview:{}, //바뀐 리뷰
+    currentReview:{}, //현재 선택된 리뷰
+    orderIdList:[], //미작성 리뷰번호
+    unwrittenOrderList:[], //미작성 리뷰 구매내역
 }
 
 const getters = {
@@ -80,6 +67,13 @@ const mutations = {
         state.writtenReview = await requestModifyComment(comment);
     },
 
+    async loadUnWrittenOrderId(state, userId){
+        state.orderIdList = await requestUnwrittenOrderId(userId);
+
+        // for(orderId in state.orderIdList){
+        //     unwrittenOrderList.
+        // }
+    }
 }
 
 //비동기 통신
