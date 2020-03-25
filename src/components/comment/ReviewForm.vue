@@ -130,9 +130,9 @@
             },
 
             clearValue(){
-                if(!this.$store.state.commentStore.isModalOpen){
-                    this.clearPlease();
-                }
+                // if(!this.$store.state.commentStore.isModalOpen){
+                //     this.clearPlease();
+                // }
 
                 return this.$store.state.commentStore.isModalOpen;
             },
@@ -148,23 +148,23 @@
             inputPhoto(){
                 alert('click');
             },
-            clearPlease(){
-                this.currentReview = {
-                    purchaseCode:'',
-                    goodsCode:'',
-                    userId:'',
-                    selectedOption:'',
-                    myPhoto:'',
-                    quantity:0,
-                    recommendCount:0,
-                    deliveryValue:0,
-                    designValue:0,
-                    sizeValue:0,
-                    starPoint:0,
-                    reviewContent:'',
-                    writtenDate:'',
-                }
-            }
+            // clearPlease(){
+            //     this.currentReview = {
+            //         purchaseCode:'',
+            //         goodsCode:'',
+            //         userId:'',
+            //         selectedOption:'',
+            //         myPhoto:'',
+            //         quantity:0,
+            //         recommendCount:0,
+            //         deliveryValue:0,
+            //         designValue:0,
+            //         sizeValue:0,
+            //         starPoint:0,
+            //         reviewContent:'',
+            //         writtenDate:'',
+            //     }
+            // }
         },
         mounted(){
             

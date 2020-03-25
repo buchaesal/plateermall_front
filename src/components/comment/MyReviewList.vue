@@ -123,7 +123,7 @@ import ReviewForm from './ReviewForm.vue'
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
 
-                this.selectedReview = review
+                this.selectedReview = review;
 
                 
             },
