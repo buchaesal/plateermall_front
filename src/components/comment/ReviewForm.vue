@@ -2,23 +2,22 @@
 
     <div id="review-modal">
         <header><h2 id='write-review'>상품평 작성</h2></header>
-        <h6>{{clearValue}}</h6>
+        <h6>{{currentReview}}</h6>
         <ul>
             <li>고객님께서 작성해주신 상품평은 등록 즉시 바로 사이트에 게재되며, 모두 공개를 원칙으로 합니다.</li>
             <li>- 상품평에 적합하지 않은 내용, 미풍양속을 해치는 글, 상품기능 및 효과에 대한 오해의 소지가 있는 내용은 통보 없이 삭제될 수 있으며,</li>
             <li> L.POINT는 지급되지 않습니다.</li>
             <li>- 단순상품문의, 교환/반품 요청, 제품이상 등 불편사항은 1:1 E-mail 상담을 이용해주세요.</li>
         </ul>
-        {{currentReview}}
         <div id="selected-item">
             <sui-item-group divided>
                 <sui-item>
-                    <img :src='selectedReview.photo' width='99' height='99'/>
+                    <img :src='goodsInfo.imgUrl' width='99' height='99'/>
                     <sui-item-content class='review'>                        
-                    <sui-item-header>{{selectedReview.brand}}</sui-item-header>
+                    <sui-item-header>{{goodsInfo.seller}}</sui-item-header>
                         <sui-item-meta>
-                            <p class="goodsName">{{selectedReview.itemName}}</p>
-                            <p class="goodsOption">{{selectedReview.selectedOption}}</p>
+                            <p class="goodsName">{{goodsInfo.title}}</p>
+                            <p class="goodsOption">{{orderInfo.selectedOptions}}</p>
                         </sui-item-meta>
 
                     </sui-item-content>
@@ -113,7 +112,7 @@
 
 <script>
     export default {
-        props:['selectedReview', 'currentReview'],
+        props:['orderInfo', 'goodsInfo', 'currentReview'],
         name: "Sample",
         data(){
             return{
@@ -130,9 +129,9 @@
             },
 
             clearValue(){
-                if(!this.$store.state.commentStore.isModalOpen){
-                    this.clearPlease();
-                }
+                // if(!this.$store.state.commentStore.isModalOpen){
+                //     this.clearPlease();
+                // }
 
                 return this.$store.state.commentStore.isModalOpen;
             },
@@ -148,23 +147,23 @@
             inputPhoto(){
                 alert('click');
             },
-            clearPlease(){
-                this.currentReview = {
-                    purchaseCode:'',
-                    goodsCode:'',
-                    userId:'',
-                    selectedOption:'',
-                    myPhoto:'',
-                    quantity:0,
-                    recommendCount:0,
-                    deliveryValue:0,
-                    designValue:0,
-                    sizeValue:0,
-                    starPoint:0,
-                    reviewContent:'',
-                    writtenDate:'',
-                }
-            }
+            // clearPlease(){
+            //     this.currentReview = {
+            //         purchaseCode:'',
+            //         goodsCode:'',
+            //         userId:'',
+            //         selectedOption:'',
+            //         myPhoto:'',
+            //         quantity:0,
+            //         recommendCount:0,
+            //         deliveryValue:0,
+            //         designValue:0,
+            //         sizeValue:0,
+            //         starPoint:0,
+            //         reviewContent:'',
+            //         writtenDate:'',
+            //     }
+            // }
         },
         mounted(){
             

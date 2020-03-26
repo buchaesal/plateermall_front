@@ -9,17 +9,17 @@
         <h2 class="member_title">로그인</h2>
         <sui-form>
             <sui-form-field>
-                <input placeholder="아이디" size="20" v-model="useremail"/>
+                <input placeholder="아이디" size="20" v-model="user.email"/>
             </sui-form-field>
             <sui-form-field>
-                <input type="password" placeholder="비밀번호" v-model="password"/>
+                <input type="password" placeholder="비밀번호" v-model="user.password"/>
             </sui-form-field>
 
 
             <!-- <sui-button type="submit" width="50%">로그인</sui-button> -->
         </sui-form>
         <p class="btns-wrap">
-            <button type="button" class="loginBtn" @click="login">로그인</button>
+            <button type="button" class="loginBtn" @click="login" style="cursor: pointer">로그인</button>
         </p>
         <sui-checkbox label="아이디 저장"/>
         <div class="link_box">
@@ -39,28 +39,37 @@
 
 <script>
 
-    import {login} from "../../../api/UserApi";
+    // import {login} from "../../../api/UserApi";
     // import UserModel from "../model/UserModel";
 
     export default {
         name: "LoginFormPage",
         data() {
             return {
-                useremail: '',
-                password: '',
+                user: {
+                    email: '',
+                    password: ''
+                }
             }
         },
         methods: {
             goToSignUpPage() {
                 this.$router.push('/signup');
             },
-            async login() {
-                let formData = new FormData();
-                formData.set("username", this.useremail);
-                formData.set("password", this.password);
-                const param = await login(formData);
-                console.log(param);
-            },
+            // async login() {
+            //     console.log('로그인');
+            //     const token = await login(this.user);
+            //
+            //     if(token === 'failed'){
+            //         alert('로그인 실패');
+            //     }else{
+            //         this.$store.commit('setToken',token);
+            //         this.$router.push('/');
+            //     }
+            // },
+            login(){
+                this.$store.dispatch('REQUEST_LOGIN', this.user);
+            }
         }
     };
 </script>

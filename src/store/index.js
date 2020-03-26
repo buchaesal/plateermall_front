@@ -5,6 +5,7 @@ import RecentSawListStore from "./RecentSawListStore";
 import ShippingSpotListStore from './ShippingSpotListStore';
 import PurchaseHistoryStore from './PurchaseHistoryStore';
 import WishListStore from "./WishListStore";
+import UserStore from "./UserStore";
 
 import Vuex from 'vuex';
 import Vue from 'vue';
@@ -13,9 +14,9 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        authentication: null,
-        token: null,
-        userDetail: null,
+    },
+    mutations:{
+
     },
     modules: {
         goodsStore: GoodsStore,
@@ -25,6 +26,6 @@ export default new Vuex.Store({
         shippingSpotListStore: ShippingSpotListStore,
         purchaseHistoryStore: PurchaseHistoryStore,
         wishListStore: WishListStore,
-
+        userStore: UserStore
     }
 })

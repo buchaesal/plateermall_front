@@ -5,8 +5,9 @@
             <a href="#">바로방문 ON</a>
         </div>
         <div class="right_bar">
-            <a @click="goToLoginForm" href="#">로그인</a>
-            <a @click="goToSignUp" href="#">회원가입</a>
+            <a v-if="!isAuthenticated" @click="goToLoginForm" href="#">로그인</a>
+            <a v-if="isAuthenticated" @click="logout" href="#">로그아웃</a>
+            <router-link v-else to="/signup" href="#">회원가입</router-link>
             <router-link to="/faq">고객센터</router-link>
             <a href="#">스마트픽</a>
             <a href="#">이벤트</a>
@@ -18,12 +19,17 @@
 <script>
     export default {
         name: "TopHeader.vue",
+        computed: {
+            isAuthenticated(){
+                return this.$store.getters.isAuthenticated;
+            },
+        },
         methods: {
             goToLoginForm() {
                 this.$router.push('/login');
             },
-            goToSignUp() {
-                this.$router.push('/signup');
+            logout(){
+                this.$store.commit('LOGOUT');
             }
         }
     }

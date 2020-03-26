@@ -56,6 +56,38 @@ export const requestModifyComment = function(comment){
     });
 }
 
+export const requestUnwrittenOrderId = function(userId){
+
+    return request.get(COMMENTS_URL+ `/getunwrittenorderid/${userId}`).then(
+        (response) => {
+            return response.data
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
+export const increaseRecommend = function(comment){
+    
+    return request.put(COMMENTS_URL + '/recommendation', comment).then(
+        (response) => {
+            console.log(response);
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
+export const goodsOptionList = function(goodsCode, goodsOption, orderBYOption){
+
+    return request.get(COMMENTS_URL + `/getfiltergoodsoption/${goodsCode}/${goodsOption}/${orderBYOption}`).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
 
 class CommentApi{
 

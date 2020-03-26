@@ -144,7 +144,7 @@
                             <sui-message
                                     v-for="(option, index) in selectedOptions"
                                     :key="index"
-                                    :header="option.name"
+                                    :header="option.text"
                                     dismissable
                                     @dismiss="handleDismiss(index)"
                             >
@@ -457,9 +457,9 @@
             addOptions(option) {
                 let addOptions = this.selectedOptions;
 
-                if (addOptions.filter(optionObject => optionObject.name === option).length === 0) {
+                if (addOptions.filter(optionObject => optionObject.text === option).length === 0) {
                     let data = {
-                        name: option,
+                        text: option,
                         quantity: 1,
                         price: this.discountedPrice,
                     };
@@ -522,7 +522,6 @@
                     this.orderSumPrice += this.selectedOptions[i].price;
                     this.orderSumQuantity += this.selectedOptions[i].quantity;
                 }
-                console.log("orderSum: " + this.orderSumPrice)
             },
             onShareList() {
                 this.shareDisplay = true;

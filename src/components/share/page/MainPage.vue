@@ -15,7 +15,7 @@
     import Contents from '../Contents.vue'
     import Footer from '../Footer.vue'
     import SideBanner from '../SideBanner.vue'
-    import {getUser} from "../../../api/UserApi";
+    //import {getUser} from "../../../api/UserApi";
     // import VuetifySlide from "../VuetifySlide";
 
     export default {
@@ -34,8 +34,8 @@
             SideBanner
         },
         async created() {
-            this.user = await getUser("sample@gmail.com");
-            console.log(this.user)
+            //this.user = await getUser("sample@gmail.com");
+            //console.log(this.user)
         }
     }
 </script>

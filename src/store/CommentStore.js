@@ -1,4 +1,5 @@
-import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment} from '../../src/api/CommentApi';
+import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, increaseRecommend, goodsOptionList} from '../../src/api/CommentApi';
+
 
 const state = {
     reviews:{},
@@ -8,24 +9,8 @@ const state = {
         myReviews:[]
     },
     isModalOpen: false,
-    writtenReview:{
+    writtenReview:{}, //바뀐 리뷰
 
-    },
-    currentReview:{
-        purchaseCode:'',
-        goodsCode:'',
-        userId:'',
-        selectedOption:'',
-        myPhoto:'',
-        quantity:0,
-        recommendCount:0,
-        deliveryValue:0,
-        designValue:0,
-        sizeValue:0,
-        starPoint: 0,
-        reviewContent:'',
-        writtenDate:'',
-    },
 }
 
 const getters = {
@@ -43,6 +28,12 @@ const mutations = {
         state.reviewSummary = reviewInfo.sumEvaluation;
     },
 
+    async loadCommentByFilter(state, goodsCode, goodsOption, orderByOption){
+        console.log(goodsOption);
+        console.log(orderByOption);
+        state.reviews.commentList = await goodsOptionList(goodsCode, goodsOption, orderByOption);
+    },
+
     async loadMyCommentsByUserId(state, testId){
         
         console.log(testId);
@@ -57,12 +48,14 @@ const mutations = {
         console.log(state.currentReview);
     },
 
-    increaseRecommendCount(state, index){
+    async increaseRecommendCount(state, index){
 
         let comment =  state.reviews.commentList;
         let subComment = comment[index];
 
         subComment.recommendCount += 1;
+        await increaseRecommend(subComment);
+
         state.reviewInfo = comment;
     },
 

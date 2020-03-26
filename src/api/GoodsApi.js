@@ -1,4 +1,5 @@
 import request, {GOODS_URL_TEST} from './axios';
+import GoodsSetApiModel from './model/GoodsSetApiModel';
 
 class GoodsApi {
     getGoods(goodsCode) {
@@ -11,8 +12,10 @@ class GoodsApi {
         });
     }
 
-    getGoodsList(goodsSet) {
-        return request.get(GOODS_URL_TEST + `/goodslist/${goodsSet}`).then(
+    getGoodsList(categoryCode, quantity) {
+        let goodsSetApiModel = new GoodsSetApiModel(categoryCode, quantity);
+
+        return request.get(GOODS_URL_TEST + `/goodslist`, {goodsSetApiModel}).then(
             (response) => {
                 return response.data
             }

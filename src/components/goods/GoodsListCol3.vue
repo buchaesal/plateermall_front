@@ -46,11 +46,10 @@
             },
         },
         created() {
-            this.$store.commit('getGoodsModelList', this.items_per_row * 2);
+            this.$store.commit("getGoodsModelList", {"10001", this.items_per_row * 2});
         },
         computed: {
             getGoodsModelList() {
-                console.log("main" + this.$store.state.goodsStore.goodsModels)
                 return this.$store.state.goodsStore.goodsModels;
             }
         },

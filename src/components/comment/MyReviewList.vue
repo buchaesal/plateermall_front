@@ -3,28 +3,28 @@
         <p>- 작성하신 상품평 내역을 조회하실 수 있습니다. 판매가 종료된 상품은 목록에서 보이지 않습니다.
 
             <div class='summary'>
-        <p id='my-review-count'>작성한 상품평 <strong>{{getRequestMyReviews.reviewCount}}</strong>건</p>
+        <p id='my-review-count'>작성한 상품평 <strong>{{myReviews.length}}</strong>건</p>
     </div>
 
     <div class='my-review-list'>
-        <p id='no-review' v-if='getRequestMyReviews.myReviews == 0'>작성한 상품평이 없습니다.</p>
+        <p id='no-review' v-if='myReviews.length == 0'>작성한 상품평이 없습니다.</p>
 
         <div v-else style="min-height: 500px">
             <sui-item-group divided>
-                <sui-item class='review-item' v-for='(review, index) in getRequestMyReviews.myReviews' :key='index'>
+                <sui-item class='review-item' v-for='(review, index) in myReviews' :key='index'>
                     <sui-item-image size="tiny" :src='photo'/>
                     <sui-item-content class='review'>
-                        <sui-item-header>{{review.brand}}</sui-item-header>
+                        <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
                         <sui-item-meta>
-                            <p class="itemName">{{review.itemName}}</p>
-                            <p class="option">{{review.selectedOption}}</p>
+                            <p class="itemName">{{goodsList[index].title}}</p>
+                            <p class="option">{{orderList[index].selectedOptions}}</p>
                         </sui-item-meta>
                         <sui-item-description>
                             <p>{{review.reviewContent}}</p>
 
                             <sui-form-field>
                                 <sui-accordion>
-                                    <a @click='findCurrentReview(review.purchaseCode)' is="sui-accordion-title" style="float:right; padding-right: 5%;">
+                                    <a is="sui-accordion-title" style="float:right; padding-right: 5%;">
                                         <sui-icon name="dropdown"/>
                                         상세보기
                                     </a>
@@ -59,7 +59,7 @@
                                             <!--모달모달-->
                                 <sui-modal v-model="open">
                                     <sui-modal-content scrolling image>
-                                        <ReviewForm :selectedReview='selectedReview' :currentReview='getCurrentReviews' @setReview="settingReview"/>
+                                        <ReviewForm :orderInfo='orderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview' @setReview="settingReview"/>
                                     </sui-modal-content>
 
                                     <sui-modal-actions>
@@ -81,26 +81,28 @@
 </template>
 
 <script>
-import ReviewForm from './ReviewForm.vue'
+import ReviewForm from './ReviewForm.vue';
+import {requestMyComments} from '../../api/CommentApi';
+import {getOrder} from '../../api/OrderApi';
+import GoodsApi from '../../api/GoodsApi';
 
     export default {
         name: "Sample",
         data() {
             return {
                 open: false,
+                myReviews:[],
+                goodsList:[],
+                orderList:[],
                 currentReview:{},
                 selectedReview:{},
                 photo: require('../../assets/review.jpg'),
             }
         },
-        async created() {
-            await this.$store.commit('loadMyCommentsByUserId', 'testId');
+        created() {
+            this.setWrittenInfo();
         },
         computed: {
-            getRequestMyReviews() {
-                return this.$store.state.commentStore.myReviewsInfo;
-            },
-
             getCurrentReviews(){
                 return this.$store.state.commentStore.currentReview;
             },
@@ -113,19 +115,12 @@ import ReviewForm from './ReviewForm.vue'
             deleteReview(){
                 alert('삭제');
             },
-            findCurrentReview(purchaseCode){
-                this.$store.commit('loadCommentByPurchaseCode', purchaseCode);
-                this.currentReview = this.$store.state.commentStore.currentReview;
-                console.log(this.currentReview);
-            },
             openReviewModal(review){
                 
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
-
-                this.selectedReview = review
-
-                
+                this.currentReview = review;
+                this.selectedReview = review;
             },
             closeReviewModal(){
                 this.open = false;
@@ -139,6 +134,26 @@ import ReviewForm from './ReviewForm.vue'
 
             settingReview(sendReview){
                 this.review = sendReview;
+            },
+            async setWrittenInfo(userId){
+                this.myReviews = await requestMyComments(userId);
+                console.log("myreview");
+                console.log(this.myReviews);
+
+                for(let index in this.myReviews){
+                    this.orderList.push(await getOrder(this.myReviews[index].orderId));
+                }
+                console.log("orderlist");
+                console.log(this.orderList);
+
+                for(let index in this.orderList){
+                    console.log(this.orderList[index].goodsCode);
+                    let goodsApi = new GoodsApi();
+                    this.goodsList.push(await goodsApi.getGoods(this.orderList[index].goodsId));
+                }
+
+                console.log(this.myReviews);
+                console.log(this.myReviews.length);
             },
         },
         components:{

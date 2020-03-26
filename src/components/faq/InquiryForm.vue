@@ -14,13 +14,13 @@
                         <sui-table definition>
                             <sui-table-body>
                                 <sui-table-row>
-                                    <sui-table-cell class="form_head">문의 영역</sui-table-cell>
+                                    <sui-table-cell class="form_head">카테고리</sui-table-cell>
                                     <sui-table-cell>
                                         <sui-dropdown
-                                                placeholder="문의 영역 선택"
+                                                placeholder="카테고리 선택"
                                                 selection
                                                 :options="options"
-                                                v-model="current"
+                                                v-model="questionObject.territory"
                                         />
                                     </sui-table-cell>
                                 </sui-table-row>
@@ -34,20 +34,22 @@
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
-                                    <sui-table-cell class="form_head">문의 제목</sui-table-cell>
+                                    <sui-table-cell class="form_head">제목</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-input/>
+                                        <sui-input v-model="questionObject.title"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
-                                    <sui-table-cell class="form_head">문의 내용</sui-table-cell>
-                                    <sui-table-cell><textarea placeholder="반품 및 교환 접수 상태 문의는 택배사 및 송장번호를 입력해 주시기 바랍니다."
-                                                              style="resize: none"></textarea></sui-table-cell>
+                                    <sui-table-cell class="form_head">내용</sui-table-cell>
+                                    <sui-table-cell>
+                                        <textarea placeholder="반품 및 교환 접수 상태 문의는 택배사 및 송장번호를 입력해 주시기 바랍니다."
+                                                  style="resize: none" v-model="questionObject.description"></textarea>
+                                    </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">답변 알림</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-checkbox label="010-4726-4128"/>
+                                        <sui-checkbox label="010-4726-4128" v-model="questionObject.smsAlarm"/>
                                         <router-link to="/deliveryanduserinfomanagement">
                                             <sui-button style="float: right">회원 정보 수정</sui-button>
                                         </router-link>
@@ -56,13 +58,13 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">이메일 수신</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-checkbox label="eks4116@gmail.com"/>
+                                        <sui-checkbox label="eks4116@gmail.com" v-model="questionObject.emailAlarm"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                             </sui-table-body>
                         </sui-table>
                         <div id="buttons">
-                            <sui-button secondary>등록</sui-button>
+                            <sui-button secondary @click="registration">등록</sui-button>
                             <sui-button basic secondary>취소</sui-button>
                         </div>
                     </sui-form-field>
@@ -90,7 +92,7 @@
             </sui-modal-content>
             <sui-modal-actions>
                 <sui-button secondary>등록</sui-button>
-                <sui-button basic secondary  @click.native="toggle">취소</sui-button>
+                <sui-button basic secondary @click.native="toggle">취소</sui-button>
             </sui-modal-actions>
         </sui-modal>
         <!--모달모달 끝-->
@@ -99,6 +101,7 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
+    import {registrationQuestion} from "../../api/FaqApi";
 
     export default {
         name: "InquiryForm",
@@ -108,27 +111,22 @@
         data() {
             return {
                 open: false,
-                today: new Date(),
-                current: null,
-                isChecked : false,
+                questionObject: {
+                    territory: '',
+                    date: new Date().getFullYear()+' - '+ (new Date().getMonth()+1) + ' - ' + new Date().getDate(),
+                    goodsCode: '',
+                    title: '',
+                    description: '',
+                    smsAlarm: '',
+                    emailAlarm: '',
+                },
+                isChecked: false,
                 options: [
-                    {
-                        text: '주문내역확인',
-                        value: 1,
-                    },
-                    {
-                        text: '배송확인',
-                        value: 2,
-                    },{
-                        text: 'L.POINT',
-                        value: 3,
-                    },{
-                        text: '반품접수',
-                        value: 4,
-                    },{
-                        text: '교환접수',
-                        value: 5,
-                    },
+                    {text: '주문내역확인', value: '주문내역확인',},
+                    {text: '배송확인', value: '배송확인',},
+                    {text: 'L.POINT', value: 'L.POINT',},
+                    {text: '반품접수', value: '반품접수',},
+                    {text: '교환접수', value: '교환접수',},
                 ]
             }
         },
@@ -136,7 +134,19 @@
             toggle() {
                 this.open = !this.open;
             },
+            async registration() {
+                if(!(this.questionObject.territory) || !(this.questionObject.title) || !(this.questionObject.description)) {
+                    alert("문의내용을 채워주세요.")
+                } else {
+                    await registrationQuestion(this.questionObject);
+                    alert("등록이 완료되었습니다.");
+                    this.$router.push("/inquiryAnswer");
+                }
+            },
         },
+        // created() {
+        //     this.questionObject.date = new Date().getFullYear()+'-'+new Date().getMonth() + '-' + new Date().getDay();
+        // }
     }
 </script>
 
@@ -179,7 +189,8 @@
     #buttons {
         text-align: center;
     }
-    .date_box{
+
+    .date_box {
         margin-bottom: 20px;
     }
 

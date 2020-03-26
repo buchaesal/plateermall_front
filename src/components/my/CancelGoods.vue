@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="my-cancel" v-if="getCancelGoodsInfo.cancelCount==0">
+        <div id="my-cancel" v-if="cancelOrderList.length==0">
             <i class="huge exclamation icon"></i>
             <br><br>
             <p>해당되는 주문내역이 없습니다.</p>
@@ -9,22 +9,22 @@
         </div>
 
         <div class='cancel-list' v-else>
-            <p id="cancel-info">취소된 상품이 <span>{{getCancelGoodsInfo.cancelCount}}개 있습니다.</span></p>
+            <p id="cancel-info">취소된 상품이 <span>{{cancelOrderList.length}}개 있습니다.</span></p>
 
-            <div v-for='(cancelItem, index) in getCancelGoodsInfo.cancelItems' :key='index'>
+            <div v-for='(cancelItem, index) in cancelOrderList' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>{{cancelItem.info}}</span>
-                    <span class='cancel-date'>취소일: {{cancelItem.cancelDate}}</span>
+                    <span class='item-info'>주문 날짜 : {{cancelItem.orderDate}}</span>
+                    <span class='cancel-date'>취소일: {{cancelItem.orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='cancel-item'>
-                    <span><img :src='cancelItem.photo' width='130' height='130'></span>
+                    <span><img :src='goodsInCancelList[index].imgUrl' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{cancelItem.brand}}</strong></span>
+                        <span><strong>{{goodsInCancelList[index].seller}}</strong></span>
                         <br>
-                        <span>{{cancelItem.itemName}}</span>
+                        <span>{{goodsInCancelList[index].title}}</span>
                         <br><br>
-                        <span>수량: {{cancelItem.quantity}}개</span>
+                        <span>수량: {{cancelItem.goodsCount}}개</span>
                     </div>
 
                     <div class='process'>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class='result'>
-                        <span class='cancel-price'>{{cancelItem.price}}</span>
+                        <span class='cancel-price'>{{cancelItem.orderPrice}}</span>
                     </div>
                 </div>
                 <br>
@@ -43,15 +43,21 @@
 </template>
 
 <script>
+    import {getCancelOrderList} from "../../api/OrderApi";
+    import GoodsApi from "../../api/GoodsApi";
+
     export default {
         name: "Sample",
         data(){
             return{
-                
+                cancelOrderList: [],
+                goodsInCancelList: [],
+                goodsApi : new GoodsApi(),
             }
         },
         created(){
-            this.$store.commit('loadCancelGoodsInfo', 'testId');
+            // this.$store.commit('loadCancelGoodsInfo', 'testId');
+            this.getCancelOrder();
         },
         computed: {
             getCancelGoodsInfo(){
@@ -59,6 +65,20 @@
             }
 
         },
+        methods: {
+            async getCancelOrder() {
+                this.cancelOrderList = await getCancelOrderList('testUserId');
+                console.log(this.cancelOrderList);
+                await this.setGoodsList(this.cancelOrderList);
+            },
+            async setGoodsList(cancelOrderList){
+                console.log("setGoodsList");
+                for(var order in cancelOrderList){
+                    this.goodsInCancelList.push(await this.goodsApi.getGoods(order.goodsId));
+                }
+                console.log(this.goodsInCancelList);
+            },
+        }
     }
 </script>
 

@@ -12,18 +12,18 @@
                 <div v-for="(order, index) in orderList" v-bind:key="index" class="goods-list">
                     <div class="my-order-list-title">
                         <p class="order-date">{{order.orderState.stateChangeDate}}</p>
-                        <a href="#" class="order-detail" @click="test">자세히보기 ></a>
+                        <a href="#" class="order-detail">자세히보기 ></a>
                     </div>
 
                     <div class="my-order-list-goods">
                         <sui-checkbox class="goods-checkbox"/>
                         <span class="goods-img">
-                        <img :src="order.imgUrl">
+                        <img :src="goodsInOrderList[index].imgUrl">
                     </span>
                         <div class="my-order-list-info">
-                            <p>판매자정보</p>
-                            <p>상품이름</p>
-                            <p>수량 가져오기</p>
+                            <p>{{goodsInOrderList[index].seller}}</p>
+                            <p>{{goodsInOrderList[index].title}}</p>
+                            <p>{{order.goodsCount}}</p>
                             <p>{{order.orderState.orderState}}</p>
                         </div>
                         <span class="my-order-list-price">{{order.orderPrice}}원</span>
@@ -44,6 +44,7 @@
     import OrderStatusBox from "./OrderStatusBox";
     import NoItem from "../share/NoItem";
     import {getOrderList} from "../../api/OrderApi";
+    import GoodsApi from "../../api/GoodsApi";
 
     export default {
         name: "OrderList",
@@ -51,11 +52,12 @@
             return {
                 checkedIndexList: [],
                 // orderList
-
+                goodsApi : new GoodsApi(),
                 orderList: [{
                     orderId : '',
                     userId : '',
                     goodsId : '',
+                    goodsCount: -1,
                     orderPrice : '',
                     orderState : {
                         orderId : '',
@@ -63,6 +65,7 @@
                         orderState : '',
                     },
                 }],
+                goodsInOrderList: [],
                 // orderList: [
                 //     {
                 //         cartCode: "code1",
@@ -104,10 +107,25 @@
             changeDeliveryAddress(){
                 this.$router.push('/deliveryanduserinfomanagement');
             },
-            async test(){
+            async getOrderList(){
                 var model = await getOrderList();
                 console.log(model);
                 this.orderList =model;
+                // console.log(await getOrder(3));
+                // var goodsApi = new GoodsApi();
+                // console.log(await goodsApi.getGoods(1203917700));
+                console.log(this.orderList);
+                this.setGoodsList(this.orderList);
+            },
+            async setGoodsList(orderList){
+                console.log("setGoodsList");
+                console.log(orderList[0].goodsId);
+                // console.log(await this.goodsApi.getGoods(orderList[0].imgUrl));
+                for(let order in orderList){
+                    console.log(orderList[order].goodsId);
+                    this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
+                }
+                console.log("this.goddsInOrderList" + this.goodsInOrderList);
             },
         },
         components: {
@@ -116,7 +134,7 @@
             NoItem
         },
         created: function() {
-            this.test();
+            this.getOrderList();
         }
     }
 </script>

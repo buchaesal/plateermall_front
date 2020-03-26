@@ -4,32 +4,32 @@
         <p>- 상품평을 작성하시면 L.POINT를 적립하여 드립니다.</p>
         <h6>{{isModalOpen}}</h6>
         <div class='unwritten-summary'>
-            <p id='unwritten-count'>미작성 상품평 <strong>{{getRequestUnWrittenReviews.unWrittenCount}}</strong>건</p>
+            <p id='unwritten-count'>미작성 상품평 <strong>{{orderIdList.length}}</strong>건</p>
         </div>
         
         <div class='unwritten-list'>
-            <p id='no-unwritten' v-if='getRequestUnWrittenReviews.unWrittenCount == 0'>작성하실 상품평이 없습니다.</p>
+            <p id='no-unwritten' v-if='orderIdList.length == 0'>작성하실 상품평이 없습니다.</p>
 
             <div v-else>
                 <sui-item-group divided>
-                    <sui-item class='unwritten-item' v-for='(unwritten, index) in getRequestUnWrittenReviews.unWrittenReviews' :key='index'>
-                    <sui-item-image size="tiny" :src='unwritten.photo'/>
+                    <sui-item class='unwritten-item' v-for='(unwritten, index) in orderIdList' :key='index'>
+                    <sui-item-image size="tiny" :src='goodsList[index].imgUrl'/>
                     <sui-item-content class='unwritten'>
-                        <sui-item-header>{{unwritten.brand}}</sui-item-header>
+                        <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
                         <sui-item-meta>
-                            <p class="itemName">{{unwritten.itemName}}</p>
-                            <p class="option">{{unwritten.option}}</p>
+                            <p class="itemName">{{goodsList[index].title}}</p>
+                            <p class="option">{{unwrittenOrderList[index].selectedOptions}}</p>
                         </sui-item-meta>
                         <br>
                         <sui-item-description>
-                            <span class='purchase-date'>구매일자: {{unwritten.purchaseDate}}</span>
+                            <span class='purchase-date'>구매일자: {{unwrittenOrderList[index].orderDate}}</span>
                             <span class='due-date'>작성기한: {{unwritten.dueDate}}</span>
-                            <sui-button @click='openReviewModal(unwritten)' size="tiny" floated="right" basic content="상품평 작성" />
+                            <sui-button @click='openReviewModal(unwrittenOrderList[index])' size="tiny" floated="right" basic content="상품평 작성" />
                         
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :selectedReview='selectedReview' :currentReview='currentReview' @setReview="settingReview"/>
+                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview' @setReview="settingReview"/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
@@ -50,7 +50,10 @@
 </template>
 
 <script>
-import ReviewForm from './ReviewForm.vue'
+import ReviewForm from './ReviewForm.vue';
+import {requestUnwrittenOrderId} from '../../api/CommentApi';
+import {getOrder} from '../../api/OrderApi';
+import GoodsApi from '../../api/GoodsApi';
 
     export default {
         name: "Sample",
@@ -58,10 +61,10 @@ import ReviewForm from './ReviewForm.vue'
             return{
                 open: false,
                 currentReview:{
-                    purchaseCode:'',
+                    orderId:'',
                     goodsCode:'',
                     userId:'',
-                    selectedOption:'',
+                    selectedOptions:'',
                     myPhoto:'',
                     quantity:0,
                     recommendCount:0,
@@ -72,8 +75,11 @@ import ReviewForm from './ReviewForm.vue'
                     reviewContent:'',
                     writtenDate:'',
                 },
-                selectedReview: {},
-                review:{}
+                review:{},
+                
+                orderIdList:[],
+                unwrittenOrderList:[],
+                goodsList:[],
             }
         },
         methods:{
@@ -81,8 +87,7 @@ import ReviewForm from './ReviewForm.vue'
                 
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
-                this.selectedReview = selectedReview;
-                this.currentReview.purchaseCode = selectedReview.purchaseCode;
+                this.currentReview.orderId = selectedReview.orderId;
             },
             closeReviewModal(){
                 this.open = false;
@@ -96,18 +101,31 @@ import ReviewForm from './ReviewForm.vue'
 
             settingReview(sendReview){
                 this.review = sendReview;
-            }
+            },
+
+            async setUnwrittenInfo(userId){
+                this.orderIdList = await requestUnwrittenOrderId(userId);
+                
+                for(let index in this.orderIdList){
+                    this.unwrittenOrderList.push(await getOrder(this.orderIdList[index]));
+                }
+
+                for(let index in this.unwrittenOrderList){
+                    let goodsApi = new GoodsApi();
+                    this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
+                }
+
+                console.log(this.goodsList);
+            },
         },
         components:{
             ReviewForm,
         },
         created(){
-            this.$store.commit('loadUnwrittenCommentsByUserId', 'testId');
+            this.setUnwrittenInfo();
+            //this.$store.commit('loadUnWrittenOrderId', 'testId');
         },
         computed:{
-            getRequestUnWrittenReviews(){
-                return this.$store.state.purchaseHistoryStore.unwrittenReviewsInfo;
-            },
             isModalOpen(){
                 return this.$store.state.commentStore.isModalOpen;
             },

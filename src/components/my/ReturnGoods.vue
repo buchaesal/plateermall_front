@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="my-return" v-if="getReturnGoodsInfo.returnCount==0">
+        <div id="my-return" v-if="returnOrderList.length==0">
             <i class="huge exclamation icon"></i>
             <br><br>
             <p>해당되는 주문내역이 없습니다.</p>
@@ -9,22 +9,22 @@
         </div>
 
         <div class='return-list' v-else>
-            <p id="return-info">반품된 상품이 <span>{{getReturnGoodsInfo.returnCount}}개 있습니다.</span></p>
+            <p id="return-info">반품된 상품이 <span>{{returnOrderList.length}}개 있습니다.</span></p>
 
-            <div v-for='(returnItem, index) in getReturnGoodsInfo.returnItems' :key='index'>
+            <div v-for='(returnItem, index) in returnOrderList' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>{{returnItem.info}}</span>
-                    <span class='return-date'>반품일: {{returnItem.returnDate}}</span>
+                    <span class='item-info'>{{returnItem.orderDate}}</span>
+                    <span class='return-date'>반품일: {{returnItem.orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='return-item'>
-                    <span><img :src='returnItem.photo' width='130' height='130'></span>
+                    <span><img :src='goodsInReturnList[index].imgUrl' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{returnItem.brand}}</strong></span>
+                        <span><strong>{{goodsInReturnList[index].seller}}</strong></span>
                         <br>
-                        <span>{{returnItem.itemName}}</span>
+                        <span>{{goodsInReturnList[index].title}}</span>
                         <br><br>
-                        <span>수량: {{returnItem.quantity}}개</span>
+                        <span>수량: {{returnItem.goodsCount}}개</span>
                     </div>
 
                     <div class='process'>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class='result'>
-                        <span class='return-price'>{{returnItem.price}}</span>
+                        <span class='return-price'>{{returnItem.orderPrice}}</span>
                     </div>
                 </div>
                 <br>
@@ -43,21 +43,40 @@
 </template>
 
 <script>
+    import GoodsApi from "../../api/GoodsApi";
+    import {getReturnOrderList} from "../../api/OrderApi";
+
     export default {
         name: "Sample",
         data(){
             return{
-                
+                returnOrderList: [],
+                goodsInReturnList: [],
+                goodsApi : new GoodsApi(),
             }
         },
         created(){
             this.$store.commit('loadReturnGoodsInfo', 'testId');
+            this.getReturnOrder();
         },
         computed: {
             getReturnGoodsInfo(){
                 return this.$store.state.purchaseHistoryStore.returnInfo;
             }
-
+        },
+        methods: {
+            async getReturnOrder() {
+                this.returnOrderList = await getReturnOrderList('testUserId');
+                console.log(this.returnOrderList);
+                await this.setGoodsList(this.returnOrderList);
+            },
+            async setGoodsList(returnOrderList){
+                console.log("setGoodsList");
+                for(var order in returnOrderList){
+                    this.goodsInReturnList.push(await this.goodsApi.getGoods(order.goodsId));
+                }
+                console.log(this.goodsInReturnList);
+            },
         },
     }
 </script>
