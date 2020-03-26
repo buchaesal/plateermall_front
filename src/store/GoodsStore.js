@@ -15,6 +15,9 @@ const mutations = {
     async goodsModel(state, goodsCode) {
         state.goodsModel = await goodsApi.getGoods(goodsCode);
     },
+    async goodsModelTest(state, goodsCode) {
+        state.goodsModel = await goodsApi.getGoodsTest(goodsCode);
+    },
     async goodsModelListCol3(state, goodsSet) {
         state.goodsModelsCol3 = await goodsApi.getGoodsList(goodsSet.categoryCode, goodsSet.quantity);
     },
