@@ -1,266 +1,296 @@
 <template>
-  <div class="signup-main">
-    <!-- <AgreementPage/> -->
-    <div>
-        <router-link to="/">
-            <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_icon_top_logo.jpg" size="small" />
-        </router-link>
-    </div>
-    <div>
-      <label>
-        <h2 class="signup-title">회원가입</h2>
-      </label>
-    </div>
-    <br>
-    <br>
-    <div>
-        <sui-input v-model="user.name" class="id-input" type="text" placeholder="이름" :disabled="isNotDuplicated"/>
+    <div class="signup-main">
+        <!-- <AgreementPage/> -->
+        <div>
+            <router-link to="/">
+                <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_icon_top_logo.jpg" size="small"/>
+            </router-link>
+        </div>
+        <div>
+            <label>
+                <h2 class="signup-title">회원가입</h2>
+            </label>
+        </div>
         <br>
         <br>
-        <sui-input v-model="user.email" class="email-input" type="text" placeholder="이메일" :disabled="isNotDuplicated"/>
-        @
-        <sui-input v-if="currentEmailDomain === '직접입력'" v-model="domain" class="email-input" type="text" placeholder="직접입력" :disabled="isNotDuplicated"/>
-        <sui-input v-else v-model="currentEmailDomain" class="email-input" type="text" :disabled="true"/>
-        <sui-dropdown class="email-input"
-          placeholder="직접입력"
-          selection
-          :options="emailDomain"
-          v-model="currentEmailDomain" :disabled="isNotDuplicated"
-        />
+        <div>
+            <sui-input v-model="user.name" class="id-input" type="text" placeholder="이름" :disabled="isNotDuplicated"/>
+            <br>
+            <br>
+            <sui-input v-model="user.email" class="email-input" type="text" placeholder="이메일"
+                       :disabled="isNotDuplicated"/>
+            @
+            <sui-input v-if="currentEmailDomain === '직접입력'" v-model="domain" class="email-input" type="text"
+                       placeholder="직접입력" :disabled="isNotDuplicated"/>
+            <sui-input v-else v-model="currentEmailDomain" class="email-input" type="text" :disabled="true"/>
+            <sui-dropdown class="email-input"
+                          placeholder="직접입력"
+                          selection
+                          :options="emailDomain"
+                          v-model="currentEmailDomain" :disabled="isNotDuplicated"
+            />
+            <br>
+            <br>
+            <p>* 로그인 계정으로 이메일 주소가 사용됩니다.</p>
+            <sui-dropdown class="phone-input-front"
+                          placeholder="State"
+                          selection
+                          :options="headNumber"
+                          v-model="currentHeadNumber" :disabled="isNotDuplicated"
+            />
+            <!-- <sui-input class="phone-input-front" type="text"/> -->
+            <sui-input class="phone-input-back" v-model="user.phoneNumber" :disabled="isNotDuplicated" type="list"/>
+        </div>
+        <br>
+        <sui-button @click="duplicateCheck" class="signup-btn">중복확인</sui-button>
         <br>
         <br>
-        <p>* 로그인 계정으로 이메일 주소가 사용됩니다.</p>
-        <sui-dropdown class="phone-input-front"
-          placeholder="State"
-          selection
-          :options="headNumber"
-          v-model="currentHeadNumber" :disabled="isNotDuplicated"
-        />
-        <!-- <sui-input class="phone-input-front" type="text"/> -->
-        <sui-input class="phone-input-back" v-model="backPhoneNumber" :disabled="isNotDuplicated" type="list"/>
-    </div>
-    <br>
-    <sui-button @click="duplicateCheck" class="signup-btn">중복확인</sui-button>
-    <br>
-    <br>
-      <div class="signup-detail-main">
-          <sui-input class="password-input" type="password" placeholder="비밀번호" v-model="user.password"/>
-          <br>
-          <br>
-          <p>* 영문, 숫자, 특수문자를 혼합한 8자 이상 ~15자 이내</p>
-          <sui-input class="password-input" type="password" placeholder="비밀번호 재입력"/>
-          <div class="marketing-check">
-              <br>
-              <br>
-              <p class="tit">(선택) 맞춤성 광고성 정보 수신 동의</p>
-              <sui-table celled class="info-table">
-                  <sui-table-header>
-                      <sui-table-row>
-                          <sui-table-header-cell>목적</sui-table-header-cell>
-                          <sui-table-header-cell>항목</sui-table-header-cell>
-                          <sui-table-header-cell>보유 빛 동의기간</sui-table-header-cell>
-                      </sui-table-row>
-                  </sui-table-header>
+        <div class="signup-detail-main">
+            <sui-input class="password-input" type="password" placeholder="비밀번호" v-model="user.password"/>
+            <br>
+            <br>
+            <p>* 영문, 숫자, 특수문자를 혼합한 8자 이상 ~15자 이내</p>
+            <sui-input class="password-input" type="password" placeholder="비밀번호 재입력"/>
+            <div class="marketing-check">
+                <br>
+                <br>
+                <p class="tit">(선택) 맞춤성 광고성 정보 수신 동의</p>
+                <sui-table celled class="info-table">
+                    <sui-table-header>
+                        <sui-table-row>
+                            <sui-table-header-cell>목적</sui-table-header-cell>
+                            <sui-table-header-cell>항목</sui-table-header-cell>
+                            <sui-table-header-cell>보유 빛 동의기간</sui-table-header-cell>
+                        </sui-table-row>
+                    </sui-table-header>
 
-                  <sui-table-body>
-                      <sui-table-row>
-                          <sui-table-cell>쇼핑, 행사, 이벤트 안내 등 <br> 고객 맞춤형 정보 서비스 안내</sui-table-cell>
-                          <sui-table-cell>이름, 성별, 생년월일, <br> 휴대폰주소, 이메일주소</sui-table-cell>
-                          <sui-table-cell>회원탈퇴 시 또는 동의 철회 시</sui-table-cell>
-                      </sui-table-row>
-                  </sui-table-body>
-              </sui-table>
-              <p>※ 동의를 거부하시는 경우에도 롯데쇼핑이 제공하는 다른 서비스는 이용 하실 수 있습니다.
-                  <br> (단, 롯데쇼핑㈜의 쇼핑정보 및 상품정보 등 서비스 정보를 안내 받을 수 없습니다.)</p>
-          </div>
-          <br>
-          <div class="checkbox-wrap">
-              <div class="email-checkbox-wrap">
-                  <span class="email-comp">이메일 수신</span>
-                  <input class="email-comp" type="radio" id="emailAgree" value="Y" :checked="emailAgree" @click="emailAgreeRadio">
-                  <label for="emailAgree"> 동의 </label>
+                    <sui-table-body>
+                        <sui-table-row>
+                            <sui-table-cell>쇼핑, 행사, 이벤트 안내 등 <br> 고객 맞춤형 정보 서비스 안내</sui-table-cell>
+                            <sui-table-cell>이름, 성별, 생년월일, <br> 휴대폰주소, 이메일주소</sui-table-cell>
+                            <sui-table-cell>회원탈퇴 시 또는 동의 철회 시</sui-table-cell>
+                        </sui-table-row>
+                    </sui-table-body>
+                </sui-table>
+                <p>※ 동의를 거부하시는 경우에도 롯데쇼핑이 제공하는 다른 서비스는 이용 하실 수 있습니다.
+                    <br> (단, 롯데쇼핑㈜의 쇼핑정보 및 상품정보 등 서비스 정보를 안내 받을 수 없습니다.)</p>
+            </div>
+            <br>
+            <div class="checkbox-wrap">
+                <div class="email-checkbox-wrap">
+                    <span class="email-comp">이메일 수신</span>
+                    <input class="email-comp" type="radio" id="emailAgree" value="Y" :checked="user.emailAgree"
+                           @click="emailAgreeRadio">
+                    <label for="emailAgree"> 동의 </label>
 
-                  <input class="email-comp" type="radio" id="emailDisagree" value="N" :checked="!emailAgree" @click="emailDisagreeRadio">
-                  <label for="emailDisagree"> 동의안함 </label>
-              </div>
-              <div class="sms-checkbox-wrap">
-                  <span class="sms-comp">SMS 수신</span>
-                  <input class="sms-comp" type="radio" id="smsAgree" value="Y" :checked="smsAgree" @click="smsAgreeRadio">
-                  <label for="smsAgree"> 동의 </label>
+                    <input class="email-comp" type="radio" id="emailDisagree" value="N" :checked="!user.emailAgree"
+                           @click="emailDisagreeRadio">
+                    <label for="emailDisagree"> 동의안함 </label>
+                </div>
+                <div class="sms-checkbox-wrap">
+                    <span class="sms-comp">SMS 수신</span>
+                    <input class="sms-comp" type="radio" id="smsAgree" value="Y" :checked="user.smsAgree"
+                           @click="smsAgreeRadio">
+                    <label for="smsAgree"> 동의 </label>
 
-                  <input class="sms-comp-disagree" type="radio" id="smsDisagree" value="N" :checked="!smsAgree" @click="smsDisagreeRadio">
-                  <label for="smsDisagree"> 동의안함 </label>
-              </div>
-          </div>
-          <div class="sign-in">
-              <a class="sign-in-btn" href="#" @click="signUp">
-                  <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_btn_login_create.gif" size="large" />
-              </a>
-          </div>
-      </div>
-    <br>
-    <br>
-  </div>
+                    <input class="sms-comp-disagree" type="radio" id="smsDisagree" value="N" :checked="!user.smsAgree"
+                           @click="smsDisagreeRadio">
+                    <label for="smsDisagree"> 동의안함 </label>
+                </div>
+            </div>
+            <div class="sign-in">
+                <a class="sign-in-btn" href="#" @click="signUp">
+                    <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_btn_login_create.gif"
+                               size="large"/>
+                </a>
+            </div>
+        </div>
+        <br>
+        <br>
+    </div>
 </template>
 
 <script>
-import UserModel from "../model/UserModel";
-// import UserApi from "../../../api/UserApi";
+    import UserModel from "../model/UserModel";
+    // import UserApi from "../../../api/UserApi";
 
-export default {
-  name: "Sample",
-  data() {
-    return {
-        user: {
-            name:'',
-            email:'',
-
+    export default {
+        name: "Sample",
+        data() {
+            return {
+                user: {
+                    name: '',
+                    email: '',
+                    password: '',
+                    phoneNumber: '',
+                    emailAgree: false,
+                    smsAgree: false,
+                },
+                isNotDuplicated: false,
+                userName: '',
+                userEmailId: '',
+                currentEmailDomain: '직접입력',
+                currentHeadNumber: '010',
+                backPhoneNumber: '',
+                emailDomain: [
+                    {text: 'gmail.com', value: 'gmail.com'},
+                    {text: 'naver.com', value: 'naver.com'},
+                    {text: 'hanmail.com', value: 'hanmail.com'},
+                    {text: 'paran.com', value: 'paran.com'},
+                    {text: 'nate.com', value: 'nate.com'},
+                    {text: '직접입력', value: '직접입력'},
+                ],
+                headNumber: [
+                    {text: '010', value: '010'},
+                    {text: '011', value: '011'},
+                    {text: '017', value: '017'},
+                    {text: '016', value: '016'},
+                    {text: '018', value: '018'},
+                ],
+                domain: ''
+            };
         },
-        emailAgree: false,
-        smsAgree: false,
-      isNotDuplicated: false,
-      userName: '',
-      userEmailId: '',
-      currentEmailDomain: '직접입력',
-      currentHeadNumber: '010',
-        backPhoneNumber: '',
-      emailDomain: [
-        { text: 'gmail.com', value: 'gmail.com'},
-        { text: 'naver.com', value: 'naver.com'},
-        { text: 'hanmail.com', value: 'hanmail.com'},
-        { text: 'paran.com', value: 'paran.com'},
-        { text: 'nate.com', value: 'nate.com'},
-        { text: '직접입력', value: '직접입력'},
-      ],
-       headNumber: [
-        { text: '010', value: '010' },
-        { text: '011', value: '011' },
-        { text: '017', value: '017' },
-        { text: '016', value: '016' },
-        { text: '018', value: '018' },
-      ],
-        domain:''
-    };
-  },
-  methods: {
-      signUp(){
-
-      },
-      emailAgreeRadio(){
-          this.emailAgree = true;
-          this.user.acceptEmail = 'Y';
-      },
-      emailDisagreeRadio(){
-          this.emailAgree = false;
-          this.user.acceptEmail = 'N';
-      },
-      smsAgreeRadio() {
-          this.smsAgree = true;
-          this.user.acceptSms = 'Y';
-      },
-      smsDisagreeRadio() {
-          this.smsAgree = false;
-          this.user.acceptSms = 'N';
-      },
-      duplicateCheck() {
-      //
-          this.user = new UserModel();
-          this.user.username = this.userName;
-          this.user.email = this.userEmailId + '@' + this.currentEmailDomain;
-          this.user.phone = this.currentHeadNumber + '-' + this.backPhoneNumber;
-      this.isNotDuplicated = true;
-    },
-  },
-    watch:{
-        currentEmailDomain:function () {
-            if(this.currentEmailDomain !== '직접입력'){
-                this.domain = this.currentEmailDomain();
-            }else{
-                this.domain = '';
+        methods: {
+            signUp() {
+                this.user.email = `${this.user.email}@${this.domain}`;
+                this.user.phoneNumber = `${this.currentHeadNumber}${this.user.phoneNumber}`;
+                this.$store.dispatch('SIGN_UP',this.user);
+                alert('회원가입이 완료되었습니다. 로그인해주세요.');
+                this.$router.push('/');
+            },
+            emailAgreeRadio() {
+                this.emailAgree = true;
+                this.user.acceptEmail = 'Y';
+            },
+            emailDisagreeRadio() {
+                this.emailAgree = false;
+                this.user.acceptEmail = 'N';
+            },
+            smsAgreeRadio() {
+                this.smsAgree = true;
+                this.user.acceptSms = 'Y';
+            },
+            smsDisagreeRadio() {
+                this.smsAgree = false;
+                this.user.acceptSms = 'N';
+            },
+            duplicateCheck() {
+                //
+                this.user = new UserModel();
+                this.user.username = this.userName;
+                this.user.email = this.userEmailId + '@' + this.currentEmailDomain;
+                this.user.phone = this.currentHeadNumber + '-' + this.backPhoneNumber;
+                this.isNotDuplicated = true;
+            },
+        },
+        watch: {
+            currentEmailDomain: function (value) {
+                if (value !== '직접입력') {
+                    this.domain = value;
+                } else {
+                    this.domain = '';
+                }
             }
-      }
-    }
-};
+        }
+    };
 </script>
 
 <style scoped>
-.signup-main {
-  margin-top: 3%;
-  margin-left: 30%;
-  margin-right: 30%;
-}
-sui-input {
-    width: 100%;
-}
-input{
-  margin-right: 3px;
-}
-.id-input {
-    width: 96%;
-    margin-right: 3px;
-}
-.email-input{
-    display: inline-block;
-    width: 30%;
-    margin-right: 3px;
-}
-.phone-input-front{
-    width:25.5%;
-    margin-right: 3px;
-}
-.phone-input-back{
-    width:63%;
-    margin-right: 3px;
-}
-.signup-title{
-    text-align: center;
+    .signup-main {
+        margin-top: 3%;
+        margin-left: 30%;
+        margin-right: 30%;
+    }
 
-}
-.signup-btn{
-    margin-left: 40% !important;
-}
-.password-input {
-    width: 100%;
-    margin-right: 3px;
-}
-.tit {
-    margin-bottom: 10px;
-    font-size: 14px;
-    font-weight: bold;
-    color: #888;
-}
-.checkbox-wrap{
-    border: 1px solid #ddd;
-    font-size: 17px;
-}
-.email-checkbox-wrap {
-    margin-top: 5%;
-    margin-left: 10%;
-}
-.email-comp {
-    margin-left: 9%;
-    color: #666;
-    font-weight: bold;
-}
-.sms-checkbox-wrap {
-    margin-top: 5%;
-    margin-left: 10%;
-    margin-bottom: 5%;
-}
-.sms-comp {
-    margin-left: 10.5%;
-    font-weight: bold;
-    color: #666;
-}
-.sms-comp-disagree{
-    margin-left: 9%;
-}
-.info-table {
-    text-align: center !important;
-    color: #777 !important;
-}
-.sign-in {
-    margin-top: 5%;
-    padding-left: 12%;
-}
+    sui-input {
+        width: 100%;
+    }
+
+    input {
+        margin-right: 3px;
+    }
+
+    .id-input {
+        width: 96%;
+        margin-right: 3px;
+    }
+
+    .email-input {
+        display: inline-block;
+        width: 30%;
+        margin-right: 3px;
+    }
+
+    .phone-input-front {
+        width: 25.5%;
+        margin-right: 3px;
+    }
+
+    .phone-input-back {
+        width: 63%;
+        margin-right: 3px;
+    }
+
+    .signup-title {
+        text-align: center;
+
+    }
+
+    .signup-btn {
+        margin-left: 40% !important;
+    }
+
+    .password-input {
+        width: 100%;
+        margin-right: 3px;
+    }
+
+    .tit {
+        margin-bottom: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #888;
+    }
+
+    .checkbox-wrap {
+        border: 1px solid #ddd;
+        font-size: 17px;
+    }
+
+    .email-checkbox-wrap {
+        margin-top: 5%;
+        margin-left: 10%;
+    }
+
+    .email-comp {
+        margin-left: 9%;
+        color: #666;
+        font-weight: bold;
+    }
+
+    .sms-checkbox-wrap {
+        margin-top: 5%;
+        margin-left: 10%;
+        margin-bottom: 5%;
+    }
+
+    .sms-comp {
+        margin-left: 10.5%;
+        font-weight: bold;
+        color: #666;
+    }
+
+    .sms-comp-disagree {
+        margin-left: 9%;
+    }
+
+    .info-table {
+        text-align: center !important;
+        color: #777 !important;
+    }
+
+    .sign-in {
+        margin-top: 5%;
+        padding-left: 12%;
+    }
 </style>
