@@ -43,13 +43,19 @@ const actions = {
     },
     async REQUEST_LOGIN(context, user) {
         try {
-            const token = await login(user);
-            console.log(token,'토큰');
-            setTokenInLocalStorage(token);
-            context.commit('LOGIN');
-            return token;
+            let msg = '';
+            const result = await login(user);
+            if(result === 'noExist'){
+                msg = '아이디가 존재하지 않습니다';
+            }else if(result === 'incorrect'){
+                msg = '패스워드가 올바르지 않습니다.';
+            }else{
+                setTokenInLocalStorage(result);
+                context.commit('LOGIN');
+            }
+            return msg;
         } catch (e) {
-            alert('아이디 혹은 비밀번호를 확인해주세요.');
+            alert('Error!');
         }
     },
 };
