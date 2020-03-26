@@ -12,9 +12,9 @@
         <div v-if="active=='배송지관리'">
             <DeliveryManagement></DeliveryManagement>
         </div>
-        <div v-if="active=='비밀번호변경'">
-            <PasswordChange></PasswordChange>
-        </div>
+<!--        <div v-if="active=='비밀번호변경'">-->
+<!--            <PasswordChange></PasswordChange>-->
+<!--        </div>-->
         <div v-if="active=='회원정보수정'">
             <UserInfoEdit></UserInfoEdit>
         </div>
@@ -25,7 +25,7 @@
 <script>
     // import Cancel from './Cancel'
     import DeliveryManagement from './DeliveryManagement'
-    import PasswordChange from './PasswordChange'
+    //import PasswordChange from './PasswordChange'
     import UserInfoEdit from "./UserInfoEdit";
 
     export default {
@@ -33,7 +33,7 @@
         data() {
             return {
                 active: '배송지관리',
-                items: ['배송지관리', '비밀번호변경', '회원정보수정'],
+                items: ['배송지관리', '회원정보수정'],
             };
         },
         methods: {
@@ -46,7 +46,7 @@
         },
         components:{
             DeliveryManagement,
-            PasswordChange,
+            //PasswordChange,
             UserInfoEdit,
         }
     }
