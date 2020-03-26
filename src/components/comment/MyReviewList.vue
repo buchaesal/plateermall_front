@@ -21,7 +21,7 @@
                         </sui-item-meta>
                         <sui-item-description>
                             <p>{{review.reviewContent}}</p>
-
+                            {{review.selectedOptions}}
                             <sui-form-field>
                                 <sui-accordion>
                                     <a is="sui-accordion-title" style="float:right; padding-right: 5%;">
@@ -97,10 +97,11 @@ import GoodsApi from '../../api/GoodsApi';
                 currentReview:{},
                 selectedReview:{},
                 photo: require('../../assets/review.jpg'),
+                review:{},
             }
         },
         created() {
-            this.setWrittenInfo();
+            this.setWrittenInfo("testId");
         },
         computed: {
             getCurrentReviews(){
@@ -108,13 +109,7 @@ import GoodsApi from '../../api/GoodsApi';
             },
         },
         methods: {
-            updateReview(){
-                alert('수정');
-            },
 
-            deleteReview(){
-                alert('삭제');
-            },
             openReviewModal(review){
                 
                 this.open = true;
@@ -137,23 +132,16 @@ import GoodsApi from '../../api/GoodsApi';
             },
             async setWrittenInfo(userId){
                 this.myReviews = await requestMyComments(userId);
-                console.log("myreview");
-                console.log(this.myReviews);
 
                 for(let index in this.myReviews){
                     this.orderList.push(await getOrder(this.myReviews[index].orderId));
                 }
-                console.log("orderlist");
-                console.log(this.orderList);
 
                 for(let index in this.orderList){
-                    console.log(this.orderList[index].goodsCode);
+                    
                     let goodsApi = new GoodsApi();
                     this.goodsList.push(await goodsApi.getGoods(this.orderList[index].goodsId));
                 }
-
-                console.log(this.myReviews);
-                console.log(this.myReviews.length);
             },
         },
         components:{

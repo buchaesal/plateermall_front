@@ -64,12 +64,14 @@ const mutations = {
     },
 
     async addCommentValue(state, comment){
-        
+        console.log("store-----");
+        console.log(comment);
         state.writtenReview = await requestAddComment(comment);
     },
 
     async modifyCommentValue(state, comment){
-        
+        console.log("update-----");
+        console.log(comment);
         state.writtenReview = await requestModifyComment(comment);
     },
 
