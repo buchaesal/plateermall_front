@@ -2,16 +2,6 @@ import request, {GOODS_URL_TEST} from './axios';
 import GoodsSetApiModel from './model/GoodsSetApiModel';
 
 class GoodsApi {
-    getGoodsTest(goodsCode) {
-        return request.get(GOODS_URL_TEST+`/${goodsCode}/`).then(
-            (response) => {
-                return response.data;
-            }
-        ).catch(function (error) {
-            console.log(error);
-        });
-    }
-
     getGoods(goodsCode) {
         return request.get(GOODS_URL_TEST+`/${goodsCode}`).then(
             (response) => {

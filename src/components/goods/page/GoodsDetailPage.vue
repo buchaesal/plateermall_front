@@ -546,9 +546,9 @@
             },
         },
         created() {
-            this.$store.commit('goodsModelTest', this.$route.params.goodsCode);
+            this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
             this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
-            this.$store.commit('addSawList');
+            this.$store.commit('addSawList', this.$route.params.goodsCode);
         },
         computed: {
             goodsData() {

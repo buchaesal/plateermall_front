@@ -44,7 +44,7 @@
             },
         },
         created() {
-            this.$store.commit("goodsModelListCol5",
+            this.$store.commit("getGoodsModelListCol5",
                 {
                     categoryCode: "10004",
                     quantity: this.items_per_row
