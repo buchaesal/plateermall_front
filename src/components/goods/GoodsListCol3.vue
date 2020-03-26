@@ -3,7 +3,7 @@
         <h3 class="section_title ui">{{section_title}}</h3>
         <div>
             <sui-card-group :items-per-row="items_per_row">
-                <sui-card class="goods-card" v-for="(goodsData, index) in goodsModelList" :key="index"
+                <sui-card class="goods-card" v-for="(goodsData, index) in goodsList" :key="index"
                           @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
@@ -46,14 +46,14 @@
             },
         },
         created() {
-            this.$store.commit("goodsModelList",
+            this.$store.commit("getGoodsModelListCol3",
                 {
                     categoryCode: "10001",
                     quantity: this.items_per_row * 2
                 });
         },
         computed: {
-            goodsModelList() {
+            goodsList() {
                 return this.$store.state.goodsStore.goodsModelsCol3;
             }
         },

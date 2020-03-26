@@ -113,7 +113,9 @@
                 open: false,
                 questionObject: {
                     territory: '',
+                    state:'',
                     date: new Date().getFullYear()+' - '+ (new Date().getMonth()+1) + ' - ' + new Date().getDate(),
+                    writer: '',
                     goodsCode: '',
                     title: '',
                     description: '',
@@ -139,6 +141,7 @@
                     alert("문의내용을 채워주세요.")
                 } else {
                     await registrationQuestion(this.questionObject);
+                    console.log(this.questionObject)
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/inquiryAnswer");
                 }

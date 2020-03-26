@@ -1,4 +1,4 @@
-import {login} from "../api/UserApi";
+import {login, signUp} from "../api/UserApi";
 import {deleteTokenInLocalStorage, setTokenInLocalStorage} from "../utils/oauth";
 //import {deleteAccessTokenInHeader, setSnackBarInfo} from "../api/common_api";
 import router from "../router/index";
@@ -38,6 +38,9 @@ const mutations = {
 };
 
 const actions = {
+    async SIGN_UP(context, user){
+        await signUp(user);
+    },
     async REQUEST_LOGIN(context, user) {
         try {
             const token = await login(user);
