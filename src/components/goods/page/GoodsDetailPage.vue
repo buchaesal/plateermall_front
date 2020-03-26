@@ -4,19 +4,19 @@
         <div class="fix-inner">
             <section class="goods-detail">
                 <div class="gallery">
-                    <img :src="getGoodsData.imgUrl" width="714px">
+                    <img :src="goodsData.imgUrl" width="714px">
                 </div>
                 <div class="info">
                     <p class="seller">
-                        <a href="#">{{getGoodsData.seller}}</a>
+                        <a href="#">{{goodsData.seller}}</a>
                     </p>
-                    <h3 class="title">{{getGoodsData.title}}</h3>
+                    <h3 class="title">{{goodsData.title}}</h3>
                     <div class="price-area">
-                        <p class="discount" v-if="isDiscount(getGoodsData.dcRate)">
-                            {{getGoodsData.dcRate}}<span class="unit">%</span>
+                        <p class="discount" v-if="isDiscount(goodsData.dcRate)">
+                            {{goodsData.dcRate}}<span class="unit">%</span>
                         </p>
                         <p class="price">
-                            {{priceFormatting(pricing(getGoodsData.originalPrice, getGoodsData.dcRate))}}<span
+                            {{priceFormatting(pricing(goodsData.originalPrice, goodsData.dcRate))}}<span
                                 class="unit">원</span>
                         </p>
                         <ul class="utils">
@@ -60,8 +60,8 @@
                     </div>
                     <div class="summary">
                         <dl class="detail">
-                            <dt>카드할인</dt>
-                            <dd><span id="dcMaxInfoTxt">{{getGoodsData.cardPromotions[0].card}} {{getGoodsData.cardPromotions[0].percentage}}% 청구할인</span>
+                            <dt v-if="goodsData.cardPromotions != null">카드할인</dt>
+                            <dd v-if="goodsData.cardPromotions != null"><span id="dcMaxInfoTxt">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
                                 <div class="tooltip">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
                                             @mouseleave="offTooltip1"><i class="info icon"></i>
@@ -71,7 +71,7 @@
                                         <ul class="benefit-list">
                                             <li><p class="item">청구할인</p>
                                                 <div class="cards"
-                                                     v-for="(cardPromotion, index) in getGoodsData.cardPromotions"
+                                                     v-for="(cardPromotion, index) in goodsData.cardPromotions"
                                                      :key="index">
                                                     <p>{{cardPromotion.card}}
                                                         {{cardPromotion.percentage}}%</p>
