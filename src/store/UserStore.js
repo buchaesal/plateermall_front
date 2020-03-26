@@ -1,6 +1,5 @@
 import {login, signUp} from "../api/UserApi";
 import {deleteTokenInLocalStorage, setTokenInLocalStorage} from "../utils/oauth";
-//import {deleteAccessTokenInHeader, setSnackBarInfo} from "../api/common_api";
 import router from "../router/index";
 
 const state = {
@@ -15,7 +14,6 @@ const getters = {
 
 function resetToken(state) {
     deleteTokenInLocalStorage();
-    //deleteAccessTokenInHeader();
     state.accessToken = null;
 }
 
@@ -26,14 +24,6 @@ const mutations = {
     },
     LOGOUT(state) {
         resetToken(state);
-        //this.commit('SET_SNACKBAR', setSnackBarInfo('로그아웃 완료', 'success', 'top'));
-
-    },
-    LOGOUT_WITH_TOKEN_INVALIDE(state) {
-        resetToken(state);
-        if (router.currentRoute.name !== 'boards') {
-            router.push('/');
-        }
     }
 };
 
