@@ -136,7 +136,7 @@
                             <sui-dropdown class="option-dropdown"
                                           placeholder="옵션 선택"
                                           selection
-                                          :options="getGoodsData.options"
+                                          :options="goodsData.options"
                                           v-model="option"
                             />
                         </div>
@@ -199,11 +199,11 @@
                         <div class="summary">
                             <dl class="detail">
                                 <dt>모델번호</dt>
-                                <dd>{{getGoodsData.modelNo}}</dd>
+                                <dd>{{goodsData.modelNo}}</dd>
                                 <dt>상품번호</dt>
-                                <dd>{{getGoodsData.goodsCode}}</dd>
+                                <dd>{{goodsData.goodsCode}}</dd>
                                 <dt>배송정보</dt>
-                                <dd id="deliveryInfoTxt">{{calculateDays(getGoodsData.shippingDays)}} 이내 택배 도착예정<br>(도착
+                                <dd id="deliveryInfoTxt">{{calculateDays(goodsData.shippingDays)}} 이내 택배 도착예정<br>(도착
                                     예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
                                 </dd>
                             </dl>
@@ -230,14 +230,14 @@
                             </sui-accordion-title>
                             <sui-accordion-content active class="accordion-content">
                                 <p>
-                                    {{getGoodsData.notice}}
+                                    {{goodsData.notice}}
                                 </p>
                             </sui-accordion-content>
                         </sui-accordion>
                     </div>
                     <h4 class="subheading">상품 상세 설명</h4>
                     <div class="goods-more-detail">
-                        {{getGoodsData.goodsDetail}}
+                        {{goodsData.goodsDetail}}
                     </div>
                     <div>
                         <sui-accordion exclusive>
@@ -258,7 +258,7 @@
                 </section>
                 <div class="brand-banner">
                     <div class="banner-text">
-                        <a href="#">{{getGoodsData.seller}}</a>
+                        <a href="#">{{goodsData.seller}}</a>
                     </div>
                 </div>
                 <div class="detail-tab">
@@ -269,7 +269,7 @@
                                 <tr class="hidden-tr">
                                     <td class="two wide column"></td>
                                 </tr>
-                                <tr v-for="(row, index) in getGoodsData.infoTable"
+                                <tr v-for="(row, index) in goodsData.infoTable"
                                     :key="index">
                                     <td>{{row.head}}</td>
                                     <td>{{row.body}}</td>
@@ -290,14 +290,14 @@
                                 <tbody>
                                 <tr>
                                     <td class="two wide column">배송비</td>
-                                    <td>{{priceFormatting(getGoodsData.shippingFee)}}원 (30,000원이상 무료배송)<br>
+                                    <td>{{priceFormatting(goodsData.shippingFee)}}원 (30,000원이상 무료배송)<br>
                                         제주/도서산간 지역의 경우, 추가비용 발생 가능
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>배송정보</td>
                                     <td>택배
-                                        {{calculateDays(getGoodsData.shippingDays)}} 이내 택배 도착예정<br>
+                                        {{calculateDays(goodsData.shippingDays)}} 이내 택배 도착예정<br>
                                         (도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
                                     </td>
                                 </tr>
@@ -328,8 +328,8 @@
                                     <td>
                                         <div>
                                             <sui-list bulleted>
-                                                <sui-list-item>예상 반품비 : {{priceFormatting(getGoodsData.shippingFee)}}원,
-                                                    예상 교환비 : {{priceFormatting(getGoodsData.shippingFee * 2)}}원 (주문 상품을
+                                                <sui-list-item>예상 반품비 : {{priceFormatting(goodsData.shippingFee)}}원,
+                                                    예상 교환비 : {{priceFormatting(goodsData.shippingFee * 2)}}원 (주문 상품을
                                                     1개씩 각각 반품/교환 시
                                                     상품 별로 발생하는 비용임)
                                                 </sui-list-item>
@@ -546,12 +546,12 @@
             },
         },
         created() {
-            this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
+            this.$store.commit('goodsModel', this.$route.params.goodsCode);
             this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
             this.$store.commit('addSawList');
         },
         computed: {
-            getGoodsData() {
+            goodsData() {
                 return this.$store.state.goodsStore.goodsModel;
             },
         },

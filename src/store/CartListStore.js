@@ -25,15 +25,20 @@ const mutations = {
 
         const goodsList = await goodsApi.getCartGoodsList(goodsCodeArr);
 
-        console.log("goodsList : " + goodsList);
+        let resultCart = [];
 
-        for (var i=0; i<cartList.length; i++) {
-            cartList[i].goods = goodsList[i];
-        }
+        cartList.forEach(function(cart) {
+            goodsList.forEach(function(goods) {
+                if(cart.goodsCode === goods.goodsCode){
+                    cart.goods = goods;
+                    resultCart.push(cart);
+                }
+            });
+        });
 
-        console.log(cartList);
+        console.log(resultCart);
 
-        state.cartList = cartList;
+        state.cartList = resultCart;
     },
 
     async deleteCart(deletedCart) {
