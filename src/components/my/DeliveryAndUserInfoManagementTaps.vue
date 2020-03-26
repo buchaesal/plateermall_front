@@ -15,6 +15,9 @@
         <div v-if="active=='비밀번호변경'">
             <PasswordChange></PasswordChange>
         </div>
+        <div v-if="active=='회원정보수정'">
+            <UserInfoEdit></UserInfoEdit>
+        </div>
     </div>
     </div>
 </template>
@@ -23,13 +26,14 @@
     // import Cancel from './Cancel'
     import DeliveryManagement from './DeliveryManagement'
     import PasswordChange from './PasswordChange'
+    import UserInfoEdit from "./UserInfoEdit";
 
     export default {
         name: "DeliveryAndUserInfoManagementTaps",
         data() {
             return {
                 active: '배송지관리',
-                items: ['배송지관리', '비밀번호변경'],
+                items: ['배송지관리', '비밀번호변경', '회원정보수정'],
             };
         },
         methods: {
@@ -43,6 +47,7 @@
         components:{
             DeliveryManagement,
             PasswordChange,
+            UserInfoEdit,
         }
     }
 </script>
