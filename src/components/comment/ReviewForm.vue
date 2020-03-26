@@ -170,16 +170,14 @@
         },
         watch:{
             currentReview:function(){
-                 this.$emit('setReview',this.currentReview);
-             }
+                 this.$emit('setReview', this.currentReview);
+            }
         }
     }
 </script>
 
 <style scoped>
-    h6{
-        display: none;
-    }
+
 
     #write-review{
         padding: 2% 2% 3% 2%;

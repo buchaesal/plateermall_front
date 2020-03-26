@@ -2,7 +2,9 @@ import GoodsApi from "../api/GoodsApi";
 // import GoodsModel from "../components/goods/model/GoodsModel";
 
 const state = {
-    goodsModels: [],
+    goodsModelsCol3: [],
+    goodsModelsCol4: [],
+    goodsModelsCol5: [],
     goodsModel: {},
     goodsCount: 0
 }
@@ -13,8 +15,14 @@ const mutations = {
     async getGoodsModel(state, goodsCode) {
         state.goodsModel = await goodsApi.getGoods(goodsCode);
     },
-    async getGoodsModelList(state, goodsSet) {
-        state.goodsModels = await goodsApi.getGoodsList(goodsSet);
+    async getGoodsModelListCol3(state, goodsSet) {
+        state.goodsModelsCol3 = await goodsApi.getGoodsList(goodsSet.categoryCode, goodsSet.quantity);
+    },
+    async getGoodsModelListCol4(state, goodsSet) {
+        state.goodsModelsCol4 = await goodsApi.getGoodsList(goodsSet.categoryCode, goodsSet.quantity);
+    },
+    async getGoodsModelListCol5(state, goodsSet) {
+        state.goodsModelsCol5 = await goodsApi.getGoodsList(goodsSet.categoryCode, goodsSet.quantity);
     },
     async getCartGoodsModelList(state, goodsCodeList) {
         state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
