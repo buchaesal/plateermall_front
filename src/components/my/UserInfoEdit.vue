@@ -3,53 +3,6 @@
         <p class="action_info-large">
             회원정보는 당신 마음대로 수정하면 되겠습니다....
         </p>
-<!--        <sui-form class="user-info-edit-form">-->
-<!--            <sui-form-field inline>-->
-<!--                <label class="form-head">이름</label>-->
-<!--                <input type="text" placeholder="은 수정불가" disabled/>-->
-<!--            </sui-form-field>-->
-
-<!--            <sui-form-field inline>-->
-<!--                <label class="form-head">연락처</label>-->
-<!--                <input type="text" placeholder="원래 폰번호"/>-->
-<!--            </sui-form-field>-->
-
-<!--            <sui-form-field inline>-->
-<!--                <label class="form-head">Email</label>-->
-<!--                <input type="text" placeholder="원래 Email" disabled/>-->
-<!--            </sui-form-field>-->
-
-<!--            <sui-form-field inline>-->
-<!--                <label class="form-head">비밀번호</label>-->
-<!--                <input type="text" placeholder="변경할 비밀번호"/>-->
-<!--            </sui-form-field>-->
-
-<!--            <sui-form-field inline>-->
-<!--                <label class="form-head">비밀번호 확인</label>-->
-<!--                <input type="text" placeholder="위와 같은 비밀번호"/>-->
-<!--            </sui-form-field>-->
-
-<!--            <sui-form-fields inline>-->
-<!--                <label for="SMS">SMS 수신동의 : </label>-->
-<!--                <sui-form-field>-->
-<!--                    <sui-checkbox radio name="SMS" label="동의" value="1"/>-->
-<!--                </sui-form-field>-->
-<!--                <sui-form-field>-->
-<!--                    <sui-checkbox radio name="SMS" label="비동의" value="2"/>-->
-<!--                </sui-form-field>-->
-<!--            </sui-form-fields>-->
-
-<!--            <sui-form-fields inline>-->
-<!--                <label for="Email">Email 수신동의 : </label>-->
-<!--                <sui-form-field>-->
-<!--                    <sui-checkbox radio name="Email" label="동의" value="1"/>-->
-<!--                </sui-form-field>-->
-<!--                <sui-form-field>-->
-<!--                    <sui-checkbox radio name="Email" label="비동의" value="2"/>-->
-<!--                </sui-form-field>-->
-<!--            </sui-form-fields>-->
-<!--        </sui-form>-->
-
         <div class="edit-form">
             <sui-form-field>
                 <sui-table definition class="edit-table">
@@ -57,31 +10,36 @@
                         <sui-table-row>
                             <sui-table-cell class="form_head">이름</sui-table-cell>
                             <sui-table-cell class="data">
-                                123
+                                <p>이름은 못바꿈</p>
+                            <p class="edit-table-text">실명 정보(이름, 생년월일, 성별, 개인 고유 식별 정보)가 변경된 경우 본인 확인을 통해 정보를 수정하실 수 있습니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">연락처</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input placeholder="변경할 연락처"/>
+                                <sui-input class="edit-data" placeholder="변경할 연락처"/>
+                            <p class="edit-table-text">아이디, 비밀번호 찾기 등 본인확인이 필요한 경우 또는 유료 결제 등 네이버로부터 알림을 받을 때 사용할 휴대전화입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">이메일</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input placeholder="변경할 이메일"/>
+                                <sui-input class="edit-data" placeholder="변경할 이메일"/>
+                                <p class="edit-table-text">PLATEER MALL 계정의 이메일 주소입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">비밀번호</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input placeholder="변경할 비밀번호"/>
+                                <sui-input class="edit-data" placeholder="변경할 비밀번호"/>
+                                <p class="edit-table-text">비밀번호 변경시 입력합니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">비밀번호 변경</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input placeholder="비밀번호 확인"/>
+                                <sui-input class="edit-data" placeholder="비밀번호 확인"/>
+                                <p class="edit-table-text">비밀번호 변경시 위 비밀번호와 동일한지 확인합니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
@@ -96,6 +54,7 @@
                                         <sui-checkbox radio name="SMS" label="비동의" value="2"/>
                                     </sui-form-field>
                                 </div>
+                                <p class="edit-table-text">PLATEER MALL 서비스 변경/개편/종료, 프로모션 등 PLATEER MALL의 대부분 안내에 대한 동의여부 입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
@@ -110,6 +69,7 @@
                                         <sui-checkbox radio name="Email" label="비동의" value="2"/>
                                     </sui-form-field>
                                 </div>
+                                <p class="edit-table-text">PLATEER MALL 서비스 변경/개편/종료, 프로모션 등 PLATEER MALL의 대부분 안내에 대한 동의여부 입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                     </sui-table-body>
@@ -150,11 +110,21 @@
     }
 
     .edit-table {
-        max-width: 500px;
+        max-width: 850px;
     }
 
     .data {
-        text-align: center !important;
+        padding: 20px !important;
+    }
+
+    .edit-data, .form-radio {
+        margin-bottom: 10px !important;
+    }
+
+    .edit-table-text {
+        font-size: 0.8rem;
+        font-weight: bolder;
+        color: #777777;
     }
 
 
