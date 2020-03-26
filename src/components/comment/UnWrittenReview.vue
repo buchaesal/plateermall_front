@@ -100,14 +100,12 @@ import GoodsApi from '../../api/GoodsApi';
 
             },
             setReview(){
-                alert("setReview");
                 this.$store.commit('addCommentValue', this.review);
                 this.closeReviewModal();
             },
 
             settingReview(sendReview){
-                alert("settingReview");
-                console.log(sendReview);
+                alert('settingreview');
                 this.review = sendReview;
             },
 

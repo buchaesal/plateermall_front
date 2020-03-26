@@ -22,8 +22,7 @@ const mutations = {
     
     async loadCommentByGoodsCode(state, goodsCode){
 
-        let reviewInfo = await requestComments('1203973748');
-        console.log(goodsCode);
+        let reviewInfo = await requestComments(goodsCode);
         state.reviews = reviewInfo;
         state.reviewSummary = reviewInfo.sumEvaluation;
     },
@@ -35,9 +34,8 @@ const mutations = {
     },
 
     async loadMyCommentsByUserId(state, testId){
-        
-        console.log(testId);
-        state.myReviewsInfo.myReviews = await requestMyComments('testId');
+
+        state.myReviewsInfo.myReviews = await requestMyComments(testId);
         //console.log(state.myReviewsInfo.myReviews);
         //state.myReviewsInfo.reviewCount = state.myReviewsInfo.myReviews.length;
     },
@@ -70,8 +68,6 @@ const mutations = {
     },
 
     async modifyCommentValue(state, comment){
-        console.log("update-----");
-        console.log(comment);
         state.writtenReview = await requestModifyComment(comment);
     },
 
