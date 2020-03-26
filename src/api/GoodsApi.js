@@ -2,7 +2,6 @@ import request, {GOODS_URL_TEST} from './axios';
 import GoodsSetApiModel from './model/GoodsSetApiModel';
 
 class GoodsApi {
-
     getGoods(goodsCode) {
         return request.get(GOODS_URL_TEST+`/${goodsCode}`).then(
             (response) => {
@@ -26,7 +25,7 @@ class GoodsApi {
     }
 
     getCartGoodsList(goodsCodeList) {
-        return request.get(GOODS_URL_TEST + `/goodslist/cart/${goodsCodeList}`).then(
+        return request.post(GOODS_URL_TEST + `/goodslist/cart/`, goodsCodeList).then(
             (response) => {
                 return response.data
             }
