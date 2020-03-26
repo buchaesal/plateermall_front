@@ -87,7 +87,12 @@ import GoodsApi from '../../api/GoodsApi';
                 
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
+
                 this.currentReview.orderId = selectedReview.orderId;
+                this.currentReview.goodsCode = selectedReview.goodsId;
+                this.currentReview.userId = selectedReview.userId;
+                this.currentReview.quantity = selectedReview.goodsCount;
+                this.currentReview.selectedOptions = selectedReview.selectedOptions;
             },
             closeReviewModal(){
                 this.open = false;
@@ -95,17 +100,20 @@ import GoodsApi from '../../api/GoodsApi';
 
             },
             setReview(){
+                alert("setReview");
                 this.$store.commit('addCommentValue', this.review);
                 this.closeReviewModal();
             },
 
             settingReview(sendReview){
+                alert("settingReview");
+                console.log(sendReview);
                 this.review = sendReview;
             },
 
             async setUnwrittenInfo(userId){
                 this.orderIdList = await requestUnwrittenOrderId(userId);
-                
+
                 for(let index in this.orderIdList){
                     this.unwrittenOrderList.push(await getOrder(this.orderIdList[index]));
                 }
@@ -122,7 +130,7 @@ import GoodsApi from '../../api/GoodsApi';
             ReviewForm,
         },
         created(){
-            this.setUnwrittenInfo();
+            this.setUnwrittenInfo('testId');
             //this.$store.commit('loadUnWrittenOrderId', 'testId');
         },
         computed:{
