@@ -14,8 +14,7 @@ class GoodsApi {
 
     getGoodsList(categoryCode, quantity) {
         let goodsSetApiModel = new GoodsSetApiModel(categoryCode, quantity);
-
-        return request.get(GOODS_URL_TEST + `/goodslist`, {goodsSetApiModel}).then(
+        return request.get(GOODS_URL_TEST + `/goodslist`, {params: goodsSetApiModel}).then(
             (response) => {
                 return response.data
             }

@@ -14,9 +14,7 @@ const mutations = {
         state.goodsModel = await goodsApi.getGoods(goodsCode);
     },
     async getGoodsModelList(state, goodsSet) {
-        localStorage.setItem('categoryCode', goodsSet.categoryCode);
-        localStorage.setItem('quantity', goodsSet.quantity);
-        state.goodsModels = await goodsApi.getGoodsList(this.categoryCode, this.quantity);
+        state.goodsModels = await goodsApi.getGoodsList(goodsSet.categoryCode, goodsSet.quantity);
     },
     async getCartGoodsModelList(state, goodsCodeList) {
         state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
