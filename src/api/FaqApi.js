@@ -41,7 +41,17 @@ export const registrationQuestion = function(questionObject) {
 }
 
 export const questionDelete = function (postId) {
-    return request.get(`http://localhost:9999/api/faq/question/delete/${postId}`).then(
+    request.get(`http://localhost:9999/api/faq/question/delete/${postId}`).then(
+        (response)=>{
+            return response.data;
+        }
+    ).catch(function (err) {
+        console.log(err);
+    });
+}
+
+export const questionUpdate = function(questionObject) {
+    return request.get(`http://localhost:9999/api/faq/question/update/`,questionObject).then(
         (response)=>{
             return response.data;
         }

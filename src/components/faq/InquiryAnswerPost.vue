@@ -36,7 +36,7 @@
                 </sui-form-field>
             </sui-form>
             <div class="btn-box">
-                <sui-button basic secondary>수정</sui-button>
+                <sui-button basic secondary @click="questionUpdate">수정</sui-button>
                 <sui-button basic secondary @click="questionDelete">삭제</sui-button>
             </div>
         </div>
@@ -81,7 +81,7 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
-    import {getQuestion, getAnswer, questionDelete} from "../../api/FaqApi";
+    import {getQuestion, getAnswer, questionDelete, questionUpdate} from "../../api/FaqApi";
 
     export default {
         name: "InquiryAnswerPost",
@@ -89,6 +89,8 @@
             return {
                 questionDetail: {},
                 answer: {},
+                updateQuestionObject: {
+                }
             }
         },
         components: {
@@ -99,20 +101,27 @@
             this.questionDetail = await getQuestion(postId);
             this.answer = await getAnswer(postId);
         },
-        methods : {
+        methods: {
             questionDelete() {
                 const postId = this.$route.params.postId;
 
-                console.log(postId);
-
-                if (questionDelete(postId)) {
+                if (this.answer) {
                     alert("답변이 완료된 문의는 삭제할 수 없습니다.");
-                    this.$router.push("/inquiryAnswer");
                 } else {
-                    alert("문의 삭제 완료.");
-                    this.$router.push("/inquiryAnswer");
+                    questionDelete(postId);
+                    if(confirm("해당 문의를 삭제하시겠습니까?")) {
+                        alert("삭제되었습니다.")
+                        this.$router.push("/inquiryAnswer");
+                    }
                 }
             },
+            questionUpdate() {
+                if(this.answer) {
+                    alert("답변이 완료된 문의는 수정할 수 없습니다.")
+                } else {
+                    questionUpdate(this.ques)
+                }
+            }
         },
     }
 </script>
