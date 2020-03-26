@@ -1,7 +1,5 @@
 import axios from "axios";
-import store from "../store/store";
 import {router} from "../routes/route";
-// import {setTokenInLocalStorage} from "../utils/oauth";
 
 /*
     모든 요청 전 header에 access_token을 담아 전송한다.
@@ -26,52 +24,27 @@ axios.interceptors.request.use(
  */
 axios.interceptors.response.use(
     response => {
-        // console.log('Interceptors Response is ', response, new Date());
+        console.log('Interceptors Response is ', response, new Date());
+        if(response.status === 401){
+            alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
+        }
+
         return response;
     },
     function (error) {
-        // console.log('Interceptors Response Error is ', error.response, new Date());
+         console.log('Interceptors Response Error is ', error.response, new Date());
 
         if (!error.response) {
             router.push('/error');
         }
 
         let status = error.response.status;
-        if (status === 500) {
-            store.commit('PUSH_ERROR_PAGE');
-            return Promise.reject(error);
-        }
-
-        if (status === 401) {
-            let errorData = error.response.data;
-            if (errorData.error !== 'invalid_token') {
-                return Promise.reject(error);
-            }
-
-            if (isExpiredToken(errorData)) {
-                // return attemptRefreshToken();
-            } else {
-                store.commit('LOGOUT_WITH_TOKEN_INVALIDE');
-                store.commit('SET_SNACKBAR', setSnackBarInfo('토큰 정보가 잘못되었습니다. 다시 로그인 해주세요', 'error', 'top'));
-            }
-        }
+        console.log(status, '==>error.response.status');
 
         return Promise.reject(error);
     }
 );
 
-function isExpiredToken(errorData) {
-    let errorDescription = errorData.error_description;
-    return errorDescription.substring(0, 20) === 'Access token expired';
-}
-
-function setSnackBarInfo(text, color, location) {
-    return {
-        text: text,
-        color: color,
-        location: location,
-    }
-}
 
 const deleteAccessTokenInHeader = () => {
     axios.defaults.headers.common['Authorization'] = null;
@@ -79,5 +52,4 @@ const deleteAccessTokenInHeader = () => {
 
 export {
     deleteAccessTokenInHeader,
-    setSnackBarInfo
 }
