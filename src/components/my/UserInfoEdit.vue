@@ -3,8 +3,8 @@
         <p class="action_info-large">
             회원정보는 당신 마음대로 수정하면 되겠습니다....
         </p>
-        <div class="edit-form">
-            <sui-form-field>
+        <div>
+            <sui-form-field class="edit-form">
                 <sui-table definition class="edit-table">
                     <sui-table-body>
                         <sui-table-row>
@@ -18,7 +18,7 @@
                             <sui-table-cell class="form_head">연락처</sui-table-cell>
                             <sui-table-cell class="data">
                                 <sui-input class="edit-data" placeholder="변경할 연락처"/>
-                            <p class="edit-table-text">아이디, 비밀번호 찾기 등 본인확인이 필요한 경우 또는 유료 결제 등 네이버로부터 알림을 받을 때 사용할 휴대전화입니다.</p>
+                            <p class="edit-table-text">아이디, 비밀번호 찾기 등 본인확인이 필요한 경우 또는 유료 결제 등 PLATEER MALL로부터 알림을 받을 때 사용할 휴대전화입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
@@ -76,6 +76,10 @@
                 </sui-table>
             </sui-form-field>
         </div>
+        <div id="buttons">
+            <sui-button secondary>수정</sui-button>
+            <sui-button basic secondary>취소</sui-button>
+        </div>
     </div>
 </template>
 
@@ -125,6 +129,11 @@
         font-size: 0.8rem;
         font-weight: bolder;
         color: #777777;
+    }
+
+    #buttons {
+        text-align: center;
+        margin-top: 20px;
     }
 
 
