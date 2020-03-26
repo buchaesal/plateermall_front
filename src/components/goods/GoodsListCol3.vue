@@ -46,7 +46,11 @@
             },
         },
         created() {
-            this.$store.commit("getGoodsModelList", {"10001", this.items_per_row * 2});
+            this.$store.commit("getGoodsModelList",
+                {
+                    categoryCode: "10001",
+                    quantity: this.items_per_row * 2
+                });
         },
         computed: {
             getGoodsModelList() {

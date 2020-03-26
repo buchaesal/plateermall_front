@@ -13,8 +13,10 @@ const mutations = {
     async getGoodsModel(state, goodsCode) {
         state.goodsModel = await goodsApi.getGoods(goodsCode);
     },
-    async getGoodsModelList(state, categoryCode, quantity) {
-        state.goodsModels = await goodsApi.getGoodsList(categoryCode, quantity);
+    async getGoodsModelList(state, goodsSet) {
+        localStorage.setItem('categoryCode', goodsSet.categoryCode);
+        localStorage.setItem('quantity', goodsSet.quantity);
+        state.goodsModels = await goodsApi.getGoodsList(this.categoryCode, this.quantity);
     },
     async getCartGoodsModelList(state, goodsCodeList) {
         state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
