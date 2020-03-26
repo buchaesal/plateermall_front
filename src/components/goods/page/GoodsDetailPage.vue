@@ -60,8 +60,8 @@
                     </div>
                     <div class="summary">
                         <dl class="detail">
-                            <dt v-if="goodsData.cardPromotions != null">카드할인</dt>
-                            <dd v-if="goodsData.cardPromotions != null"><span id="dcMaxInfoTxt">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
+                            <dt>카드할인</dt>
+                            <dd><span id="dcMaxInfoTxt"  v-if="goodsData.cardPromotions != null">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
                                 <div class="tooltip">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
                                             @mouseleave="offTooltip1"><i class="info icon"></i>
@@ -546,9 +546,9 @@
             },
         },
         created() {
-            this.$store.commit('goodsModel', this.$route.params.goodsCode);
+            this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
             this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
-            this.$store.commit('addSawList');
+            this.$store.commit('addSawList', this.$route.params.goodsCode);
         },
         computed: {
             goodsData() {

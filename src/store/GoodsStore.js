@@ -12,19 +12,19 @@ const state = {
 let goodsApi = new GoodsApi();
 
 const mutations = {
-    async goodsModel(state, goodsCode) {
+    async getGoodsModel(state, goodsCode) {
         state.goodsModel = await goodsApi.getGoods(goodsCode);
     },
-    async goodsModelListCol3(state, goodsSet) {
+    async getGoodsModelListCol3(state, goodsSet) {
         state.goodsModelsCol3 = await goodsApi.getGoodsList(goodsSet.categoryCode, goodsSet.quantity);
     },
-    async goodsModelListCol4(state, goodsSet) {
+    async getGoodsModelListCol4(state, goodsSet) {
         state.goodsModelsCol4 = await goodsApi.getGoodsList(goodsSet.categoryCode, goodsSet.quantity);
     },
-    async goodsModelListCol5(state, goodsSet) {
+    async getGoodsModelListCol5(state, goodsSet) {
         state.goodsModelsCol5 = await goodsApi.getGoodsList(goodsSet.categoryCode, goodsSet.quantity);
     },
-    async cartGoodsModelList(state, goodsCodeList) {
+    async getCartGoodsModelList(state, goodsCodeList) {
         state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
     },
 

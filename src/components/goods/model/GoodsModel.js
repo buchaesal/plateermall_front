@@ -10,9 +10,11 @@ class GoodsModel {
     saleCnt = "";
     category = "";
     shippingDays = "";
+    shippingFee = "";
     cardPromotions = "";
+    infoTable = "";
 
-    constructor(imgUrl, goodsCode, seller, copy, title, originalPrice, dcRate, saleCnt, options, cardPromotions, category, modelNo, shippingDays) {
+    constructor(imgUrl, goodsCode, seller, copy, title, originalPrice, dcRate, saleCnt, options, cardPromotions, category, modelNo, shippingDays, shippingFee, infoTable) {
         this.imgUrl = imgUrl,
             this.goodsCode = goodsCode,
             this.seller = seller,
@@ -25,7 +27,9 @@ class GoodsModel {
             this.cardPromotions = cardPromotions,
             this.category = category,
             this.modelNo = modelNo,
-            this.shippingDays = shippingDays
+            this.shippingDays = shippingDays,
+            this.shippingFee = shippingFee,
+            this.infoTable = infoTable
     }
 }
 
