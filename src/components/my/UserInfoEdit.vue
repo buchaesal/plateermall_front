@@ -17,21 +17,21 @@
                         <sui-table-row>
                             <sui-table-cell class="form_head">연락처</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" placeholder="변경할 연락처"/>
+                                <sui-input class="edit-data" v-model="userInfo.phoneNumber" placeholder="변경할 연락처"/>
                             <p class="edit-table-text">아이디, 비밀번호 찾기 등 본인확인이 필요한 경우 또는 유료 결제 등 PLATEER MALL로부터 알림을 받을 때 사용할 휴대전화입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">이메일</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" placeholder="변경할 이메일"/>
+                                <p>{{userInfo.email}}</p>
                                 <p class="edit-table-text">PLATEER MALL 계정의 이메일 주소입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">비밀번호</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" placeholder="변경할 비밀번호"/>
+                                <sui-input class="edit-data" v-model="userInfo.password" placeholder="변경할 비밀번호"/>
                                 <p class="edit-table-text">비밀번호 변경시 입력합니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
@@ -84,9 +84,20 @@
 </template>
 
 <script>
+import {getUserInfo} from '../../api/UserApi';
+
     export default {
-        name: "UserInfoEdit"
+        name: "UserInfoEdit",
+        data(){
+            return{
+                userInfo:{},
+            }
+        },
+        async created(){
+            this.userInfo= await getUserInfo('aaa');
+        },
     }
+
 </script>
 
 <style scoped>

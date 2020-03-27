@@ -3,25 +3,25 @@ import axios from 'axios';
 // import router from "../../router";
 
 export const COMMENTS_URL = 'http://192.168.0.66:9999/api/comments';
-export const GOODS_URL_TEST= 'http://192.168.0.65:9999/api/goods';
+export const GOODS_URL = 'http://192.168.0.65:9999/api/goods';
 
 export const CART_URL = 'http://192.168.0.199:9999/api/cart';
 
-export const FAQ_URL = process.env.VUE_APP_BASE_URL+'/api/faq';
+export const FAQ_URL = process.env.VUE_APP_BASE_URL + '/api/faq';
 export const ORDER_URL = 'http://localhost:9999/api/order';
-export const PURCHASEHISTORY_URL = process.env.PURCHASEHISTORY_APP_BASE_URL+'api/purchasehistory';
+export const PURCHASEHISTORY_URL = process.env.PURCHASEHISTORY_APP_BASE_URL + 'api/purchasehistory';
 
-export const USER_URL = process.env.VUE_APP_BASE_URL+'/api/user';
-export const SHIPPINGSPOT_URL = process.env.VUE_APP_BASE_URL+'/api/shippingspot';
+export const USER_URL = process.env.VUE_APP_BASE_URL + '/api/user';
+export const SHIPPINGSPOT_URL = process.env.VUE_APP_BASE_URL + '/api/shippingspot';
 
 const instance = axios.create({
     withCredentials: true
 });
 
-//
-// /*
-//     모든 요청 전 header에 access_token을 담아 전송한다.
-//  */
+
+/*
+    모든 요청 전 header에 access_token을 담아 전송한다.
+ */
 // instance.interceptors.request.use(
 //     config => {
 //         let accessToken = localStorage.getItem('access_token');
@@ -37,6 +37,7 @@ const instance = axios.create({
 //     }
 // );
 
+
 /*
     만료된 access_token으로 요청시 Access token exprited가 발생하면 refresh 토큰으로 새로운 토큰을 받는다.
  */
@@ -48,9 +49,9 @@ const instance = axios.create({
 //     },
 //     function (error) {
 //         console.log('Interceptors Response Error is ', error);
-//         alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
-//         store.commit('LOGOUT');
-//         router.push('/');
+//         // alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
+//         // store.commit('LOGOUT');
+//         // router.push('/');
 //
 //         return Promise.reject(error);
 //     }
