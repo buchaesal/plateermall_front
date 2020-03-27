@@ -24,52 +24,55 @@
                             <a href="javascript:void(0)" @click="containWishList">위시담기</a>
                         </div>
                     </div>
-                    <div v-for="(cart, index) in cartList" v-bind:key="index"  class="goods-list">
-                        <div style="background-color:#ededed; height:50px;">
-                            <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
+                    <template v-for="cart in getCartList">
+                        <div v-for="(option, index) in cart.selectedOptions" v-bind:key="index"  class="goods-list">
+                            <div style="background-color:#ededed; height:50px;">
+                                <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
+                            </div>
+                            <div>
+                                <sui-grid :columns="5">
+                                    <sui-grid-row stretched class="cart-grid-row">
+                                        <sui-grid-column style="width:10%;">
+                                            <sui-segment style="position:absolute; top:50%;">
+                                                <sui-checkbox class="goods-checkbox" :id="cart.cartCode + index" :value="cart" v-model="checkedCartList"/>
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                        <sui-grid-column style="width:20%;">
+                                            <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
+                                                <sui-image :src="cart.goods.imgUrl"  class="cart-img" />
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                        <sui-grid-column style="width:40%;">
+                                            <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
+                                                <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
+                                                <p style="font-family:Georgia, serif; color:gray">옵션 : {{option.text}}</p>
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                        <sui-grid-column style="width:15%; padding-bottom:5%;">
+                                            <sui-segment>
+                                                <div class="quantity-box">
+                                                    <sui-button class="minus" @click="quantityMinus(option)">-</sui-button>
+                                                    <sui-input :value="option.quantity" v-model="option.quantity" style="margin-left:18px; width:40px;" />
+                                                    <sui-button class="plus" @click="quantityPlus(option)">+</sui-button>
+                                                </div>
+                                                <div>
+                                                    <sui-button @click="changeQuantity(cart, option)" class="quantity-change-btn" basic secondary>변경</sui-button>
+                                                </div>
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                        <sui-grid-column style="width:15%; padding-bottom: 6%;">
+                                            <sui-segment>
+                                                <div @click="deleteCart(cart, option)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
+                                            </sui-segment>
+                                            <sui-segment>
+                                                <div><span class="goods-price">{{priceFormatting(cart.goods.originalPrice)}}원</span></div>
+                                            </sui-segment>
+                                        </sui-grid-column>
+                                    </sui-grid-row>
+                                </sui-grid>
+                            </div>
                         </div>
-                        <div>
-                            <sui-grid :columns="5">
-                                <sui-grid-row stretched class="cart-grid-row">
-                                    <sui-grid-column style="width:10%;">
-                                        <sui-segment style="position:absolute; top:50%;">
-                                            <sui-checkbox class="goods-checkbox" :id="index" :value="cart" v-model="checkedCartList"/>
-                                        </sui-segment>
-                                    </sui-grid-column>
-                                    <sui-grid-column style="width:20%;">
-                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
-                                            <sui-image :src="cart.goods.imgUrl"  class="cart-img" />
-                                        </sui-segment>
-                                    </sui-grid-column>
-                                    <sui-grid-column style="width:40%;">
-                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
-                                            <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
-                                        </sui-segment>
-                                    </sui-grid-column>
-                                    <sui-grid-column style="width:15%; padding-bottom:5%;">
-                                        <sui-segment>
-                                            <div class="quantity-box">
-                                                <sui-button class="minus" @click="cartStockMinus(index)">-</sui-button>
-                                                <sui-input :value="cart.cartStock" v-model="cart.cartStock" style="margin-left:18px; width:40px;" />
-                                                <sui-button class="plus" @click="cartStockPlus(index)">+</sui-button>
-                                            </div>
-                                            <div>
-                                                <sui-button @click="changeStock(index)" class="stock-change-btn" basic secondary>변경</sui-button>
-                                            </div>
-                                        </sui-segment>
-                                    </sui-grid-column>
-                                    <sui-grid-column style="width:15%; padding-bottom: 6%;">
-                                        <sui-segment>
-                                            <div @click="deleteCart(cart)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
-                                        </sui-segment>
-                                        <sui-segment>
-                                            <div><span class="goods-price">{{priceFormatting(cart.goods.originalPrice)}}원</span></div>
-                                        </sui-segment>
-                                    </sui-grid-column>
-                                </sui-grid-row>
-                            </sui-grid>
-                        </div>
-                    </div>
+                    </template>
                 </div>
 
                 <div class="goods-price-container">
@@ -153,13 +156,6 @@
                 {{getCartList}}
                 <hr/>
             </div>
-            <div>
-                <hr/>
-                data에 cartList 값
-                <br />
-                {{cartList}}
-                <hr/>
-            </div>
 
             <div>
                 <hr/>
@@ -185,7 +181,6 @@
                 isTotalChecked:false,
                 isChecked:[],
                 checkedCartList:[],
-                cartList:[],
             }
         },
         components: {
@@ -201,7 +196,7 @@
             },
             checkWholeItem() {
                 if(!this.isTotalChecked) {
-                    this.checkedCartList = this.cartList;
+                    this.checkedCartList = this.$store.state.cartListStore.cartList;
                     this.isTotalChecked = true;
                 } else {
                     this.checkedCartList = [];
@@ -211,14 +206,16 @@
             totalCartCount() {
                 return this.checkedCartList.length;
             },
-            pricingCalculation(originalPrice, cartStock) {
-                return originalPrice * cartStock;
+            pricingCalculation(originalPrice, quantity) {
+                return originalPrice * quantity;
             },
             totalGoodsPrice() {
                 let totalGoodsPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalGoodsPrice += this.pricingCalculation(cart.goods.originalPrice, cart.cartStock);
+                    cart.selectedOptions.map((option) => {
+                        totalGoodsPrice += this.pricingCalculation(cart.goods.originalPrice, option.quantity);
+                    });
                 });
                 return this.priceFormatting(totalGoodsPrice);
             },
@@ -226,26 +223,27 @@
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalCartPrice += this.pricingCalculation(cart.goods.originalPrice, cart.cartStock);
+                    cart.selectedOptions.map((option) => {
+                        totalCartPrice += this.pricingCalculation(cart.goods.originalPrice, option.quantity);
+                    });
                 });
                 return this.priceFormatting(totalCartPrice);
             },
-            cartStockMinus(index) {
-                if (this.cartList[index].cartStock === 1) {
+            quantityMinus(option) {
+                if (option.quantity === 1) {
                     alert('최소 1개 구매 가능합니다.');
                     return;
                 }
-                this.cartList[index].cartStock -= 1;
+                option.quantity -= 1;
             },
-            cartStockPlus(index) {
-                this.cartList[index].cartStock += 1;
+            quantityPlus(option) {
+                option.quantity += 1;
             },
 
-            deleteCart(deletedCart) {
+            deleteCart(deletedCart, option) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
-                    this.$store.commit('deleteCart', deletedCart);
-                    this.$router.go();
+                    this.$store.commit('deleteCart', deletedCart, option);
                 }
             },
 
@@ -253,7 +251,6 @@
                 const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
                 if (result) {
                     this.$store.commit('checkedDeleteCartList', this.checkedCartList);
-                    this.$router.go();
                 }
             },
 
@@ -268,9 +265,8 @@
                 this.$router.push('/goodsDetail/' + goodsCode);
             },
 
-            changeStock(index) {
-                this.$store.commit('changeStock', this.cartList[index]);
-                this.$router.go();
+            changeQuantity(cart, option) {
+                this.$store.commit('changeQuantity', cart, option);
             },
 
             buyCartList() {
@@ -280,10 +276,7 @@
         async created() {
             await this.$store.commit('getCartList');
         },
-        mounted() {
-            this.cartList = JSON.parse ( JSON.stringify ( this.$store.state.cartListStore.cartList ) );
-            this.isChecked = new Array(this.cartList.length).fill(false);
-        },
+
         computed: {
             getCartList() {
                   return this.$store.state.cartListStore.cartList;
@@ -365,7 +358,7 @@
         font-size:12px;
     }
 
-    .stock-change-btn {
+    .quantity-change-btn {
         width: 83px;
         margin-top: 40%;
     }

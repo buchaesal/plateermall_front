@@ -30,8 +30,10 @@ export const requestDeleteCart = function(cartCode) {
     })
 }
 
-export const requestCheckedDeleteCartList = function(cartList) {
-    request.delete(CART_URL + `/list`, cartList).then(
+export const requestCheckedDeleteCartList = function(cartCodeArr) {
+    request.delete(CART_URL + `/list`, { 
+            data : cartCodeArr
+        }).then(
         (response) => {
             return response.data;
         }
