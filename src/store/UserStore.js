@@ -1,5 +1,4 @@
 import {login, signUp} from "../api/UserApi";
-import {deleteTokenInLocalStorage, setTokenInLocalStorage} from "../utils/oauth";
 import router from "../router/index";
 
 const state = {
@@ -13,7 +12,6 @@ const getters = {
 };
 
 function resetToken(state) {
-    deleteTokenInLocalStorage();
     state.accessToken = null;
 }
 
@@ -40,7 +38,6 @@ const actions = {
             }else if(result === 'incorrect'){
                 msg = '패스워드가 올바르지 않습니다.';
             }else{
-                setTokenInLocalStorage(result);
                 context.commit('LOGIN');
             }
             return msg;
