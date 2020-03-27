@@ -47,7 +47,7 @@
                 <sui-button basic secondary v-if="updateBtn" @click="updateBtnChange">수정</sui-button>
                 <sui-button basic secondary  v-if="updateBtn" @click="questionDelete">삭제</sui-button>
                 <sui-button basic secondary v-if="!updateBtn" @click="questionUpdate">수정완료</sui-button>
-                <sui-button basic secondary v-if="!updateBtn">수정취소</sui-button>
+                <sui-button basic secondary v-if="!updateBtn" @click="updateBtnChange">수정취소</sui-button>
             </div>
         </div>
 
@@ -161,6 +161,7 @@
                     console.log(this.updateQuestionObject);
                     questionUpdate(this.updateQuestionObject);
                     alert("문의가 수정되었습니다.");
+                    this.$router.push("/inquiryAnswer");
                 }
             },
             updateBtnChange() {
