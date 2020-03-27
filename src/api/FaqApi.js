@@ -51,7 +51,7 @@ export const questionDelete = function (postId) {
 }
 
 export const questionUpdate = function(questionObject) {
-    return request.get(`http://localhost:9999/api/faq/question/update/`,questionObject).then(
+    return request.post(`http://localhost:9999/api/faq/question/update/`,questionObject).then(
         (response)=>{
             return response.data;
         }
