@@ -60,8 +60,9 @@
                     </div>
                     <div class="summary">
                         <dl class="detail">
-                            <dt>카드할인</dt>
-                            <dd><span id="dcMaxInfoTxt"  v-if="goodsData.cardPromotions != null">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
+                            <dt v-if="isEmpty(goodsData.cardPromotions)">카드할인</dt>
+                            <dd v-if="isEmpty(goodsData.cardPromotions)">
+                                <span id="dcMaxInfoTxt">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
                                 <div class="tooltip">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
                                             @mouseleave="offTooltip1"><i class="info icon"></i>
@@ -90,43 +91,43 @@
                                 </div>
                             </dd>
                             <dt>포인트</dt>
-                            <dd class="">
-                        <span class="oners-txt mt-none">플래티어 오너스 L.POINT 0.5% 적립
-                        <div class="tooltip tooltip-oners-saving">
-                                <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
-                                        @mouseleave="offTooltip2"><i class="info icon"></i>
-                                </button>
-                            <div role="tooltip" class="tooltip-conts" v-if="tooltip2Display">
-                            <p class="desc-tit">플래티어 오너스 적립 안내</p>
-                                <div class="saving-info">
-                                    <dl>
-                                        <dt>대상회원</dt>
-                                        <dd>플래티어 오너스 유료회원 가입</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>적립유형</dt>
-                                        <dd>L.POINT</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>적립금액</dt>
-                                        <dd>결제금액의 0.5%</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>적립시점</dt>
-                                        <dd>상품발송 완료 후 자동 적립</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>유효기간</dt>
-                                        <dd>발급일부터 5년</dd>
-                                    </dl>
-                                    <dl>
-                                        <dt>유의사항</dt>
-                                        <dd>본 혜택은 당사 사정에 따라 변경/삭제 될 수 있으며, 실제 적립 내역과 상이할 수 있습니다.</dd>
-                                    </dl>
+                            <dd>
+                                <span class="oners-txt mt-none">플래티어 오너스 L.POINT 0.5% 적립
+                                <div class="tooltip tooltip-oners-saving">
+                                    <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
+                                            @mouseleave="offTooltip2"><i class="info icon"></i>
+                                    </button>
+                                    <div role="tooltip" class="tooltip-conts" v-if="tooltip2Display">
+                                        <p class="desc-tit">플래티어 오너스 적립 안내</p>
+                                        <div class="saving-info">
+                                            <dl>
+                                                <dt>대상회원</dt>
+                                                <dd>플래티어 오너스 유료회원 가입</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>적립유형</dt>
+                                                <dd>L.POINT</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>적립금액</dt>
+                                                <dd>결제금액의 0.5%</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>적립시점</dt>
+                                                <dd>상품발송 완료 후 자동 적립</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>유효기간</dt>
+                                                <dd>발급일부터 5년</dd>
+                                            </dl>
+                                            <dl>
+                                                <dt>유의사항</dt>
+                                                <dd>본 혜택은 당사 사정에 따라 변경/삭제 될 수 있으며, 실제 적립 내역과 상이할 수 있습니다.</dd>
+                                            </dl>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </span>
+                                </span>
                                 *오너스 회원가로 결제 시, 표기 된 카드혜택가 및 적립 내역과 상이할 수 있습니다.
                             </dd>
                         </dl>
@@ -150,11 +151,11 @@
                             >
                                 <div class="option-body">
                                     <div class="amount">
-                                        <sui-button circular icon='plus' class="ico-plus"
+                                        <sui-button circular icon="plus" class="ico-plus"
                                                     @click="OptionQuantityPlus(index)"/>
                                         <input type="number" transparent class="output" :value="option.quantity"
                                                disabled>
-                                        <sui-button circular icon='minus' class="ico-minus"
+                                        <sui-button circular icon="minus" class="ico-minus"
                                                     @click="OptionQuantityMinus(index)"/>
                                     </div>
                                     <div class="option-price">
@@ -192,7 +193,7 @@
                         </div>
                         <div>
                             <sui-button-group class="cart-or-now">
-                                <sui-button color="black" content="쇼핑백"></sui-button>
+                                <sui-button color="black" content="쇼핑백" @click="addCart"></sui-button>
                                 <sui-button color="blue" content="바로구매"></sui-button>
                             </sui-button-group>
                         </div>
@@ -222,7 +223,7 @@
             </div>
             <div class="details">
                 <section class="md-details">
-                    <div>
+                    <div v-if="isEmpty(goodsData.notice)">
                         <sui-accordion exclusive>
                             <sui-accordion-title active class="accordion-title">
                                 <sui-icon name="dropdown"/>
@@ -263,7 +264,7 @@
                 </div>
                 <div class="detail-tab">
                     <sui-tab>
-                        <sui-tab-pane title="구매정보">
+                        <sui-tab-pane title="구매정보" v-if="isEmpty(goodsData.infoTable)">
                             <table class="ui definition table">
                                 <tbody>
                                 <tr class="hidden-tr">
@@ -382,8 +383,6 @@
                                 (이하 전상법이라 합니다)에서 규정한 내용보다 고객님께 유리한 경우에는 개별적으로 게시한 해당 "청약철회" 내용을 우선 적용하며, "전상법"의 규정보다 불리한
                                 경우에는 "전상법"의 규정을 우선하여 적용합니다.
                             </div>
-
-
                         </sui-tab-pane>
                     </sui-tab>
                 </div>
@@ -402,7 +401,7 @@
     import RatingStarPoint from "../../comment/RatingStarPoint";
     import RatingGraph from "../../comment/RatingGraph";
     import ReviewList from "../../comment/ReviewList";
-
+    import {requestAddCart} from "../../../api/CartListApi";
 
     export default {
         name: "GoodsDetail",
@@ -431,8 +430,22 @@
             }
         },
         methods: {
+            isEmpty(obj) {
+                if (
+                    obj === null ||
+                    obj === undefined ||
+                    obj === "" ||
+                    obj.length < 1
+                ) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
             priceFormatting(price) {
-                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                if (this.isEmpty(price)) {
+                    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
             },
             pricing(originalPrice, dcRate) {
                 this.discountedPrice = originalPrice * (100 - dcRate) / 100;
@@ -469,7 +482,7 @@
                 }
             },
             calculateDays(days) {
-                let week = ['일', '월', '화', '수', '목', '금', '토'];
+                let week = ["일", "월", "화", "수", "목", "금", "토"];
 
                 let date = new Date();
                 let weekday = date.getDay();
@@ -480,15 +493,15 @@
 
                 date.setDate(date.getDate() + days);
 
-                let month = '' + (date.getMonth() + 1);
-                let day = '' + date.getDate();
+                let month = "" + (date.getMonth() + 1);
+                let day = "" + date.getDate();
 
                 if (month.length < 2) {
-                    month = '0' + month;
+                    month = "0" + month;
                 }
 
                 if (day.length < 2) {
-                    day = '0' + day;
+                    day = "0" + day;
                 }
 
                 return month + "/" + day + "(" + week[date.getDay()] + ")";
@@ -544,11 +557,17 @@
             offTooltip2() {
                 this.tooltip2Display = false;
             },
+            addCart() {
+                requestAddCart({
+                    goodsCode: this.$route.params.goodsCode,
+                    selectedOptions: this.selectedOptions
+                });
+            },
         },
         created() {
-            this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
-            this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
-            this.$store.commit('addSawList', this.$route.params.goodsCode);
+            this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
+            this.$store.commit("loadCommentByGoodsCode", this.$route.params.goodsCode);
+            this.$store.commit("addSawList", this.$route.params.goodsCode);
         },
         computed: {
             goodsData() {
@@ -851,6 +870,11 @@
         margin-bottom: 20px;
     }
 
+    .ui.basic.blue.active.button {
+        background-color: #2185d0!important;
+        color: white!important;
+    }
+
     .output {
         display: inline-block;
         width: 40%;
@@ -903,11 +927,13 @@
     }
 
     .promotion-banner {
-        background-color: rgb(125, 115, 103);
+        background-color: black;
+        color: white;
     }
 
     .brand-banner {
-        background-color: rgb(125, 115, 103);
+        background-color: black;
+        color: white;
     }
 
     .banner-text a {

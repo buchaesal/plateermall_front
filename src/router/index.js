@@ -7,6 +7,7 @@ import MyPage from '../components/my/page/MyPageIndex';
 import GoodsDetailPage from '../components/goods/page/GoodsDetailPage';
 import MyCart from "../components/my/page/MyCartPage";
 import Error from "../components/share/page/Error";
+import OrderCompletePage from "../components/order/page/OrderCompletePage";
 
 Vue.use(VueRouter);
 
@@ -15,20 +16,22 @@ const routes = [
     {path: '/login', component: LoginForm},
     {path: '/signup', component: SignUpPage},
     {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent', userInfo:false}},
-    {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'}},
-    {path: '/inquiryAnswer', component: MyPage, props:{selectedComponent:'InquiryAnswer'}},
-    {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'}},
+    {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'},meta: {authRequired: true}},
+    {path: '/inquiryAnswer', component: MyPage, props:{selectedComponent:'InquiryAnswer'},meta: {authRequired: true}},
+    {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'},meta: {authRequired: true}},
     {path: '/goodsDetail/:goodsCode', component: GoodsDetailPage},
-    {path: '/cart', component: MyCart},
-    {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'}},
-    {path: '/board' ,component: MyPage, props:{selectedComponent: 'Board'}},
-    {path: '/wishlist', component: MyPage, props:{selectedComponent: 'Wishlist'}},
-    {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList'}},
-    {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch'}},
-    {path: '/answer/:postId', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'}},
-    {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'}},
-    {path: '/error', component: Error}
+    {path: '/cart', component: MyCart,meta: {authRequired: true}},
+    {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'},meta: {authRequired: true}},
+    {path: '/board' ,component: MyPage, props:{selectedComponent: 'Board'},meta: {authRequired: true}},
+    {path: '/wishlist', component: MyPage, props:{selectedComponent: 'Wishlist'},meta: {authRequired: true}},
+    {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList'},meta: {authRequired: true}},
+    {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch'},meta: {authRequired: true}},
+    {path: '/answer/:postId', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'},meta: {authRequired: true}},
+    {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'},meta: {authRequired: true}},
+    {path: '/error', component: Error},
 
+    {path: '/order/ordercomplete', component: OrderCompletePage}
+    // {path: '/order/ordercomplete', components: OrderCompletePage, props:{OrderCompletePage: 'orderInformation'}}
 ]
 
 export default new VueRouter({

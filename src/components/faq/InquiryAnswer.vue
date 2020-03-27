@@ -23,7 +23,7 @@
                         <sui-table-header-cell>등록일</sui-table-header-cell>
                     </sui-table-row>
                 </sui-table-header>
-                <sui-table-body v-if="questionList.length===0">
+                <sui-table-body v-if="questionList.length==0">
                     <sui-table-row>
                         <sui-table-cell colspan="5" style="text-align:center;">문의 내역이 없습니다.</sui-table-cell>
                     </sui-table-row>
@@ -31,11 +31,13 @@
                 <sui-table-body v-else>
                     <sui-table-row v-for="(post, index) in questionList" :key="index">
 
-                        <sui-table-cell v-if="post.state==true">답변완료</sui-table-cell>
+                        <sui-table-cell v-if="post.state">답변완료</sui-table-cell>
                         <sui-table-cell v-else>답변대기</sui-table-cell>
 
                         <sui-table-cell>{{post.territory}}</sui-table-cell>
-                        <sui-table-cell><router-link :to="`/answer/${post.postId}`">{{ post.title }}</router-link></sui-table-cell>
+                        <sui-table-cell>
+                            <router-link :to="`/answer/${post.postId}`">{{ post.title }}</router-link>
+                        </sui-table-cell>
                         <sui-table-cell>{{post.date}}</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
@@ -47,7 +49,7 @@
 <script>
     import FaqHeader from "./FaqHeader";
     // import FaqApi from "../../api/FaqApi";
-    import {getQuestionList, getQuestion} from "../../api/FaqApi";
+    import {getAnswer, getQuestionList} from "../../api/FaqApi";
 
     export default {
         name: "InquiryAnswer",
@@ -57,12 +59,15 @@
         data() {
             return {
                 questionList: [],
-                questionDetail: {},
+                answer: {},
             }
         },
         async created() {
+            const postId = this.$route.params.postId;
             this.questionList = await getQuestionList();
-            this.questionDetail = await getQuestion();
+            this.answer = await getAnswer(postId);
+        },
+        methods : {
         },
     }
 </script>

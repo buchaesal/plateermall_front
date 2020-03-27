@@ -68,7 +68,13 @@
             //     }
             // },
             login(){
-                this.$store.dispatch('REQUEST_LOGIN', this.user);
+               this.$store.dispatch('REQUEST_LOGIN', this.user)
+                   .then((res) => {
+                       if(res){
+                           alert(res);
+                       }
+                   });
+
             }
         }
     };

@@ -56,7 +56,7 @@
             }
         },
         created(){
-            this.$store.commit('loadReturnGoodsInfo', 'testId');
+            this.$store.commit('loadReturnGoodsInfo', 'testid');
             this.getReturnOrder();
         },
         computed: {
@@ -66,14 +66,14 @@
         },
         methods: {
             async getReturnOrder() {
-                this.returnOrderList = await getReturnOrderList('testUserId');
+                this.returnOrderList = await getReturnOrderList('testid');
                 console.log(this.returnOrderList);
                 await this.setGoodsList(this.returnOrderList);
             },
             async setGoodsList(returnOrderList){
                 console.log("setGoodsList");
                 for(var order in returnOrderList){
-                    this.goodsInReturnList.push(await this.goodsApi.getGoods(order.goodsId));
+                    this.goodsInReturnList.push(await this.goodsApi.getGoods(returnOrderList[order].goodsId));
                 }
                 console.log(this.goodsInReturnList);
             },

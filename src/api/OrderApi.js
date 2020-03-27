@@ -1,7 +1,7 @@
 import request, {ORDER_URL} from './axios';
 
-export const getOrderList = function () {
-    return request.get(ORDER_URL + `/normalorderlist`).then(
+export const getOrderList = function (userid) {
+    return request.get(ORDER_URL + `/list/normal/${userid}`).then(
         (response) => {
             return response.data;
         }
@@ -51,7 +51,7 @@ export const getReturnOrder = function () {
 }
 
 export const getOrder = function (orderId) {
-    return request.get(`http://192.168.0.228:9999/api/order/order/${orderId}`)
+    return request.get(`http://192.168.0.228:9999/api/order/${orderId}`)
         .then((response) => {return response.data})
         .catch((err) => console.log(err));
 }

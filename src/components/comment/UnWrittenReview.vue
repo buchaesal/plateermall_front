@@ -23,13 +23,13 @@
                         <br>
                         <sui-item-description>
                             <span class='purchase-date'>구매일자: {{unwrittenOrderList[index].orderDate}}</span>
-                            <span class='due-date'>작성기한: {{unwritten.dueDate}}</span>
-                            <sui-button @click='openReviewModal(unwrittenOrderList[index])' size="tiny" floated="right" basic content="상품평 작성" />
-                        
+                            <span class='due-date'>작성기한: {{dueDate[index]}}</span>
+                            <sui-button v-if='dueDate[index]>today' @click='openReviewModal(unwrittenOrderList[index])' size="tiny" floated="right" basic content="상품평 작성" />
+                            <sui-button v-else size="tiny" floated="right" disabled basic content="기한 만료"/>
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview' @setReview="settingReview"/>
+                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview'/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
@@ -76,7 +76,8 @@ import GoodsApi from '../../api/GoodsApi';
                     writtenDate:'',
                 },
                 review:{},
-                
+                dueDate:[],
+                today:'',
                 orderIdList:[],
                 unwrittenOrderList:[],
                 goodsList:[],
@@ -97,37 +98,38 @@ import GoodsApi from '../../api/GoodsApi';
             closeReviewModal(){
                 this.open = false;
                 this.$store.commit('toggleModalOpen');
-
             },
             setReview(){
                 this.$store.commit('addCommentValue', this.review);
                 this.closeReviewModal();
-            },
-
-            settingReview(sendReview){
-                alert('settingreview');
-                this.review = sendReview;
+                this.$router.push('/myreview');
             },
 
             async setUnwrittenInfo(userId){
                 this.orderIdList = await requestUnwrittenOrderId(userId);
 
-                for(let index in this.orderIdList){
+                for(let index in this.orderIdList){                    
                     this.unwrittenOrderList.push(await getOrder(this.orderIdList[index]));
                 }
 
                 for(let index in this.unwrittenOrderList){
+                    let year = this.unwrittenOrderList[index].orderDate.substr(0,4);
+                    let month = this.unwrittenOrderList[index].orderDate.substr(5,2);
+                    let day = this.unwrittenOrderList[index].orderDate.substr(8,2);
+
+                    let date = new Date(year, month, day).toISOString().slice(0,10);
+                    this.dueDate.push(date);
+
                     let goodsApi = new GoodsApi();
                     this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
                 }
-
-                console.log(this.goodsList);
             },
         },
         components:{
             ReviewForm,
         },
         created(){
+            this.today = new Date().toISOString().slice(0,10);
             this.setUnwrittenInfo('testId');
             //this.$store.commit('loadUnWrittenOrderId', 'testId');
         },
