@@ -52,7 +52,7 @@
 
                     <!--            여기 같은 플래그들 보는데 묶어보기 -->
                     <sui-table-cell text-align="left" v-if="openModifyShippingSpotFormFlag">
-                        <ShippingSpotForm v-bind:target-shipping-spot="defaultShippingSpot"></ShippingSpotForm>
+                        <ShippingSpotForm v-bind:target-shipping-spot="defaultShippingSpotCopy"></ShippingSpotForm>
                     </sui-table-cell>
                     <sui-table-cell text-align="left" v-else>
                         <p class="user-name">{{defaultShippingSpot.receiverName}}</p>
@@ -130,6 +130,9 @@
                 openModifyShippingSpotFormFlag: false,
                 defaultShippingSpot: {},
                 otherShippingSpots: [],
+
+                defaultShippingSpotCopy: {},
+
                 shippingSpotSize: -1,
                 checkedRadio: 'defaultShippingSpot',
             }
@@ -142,32 +145,31 @@
         },
         methods: {
             openShippingSpotForm() {
+                console.log(this.shippingSpotSize);
+                if(this.shippingSpotSize >= 3){
+                    alert("3개 이상의 배송지를 추가할 수 없습니다.")
+                    return
+                }
                 this.openShippingSpotFormFlag = true;
             },
             closeShippingSpotForm() {
                 this.openShippingSpotFormFlag = false;
                 this.newShippingSpotModel = new ShippingSpotModel();
-                // this.$store.commit('cleanAddress');
             },
             openModifyDefaultSpotForm() {
                 this.openModifyShippingSpotFormFlag = true;
-                // this.$store.commit('setAddress', {
-                //     roadAddress: this.defaultShippingSpot.roadAddress,
-                //     zipcodeAddress: this.defaultShippingSpot.zipcodeAddress
-                // });
+                this.defaultShippingSpotCopy = JSON.parse (JSON.stringify(this.defaultShippingSpot));
             },
             closeModifyDefaultSpotForm() {
                 this.openModifyShippingSpotFormFlag = false;
-                // this.$store.commit('cleanAddress');
             },
             modifyShippingSpot() {
-                // this.defaultShippingSpot.roadAddress = this.$store.state.shippingSpotListStore.roadAddress;
-                // this.defaultShippingSpot.zipcodeAddress = this.$store.state.shippingSpotListStore.zipcodeAddress;
+                this.defaultShippingSpot = JSON.parse (JSON.stringify(this.defaultShippingSpotCopy));
                 this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
+                alert("수정되었습니다.")
                 this.closeModifyDefaultSpotForm();
             },
             deleteShippingSpot(index) {
-                //
                 this.otherShippingSpots.splice(index, 1);
                 this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
                 alert('배송지가 삭제되었습니다.');
@@ -194,8 +196,6 @@
                 console.log('getShippingApi')
                 this.$store.commit('getShippingSpotListFromApi');
                 this.filterDefaultAndOtherSpots();
-                // this.$store.dispatch('getShippingSpotListFromApi')
-                // .then(() => this.filterDefaultAndOtherSpots());
             },
             filterDefaultAndOtherSpots() {
                 console.log('filterDefault')
@@ -210,14 +210,11 @@
                 });
             },
             registerNewShippingSpot() {
-                // this.newShippingSpotModel.roadAddress = this.$store.state.shippingSpotListStore.roadAddress;
-                // this.newShippingSpotModel.zipcodeAddress = this.$store.state.shippingSpotListStore.zipcodeAddress;
                 console.log(this.newShippingSpotModel);
                 this.$store.commit('addShippingSpotList', this.newShippingSpotModel);
                 this.filterDefaultAndOtherSpots();
                 this.closeShippingSpotForm();
                 alert('배송지가 등록되었습니다.')
-                // this.getShippingSpotListFromApi();
             },
         },
         created: function () {

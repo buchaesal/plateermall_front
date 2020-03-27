@@ -51,7 +51,7 @@ export const getReturnOrder = function () {
 }
 
 export const getOrder = function (orderId) {
-    return request.get(`http://192.168.0.228:9999/api/order/order/${orderId}`)
+    return request.get(`http://192.168.0.228:9999/api/order/${orderId}`)
         .then((response) => {return response.data})
         .catch((err) => console.log(err));
 }

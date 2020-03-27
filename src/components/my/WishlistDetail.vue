@@ -31,26 +31,49 @@
 </template>
 
 <script>
+
+
+    import GoodsApi from "../../api/GoodsApi";
+    import WishListApi from "../../api/WishListApi";
+
     export default {
         name: "Sample",
+        data() {
+            return {
+                wishListGoodsCodes : [],
+                wishListGoods : [],
+            }
+        },
         computed: {
-            wishListGoodsCodes: function () {
-                return this.$store.state.wishListStore.wishListGoodsCodes;
-            },
-            wishListGoods: function () {
-                let wishListGoodsCodes = this.wishListGoodsCodes;
-                let wishListGoods = [];
-                wishListGoodsCodes.forEach(goodsCode => {
-                    this.$store.commit('getGoodsModel', goodsCode);
-                    wishListGoods.push(this.$store.state.goodsStore.goodsModel);
-                });
-                return wishListGoods;
-            },
+            // wishListGoodsCodes: function () {
+            //     console.log("wishListGoodsCode")
+            //     return this.$store.state.wishListStore.wishListGoodsCodes;
+            // },
+            // wishListGoods: function () {
+            //     console.log("wishListGoods")
+            //     let wishListGoodsCodes = this.wishListGoodsCodes;
+            //     let wishListGoods = [];
+            //     wishListGoodsCodes.forEach(goodsCode => {
+            //         let goodsApi = new GoodsApi();
+            //         // this.$store.commit('getGoodsModel', goodsCode);
+            //         // wishListGoods = goodsApi.getGoods(goodsCode)
+            //         wishListGoods.push(goodsApi.getGoods(goodsCode));
+            //     });
+            //     return wishListGoods;
+            // },
             wishProductCount: function () {
                 return this.wishListGoodsCodes.length;
             }
         },
         methods: {
+            async setGoodsFromGoodsCodes() {
+                console.log("test")
+                let goodsApi = new GoodsApi();
+                for(let index in this.wishListGoodsCodes){
+                    this.wishListGoods.push(await goodsApi.getGoods(this.wishListGoodsCodes[index]));
+                }
+            }
+            ,
             pricing(originalPrice, dcRate) {
                 var price = originalPrice * (100 - dcRate) / 100;
                     price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -59,8 +82,12 @@
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/'+goodsCode);
             },
-            setWishList() {
-                this.$store.commit('getWishListFromApi');
+            async setWishList() {
+                console.log("setWishList")
+                let wishListApi = new WishListApi();
+                this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes();
+                await this.setGoodsFromGoodsCodes();
+                // this.$store.commit('getWishListFromApi');
             }
         },
         created: function () {
