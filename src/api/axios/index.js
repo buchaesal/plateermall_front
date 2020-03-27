@@ -18,10 +18,10 @@ const instance = axios.create({
     withCredentials: true
 });
 
-//
-// /*
-//     모든 요청 전 header에 access_token을 담아 전송한다.
-//  */
+
+/*
+    모든 요청 전 header에 access_token을 담아 전송한다.
+ */
 // instance.interceptors.request.use(
 //     config => {
 //         let accessToken = localStorage.getItem('access_token');
@@ -49,9 +49,9 @@ const instance = axios.create({
 //     },
 //     function (error) {
 //         console.log('Interceptors Response Error is ', error);
-//         alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
-//         store.commit('LOGOUT');
-//         router.push('/');
+//         // alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
+//         // store.commit('LOGOUT');
+//         // router.push('/');
 //
 //         return Promise.reject(error);
 //     }
