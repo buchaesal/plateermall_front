@@ -87,7 +87,7 @@ import GoodsApi from '../../api/GoodsApi';
                 
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
-                console.log(selectedReview.orderId);
+
                 this.currentReview.orderId = selectedReview.orderId;
                 this.currentReview.goodsCode = selectedReview.goodsId;
                 this.currentReview.userId = selectedReview.userId;
@@ -97,22 +97,19 @@ import GoodsApi from '../../api/GoodsApi';
             closeReviewModal(){
                 this.open = false;
                 this.$store.commit('toggleModalOpen');
-
             },
             setReview(){
-                alert('setreivew');
                 this.$store.commit('addCommentValue', this.review);
                 this.closeReviewModal();
+                this.$router.push('/myreview');
             },
-            
+
             async setUnwrittenInfo(userId){
                 this.orderIdList = await requestUnwrittenOrderId(userId);
 
                 for(let index in this.orderIdList){
                     this.unwrittenOrderList.push(await getOrder(this.orderIdList[index]));
                 }
-
-                console.log(this.unwrittenOrderList);
 
                 for(let index in this.unwrittenOrderList){
                     let goodsApi = new GoodsApi();
