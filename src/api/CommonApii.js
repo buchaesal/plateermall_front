@@ -1,5 +1,6 @@
-import axios from "axios";
-import {router} from "../routes/route";
+import axios from "./axios";
+import router from "../router/index";
+import store from "../store";
 
 /*
     모든 요청 전 header에 access_token을 담아 전송한다.
@@ -10,7 +11,7 @@ axios.interceptors.request.use(
         if (accessToken !== null) {
             config.headers.Authorization = accessToken;
         }
-        // console.log('Interceptors Request is', config, new Date());
+         console.log('Interceptors Request is', config, new Date());
         return config
     },
     error => {
@@ -27,6 +28,8 @@ axios.interceptors.response.use(
         console.log('Interceptors Response is ', response, new Date());
         if(response.status === 401){
             alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
+            store.commit('LOGOUT');
+            router.push('/home');
         }
 
         return response;
