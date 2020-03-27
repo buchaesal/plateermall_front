@@ -56,7 +56,7 @@
             }
         },
         created(){
-            this.$store.commit('loadExchangeGoodsInfo', 'testId');
+            this.$store.commit('loadExchangeGoodsInfo', 'testid');
             this.getExchangeOrder();
         },
         computed: {
@@ -66,7 +66,7 @@
         },
         methods: {
             async getExchangeOrder() {
-                this.exchangeOrderList = await getExchangeOrderList('testUserId');
+                this.exchangeOrderList = await getExchangeOrderList('testid');
                 console.log(this.exchangeOrderList);
                 await this.setGoodsList(this.exchangeOrderList);
             },
