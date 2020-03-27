@@ -74,7 +74,7 @@
             async setGoodsList(cancelOrderList){
                 console.log("setGoodsList");
                 for(var order in cancelOrderList){
-                    this.goodsInCancelList.push(await this.goodsApi.getGoods(order.goodsId));
+                    this.goodsInCancelList.push(await this.goodsApi.getGoods(cancelOrderList[order].goodsId));
                 }
                 console.log(this.goodsInCancelList);
             },

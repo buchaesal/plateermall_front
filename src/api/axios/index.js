@@ -18,24 +18,25 @@ const instance = axios.create({
     withCredentials: true
 });
 
+//
+// /*
+//     모든 요청 전 header에 access_token을 담아 전송한다.
+//  */
+// instance.interceptors.request.use(
+//     config => {
+//         let accessToken = localStorage.getItem('access_token');
+//         if (accessToken !== null) {
+//             config.headers.Authorization = accessToken;
+//         }
+//         console.log('Interceptors Request is', config);
+//         return config
+//     },
+//     error => {
+//         // console.log('Interceptors Request Error is', error.response, new Date());
+//         return Promise.reject(error);
+//     }
+// );
 
-/*
-    모든 요청 전 header에 access_token을 담아 전송한다.
- */
-instance.interceptors.request.use(
-    config => {
-        let accessToken = localStorage.getItem('access_token');
-        if (accessToken !== null) {
-            config.headers.Authorization = accessToken;
-        }
-        // console.log('Interceptors Request is', config);
-        return config
-    },
-    error => {
-        // console.log('Interceptors Request Error is', error.response, new Date());
-        return Promise.reject(error);
-    }
-);
 
 /*
     만료된 access_token으로 요청시 Access token exprited가 발생하면 refresh 토큰으로 새로운 토큰을 받는다.
@@ -43,23 +44,14 @@ instance.interceptors.request.use(
 // instance.interceptors.response.use(
 //     response => {
 //         console.log('Interceptors Response is ', response);
-//         if(response.status === 401){
-//             alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
-//             store.commit('LOGOUT');
-//             router.push('/home');
-//         }
 //
 //         return response;
 //     },
 //     function (error) {
-//         console.log('Interceptors Response Error is ', error.response);
-//
-//         if (!error.response) {
-//             router.push('/error');
-//         }
-//
-//         let status = error.response.status;
-//         console.log(status, '==>error.response.status');
+//         console.log('Interceptors Response Error is ', error);
+//         alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
+//         store.commit('LOGOUT');
+//         router.push('/');
 //
 //         return Promise.reject(error);
 //     }

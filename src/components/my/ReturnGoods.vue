@@ -73,7 +73,7 @@
             async setGoodsList(returnOrderList){
                 console.log("setGoodsList");
                 for(var order in returnOrderList){
-                    this.goodsInReturnList.push(await this.goodsApi.getGoods(order.goodsId));
+                    this.goodsInReturnList.push(await this.goodsApi.getGoods(returnOrderList[order].goodsId));
                 }
                 console.log(this.goodsInReturnList);
             },

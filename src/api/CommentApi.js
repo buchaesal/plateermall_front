@@ -38,22 +38,22 @@ export const requestAddComment = function(comment){
 
     return request.post(COMMENTS_URL, comment).then(
         (response) => {
-            console.log(response);
+            return response.data;
         }
-    ).catch(function(error){
-        console.log(error);
-    });
+    ).catch(function (err) {
+        console.log(err);
+    })
 }
 
 export const requestModifyComment = function(comment){
 
     return request.put(COMMENTS_URL, comment).then(
         (response) => {
-            console.log(response);
+            return response.data;
         }
-    ).catch(function(error){
-        console.log(error);
-    });
+    ).catch(function (err) {
+        console.log(err);
+    })
 }
 
 export const requestUnwrittenOrderId = function(userId){

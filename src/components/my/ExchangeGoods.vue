@@ -73,7 +73,7 @@
             async setGoodsList(exchangeOrderList){
                 console.log("setGoodsList");
                 for(var order in exchangeOrderList){
-                    this.goodsInExchangeList.push(await this.goodsApi.getGoods(order.goodsId));
+                    this.goodsInExchangeList.push(await this.goodsApi.getGoods(exchangeOrderList[order].goodsId));
                 }
                 console.log(this.goodsInExchangeList);
             },
