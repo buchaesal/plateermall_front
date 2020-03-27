@@ -16,19 +16,27 @@
                             <sui-table-row>
                                 <sui-table-cell class="form_head">카테고리</sui-table-cell>
                                 <sui-table-cell>
-                                    <p>{{questionDetail.territory}}</p>
+                                    <p v-if="updateBtn">{{questionDetail.territory}}</p>
+                                    <sui-dropdown v-else
+                                            :placeholder="questionDetail.territory"
+                                            selection
+                                            :options="options"
+                                            v-model="updateQuestionObject.territory"
+                                    />
                                 </sui-table-cell>
                             </sui-table-row>
                             <sui-table-row>
                                 <sui-table-cell class="form_head">제목</sui-table-cell>
                                 <sui-table-cell>
-                                    <p>{{questionDetail.title}}</p>
+                                    <p v-if="updateBtn">{{questionDetail.title}}</p>
+                                    <sui-input v-else class="edit-data" v-model="updateQuestionObject.title" :placeholder="questionDetail.title"/>
                                 </sui-table-cell>
                             </sui-table-row>
                             <sui-table-row>
                                 <sui-table-cell class="form_head">내용</sui-table-cell>
                                 <sui-table-cell class="answer-content">
-                                    {{questionDetail.description}}
+                                    <p v-if="updateBtn">{{questionDetail.description}}</p>
+                                    <sui-input v-else class="edit-data" v-model="updateQuestionObject.description" :placeholder="questionDetail.description"/>
                                 </sui-table-cell>
                             </sui-table-row>
                         </sui-table-body>
@@ -36,8 +44,10 @@
                 </sui-form-field>
             </sui-form>
             <div class="btn-box">
-                <sui-button basic secondary @click="questionUpdate">수정</sui-button>
-                <sui-button basic secondary @click="questionDelete">삭제</sui-button>
+                <sui-button basic secondary v-if="updateBtn" @click="updateBtnChange">수정</sui-button>
+                <sui-button basic secondary  v-if="updateBtn" @click="questionDelete">삭제</sui-button>
+                <sui-button basic secondary v-if="!updateBtn" @click="questionUpdate">수정완료</sui-button>
+                <sui-button basic secondary v-if="!updateBtn">수정취소</sui-button>
             </div>
         </div>
 
@@ -87,10 +97,27 @@
         name: "InquiryAnswerPost",
         data() {
             return {
+                updateBtn: '0',
+                options: [
+                    {text: '주문내역확인', value: '주문내역확인',},
+                    {text: '배송확인', value: '배송확인',},
+                    {text: 'L.POINT', value: 'L.POINT',},
+                    {text: '반품접수', value: '반품접수',},
+                    {text: '교환접수', value: '교환접수',},
+                ],
                 questionDetail: {},
                 answer: {},
                 updateQuestionObject: {
-                }
+                    // postId: '',
+                    // state: '',
+                    // date: '',
+                    // territory: '',
+                    // goodsCode: '',
+                    // title: '',
+                    // description: '',
+                    // smsAlarm: '',
+                    // emailAlarm: '',
+                },
             }
         },
         components: {
@@ -99,6 +126,17 @@
         async created() {
             const postId = this.$route.params.postId;
             this.questionDetail = await getQuestion(postId);
+            this.updateQuestionObject = await this.questionDetail;
+            console.log(this.updateQuestionObject);
+            // this.updateQuestionObject.postId = this.questionDetail.postId;
+            // this.updateQuestionObject.state = this.questionDetail.state;
+            // this.updateQuestionObject.date = this.questionDetail.postId;
+            // this.updateQuestionObject.territory = this.questionDetail.postId;
+            // this.updateQuestionObject.goodsCode = this.questionDetail.postId;
+            // this.updateQuestionObject.title = this.questionDetail.postId;
+            // this.updateQuestionObject.description = this.questionDetail.postId;
+            // this.updateQuestionObject.smsAlarm = this.questionDetail.postId;
+            // this.updateQuestionObject.emailAlarm = this.questionDetail.postId;
             this.answer = await getAnswer(postId);
         },
         methods: {
@@ -119,9 +157,19 @@
                 if(this.answer) {
                     alert("답변이 완료된 문의는 수정할 수 없습니다.")
                 } else {
-                    questionUpdate(this.ques)
+                    this.updateBtnChange();
+                    console.log(this.updateQuestionObject);
+                    questionUpdate(this.updateQuestionObject);
+                    alert("문의가 수정되었습니다.");
                 }
-            }
+            },
+            updateBtnChange() {
+                if(this.updateBtn==0) {
+                    this.updateBtn = 1;
+                } else {
+                    this.updateBtn = 0;
+                }
+            },
         },
     }
 </script>
