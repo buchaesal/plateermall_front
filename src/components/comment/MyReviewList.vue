@@ -47,7 +47,7 @@
                                                 </sui-item-description>
 
                                                     <sui-button @click='openReviewModal(review)' class="modify-button" size="tiny">수정</sui-button>
-                                                    <sui-button @click='deleteReview()' class="delete-button" size="tiny">삭제</sui-button>
+                                                    <sui-button @click='deleteReview(review.orderId)' class="delete-button" size="tiny">삭제</sui-button>
 
                                                     
                                                 </sui-item-content>
@@ -82,7 +82,7 @@
 
 <script>
 import ReviewForm from './ReviewForm.vue';
-import {requestMyComments} from '../../api/CommentApi';
+import {requestMyComments, deleteComment} from '../../api/CommentApi';
 import {getOrder} from '../../api/OrderApi';
 import GoodsApi from '../../api/GoodsApi';
 
@@ -144,6 +144,14 @@ import GoodsApi from '../../api/GoodsApi';
                     this.goodsList.push(await goodsApi.getGoods(this.myReviews[index].goodsCode));
                 }
             },
+            async deleteReview(orderId){
+
+                if(confirm("해당 상품평을 삭제하시겠습니까?")) {
+                    await deleteComment(orderId);
+                    alert("삭제되었습니다.")                    
+                    this.$router.push("/myreview");
+                }
+            }
         },
         components:{
             ReviewForm,

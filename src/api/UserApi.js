@@ -26,6 +26,12 @@ export const getUser = function (email) {
 
 }
 
+export const getUserInfo = function(email){
+    return request.get(USER_URL+`/getuserinfo/${email}`)
+        .then((response)=> {response.data})
+        .catch((err)=> console.log(err));
+}
+
 class UserApi {
 
 }
