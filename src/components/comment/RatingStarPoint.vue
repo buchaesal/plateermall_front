@@ -27,7 +27,7 @@
             }
         },
         created(){
-            console.log("created1");
+
         },
         computed: {
             getRequestComments(){

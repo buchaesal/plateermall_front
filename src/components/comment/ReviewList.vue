@@ -78,6 +78,7 @@
         created(){
             this.goods = this.$store.state.goodsStore.goodsModel;
             console.log(this.goods);
+
             for(let index in this.goods.options){
                 this.goodsOption.push(this.goods.options[index]);
             }
