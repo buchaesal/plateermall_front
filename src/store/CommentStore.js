@@ -27,10 +27,12 @@ const mutations = {
         state.reviewSummary = reviewInfo.sumEvaluation;
     },
 
-    async loadCommentByFilter(state, goodsCode, goodsOption, orderByOption){
-        console.log(goodsOption);
-        console.log(orderByOption);
-        state.reviews.commentList = await goodsOptionList(goodsCode, goodsOption, orderByOption);
+    async loadCommentByFilter(state, options){
+ 
+        if(options.goodsOption == null) options.goodsOption = '옵션보기';
+        if(options.orderOption == null) options.orderOption = '전체보기';
+
+        state.reviews.commentList = await goodsOptionList(options.goodsCode, options.goodsOption, options.orderOption);
     },
 
     async loadMyCommentsByUserId(state, testId){
@@ -61,14 +63,19 @@ const mutations = {
         state.isModalOpen ? state.isModalOpen= false : state.isModalOpen=true;
     },
 
-    async addCommentValue(state, comment){
-        console.log("store-----");
-        console.log(comment);
-        state.writtenReview = await requestAddComment(comment);
+    updateComment(state, review){
+        state.writtenReview = review;
     },
 
-    async modifyCommentValue(state, comment){
-        state.writtenReview = await requestModifyComment(comment);
+    async addCommentValue(state){
+        console.log("store-----");
+        console.log(state.writtenReview);
+        await requestAddComment(state.writtenReview);
+    },
+
+    async modifyCommentValue(state){
+
+        await requestModifyComment(state.writtenReview);
     },
 
 }

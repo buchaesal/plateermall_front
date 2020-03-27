@@ -170,7 +170,7 @@
         },
         watch:{
             currentReview:function(){
-                 this.$emit('setReview', this.currentReview);
+                this.$store.commit('updateComment', this.currentReview);
             }
         }
     }

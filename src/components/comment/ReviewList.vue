@@ -24,7 +24,7 @@
             <sui-item-group divided>
                 <sui-item v-for='(review, index) in getRequestComments' :key='index'>
                     <sui-item-content>
-                    <sui-item-header><sui-rating id="starAvg" :rating="review.starPoint" :max-rating="5" /> {{review.selectedOption}}</sui-item-header>
+                    <sui-item-header><sui-rating id="starAvg" :rating="review.starPoint" :max-rating="5" /><span style="font-size: 15px; ">{{review.selectedOptions}}</span></sui-item-header>
                     <sui-item-meta>
                         <p>{{review.reviewContent}}</p>
                         <img :src='review.myPhoto' width='99' height='99'>
@@ -54,7 +54,7 @@
                 goods:{},
                 currentOrderRating: null,
                 currentOption: null,
-                goodsOption:['옵션보기'],
+                goodsOption:['옵션보기',],
                 options: [
                     {
                         text: '전체보기',
@@ -96,10 +96,25 @@
         },
         watch:{
             currentOption:function(){
-                this.$store.commit('loadCommentByFilter', this.goods.goodsCode, this.currentOption, this.currentOrderRating);
+                let options = {
+                    goodsCode: this.goods.goodsCode,
+                    goodsOption: this.currentOption,
+                    orderOption: this.currentOrderRating,
+                }
+
+                console.log(this.currentOption);
+                this.$store.commit('loadCommentByFilter', options);
             },
             currentOrderRating:function(){
-                this.$store.commit('loadCommentByFilter', this.goods.goodsCode, this.currentOption, this.currentOrderRating);
+
+                let options = {
+                    goodsCode: this.goods.goodsCode,
+                    goodsOption: this.currentOption,
+                    orderOption: this.currentOrderRating,
+                }
+
+                console.log(this.currentOrderRating);
+                this.$store.commit('loadCommentByFilter', options);
             },
         },
     }

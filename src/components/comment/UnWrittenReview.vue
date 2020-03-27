@@ -29,7 +29,7 @@
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview' @setReview="settingReview"/>
+                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview'/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
@@ -87,7 +87,7 @@ import GoodsApi from '../../api/GoodsApi';
                 
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
-
+                console.log(selectedReview.orderId);
                 this.currentReview.orderId = selectedReview.orderId;
                 this.currentReview.goodsCode = selectedReview.goodsId;
                 this.currentReview.userId = selectedReview.userId;
@@ -100,15 +100,11 @@ import GoodsApi from '../../api/GoodsApi';
 
             },
             setReview(){
+                alert('setreivew');
                 this.$store.commit('addCommentValue', this.review);
                 this.closeReviewModal();
             },
-
-            settingReview(sendReview){
-                alert('settingreview');
-                this.review = sendReview;
-            },
-
+            
             async setUnwrittenInfo(userId){
                 this.orderIdList = await requestUnwrittenOrderId(userId);
 
@@ -116,12 +112,13 @@ import GoodsApi from '../../api/GoodsApi';
                     this.unwrittenOrderList.push(await getOrder(this.orderIdList[index]));
                 }
 
+                console.log(this.unwrittenOrderList);
+
                 for(let index in this.unwrittenOrderList){
                     let goodsApi = new GoodsApi();
                     this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
                 }
 
-                console.log(this.goodsList);
             },
         },
         components:{

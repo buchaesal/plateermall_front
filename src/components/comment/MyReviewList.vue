@@ -59,7 +59,7 @@
                                             <!--모달모달-->
                                 <sui-modal v-model="open">
                                     <sui-modal-content scrolling image>
-                                        <ReviewForm :orderInfo='orderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview' @setReview="settingReview"/>
+                                        <ReviewForm :orderInfo='orderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview'/>
                                     </sui-modal-content>
 
                                     <sui-modal-actions>
@@ -123,13 +123,10 @@ import GoodsApi from '../../api/GoodsApi';
 
             },
             setReview(){
-                this.$store.commit('modifyCommentValue', this.review);
+                this.$store.commit('modifyCommentValue');
                 this.closeReviewModal();
             },
 
-            settingReview(sendReview){
-                this.review = sendReview;
-            },
             async setWrittenInfo(userId){
                 this.myReviews = await requestMyComments(userId);
 
