@@ -68,8 +68,7 @@ const mutations = {
     },
 
     async addCommentValue(state){
-        console.log("store-----");
-        console.log(state.writtenReview);
+        
         await requestAddComment(state.writtenReview);
     },
 

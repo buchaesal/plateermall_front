@@ -104,9 +104,7 @@ import GoodsApi from '../../api/GoodsApi';
             this.setWrittenInfo("testId");
         },
         computed: {
-            getCurrentReviews(){
-                return this.$store.state.commentStore.currentReview;
-            },
+
         },
         methods: {
 
@@ -130,14 +128,20 @@ import GoodsApi from '../../api/GoodsApi';
             async setWrittenInfo(userId){
                 this.myReviews = await requestMyComments(userId);
 
+                console.log("----------------------");
+                console.log(this.myReviews);
+
                 for(let index in this.myReviews){
-                    this.orderList.push(await getOrder(this.myReviews[index].orderId));
+                     this.orderList.push(await getOrder(this.myReviews[index].orderId));
                 }
 
-                for(let index in this.orderList){
+                console.log("---------------------");
+                console.log(this.orderList.goodsId);
+
+                for(let index in this.myReviews){
                     
                     let goodsApi = new GoodsApi();
-                    this.goodsList.push(await goodsApi.getGoods(this.orderList[index].goodsId));
+                    this.goodsList.push(await goodsApi.getGoods(this.myReviews[index].goodsCode));
                 }
             },
         },
