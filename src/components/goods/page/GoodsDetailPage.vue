@@ -870,12 +870,9 @@
         margin-bottom: 20px;
     }
 
-    .shipping-option > sui-button .active {
-        background-color: #1a69a4;
-    }
-
-    .shipping-option > button .active {
-        background-color: #1a69a4;
+    .ui.basic.blue.active.button {
+        background-color: #2185d0!important;
+        color: white!important;
     }
 
     .output {
@@ -930,11 +927,13 @@
     }
 
     .promotion-banner {
-        background-color: rgb(125, 115, 103);
+        background-color: black;
+        color: white;
     }
 
     .brand-banner {
-        background-color: rgb(125, 115, 103);
+        background-color: black;
+        color: white;
     }
 
     .banner-text a {

@@ -56,7 +56,7 @@
             }
         },
         created(){
-            this.$store.commit('loadReturnGoodsInfo', 'testId');
+            this.$store.commit('loadReturnGoodsInfo', 'testid');
             this.getReturnOrder();
         },
         computed: {
@@ -66,7 +66,7 @@
         },
         methods: {
             async getReturnOrder() {
-                this.returnOrderList = await getReturnOrderList('testUserId');
+                this.returnOrderList = await getReturnOrderList('testid');
                 console.log(this.returnOrderList);
                 await this.setGoodsList(this.returnOrderList);
             },
