@@ -59,7 +59,7 @@
                                             <!--모달모달-->
                                 <sui-modal v-model="open">
                                     <sui-modal-content scrolling image>
-                                        <ReviewForm :orderInfo='orderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview' @setReview="settingReview"/>
+                                        <ReviewForm :orderInfo='orderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview'/>
                                     </sui-modal-content>
 
                                     <sui-modal-actions>
@@ -104,9 +104,7 @@ import GoodsApi from '../../api/GoodsApi';
             this.setWrittenInfo("testId");
         },
         computed: {
-            getCurrentReviews(){
-                return this.$store.state.commentStore.currentReview;
-            },
+
         },
         methods: {
 
@@ -123,24 +121,27 @@ import GoodsApi from '../../api/GoodsApi';
 
             },
             setReview(){
-                this.$store.commit('modifyCommentValue', this.review);
+                this.$store.commit('modifyCommentValue');
                 this.closeReviewModal();
             },
 
-            settingReview(sendReview){
-                this.review = sendReview;
-            },
             async setWrittenInfo(userId){
                 this.myReviews = await requestMyComments(userId);
 
+                console.log("----------------------");
+                console.log(this.myReviews);
+
                 for(let index in this.myReviews){
-                    this.orderList.push(await getOrder(this.myReviews[index].orderId));
+                     this.orderList.push(await getOrder(this.myReviews[index].orderId));
                 }
 
-                for(let index in this.orderList){
+                console.log("---------------------");
+                console.log(this.orderList.goodsId);
+
+                for(let index in this.myReviews){
                     
                     let goodsApi = new GoodsApi();
-                    this.goodsList.push(await goodsApi.getGoods(this.orderList[index].goodsId));
+                    this.goodsList.push(await goodsApi.getGoods(this.myReviews[index].goodsCode));
                 }
             },
         },

@@ -29,7 +29,7 @@
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview' @setReview="settingReview"/>
+                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview'/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
@@ -97,16 +97,11 @@ import GoodsApi from '../../api/GoodsApi';
             closeReviewModal(){
                 this.open = false;
                 this.$store.commit('toggleModalOpen');
-
             },
             setReview(){
                 this.$store.commit('addCommentValue', this.review);
                 this.closeReviewModal();
-            },
-
-            settingReview(sendReview){
-                alert('settingreview');
-                this.review = sendReview;
+                this.$router.push('/myreview');
             },
 
             async setUnwrittenInfo(userId){
@@ -121,7 +116,6 @@ import GoodsApi from '../../api/GoodsApi';
                     this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
                 }
 
-                console.log(this.goodsList);
             },
         },
         components:{

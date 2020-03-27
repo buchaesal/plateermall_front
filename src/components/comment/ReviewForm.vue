@@ -31,7 +31,7 @@
                     <sui-table-row>
                         <sui-table-cell>별점</sui-table-cell>
                         <sui-table-cell>
-                            <sui-rating :rating="currentReview.starPoint" :max-rating="5" @rate="handleRate" />
+                            <sui-rating :rating="currentReview.starPoint" :max-rating="5" @rate="handleRate" @click="changeValue"/>
                         </sui-table-cell>
                     </sui-table-row>
       
@@ -42,39 +42,39 @@
                                 <sui-form-fields inline>
                                     <label>배송</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="currentReview.deliveryValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" @click="changeValue" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 빨라요" radio value="2" v-model="currentReview.deliveryValue"/>
+                                    <sui-checkbox label="생각보다 빨라요" radio value="2" @click="changeValue" v-model="currentReview.deliveryValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 느려요" radio value="3" v-model="currentReview.deliveryValue" />
+                                        <sui-checkbox label="생각보다 느려요" radio value="3" @click="changeValue" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                
                                 <sui-form-fields inline>
                                     <label>디자인</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="currentReview.designValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" @click="changeValue" v-model="currentReview.designValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 예뻐요" radio value="2" v-model="currentReview.designValue"/>
+                                    <sui-checkbox label="생각보다 예뻐요" radio value="2" @click="changeValue" v-model="currentReview.designValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 별로에요" radio value="3" v-model="currentReview.designValue" />
+                                        <sui-checkbox label="생각보다 별로에요" radio value="3" @click="changeValue" v-model="currentReview.designValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
 
                                 <sui-form-fields inline>
                                     <label>사이즈</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" v-model="currentReview.sizeValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" @click="changeValue" v-model="currentReview.sizeValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 커요" radio value="2" v-model="currentReview.sizeValue"/>
+                                    <sui-checkbox label="생각보다 커요" radio value="2" @click="changeValue" v-model="currentReview.sizeValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 작아요" radio value="3" v-model="currentReview.sizeValue" />
+                                        <sui-checkbox label="생각보다 작아요" radio value="3" @click="changeValue" v-model="currentReview.sizeValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                 
@@ -99,7 +99,7 @@
 
                     <sui-table-row>
                         <sui-table-cell>상품평 작성</sui-table-cell>
-                        <sui-table-cell><textarea v-model="currentReview.reviewContent" id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
+                        <sui-table-cell><textarea @click="changeValue" v-model="currentReview.reviewContent" id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
 이 곳에 작성하시면 답변을 받지 못합니다.">
                         </textarea></sui-table-cell>
                     </sui-table-row>
@@ -116,7 +116,7 @@
         name: "Sample",
         data(){
             return{
-                writeReview: this.currentReview,
+                
             }
         },
         
@@ -137,9 +137,6 @@
             },
         },
         methods: {
-            closeReviewModal(){
-                this.open = false;
-            },
             handleRate(evt, props) {
                 this.currentReview.starPoint = props.rating;
                 this.currentReview.payload = props;
@@ -147,6 +144,12 @@
             inputPhoto(){
                 alert('click');
             },
+            changeValue(){
+                this.$store.commit('updateComment', this.currentReview);
+                //console.log(this.currentReview);
+                //console.log(JSON.stringify(event.target.parentNode));
+                //console.log("value" + event.target.getAttribute("rating"));
+            }
             // clearPlease(){
             //     this.currentReview = {
             //         purchaseCode:'',
@@ -168,11 +171,7 @@
         mounted(){
             
         },
-        watch:{
-            currentReview:function(){
-                 this.$emit('setReview', this.currentReview);
-            }
-        }
+
     }
 </script>
 
