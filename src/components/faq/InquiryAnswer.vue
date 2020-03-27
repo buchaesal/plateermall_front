@@ -23,7 +23,7 @@
                         <sui-table-header-cell>등록일</sui-table-header-cell>
                     </sui-table-row>
                 </sui-table-header>
-                <sui-table-body v-if="questionList.length===0">
+                <sui-table-body v-if="questionList.length==0">
                     <sui-table-row>
                         <sui-table-cell colspan="5" style="text-align:center;">문의 내역이 없습니다.</sui-table-cell>
                     </sui-table-row>
@@ -47,7 +47,7 @@
 <script>
     import FaqHeader from "./FaqHeader";
     // import FaqApi from "../../api/FaqApi";
-    import {getQuestionList, getQuestion} from "../../api/FaqApi";
+    import {getQuestionList} from "../../api/FaqApi";
 
     export default {
         name: "InquiryAnswer",
@@ -62,7 +62,7 @@
         },
         async created() {
             this.questionList = await getQuestionList();
-            this.questionDetail = await getQuestion();
+            //this.questionDetail = await getQuestion();
         },
     }
 </script>
