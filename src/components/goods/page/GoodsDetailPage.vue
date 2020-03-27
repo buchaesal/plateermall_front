@@ -60,8 +60,8 @@
                     </div>
                     <div class="summary">
                         <dl class="detail">
-                            <dt>카드할인</dt>
-                            <dd v-if="goodsData.cardPromotions">
+                            <dt v-if="isEmpty(goodsData.cardPromotions)">카드할인</dt>
+                            <dd v-if="isEmpty(goodsData.cardPromotions)">
                                 <span id="dcMaxInfoTxt">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
                                 <div class="tooltip">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
@@ -151,11 +151,11 @@
                             >
                                 <div class="option-body">
                                     <div class="amount">
-                                        <sui-button circular icon='plus' class="ico-plus"
+                                        <sui-button circular icon="plus" class="ico-plus"
                                                     @click="OptionQuantityPlus(index)"/>
                                         <input type="number" transparent class="output" :value="option.quantity"
                                                disabled>
-                                        <sui-button circular icon='minus' class="ico-minus"
+                                        <sui-button circular icon="minus" class="ico-minus"
                                                     @click="OptionQuantityMinus(index)"/>
                                     </div>
                                     <div class="option-price">
@@ -193,7 +193,7 @@
                         </div>
                         <div>
                             <sui-button-group class="cart-or-now">
-                                <sui-button color="black" content="쇼핑백"></sui-button>
+                                <sui-button color="black" content="쇼핑백" @click="addCart"></sui-button>
                                 <sui-button color="blue" content="바로구매"></sui-button>
                             </sui-button-group>
                         </div>
@@ -223,7 +223,7 @@
             </div>
             <div class="details">
                 <section class="md-details">
-                    <div>
+                    <div v-if="isEmpty(goodsData.notice)">
                         <sui-accordion exclusive>
                             <sui-accordion-title active class="accordion-title">
                                 <sui-icon name="dropdown"/>
@@ -264,7 +264,7 @@
                 </div>
                 <div class="detail-tab">
                     <sui-tab>
-                        <sui-tab-pane title="구매정보">
+                        <sui-tab-pane title="구매정보" v-if="isEmpty(goodsData.infoTable)">
                             <table class="ui definition table">
                                 <tbody>
                                 <tr class="hidden-tr">
@@ -401,6 +401,7 @@
     import RatingStarPoint from "../../comment/RatingStarPoint";
     import RatingGraph from "../../comment/RatingGraph";
     import ReviewList from "../../comment/ReviewList";
+    import {requestAddCart} from "../../../api/CartListApi";
 
     export default {
         name: "GoodsDetail",
@@ -429,8 +430,22 @@
             }
         },
         methods: {
+            isEmpty(obj) {
+                if (
+                    obj === null ||
+                    obj === undefined ||
+                    obj === "" ||
+                    obj.length < 1
+                ) {
+                    return false;
+                } else {
+                    return true;
+                }
+            },
             priceFormatting(price) {
-                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+                if (this.isEmpty(price)) {
+                    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                }
             },
             pricing(originalPrice, dcRate) {
                 this.discountedPrice = originalPrice * (100 - dcRate) / 100;
@@ -467,7 +482,7 @@
                 }
             },
             calculateDays(days) {
-                let week = ['일', '월', '화', '수', '목', '금', '토'];
+                let week = ["일", "월", "화", "수", "목", "금", "토"];
 
                 let date = new Date();
                 let weekday = date.getDay();
@@ -478,15 +493,15 @@
 
                 date.setDate(date.getDate() + days);
 
-                let month = '' + (date.getMonth() + 1);
-                let day = '' + date.getDate();
+                let month = "" + (date.getMonth() + 1);
+                let day = "" + date.getDate();
 
                 if (month.length < 2) {
-                    month = '0' + month;
+                    month = "0" + month;
                 }
 
                 if (day.length < 2) {
-                    day = '0' + day;
+                    day = "0" + day;
                 }
 
                 return month + "/" + day + "(" + week[date.getDay()] + ")";
@@ -542,11 +557,17 @@
             offTooltip2() {
                 this.tooltip2Display = false;
             },
+            addCart() {
+                requestAddCart({
+                    goodsCode: this.$route.params.goodsCode,
+                    selectedOptions: this.selectedOptions
+                });
+            },
         },
         created() {
-            this.$store.commit('getGoodsModel', this.$route.params.goodsCode);
-            this.$store.commit('loadCommentByGoodsCode', this.$route.params.goodsCode);
-            this.$store.commit('addSawList', this.$route.params.goodsCode);
+            this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
+            this.$store.commit("loadCommentByGoodsCode", this.$route.params.goodsCode);
+            this.$store.commit("addSawList", this.$route.params.goodsCode);
         },
         computed: {
             goodsData() {
@@ -847,6 +868,14 @@
         width: 100%;
         height: 3rem;
         margin-bottom: 20px;
+    }
+
+    .shipping-option > sui-button .active {
+        background-color: #1a69a4;
+    }
+
+    .shipping-option > button .active {
+        background-color: #1a69a4;
     }
 
     .output {
