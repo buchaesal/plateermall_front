@@ -38,10 +38,6 @@
 </template>
 
 <script>
-
-    // import {login} from "../../../api/UserApi";
-    // import UserModel from "../model/UserModel";
-
     export default {
         name: "LoginFormPage",
         data() {
@@ -56,25 +52,13 @@
             goToSignUpPage() {
                 this.$router.push('/signup');
             },
-            // async login() {
-            //     console.log('로그인');
-            //     const token = await login(this.user);
-            //
-            //     if(token === 'failed'){
-            //         alert('로그인 실패');
-            //     }else{
-            //         this.$store.commit('setToken',token);
-            //         this.$router.push('/');
-            //     }
-            // },
-            login(){
-               this.$store.dispatch('REQUEST_LOGIN', this.user)
-                   .then((res) => {
-                       if(res){
-                           alert(res);
-                       }
-                   });
-
+            login() {
+                this.$store.dispatch('REQUEST_LOGIN', this.user)
+                    .then((res) => {
+                        if(res){
+                            alert(res);
+                        }
+                    })
             }
         }
     };

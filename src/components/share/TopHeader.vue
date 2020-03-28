@@ -31,6 +31,7 @@
             },
             logout(){
                 this.$store.commit('LOGOUT');
+                alert('로그아웃 되었습니다.');
             },
             async test(){
                 await test();
