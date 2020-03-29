@@ -1,17 +1,14 @@
+import request, {WISHLIST_URL} from './axios';
 
 class WishListApi {
-    wishList = [];
-
-    constructor() {
-        this.wishList.push('1203917700')
-    }
-
-    getWishListGoodsCodes(){
-        return this.wishList;
-    }
-
-    addGoods(goods){
-        this.wishList = goods;
+    getWishListGoodsCodes() {
+        return request.get(WISHLIST_URL).then(
+            (response) => {
+                return response.data;
+            }
+        ).catch(function (error) {
+            console.log(error);
+        });
     }
 }
 

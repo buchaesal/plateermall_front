@@ -64,7 +64,12 @@
                                             <div @click="deleteCart(cart)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
                                         </sui-segment>
                                         <sui-segment>
-                                            <div><span class="goods-price">{{priceFormatting(cart.goods.originalPrice)}}원</span></div>
+                                            <div>
+                                                <span class="goods-original-price">{{priceFormatting(cart.goods.originalPrice)}}원</span>
+                                            </div>
+                                            <div>
+                                                <span class="goods-dc-price">{{priceFormatting(pricing(cart.goods.originalPrice, cart.goods.dcRate))}}원</span>
+                                            </div>
                                         </sui-segment>
                                     </sui-grid-column>
                                 </sui-grid-row>
@@ -82,7 +87,7 @@
                                 <span>상품금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>{{totalGoodsPrice()}}원</span>
+                                <span>{{priceFormatting(totalGoodsPrice())}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -90,7 +95,7 @@
                                 <span>배송비</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>+0원</span>
+                                <span>+{{priceFormatting(totalShippingFee())}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -98,7 +103,7 @@
                                 <span>할인금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>-0원</span>
+                                <span>-{{priceFormatting(totalDcRatePrice())}}원</span>
                             </div>
                         </div>
                         <sui-divider />
@@ -107,7 +112,7 @@
                                 <span>결제예정금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>{{totalCartPrice()}}원</span>
+                                <span>{{priceFormatting(totalCartPrice())}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -185,6 +190,10 @@
             Footer,
         },
         methods: {
+            pricing(originalPrice, dcRate) {
+                let price = originalPrice * (100 - dcRate) / 100;
+                return price;
+            },
             priceFormatting(price) {
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
@@ -203,24 +212,37 @@
             totalCartCount() {
                 return this.checkedCartList.length;
             },
-            pricingCalculation(originalPrice, quantity) {
-                return originalPrice * quantity;
+            totalShippingFee() {
+                let totalShippingFee = 0;
+
+                this.checkedCartList.map((cart) => {
+                    totalShippingFee += cart.goods.shippingFee;
+                });
+                return totalShippingFee;
             },
+            totalDcRatePrice() {
+                let totalDcRatePrice = 0;
+                this.checkedCartList.map((cart) => {
+                    totalDcRatePrice += (cart.goods.originalPrice - this.pricing(cart.goods.originalPrice, cart.goods.dcRate));
+                });
+                return totalDcRatePrice;
+            },
+
             totalGoodsPrice() {
                 let totalGoodsPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalGoodsPrice += this.pricingCalculation(cart.goods.originalPrice, cart.quantity);
+                    totalGoodsPrice += (cart.goods.originalPrice * cart.quantity);
                 });
-                return this.priceFormatting(totalGoodsPrice);
+                return totalGoodsPrice;
             },
             totalCartPrice() {
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalCartPrice += this.pricingCalculation(cart.goods.originalPrice, cart.quantity);
+                    totalCartPrice += ((cart.goods.originalPrice * cart.quantity) + cart.goods.shippingFee - (cart.goods.originalPrice - this.pricing(cart.goods.originalPrice, cart.goods.dcRate)));
                 });
-                return this.priceFormatting(totalCartPrice);
+                return totalCartPrice;
             },
             quantityMinus(cart) {
                 if (cart.quantity === 1) {
@@ -347,8 +369,10 @@
         float:right;
     }
 
-    .goods-price {
+    .goods-original-price {
+        text-decoration: line-through;
         font-size:12px;
+        color:gray;
     }
 
     .quantity-change-btn {
