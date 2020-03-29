@@ -24,55 +24,53 @@
                             <a href="javascript:void(0)" @click="containWishList">위시담기</a>
                         </div>
                     </div>
-                    <template v-for="cart in getCartList">
-                        <div v-for="(option, index) in cart.selectedOptions" v-bind:key="index"  class="goods-list">
-                            <div style="background-color:#ededed; height:50px;">
-                                <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
-                            </div>
-                            <div>
-                                <sui-grid :columns="5">
-                                    <sui-grid-row stretched class="cart-grid-row">
-                                        <sui-grid-column style="width:10%;">
-                                            <sui-segment style="position:absolute; top:50%;">
-                                                <sui-checkbox class="goods-checkbox" :id="cart.cartCode + index" :value="cart" v-model="checkedCartList"/>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:20%;">
-                                            <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
-                                                <sui-image :src="cart.goods.imgUrl"  class="cart-img" />
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:40%;">
-                                            <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
-                                                <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
-                                                <p style="font-family:Georgia, serif; color:gray">옵션 : {{option.text}}</p>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:15%; padding-bottom:5%;">
-                                            <sui-segment>
-                                                <div class="quantity-box">
-                                                    <sui-button class="minus" @click="quantityMinus(option)">-</sui-button>
-                                                    <sui-input :value="option.quantity" v-model="option.quantity" style="margin-left:18px; width:40px;" />
-                                                    <sui-button class="plus" @click="quantityPlus(option)">+</sui-button>
-                                                </div>
-                                                <div>
-                                                    <sui-button @click="changeQuantity(cart, option)" class="quantity-change-btn" basic secondary>변경</sui-button>
-                                                </div>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                        <sui-grid-column style="width:15%; padding-bottom: 6%;">
-                                            <sui-segment>
-                                                <div @click="deleteCart(cart, option)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
-                                            </sui-segment>
-                                            <sui-segment>
-                                                <div><span class="goods-price">{{priceFormatting(cart.goods.originalPrice)}}원</span></div>
-                                            </sui-segment>
-                                        </sui-grid-column>
-                                    </sui-grid-row>
-                                </sui-grid>
-                            </div>
+                    <div v-for="(cart, index) in getCartList" v-bind:key="index" class="goods-list">
+                        <div style="background-color:#ededed; height:50px;">
+                            <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
                         </div>
-                    </template>
+                        <div>
+                            <sui-grid :columns="5">
+                                <sui-grid-row stretched class="cart-grid-row">
+                                    <sui-grid-column style="width:10%;">
+                                        <sui-segment style="position:absolute; top:50%;">
+                                            <sui-checkbox class="goods-checkbox" :id="index" :value="cart" v-model="checkedCartList" />
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                    <sui-grid-column style="width:20%;">
+                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
+                                            <sui-image :src="cart.goods.imgUrl"  class="cart-img" />
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                    <sui-grid-column style="width:40%;">
+                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
+                                            <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
+                                            <p style="font-family:Georgia, serif; color:gray">옵션 : {{cart.text}}</p>
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                    <sui-grid-column style="width:15%; padding-bottom:5%;">
+                                        <sui-segment>
+                                            <div class="quantity-box">
+                                                <sui-button class="minus" @click="quantityMinus(cart)">-</sui-button>
+                                                <sui-input :value="cart.quantity" v-model="cart.quantity" style="margin-left:18px; width:40px;" />
+                                                <sui-button class="plus" @click="quantityPlus(cart)">+</sui-button>
+                                            </div>
+                                            <div>
+                                                <sui-button @click="changeQuantity(cart)" class="quantity-change-btn" basic secondary>변경</sui-button>
+                                            </div>
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                    <sui-grid-column style="width:15%; padding-bottom: 6%;">
+                                        <sui-segment>
+                                            <div @click="deleteCart(cart)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
+                                        </sui-segment>
+                                        <sui-segment>
+                                            <div><span class="goods-price">{{priceFormatting(cart.goods.originalPrice)}}원</span></div>
+                                        </sui-segment>
+                                    </sui-grid-column>
+                                </sui-grid-row>
+                            </sui-grid>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="goods-price-container">
@@ -144,7 +142,6 @@
                 </div>
             </div>
         </sui-container>
-        <!--
         <div>
             <sui-button @click="addCartList">장바구니 추가</sui-button>
         </div>
@@ -165,7 +162,6 @@
                 <hr/>
             </div>
         </div>
-        -->
         <Footer></Footer>
     </div>
 </template>
@@ -179,7 +175,6 @@
         data() {
             return {
                 isTotalChecked:false,
-                isChecked:[],
                 checkedCartList:[],
             }
         },
@@ -213,9 +208,7 @@
                 let totalGoodsPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    cart.selectedOptions.map((option) => {
-                        totalGoodsPrice += this.pricingCalculation(cart.goods.originalPrice, option.quantity);
-                    });
+                    totalGoodsPrice += this.pricingCalculation(cart.goods.originalPrice, cart.quantity);
                 });
                 return this.priceFormatting(totalGoodsPrice);
             },
@@ -223,27 +216,25 @@
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    cart.selectedOptions.map((option) => {
-                        totalCartPrice += this.pricingCalculation(cart.goods.originalPrice, option.quantity);
-                    });
+                    totalCartPrice += this.pricingCalculation(cart.goods.originalPrice, cart.quantity);
                 });
                 return this.priceFormatting(totalCartPrice);
             },
-            quantityMinus(option) {
-                if (option.quantity === 1) {
+            quantityMinus(cart) {
+                if (cart.quantity === 1) {
                     alert('최소 1개 구매 가능합니다.');
                     return;
                 }
-                option.quantity -= 1;
+                cart.quantity -= 1;
             },
-            quantityPlus(option) {
-                option.quantity += 1;
+            quantityPlus(cart) {
+                cart.quantity += 1;
             },
 
-            deleteCart(deletedCart, option) {
+            deleteCart(deletedCart) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
-                    this.$store.commit('deleteCart', deletedCart, option);
+                    this.$store.commit('deleteCart', deletedCart);
                 }
             },
 
@@ -265,13 +256,13 @@
                 this.$router.push('/goodsDetail/' + goodsCode);
             },
 
-            changeQuantity(cart, option) {
-                this.$store.commit('changeQuantity', cart, option);
+            changeQuantity(cart) {
+                this.$store.commit('changeQuantity', cart);
             },
 
             buyCartList() {
 
-            }
+            },
         },
         async created() {
             await this.$store.commit('getCartList');

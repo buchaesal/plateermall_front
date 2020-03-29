@@ -1,4 +1,4 @@
-import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, requestChangeStock} from '../api/CartListApi'
+import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, requestChangeQuantity} from '../api/CartListApi'
 import GoodsApi from '../api/GoodsApi'
 //import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
@@ -15,6 +15,7 @@ const getters = {
 const mutations = {
     async getCartList(state) {
         const cartList = await requestCartList();
+
         let goodsCodeArr = [];
         
         let goodsApi = new GoodsApi();
@@ -45,18 +46,12 @@ const mutations = {
     async deleteCart(state, deletedCart) {
         console.log(deletedCart);
 
-        await requestDeleteCart(deletedCart.cartCode);
+        await requestDeleteCart(deletedCart);
         router.go();
     },
 
     async checkedDeleteCartList(state, checkedCartList) {
-        let cartCodeArr = [];
-
-        checkedCartList.map((cart) => {
-            cartCodeArr.push(cart.cartCode);
-        });
-
-        await requestCheckedDeleteCartList(cartCodeArr);
+        await requestCheckedDeleteCartList(checkedCartList);
         router.go();
     },
 
@@ -67,8 +62,8 @@ const mutations = {
         wishListApi.addGoods(goodsCodeArr);
     },
 
-    async changeStock(state, changeCart) {
-        await requestChangeStock(changeCart);
+    async changeQuantity(state, changeCart) {
+        await requestChangeQuantity(changeCart);
         router.go();
     }
 }
