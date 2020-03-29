@@ -85,7 +85,9 @@
                     <sui-table-row>
                         <sui-table-cell>사진 올리기</sui-table-cell>
                         <sui-table-cell>
-                            <img id="image1" src='../../assets/frame.png' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            <img class="image1" v-if="currentReview.myPhoto != ''" :src='currentReview.myPhoto' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            <img class="image1" v-else :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            
                             <img id="image2" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             <img id="image3" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/><br><br>
                             <input v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%;"/>
@@ -162,12 +164,6 @@
                     
                 }
             },
-                // console.log(this.$refs.commentimage.files[0]);
-                // this.currentReview.myPhoto = this.$refs.commentimage.files[0].name;
-                
-                // let image1 = document.getElementById('image1');
-                // image1.src = this.$refs.commentimage.files[0];
-
             // clearPlease(){
             //     this.currentReview = {
             //         purchaseCode:'',

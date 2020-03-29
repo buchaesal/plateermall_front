@@ -91,7 +91,6 @@ export const goodsOptionList = function(goodsCode, goodsOption, orderBYOption){
 
 export const deleteComment = function(orderId){
 
-    console.log("delete?");
     return request.delete(COMMENTS_URL + `/${orderId}`).then(
         (response)=> {
             return response.data;

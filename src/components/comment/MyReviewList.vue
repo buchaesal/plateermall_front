@@ -3,15 +3,15 @@
         <p>- 작성하신 상품평 내역을 조회하실 수 있습니다. 판매가 종료된 상품은 목록에서 보이지 않습니다.
 
             <div class='summary'>
-        <p id='my-review-count'>작성한 상품평 <strong>{{myReviews.length}}</strong>건</p>
+        <p id='my-review-count'>작성한 상품평 <strong>{{cancelCount}}</strong>건</p>
     </div>
 
     <div class='my-review-list'>
-        <p id='no-review' v-if='myReviews.length == 0'>작성한 상품평이 없습니다.</p>
+        <p id='no-review' v-if='cancelCount == 0'>작성한 상품평이 없습니다.</p>
 
         <div v-else style="min-height: 500px">
             <sui-item-group divided>
-                <sui-item class='review-item' v-for='(review, index) in myReviews' :key='index'>
+                <sui-item class='review-item' v-for='(review, index) in getReviews' :key='index'>
                     <sui-item-image size="tiny" :src='review.myPhoto'/>
                     <sui-item-content class='review'>
                         <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
@@ -81,7 +81,7 @@
 
 <script>
 import ReviewForm from './ReviewForm.vue';
-import {requestMyComments, deleteComment} from '../../api/CommentApi';
+import {requestMyComments} from '../../api/CommentApi';
 import {getOrder} from '../../api/OrderApi';
 import GoodsApi from '../../api/GoodsApi';
 
@@ -96,13 +96,16 @@ import GoodsApi from '../../api/GoodsApi';
                 currentReview:{},
                 selectedReview:{},
                 review:{},
+                cancelCount:0,
             }
         },
         created() {
             this.setWrittenInfo("testId");
         },
         computed: {
-
+            getReviews(){
+                return this.$store.state.commentStore.myReviews;
+            }
         },
         methods: {
 
@@ -124,7 +127,9 @@ import GoodsApi from '../../api/GoodsApi';
             },
 
             async setWrittenInfo(userId){
+                this.$store.commit('loadMyCommentsByUserId', userId);
                 this.myReviews = await requestMyComments(userId);
+                this.cancelCount = this.myReviews.length;
 
                 for(let index in this.myReviews){
                      this.orderList.push(await getOrder(this.myReviews[index].orderId));
@@ -137,11 +142,18 @@ import GoodsApi from '../../api/GoodsApi';
                 }
             },
             async deleteReview(orderId){
+                let info = {
+                    orderId: orderId,
+                    userId: 'testId',
+                }
 
                 if(confirm("해당 상품평을 삭제하시겠습니까?")) {
-                    await deleteComment(orderId);
-                    alert("삭제되었습니다.")                    
-                    this.$router.push("/myreview");
+                    
+                    await this.$store.commit('deleteComment', info);
+                    alert("삭제되었습니다.");
+                    
+                    this.cancelCount -= 1;
+                    this.myReviews = this.$store.state.commentStore.myReviews;
                 }
             }
         },
