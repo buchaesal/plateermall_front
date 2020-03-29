@@ -12,7 +12,7 @@
         <div v-else style="min-height: 500px">
             <sui-item-group divided>
                 <sui-item class='review-item' v-for='(review, index) in myReviews' :key='index'>
-                    <sui-item-image size="tiny" :src='photo'/>
+                    <sui-item-image size="tiny" :src='review.myPhoto'/>
                     <sui-item-content class='review'>
                         <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
                         <sui-item-meta>
@@ -21,7 +21,6 @@
                         </sui-item-meta>
                         <sui-item-description>
                             <p>{{review.reviewContent}}</p>
-                            {{review.selectedOptions}}
                             <sui-form-field>
                                 <sui-accordion>
                                     <a is="sui-accordion-title" style="float:right; padding-right: 5%;">
@@ -36,7 +35,7 @@
                                                 <sui-item-content>
                                                 <sui-item-header>{{review.starPoint}}<sui-rating id="starAvg" :rating="review.starPoint" :max-rating="5" /></sui-item-header>
                                                 <sui-item-meta>
-                                                    <img class='detail-image' style="margin-right: 3%;" :src='photo' width='99' height='99'>    
+                                                    <img class='detail-image' style="margin-right: 3%;" :src="review.myPhoto" width='99' height='99'>    
                                                 </sui-item-meta>
                                                     
                                                 <sui-item-description>
@@ -96,7 +95,6 @@ import GoodsApi from '../../api/GoodsApi';
                 orderList:[],
                 currentReview:{},
                 selectedReview:{},
-                photo: require('../../assets/review.jpg'),
                 review:{},
             }
         },
@@ -128,15 +126,9 @@ import GoodsApi from '../../api/GoodsApi';
             async setWrittenInfo(userId){
                 this.myReviews = await requestMyComments(userId);
 
-                console.log("----------------------");
-                console.log(this.myReviews);
-
                 for(let index in this.myReviews){
                      this.orderList.push(await getOrder(this.myReviews[index].orderId));
                 }
-
-                console.log("---------------------");
-                console.log(this.orderList.goodsId);
 
                 for(let index in this.myReviews){
                     

@@ -2,7 +2,7 @@ import request,{USER_URL} from './axios';
 
 
 export const login = function (user) {
-    return request.post(USER_URL+'/login', user)
+    return request.post('http://localhost:9999/api/user/login', user)
         .then((response) => {return response.data})
         .catch((err) => console.log(err))
 }
@@ -26,10 +26,10 @@ export const getUser = function (email) {
 
 }
 
-export const getUserInfo = function(email){
-    return request.get(USER_URL+`/getuserinfo/${email}`)
-        .then((response)=> {response.data})
-        .catch((err)=> console.log(err));
+export const getCurrentUserInfo = function () {
+    return request.get('http://localhost:9999/api/user/getCurrentUserInfo')
+        .then((response) => {return response.data})
+        .catch((error)=>console.log(error));
 }
 
 class UserApi {
