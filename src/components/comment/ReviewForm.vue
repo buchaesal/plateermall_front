@@ -2,7 +2,6 @@
 
     <div id="review-modal">
         <header><h2 id='write-review'>상품평 작성</h2></header>
-        <h6>{{currentReview}}</h6>
         <ul>
             <li>고객님께서 작성해주신 상품평은 등록 즉시 바로 사이트에 게재되며, 모두 공개를 원칙으로 합니다.</li>
             <li>- 상품평에 적합하지 않은 내용, 미풍양속을 해치는 글, 상품기능 및 효과에 대한 오해의 소지가 있는 내용은 통보 없이 삭제될 수 있으며,</li>
@@ -86,10 +85,11 @@
                     <sui-table-row>
                         <sui-table-cell>사진 올리기</sui-table-cell>
                         <sui-table-cell>
-                            <sui-button @click="inputPhoto" size="massive" icon="plus"></sui-button>
-                            <sui-button size="massive" icon="plus"></sui-button>
-                            <sui-button size="massive" icon="plus"></sui-button>
-                            <br><br>
+                            <img id="image1" src='../../assets/frame.png' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            <img id="image2" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            <img id="image3" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/><br><br>
+                            <input v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%;"/>
+                            
                             <p>- 매월 우수상품평 작성자 50명에게 L.POINT 2000점을 적립해 드립니다.</p>
                             <p>- 첨부가능 파일형식: JPG, JPEG, GIF, PNG</p>
                             <p>- 파일명: 영문파일명만 가능</p>
@@ -141,15 +141,33 @@
                 this.currentReview.starPoint = props.rating;
                 this.currentReview.payload = props;
             },
-            inputPhoto(){
-                alert('click');
-            },
             changeValue(){
                 this.$store.commit('updateComment', this.currentReview);
-                //console.log(this.currentReview);
-                //console.log(JSON.stringify(event.target.parentNode));
-                //console.log("value" + event.target.getAttribute("rating"));
-            }
+            },
+            fileSelect(review){
+                if (this.$refs.commentimage.files && this.$refs.commentimage.files[0]) {
+                    let reader = new FileReader();
+                    
+                    reader.onload = function(event){
+                        review.myPhoto = event.target.result;
+                        
+                        console.log(review.myPhoto);
+                        
+                        let image = document.getElementById('image1'); 
+                        image.setAttribute("src", review.myPhoto);
+                    }
+
+                    this.changeValue();
+                    reader.readAsDataURL(this.$refs.commentimage.files[0]);
+                    
+                }
+            },
+                // console.log(this.$refs.commentimage.files[0]);
+                // this.currentReview.myPhoto = this.$refs.commentimage.files[0].name;
+                
+                // let image1 = document.getElementById('image1');
+                // image1.src = this.$refs.commentimage.files[0];
+
             // clearPlease(){
             //     this.currentReview = {
             //         purchaseCode:'',
@@ -213,6 +231,13 @@
 
     img{
         margin-right: 2%;
+    }
+
+    image{
+        width: 100px; 
+        height: 100px; 
+        margin-right: 3%; 
+        float: left;
     }
 
 </style>

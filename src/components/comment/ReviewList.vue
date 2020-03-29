@@ -3,7 +3,7 @@
         <div class="photo-review">
             <h3>포토<br>상품평</h3>
             <div class='review-img' v-for='(review, index) in getRequestComments' :key='index'>
-                <img :src='review.photo' width='99' height='99' v-if='review.photo != ""'>
+                <img :src='review.myPhoto' width='99' height='99' v-if='review.photo != ""'>
             </div>
         </div>
         <div class='options'>
@@ -46,12 +46,14 @@
 </template>
 
 <script>
+import GoodsApi from '../../api/GoodsApi';
 
     export default {
         name: "Sample",
         data(){
             return{
                 goods:{},
+                goodsCode:'',
                 currentOrderRating: null,
                 currentOption: null,
                 goodsOption:['옵션보기',],
@@ -75,9 +77,11 @@
                 ],
             }
         },
-        created(){
-            this.goods = this.$store.state.goodsStore.goodsModel;
-            console.log(this.goods);
+        async created(){
+            this.goodsCode = this.$route.params.goodsCode;
+
+            let goodsApi = new GoodsApi();
+            this.goods = await goodsApi.getGoods(this.goodsCode);
 
             for(let index in this.goods.options){
                 this.goodsOption.push(this.goods.options[index]);
@@ -97,12 +101,11 @@
         watch:{
             currentOption:function(){
                 let options = {
-                    goodsCode: this.goods.goodsCode,
+                    goodsCode: this.goodsCode,
                     goodsOption: this.currentOption,
                     orderOption: this.currentOrderRating,
                 }
 
-                console.log(this.currentOption);
                 this.$store.commit('loadCommentByFilter', options);
             },
             currentOrderRating:function(){
@@ -113,6 +116,7 @@
                     orderOption: this.currentOrderRating,
                 }
 
+                console.log(this.goods.goodsCode);
                 console.log(this.currentOrderRating);
                 this.$store.commit('loadCommentByFilter', options);
             },

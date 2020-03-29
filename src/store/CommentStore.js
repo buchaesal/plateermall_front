@@ -28,7 +28,7 @@ const mutations = {
     },
 
     async loadCommentByFilter(state, options){
- 
+
         if(options.goodsOption == null) options.goodsOption = '옵션보기';
         if(options.orderOption == null) options.orderOption = '전체보기';
 
@@ -38,8 +38,6 @@ const mutations = {
     async loadMyCommentsByUserId(state, testId){
 
         state.myReviewsInfo.myReviews = await requestMyComments(testId);
-        //console.log(state.myReviewsInfo.myReviews);
-        //state.myReviewsInfo.reviewCount = state.myReviewsInfo.myReviews.length;
     },
     
     async loadCommentByPurchaseCode(state, purchaseCode){
