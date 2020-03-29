@@ -24,7 +24,7 @@
                             <a href="javascript:void(0)" @click="containWishList">위시담기</a>
                         </div>
                     </div>
-                    <div v-for="(cart, index) in cartList" v-bind:key="index"  class="goods-list">
+                    <div v-for="(cart, index) in getCartList" v-bind:key="index" class="goods-list">
                         <div style="background-color:#ededed; height:50px;">
                             <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
                         </div>
@@ -33,7 +33,7 @@
                                 <sui-grid-row stretched class="cart-grid-row">
                                     <sui-grid-column style="width:10%;">
                                         <sui-segment style="position:absolute; top:50%;">
-                                            <sui-checkbox class="goods-checkbox" :id="index" :value="cart" v-model="checkedCartList"/>
+                                            <sui-checkbox class="goods-checkbox" :id="index" :value="cart" v-model="checkedCartList" />
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:20%;">
@@ -44,17 +44,18 @@
                                     <sui-grid-column style="width:40%;">
                                         <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
                                             <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
+                                            <p style="font-family:Georgia, serif; color:gray">옵션 : {{cart.text}}</p>
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:15%; padding-bottom:5%;">
                                         <sui-segment>
                                             <div class="quantity-box">
-                                                <sui-button class="minus" @click="cartStockMinus(index)">-</sui-button>
-                                                <sui-input :value="cart.cartStock" v-model="cart.cartStock" style="margin-left:18px; width:40px;" />
-                                                <sui-button class="plus" @click="cartStockPlus(index)">+</sui-button>
+                                                <sui-button class="minus" @click="quantityMinus(cart)">-</sui-button>
+                                                <sui-input :value="cart.quantity" v-model="cart.quantity" style="margin-left:18px; width:40px;" />
+                                                <sui-button class="plus" @click="quantityPlus(cart)">+</sui-button>
                                             </div>
                                             <div>
-                                                <sui-button @click="changeStock(index)" class="stock-change-btn" basic secondary>변경</sui-button>
+                                                <sui-button @click="changeQuantity(cart)" class="quantity-change-btn" basic secondary>변경</sui-button>
                                             </div>
                                         </sui-segment>
                                     </sui-grid-column>
@@ -63,7 +64,12 @@
                                             <div @click="deleteCart(cart)" style="text-align:center; cursor:pointer"><a href="javascript:void(0)">X</a></div>
                                         </sui-segment>
                                         <sui-segment>
-                                            <div><span class="goods-price">{{priceFormatting(cart.goods.originalPrice)}}원</span></div>
+                                            <div>
+                                                <span class="goods-original-price">{{priceFormatting(cart.goods.originalPrice)}}원</span>
+                                            </div>
+                                            <div>
+                                                <span class="goods-dc-price">{{priceFormatting(pricing(cart.goods.originalPrice, cart.goods.dcRate))}}원</span>
+                                            </div>
                                         </sui-segment>
                                     </sui-grid-column>
                                 </sui-grid-row>
@@ -81,7 +87,7 @@
                                 <span>상품금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>{{totalGoodsPrice()}}원</span>
+                                <span>{{priceFormatting(totalGoodsPrice())}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -89,7 +95,7 @@
                                 <span>배송비</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>+0원</span>
+                                <span>+{{priceFormatting(totalShippingFee())}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -97,7 +103,7 @@
                                 <span>할인금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>-0원</span>
+                                <span>-{{priceFormatting(totalDcRatePrice())}}원</span>
                             </div>
                         </div>
                         <sui-divider />
@@ -106,7 +112,7 @@
                                 <span>결제예정금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>{{totalCartPrice()}}원</span>
+                                <span>{{priceFormatting(totalCartPrice())}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -153,13 +159,6 @@
                 {{getCartList}}
                 <hr/>
             </div>
-            <div>
-                <hr/>
-                data에 cartList 값
-                <br />
-                {{cartList}}
-                <hr/>
-            </div>
 
             <div>
                 <hr/>
@@ -183,9 +182,7 @@
         data() {
             return {
                 isTotalChecked:false,
-                isChecked:[],
                 checkedCartList:[],
-                cartList:[],
             }
         },
         components: {
@@ -193,6 +190,10 @@
             Footer,
         },
         methods: {
+            pricing(originalPrice, dcRate) {
+                let price = originalPrice * (100 - dcRate) / 100;
+                return price;
+            },
             priceFormatting(price) {
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
@@ -201,7 +202,7 @@
             },
             checkWholeItem() {
                 if(!this.isTotalChecked) {
-                    this.checkedCartList = this.cartList;
+                    this.checkedCartList = this.$store.state.cartListStore.cartList;
                     this.isTotalChecked = true;
                 } else {
                     this.checkedCartList = [];
@@ -211,41 +212,53 @@
             totalCartCount() {
                 return this.checkedCartList.length;
             },
-            pricingCalculation(originalPrice, cartStock) {
-                return originalPrice * cartStock;
+            totalShippingFee() {
+                let totalShippingFee = 0;
+
+                this.checkedCartList.map((cart) => {
+                    totalShippingFee += cart.goods.shippingFee;
+                });
+                return totalShippingFee;
             },
+            totalDcRatePrice() {
+                let totalDcRatePrice = 0;
+                this.checkedCartList.map((cart) => {
+                    totalDcRatePrice += (cart.goods.originalPrice - this.pricing(cart.goods.originalPrice, cart.goods.dcRate));
+                });
+                return totalDcRatePrice;
+            },
+
             totalGoodsPrice() {
                 let totalGoodsPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalGoodsPrice += this.pricingCalculation(cart.goods.originalPrice, cart.cartStock);
+                    totalGoodsPrice += (cart.goods.originalPrice * cart.quantity);
                 });
-                return this.priceFormatting(totalGoodsPrice);
+                return totalGoodsPrice;
             },
             totalCartPrice() {
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalCartPrice += this.pricingCalculation(cart.goods.originalPrice, cart.cartStock);
+                    totalCartPrice += ((cart.goods.originalPrice * cart.quantity) + cart.goods.shippingFee - (cart.goods.originalPrice - this.pricing(cart.goods.originalPrice, cart.goods.dcRate)));
                 });
-                return this.priceFormatting(totalCartPrice);
+                return totalCartPrice;
             },
-            cartStockMinus(index) {
-                if (this.cartList[index].cartStock === 1) {
+            quantityMinus(cart) {
+                if (cart.quantity === 1) {
                     alert('최소 1개 구매 가능합니다.');
                     return;
                 }
-                this.cartList[index].cartStock -= 1;
+                cart.quantity -= 1;
             },
-            cartStockPlus(index) {
-                this.cartList[index].cartStock += 1;
+            quantityPlus(cart) {
+                cart.quantity += 1;
             },
 
             deleteCart(deletedCart) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
                     this.$store.commit('deleteCart', deletedCart);
-                    this.$router.go();
                 }
             },
 
@@ -253,7 +266,6 @@
                 const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
                 if (result) {
                     this.$store.commit('checkedDeleteCartList', this.checkedCartList);
-                    this.$router.go();
                 }
             },
 
@@ -268,22 +280,18 @@
                 this.$router.push('/goodsDetail/' + goodsCode);
             },
 
-            changeStock(index) {
-                this.$store.commit('changeStock', this.cartList[index]);
-                this.$router.go();
+            changeQuantity(cart) {
+                this.$store.commit('changeQuantity', cart);
             },
 
             buyCartList() {
 
-            }
+            },
         },
         async created() {
             await this.$store.commit('getCartList');
         },
-        mounted() {
-            this.cartList = JSON.parse ( JSON.stringify ( this.$store.state.cartListStore.cartList ) );
-            this.isChecked = new Array(this.cartList.length).fill(false);
-        },
+
         computed: {
             getCartList() {
                   return this.$store.state.cartListStore.cartList;
@@ -361,11 +369,13 @@
         float:right;
     }
 
-    .goods-price {
+    .goods-original-price {
+        text-decoration: line-through;
         font-size:12px;
+        color:gray;
     }
 
-    .stock-change-btn {
+    .quantity-change-btn {
         width: 83px;
         margin-top: 40%;
     }
