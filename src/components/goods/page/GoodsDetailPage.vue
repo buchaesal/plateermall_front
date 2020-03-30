@@ -193,8 +193,17 @@
                         </div>
                         <div>
                             <sui-button-group class="cart-or-now">
-                                <sui-button color="black" content="쇼핑백" @click="addCart"></sui-button>
-                                <sui-button color="blue" content="바로구매"></sui-button>
+                                <sui-button color="black" content="쇼핑백" @click.native="addCart"></sui-button>
+                                <sui-modal size="tiny" v-model="open">
+                                    <div class="modal-inner">
+                                        <p>선택하신 상품이 <b>쇼핑백</b>에 담겼습니다.</p>
+                                        <sui-button-group class="modal-inner-button">
+                                            <sui-button content="계속 쇼핑하기" @click.native="toggle"></sui-button>
+                                            <sui-button color="black" content="쇼핑백 보러가기" @click="goToCart"></sui-button>
+                                        </sui-button-group>
+                                    </div>
+                                </sui-modal>
+                                <sui-button color="blue" content="바로구매" @click="directOrder"></sui-button>
                             </sui-button-group>
                         </div>
                         <div class="summary">
@@ -427,6 +436,7 @@
                 orderSumQuantity: 0,
                 orderSumPrice: 0,
                 discountedPrice: 0,
+                open: false,
             }
         },
         methods: {
@@ -562,7 +572,20 @@
                     goodsCode: this.$route.params.goodsCode,
                     selectedOptions: this.selectedOptions
                 });
+                this.toggle();
             },
+            toggle() {
+                this.open = !this.open;
+            },
+            goToCart() {
+                this.$router.push('/cart');
+            },
+            directOrder() {
+                //     requestOrder({
+                //         goodsCode: this.$route.params.goodsCode,
+                //         selectedOptions: this.selectedOptions
+                //     });
+            }
         },
         created() {
             this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
@@ -871,8 +894,8 @@
     }
 
     .ui.basic.blue.active.button {
-        background-color: #2185d0!important;
-        color: white!important;
+        background-color: #2185d0 !important;
+        color: white !important;
     }
 
     .output {
@@ -924,6 +947,21 @@
         width: 100%;
         height: 5rem;
         margin-bottom: 20px;
+    }
+
+    .modal-inner {
+        padding: 40px;
+        text-align: center;
+    }
+
+    .modal-inner-button {
+        height: 3rem;
+    }
+
+    .modal-inner p {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 2rem;
     }
 
     .promotion-banner {

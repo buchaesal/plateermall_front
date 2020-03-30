@@ -14,14 +14,14 @@
                     <sui-table-header-cell :width="2">관리</sui-table-header-cell>
                 </sui-table-row>
             </sui-table-header>
-            <sui-table-body>
 
+            <sui-table-body>
                 <sui-table-row v-if="openShippingSpotFormFlag">
                     <sui-table-cell></sui-table-cell>
                     <sui-table-cell class="spot-type"></sui-table-cell>
                     <sui-table-cell text-align="left">
                         <!--                props 객체로 생성해서 디폴트 옵션 넣고 그렇게 만들어보기 -->
-                        <ShippingSpotForm v-bind:target-shipping-spot="newShippingSpotModel"></ShippingSpotForm>
+                        <ShippingSpotForm :target-shipping-spot="newShippingSpotModel"></ShippingSpotForm>
                     </sui-table-cell>
                     <sui-table-cell>
                         <p>
@@ -45,24 +45,24 @@
 
 
                 <sui-table-row v-else>
-                    <sui-table-cell>
-                        <sui-checkbox radio value="defaultShippingSpot" checked v-model="checkedRadio"/>
-                    </sui-table-cell>
-                    <sui-table-cell class="spot-type">{{defaultShippingSpot.spotName}}<br> (기본배송지)</sui-table-cell>
+<!--                    <sui-table-cell>-->
+<!--                        <sui-checkbox radio value="defaultShippingSpot" checked v-model="checkedRadio"/>-->
+<!--                    </sui-table-cell>-->
+<!--                    <sui-table-cell class="spot-type">{{defaultShippingSpot.spotName}}<br> (기본배송지)</sui-table-cell>-->
 
-                    <!--            여기 같은 플래그들 보는데 묶어보기 -->
-                    <sui-table-cell text-align="left" v-if="openModifyShippingSpotFormFlag">
-                        <ShippingSpotForm v-bind:target-shipping-spot="defaultShippingSpotCopy"></ShippingSpotForm>
-                    </sui-table-cell>
-                    <sui-table-cell text-align="left" v-else>
-                        <p class="user-name">{{defaultShippingSpot.receiverName}}</p>
-                        <div class="spot-details">
-                            <p>{{defaultShippingSpot.lineNumber}}/{{defaultShippingSpot.phoneNumber}}</p>
-                            <p>도로명 주소 : {{defaultShippingSpot.roadAddress}}</p>
-                            <p>지번 주소 : {{defaultShippingSpot.zipcodeAddress}}</p>
-                            <p>나머지 주소 : {{defaultShippingSpot.remainAddress}}</p>
-                        </div>
-                    </sui-table-cell>
+<!--                    &lt;!&ndash;            여기 같은 플래그들 보는데 묶어보기 &ndash;&gt;-->
+<!--                    <sui-table-cell text-align="left" v-if="openModifyShippingSpotFormFlag">-->
+<!--                        <ShippingSpotForm v-bind:target-shipping-spot="defaultShippingSpotCopy"></ShippingSpotForm>-->
+<!--                    </sui-table-cell>-->
+<!--                    <sui-table-cell text-align="left" v-else>-->
+<!--                        <p class="user-name">{{defaultShippingSpot.receiverName}}</p>-->
+<!--                        <div class="spot-details">-->
+<!--                            <p>{{defaultShippingSpot.lineNumber}}/{{defaultShippingSpot.phoneNumber}}</p>-->
+<!--                            <p>도로명 주소 : {{defaultShippingSpot.roadAddress}}</p>-->
+<!--                            <p>지번 주소 : {{defaultShippingSpot.zipcodeAddress}}</p>-->
+<!--                            <p>나머지 주소 : {{defaultShippingSpot.remainAddress}}</p>-->
+<!--                        </div>-->
+<!--                    </sui-table-cell>-->
 
                     <sui-table-cell v-if="openModifyShippingSpotFormFlag">
                         <p>
@@ -72,20 +72,20 @@
                             <button class="save-btn" @click="modifyShippingSpot">저장</button>
                         </p>
                     </sui-table-cell>
-                    <sui-table-cell v-else>
-                        <button class="modify-btn" @click="openModifyDefaultSpotForm">수정</button>
-                    </sui-table-cell>
+<!--                    <sui-table-cell v-else>-->
+<!--                        <button class="modify-btn" @click="openModifyDefaultSpotForm">수정</button>-->
+<!--                    </sui-table-cell>-->
                 </sui-table-row>
 
-                <sui-table-row v-for="(shippingSpot, index) in otherShippingSpots" :key="index" text-align="center">
+                <sui-table-row v-for="(shippingSpot, index) in shippingSpots" :key="index" text-align="center">
                     <sui-table-cell>
-                        <sui-checkbox radio :value="''+index" v-model="checkedRadio"/>
+                        <sui-checkbox radio :value="''+shippingSpot.id" v-model="selectedDefaultId"/>
                     </sui-table-cell>
 
-                    <sui-table-cell class="spot-type">{{shippingSpot.spotName}}</sui-table-cell>
+                    <sui-table-cell class="spot-type">{{shippingSpot.spotAlias}}</sui-table-cell>
 
                     <sui-table-cell text-align="left">
-                        <p class="user-name">{{shippingSpot.receiverName}}</p>
+                        <p class="user-name">{{shippingSpot.receiver}}</p>
                         <div class="spot-details">
                             <p>{{shippingSpot.lineNumber}}/{{shippingSpot.phoneNumber}}</p>
                             <p>도로명 주소 : {{shippingSpot.roadAddress}}</p>
@@ -135,6 +135,7 @@
 
                 shippingSpotSize: -1,
                 checkedRadio: 'defaultShippingSpot',
+                selectedDefaultId: null
             }
         },
         computed: {
@@ -180,8 +181,8 @@
                     alert("기본 배송지입니다.")
                     return;
                 }
-                this.defaultShippingSpot.isDefaultShippingSpot = 'N';
-                this.otherShippingSpots[this.checkedRadio].isDefaultShippingSpot = 'Y';
+                this.defaultShippingSpot.isDefault = false;
+                this.otherShippingSpots[this.checkedRadio].isDefault = true;
                 this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
                 alert('기본 배송지로 설정하였습니다.')
                 this.checkedRadio = 'defaultShippingSpot';
@@ -193,16 +194,19 @@
                 this.filterDefaultAndOtherSpots();
             },
             getShippingSpotListFromApi() {
-                console.log('getShippingApi')
                 this.$store.commit('getShippingSpotListFromApi');
-                this.filterDefaultAndOtherSpots();
+                this.selectedDefaultId = this.shippingSpots.filter((item)=>{
+                    return item.isDefault === true;
+                })[0].id+'';
+
+                //this.filterDefaultAndOtherSpots();
             },
             filterDefaultAndOtherSpots() {
                 console.log('filterDefault')
                 this.shippingSpotSize = this.shippingSpots.length;
                 this.otherShippingSpots = [];
                 this.shippingSpots.filter((shippingSpot) => {
-                    if (shippingSpot.isDefaultShippingSpot === 'Y') {
+                    if (shippingSpot.isDefault) {
                         this.defaultShippingSpot = shippingSpot;
                     } else {
                         this.otherShippingSpots.push(shippingSpot);
@@ -210,11 +214,13 @@
                 });
             },
             registerNewShippingSpot() {
-                console.log(this.newShippingSpotModel);
-                this.$store.commit('addShippingSpotList', this.newShippingSpotModel);
-                this.filterDefaultAndOtherSpots();
-                this.closeShippingSpotForm();
-                alert('배송지가 등록되었습니다.')
+                this.newShippingSpotModel.isDefault = false;
+                console.log(this.newShippingSpotModel,"추가할 배송지");
+                //this.$store.dispatch('addShippingSpotListFromApi',this.newShippingSpotModel);
+                //this.$store.commit('addShippingSpotList', this.newShippingSpotModel);
+                // this.filterDefaultAndOtherSpots();
+                // this.closeShippingSpotForm();
+                //alert('배송지가 등록되었습니다.');
             },
         },
         created: function () {
@@ -320,5 +326,9 @@
         line-height: 40px;
         border: 1px solid #333;
         color: white;
+    }
+
+    button {
+        cursor: pointer;
     }
 </style>
