@@ -45,25 +45,6 @@
 
 
                 <sui-table-row v-else>
-                    <!--                    <sui-table-cell>-->
-                    <!--                        <sui-checkbox radio value="defaultShippingSpot" checked v-model="checkedRadio"/>-->
-                    <!--                    </sui-table-cell>-->
-                    <!--                    <sui-table-cell class="spot-type">{{defaultShippingSpot.spotName}}<br> (기본배송지)</sui-table-cell>-->
-
-                    <!--                    &lt;!&ndash;            여기 같은 플래그들 보는데 묶어보기 &ndash;&gt;-->
-                    <!--                    <sui-table-cell text-align="left" v-if="openModifyShippingSpotFormFlag">-->
-                    <!--                        <ShippingSpotForm v-bind:target-shipping-spot="defaultShippingSpotCopy"></ShippingSpotForm>-->
-                    <!--                    </sui-table-cell>-->
-                    <!--                    <sui-table-cell text-align="left" v-else>-->
-                    <!--                        <p class="user-name">{{defaultShippingSpot.receiverName}}</p>-->
-                    <!--                        <div class="spot-details">-->
-                    <!--                            <p>{{defaultShippingSpot.lineNumber}}/{{defaultShippingSpot.phoneNumber}}</p>-->
-                    <!--                            <p>도로명 주소 : {{defaultShippingSpot.roadAddress}}</p>-->
-                    <!--                            <p>지번 주소 : {{defaultShippingSpot.zipcodeAddress}}</p>-->
-                    <!--                            <p>나머지 주소 : {{defaultShippingSpot.remainAddress}}</p>-->
-                    <!--                        </div>-->
-                    <!--                    </sui-table-cell>-->
-
                     <sui-table-cell v-if="openModifyShippingSpotFormFlag">
                         <p>
                             <button class="cancel-btn" @click="closeModifyDefaultSpotForm">취소</button>
@@ -72,9 +53,6 @@
                             <button class="save-btn" @click="modifyShippingSpot">저장</button>
                         </p>
                     </sui-table-cell>
-                    <!--                    <sui-table-cell v-else>-->
-                    <!--                        <button class="modify-btn" @click="openModifyDefaultSpotForm">수정</button>-->
-                    <!--                    </sui-table-cell>-->
                 </sui-table-row>
 
                 <sui-table-row v-for="(shippingSpot, index) in shippingSpots" :key="index" text-align="center">
@@ -133,7 +111,7 @@
                 otherShippingSpots: [],
 
                 defaultShippingSpotCopy: {},
-
+                defaultAddress:{},
                 shippingSpotSize: -1,
                 checkedRadio: 'defaultShippingSpot',
                 selectedDefaultId: null
@@ -175,17 +153,17 @@
                 // this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
                 // alert('배송지가 삭제되었습니다.');
             },
-            setDefaultShippingSpot() {
+            async setDefaultShippingSpot() {
                 console.log('setDefaultShippingSpot')
-                if (this.checkedRadio === "defaultShippingSpot") {
-                    alert("기본 배송지입니다.")
+                if (this.selectedDefaultId === this.defaultAddress.id) {
+                    alert("기본 배송지입니다.");
                     return;
                 }
-                this.defaultShippingSpot.isDefault = false;
-                this.otherShippingSpots[this.checkedRadio].isDefault = true;
-                this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
+                await this.$store.dispatch('setDefaultShippingSpot', this.selectedDefaultId);
+                // this.defaultShippingSpot.isDefault = false;
+                // this.otherShippingSpots[this.checkedRadio].isDefault = true;
+                // this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
                 alert('기본 배송지로 설정하였습니다.')
-                this.checkedRadio = 'defaultShippingSpot';
             },
             updateShippingSpotList(defaultShippingSpot, otherShippingSpots) {
                 console.log('updateSPot')
@@ -195,11 +173,11 @@
             },
             async getShippingSpotListFromApi() {
                 await this.$store.dispatch('getShippingSpotListFromApi');
-                let defaultAddress = this.shippingSpots.filter((item) => {
+                this.defaultAddress = this.shippingSpots.filter((item) => {
                     return item.default === true;
                 })[0];
-                if (defaultAddress) {
-                    this.selectedDefaultId = defaultAddress.id + '';
+                if ( this.defaultAddress) {
+                    this.selectedDefaultId =  this.defaultAddress.id + '';
                 }
             },
             filterDefaultAndOtherSpots() {
@@ -216,7 +194,7 @@
             },
             registerNewShippingSpot() {
                 this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0;
-                console.log(this.newShippingSpotModel.isDefault,"defalut니?");
+                console.log(this.newShippingSpotModel.isDefault, "defalut니?");
                 this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
                 alert('배송지가 등록되었습니다.');
                 this.openShippingSpotFormFlag = false;
