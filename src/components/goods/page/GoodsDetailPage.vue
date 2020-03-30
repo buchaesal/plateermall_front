@@ -605,6 +605,7 @@
                         }
                     });
                 }
+
                 //     requestOrder({
                 //         goodsCode: this.$route.params.goodsCode,
                 //         selectedOptions: this.selectedOptions
