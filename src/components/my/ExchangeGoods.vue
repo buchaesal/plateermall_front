@@ -11,20 +11,20 @@
         <div class='exchange-list' v-else>
             <p id="exchange-info">교환된 상품이 <span>{{exchangeOrderList.length}}개 있습니다.</span></p>
 
-            <div v-for='(exchangeItem, index) in exchangeOrderList' :key='index'>
+            <div v-for='(exchangeGoods, index) in goodsInExchangeList' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>{{exchangeItem.orderDate}}</span>
-                    <span class='exchange-date'>교환 신청일: {{exchangeItem.orderState.stateChangeDate}}</span>
+                    <span class='item-info'>{{exchangeOrderList[index].orderDate}}</span>
+                    <span class='exchange-date'>교환 신청일: {{exchangeOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='exchange-item'>
-                    <span><img :src='goodsInExchangeList[index].imgUrl' width='130' height='130'></span>
+                    <span><img :src='exchangeGoods.imgUrl' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{goodsInExchangeList[index].seller}}</strong></span>
+                        <span><strong>{{exchangeGoods.seller}}</strong></span>
                         <br>
-                        <span>{{goodsInExchangeList[index].title}}</span>
+                        <span>{{exchangeGoods.title}}</span>
                         <br><br>
-                        <span>수량: {{exchangeItem.goodsCount}}개</span>
+                        <span>수량: {{exchangeOrderList[index].goodsCount}}개</span>
                     </div>
 
                     <div class='process'>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class='result'>
-                        <span class='exchange-price'>{{exchangeItem.orderPrice}}</span>
+                        <span class='exchange-price'>{{exchangeOrderList[index].orderPrice}}</span>
                     </div>
                 </div>
                 <br>

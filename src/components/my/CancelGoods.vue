@@ -11,20 +11,20 @@
         <div class='cancel-list' v-else>
             <p id="cancel-info">취소된 상품이 <span>{{cancelOrderList.length}}개 있습니다.</span></p>
 
-            <div v-for='(cancelItem, index) in cancelOrderList' :key='index'>
+            <div v-for='(cancelGoods, index) in goodsInCancelList' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>주문 날짜 : {{cancelItem.orderDate}}</span>
-                    <span class='cancel-date'>취소일: {{cancelItem.orderState.stateChangeDate}}</span>
+                    <span class='item-info'>주문 날짜 : {{cancelOrderList[index].orderDate}}</span>
+                    <span class='cancel-date'>취소일: {{cancelOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='cancel-item'>
-                    <span><img :src='goodsInCancelList[index].imgUrl' width='130' height='130'></span>
+                    <span><img :src='cancelGoods.imgUrl' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{goodsInCancelList[index].seller}}</strong></span>
+                        <span><strong>{{cancelGoods.seller}}</strong></span>
                         <br>
-                        <span>{{goodsInCancelList[index].title}}</span>
+                        <span>{{cancelGoods.title}}</span>
                         <br><br>
-                        <span>수량: {{cancelItem.goodsCount}}개</span>
+                        <span>수량: {{cancelOrderList[index].goodsCount}}개</span>
                     </div>
 
                     <div class='process'>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class='result'>
-                        <span class='cancel-price'>{{cancelItem.orderPrice}}</span>
+                        <span class='cancel-price'>{{cancelOrderList[index].orderPrice}}</span>
                     </div>
                 </div>
                 <br>

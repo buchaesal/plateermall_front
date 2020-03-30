@@ -11,20 +11,20 @@
         <div class='return-list' v-else>
             <p id="return-info">반품된 상품이 <span>{{returnOrderList.length}}개 있습니다.</span></p>
 
-            <div v-for='(returnItem, index) in returnOrderList' :key='index'>
+            <div v-for='(returnGoods, index) in goodsInReturnList' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>{{returnItem.orderDate}}</span>
-                    <span class='return-date'>반품일: {{returnItem.orderState.stateChangeDate}}</span>
+                    <span class='item-info'>{{returnOrderList[index].orderDate}}</span>
+                    <span class='return-date'>반품일: {{returnOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='return-item'>
-                    <span><img :src='goodsInReturnList[index].imgUrl' width='130' height='130'></span>
+                    <span><img :src='returnGoods.imgUrl' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{goodsInReturnList[index].seller}}</strong></span>
+                        <span><strong>{{returnGoods.seller}}</strong></span>
                         <br>
-                        <span>{{goodsInReturnList[index].title}}</span>
+                        <span>{{returnGoods.title}}</span>
                         <br><br>
-                        <span>수량: {{returnItem.goodsCount}}개</span>
+                        <span>수량: {{returnOrderList[index].goodsCount}}개</span>
                     </div>
 
                     <div class='process'>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class='result'>
-                        <span class='return-price'>{{returnItem.orderPrice}}</span>
+                        <span class='return-price'>{{returnOrderList[index].orderPrice}}</span>
                     </div>
                 </div>
                 <br>
