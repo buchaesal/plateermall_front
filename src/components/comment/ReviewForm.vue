@@ -95,7 +95,7 @@
                             <img class="image" @change="changeValue" @click="cancelUpload(2)" v-if="currentReview.myPhoto3 != ''" :src='currentReview.myPhoto3' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             <img class="image" @change="changeValue" v-if="currentReview.myPhoto3 == ''" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             
-                            <input id="image-input" v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%; "/>
+                            <input id="image-input" v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" text="" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%; color: transparent;"/>
                             </div>
 
                             <p>- 매월 우수상품평 작성자 50명에게 L.POINT 2000점을 적립해 드립니다.</p>
@@ -180,25 +180,32 @@
                 }
             },
             cancelUpload(index){
-                if(index == 0){
-                    if(this.currentReview.myPhoto2 == ''){
-                        this.currentReview.myPhoto = '';
+                if(confirm("사진을 삭제하시겠습니까?")) {
+                    
+                    if(index == 0){
+                        if(this.currentReview.myPhoto2 == ''){
+                            this.currentReview.myPhoto = '';
+                        }else{
+                            this.currentReview.myPhoto = this.currentReview.myPhoto2;                        
+                        }
+
+                        this.currentReview.myPhoto2 = this.currentReview.myPhoto3;
+                        this.currentReview.myPhoto3 = '';
+                    }
+                    else if(index == 1){
+                        this.currentReview.myPhoto2 = this.currentReview.myPhoto3;
+                        this.currentReview.myPhoto3 = '';
                     }else{
-                        this.currentReview.myPhoto = this.currentReview.myPhoto2;                        
+                        this.currentReview.myPhoto3 = '';
                     }
 
-                    this.currentReview.myPhoto2 = this.currentReview.myPhoto3;
-                    this.currentReview.myPhoto3 = '';
-                }
-                else if(index == 1){
-                    this.currentReview.myPhoto2 = this.currentReview.myPhoto3;
-                    this.currentReview.myPhoto3 = '';
-                }else{
-                    this.currentReview.myPhoto3 = '';
+                        this.changeValue();
+                    }
+                
+                    alert("삭제되었습니다.");
                 }
 
-                this.changeValue();
-            }
+
         },
     }
 </script>
