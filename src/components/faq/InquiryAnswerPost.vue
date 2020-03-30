@@ -127,7 +127,7 @@
             const postId = this.$route.params.postId;
             this.questionDetail = await getQuestion(postId);
             this.updateQuestionObject = await this.questionDetail;
-            console.log(this.updateQuestionObject);
+            // console.log(this.updateQuestionObject);
             // this.updateQuestionObject.postId = this.questionDetail.postId;
             // this.updateQuestionObject.state = this.questionDetail.state;
             // this.updateQuestionObject.date = this.questionDetail.postId;
@@ -154,18 +154,20 @@
                 }
             },
             questionUpdate() {
-                if(this.answer) {
-                    alert("답변이 완료된 문의는 수정할 수 없습니다.")
-                } else {
+                // if(this.answer) {
+                //     alert("답변이 완료된 문의는 수정할 수 없습니다.");
+                // } else {
                     this.updateBtnChange();
                     console.log(this.updateQuestionObject);
                     questionUpdate(this.updateQuestionObject);
                     alert("문의가 수정되었습니다.");
                     this.$router.push("/inquiryAnswer");
-                }
+                // }
             },
             updateBtnChange() {
-                if(this.updateBtn==0) {
+                if(this.answer){
+                    alert("답변이 완료된 문의는 수정할 수 없습니다.");
+                } else if(this.updateBtn==0) {
                     this.updateBtn = 1;
                 } else {
                     this.updateBtn = 0;

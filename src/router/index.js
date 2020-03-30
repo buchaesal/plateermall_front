@@ -30,8 +30,7 @@ const routes = [
     {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'},meta: {authRequired: true}},
     {path: '/error', component: Error},
 
-    {path: '/order/ordercomplete', component: OrderCompletePage}
-    // {path: '/order/ordercomplete', components: OrderCompletePage, props:{OrderCompletePage: 'orderInformation'}}
+    {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true}
 ]
 
 export default new VueRouter({
