@@ -176,6 +176,8 @@
 <script>
     import Header from '../../share/Header';
     import Footer from '../../share/Footer.vue';
+    import {order} from "../../../api/OrderApi";
+    import OrderModel from "../model/OrderModel";
 
     export default {
         name: "MyCart",
@@ -289,7 +291,21 @@
             },
 
             buyCartList() {
+                let today = new Date();
+                let year = today.getFullYear();
+                let month = today.getMonth()+1;
+                let date = today.getDate();
 
+                month = month < 10 ? '0' + month : month;
+                date = date < 10 ? '0' + date : date;
+
+                today = year + "-" + month + "-" + date;
+
+                for (let cart of this.checkedCartList) {
+                    let option = cart.text + ", " + cart.quantity;
+                    let orderModel = new OrderModel('', "testid", cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
+                    order(orderModel);
+                }
             },
         },
         async created() {
@@ -301,6 +317,12 @@
                   return this.$store.state.cartListStore.cartList;
             },
         },
+        watch: {
+            getCartList(val, oldVal) {
+                console.log("val : ", val);
+                console.log("oldVal : ", oldVal);
+            }
+        }
     }
 </script>
 

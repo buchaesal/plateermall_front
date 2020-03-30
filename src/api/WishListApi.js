@@ -11,17 +11,6 @@ class WishListApi {
         });
     }
 
-    // 모양만 만들어봤슴다...
-    deleteGoodsWish(goodsCode) {
-        return request.delete(WISHLIST_URL, goodsCode).then(
-            (response) => {
-                return response.data;
-            }
-        ).catch(function (error) {
-            console.log(error);
-        });
-    }
-
     addGoodsWishList(goodsCodeArr) {
         return request.post(WISHLIST_URL + `/list`, goodsCodeArr).then(
             (response) => {
@@ -39,6 +28,16 @@ class WishListApi {
             }
         ).catch(function (error) {
             console.log(error);
+        });
+    }
+
+    deleteGoodsWish(goodsCode) {
+        return request.delete(WISHLIST_URL + `/${goodsCode}`).then(
+            (response) => {
+                return response.data;
+            }
+        ).catch(function (error) {
+           console.log(error);
         });
     }
 }

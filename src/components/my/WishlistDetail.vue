@@ -13,7 +13,7 @@
             <div>
                 <sui-card-group :items-per-row="4">
                     <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
-                              @click="goToGoodsDetail">
+                              @click="goToGoodsDetail(goodsData.goodsCode)">
                         <sui-image :src=" goodsData.imgUrl" width="100%"/>
                         <sui-card-content>
                             <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
@@ -23,7 +23,7 @@
                                     {{pricing(goodsData.originalPrice,
                                     goodsData.dcRate)}}<span class="unit">원</span>
                                 </div>
-                                <div class="cancel-wish">
+                                <div class="cancel-wish" @click="cancelWish(goodsData.goodsCode)">
                                     <i class="close icon"></i>
                                 </div>
                             </sui-card-description>
@@ -93,6 +93,10 @@
                 this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes();
                 await this.setGoodsFromGoodsCodes();
                 // this.$store.commit('getWishListFromApi');
+            },
+            cancelWish(goodsCode) {
+                let wishListApi = new WishListApi();
+                wishListApi.deleteGoodsWish(goodsCode);
             }
         },
         created: function () {
