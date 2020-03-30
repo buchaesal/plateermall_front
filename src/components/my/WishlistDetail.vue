@@ -23,7 +23,7 @@
                                     {{pricing(goodsData.originalPrice,
                                     goodsData.dcRate)}}<span class="unit">원</span>
                                 </div>
-                                <div class="cancel-wish">
+                                <div class="cancel-wish" @click="requestCancelWish">
                                     <i class="close icon"></i>
                                 </div>
                             </sui-card-description>
@@ -93,6 +93,9 @@
                 this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes();
                 await this.setGoodsFromGoodsCodes();
                 // this.$store.commit('getWishListFromApi');
+            },
+            requestCancelWish() {
+                alert("위시 취소")
             }
         },
         created: function () {
