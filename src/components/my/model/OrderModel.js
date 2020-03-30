@@ -16,7 +16,7 @@ class OrderModel {
         this.goodsCount = goodsCount;
         this.orderPrice = orderPrice;
         this.orderDate = orderDate;
-        this.selectedOptions = selectedOptions; // ''
+        this.selectedOptions = selectedOptions;
         this.orderState = orderState;
     }
 }

@@ -40,16 +40,6 @@ export const getReturnOrderList = function (userid) {
     })
 }
 
-export const getReturnOrder = function () {
-    request.put(ORDER_URL + `/returnorderlist`).then(
-        (response) => {
-            return response.data;
-        }
-    ).catch(function (err) {
-        console.log(err);
-    })
-}
-
 export const getOrder = function (orderId) {
     return request.get(ORDER_URL + `/${orderId}`)
         .then((response) => {return response.data})
