@@ -272,10 +272,14 @@
             containWishList() {
                 let goodsCodeArr = [];
                 this.checkedCartList.map((cart) => {
-                    goodsCodeArr.push(cart.goods.goodsCode);
+                    goodsCodeArr.push({
+                        "goodsCode" : cart.goods.goodsCode
+                    });
                 });
+
                 this.$store.commit('containWishList', goodsCodeArr);
             },
+
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);
             },

@@ -7,7 +7,8 @@
         <hr>
 
         <div class="my-order-list">
-            <NoItem v-if="orderList.length<1"></NoItem>
+            <NoItem v-if="orderList.length==0"></NoItem>
+            <sui-loader active centered inline v-else-if="orderList[0].orderId == ''"/>
             <div v-else>
                 <div v-for="(order, index) in orderList" v-bind:key="index" class="goods-list">
                     <div class="my-order-list-title">
@@ -73,21 +74,13 @@
                 this.$router.push('/deliveryanduserinfomanagement');
             },
             async getOrderList(){
-                var model = await getOrderList("testid");
-                console.log(model);
-                this.orderList =model;
-                console.log(this.orderList);
+                this.orderList = await getOrderList("testid");
                 this.setGoodsList(this.orderList);
             },
             async setGoodsList(orderList){
-                console.log("setGoodsList");
-                console.log(orderList[0].goodsId);
-                // console.log(await this.goodsApi.getGoods(orderList[0].imgUrl));
                 for(let order in orderList){
-                    console.log(orderList[order].goodsId);
                     this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
-                console.log("this.goddsInOrderList" + this.goodsInOrderList);
             },
         },
         components: {
@@ -182,5 +175,4 @@
         margin: 4px 2px;
         cursor: pointer;
     }
-
 </style>
