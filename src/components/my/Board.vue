@@ -40,8 +40,14 @@
                 </sui-table-body>
             </sui-table>
             <div class="search-box">
-                <sui-input class="search-input"/>
-                <sui-button secondary class="search-btn">검색</sui-button>
+                    <sui-dropdown class="search-dropdown"
+                        placeholder="제목"
+                        selection
+                        :options="options"
+                        v-model="searchQuestionObject.searchDropdown"
+                />
+                <sui-input class="search-input" v-model="searchQuestionObject.searchQuestionText"/>
+                <sui-button secondary class="search-btn" @click="searchQuestion">검색</sui-button>
             </div>
         </div>
     </div>
@@ -50,7 +56,7 @@
 <script>
 
     import FaqHeader from "../faq/FaqHeader";
-    import {getQuestionList, getQuestion} from "../../api/FaqApi";
+    import {getQuestionList, getQuestion, searchQuestion} from "../../api/FaqApi";
 
     export default {
         name: "Board",
@@ -61,11 +67,31 @@
             return {
                 questionList: [],
                 questionDetail: {},
+                searchQuestionObject:[
+                    {searchDropdown:''},
+                    {searchQuestionText:''}
+                ],
+                options: [
+                    {text: '제목', value: '제목',},
+                    {text: '내용', value: '제목',},
+                    {text: '작성자', value: '작성자',},
+                    {text: '제목+내용', value: '제목+내용',},
+                ],
             }
         },
         async created() {
             this.questionList = await getQuestionList();
             this.questionDetail = await getQuestion();
+        },
+        methods: {
+          searchQuestion() {
+              if(!this.searchQuestionObject.searchQuestionText) {
+                  alert("검색할 내용을 입력해주세요.");
+              } else {
+                  console.log(this.searchQuestionObject);
+                  searchQuestion(this.searchQuestionObject);
+              }
+          }
         },
     }
 </script>
@@ -135,9 +161,9 @@
     }
 
     .search-input {
-        margin-right: 10px;
+        margin: 0 10px;
         height: 36px;
         vertical-align: middle;
+        max-height: 200px;
     }
-
 </style>
