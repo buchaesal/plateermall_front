@@ -19,8 +19,13 @@
                             <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                             <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                             <sui-card-description class="price">
-                                {{pricing(goodsData.originalPrice,
-                                goodsData.dcRate)}}<span class="unit">원</span>
+                                <div class="price-area">
+                                    {{pricing(goodsData.originalPrice,
+                                    goodsData.dcRate)}}<span class="unit">원</span>
+                                </div>
+                                <div class="cancel-wish">
+                                    <i class="close icon"></i>
+                                </div>
                             </sui-card-description>
                         </sui-card-content>
                     </sui-card>
@@ -108,5 +113,17 @@
 
     .goods-card {
         cursor: pointer;
+    }
+
+    .price {
+        display: block;
+    }
+
+    .price-area {
+        float: left;
+    }
+
+    .cancel-wish {
+        float: right;
     }
 </style>
