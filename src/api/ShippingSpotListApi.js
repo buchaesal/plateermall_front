@@ -1,23 +1,16 @@
 import ShippingSpotModel from "../components/my/model/ShippingSpotModel";
-import request,{SHIPPINGSPOT_URL} from './axios';
+import request from './axios';
 
 //api/user/~~
 //리스트받아오느거
 //추가 삭제 수정
 //기본배송지변경
-export const getShippingSpotList = function (useremail) {
-
-    request.get(SHIPPINGSPOT_URL + `/getshippingspotlist/${useremail}`).then(
-        (response) => {
-            return response.data
-        }
-    ).catch(function (error) {
-        console.log(error);
-    });
+export const getShippingSpotList = function () {
+    return request.get('http://localhost:9999/api/address/list');
 }
 
-export const addDeliveryAddress = function (address) {
-    request.post('http://localhost:9999/api/address/add', address)
+export const addDeliveryAddress = function (deliveryAddress) {
+    request.post('http://localhost:9999/api/address/add', deliveryAddress)
         .then((res) => {
             return res.data;
         })

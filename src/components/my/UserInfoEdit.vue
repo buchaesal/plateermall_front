@@ -74,26 +74,31 @@
             </sui-form-field>
         </div>
         <div id="buttons">
-            <sui-button secondary @click="modifyUser">수정</sui-button>
+            <sui-button secondary>수정</sui-button>
             <sui-button basic secondary>취소</sui-button>
         </div>
     </div>
 </template>
 
 <script>
+import {getCurrentUserInfo} from '../../api/UserApi';
+
     export default {
         name: "UserInfoEdit",
-        props:['userInfo'],
         data(){
             return{
-
+                userInfo:{},
             }
         },
-        methods:{
-            modifyUser(){
-                //console.log(this.userInfo);
+        async created(){
+            let result = await getCurrentUserInfo();
+            if(result){
+                result.password = '';
+                this.userInfo = result;
+            }else{
+                //alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
             }
-        }
+        },
     }
 
 </script>
