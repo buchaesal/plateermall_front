@@ -29,6 +29,16 @@ class WishListApi {
             console.log(error);
         });
     }
+
+    deleteGoodsWish(goodsCode) {
+        return request.delete(WISHLIST_URL + `/${goodsCode}`).then(
+            (response) => {
+                return response.data;
+            }
+        ).catch(function (error) {
+           console.log(error);
+        });
+    }
 }
 
 export default WishListApi;
