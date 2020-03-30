@@ -42,7 +42,6 @@ const mutations = {
 
         await deleteComment(info.orderId);
         state.myReviews = await requestMyComments(info.userId);
-        console.log(state.myReviews);
     },
 
     async loadCommentByPurchaseCode(state, purchaseCode){
@@ -64,7 +63,6 @@ const mutations = {
     async loadUnwrittenList(state, userId){
 
         state.unWritten = await requestUnwrittenOrderId(userId);
-        console.log(state.unWritten);
     },
 
     toggleModalOpen(state){
@@ -84,6 +82,7 @@ const mutations = {
     async modifyCommentValue(state){
 
         await requestModifyComment(state.writtenReview);
+        state.myReviews = await requestMyComments(state.writtenReview.userId);
     },
 
 }

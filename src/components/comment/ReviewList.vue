@@ -4,7 +4,7 @@
         <div class="photo-review">
             <h3>포토<br>상품평</h3>
             <div class='review-img' v-for='(review, index) in getRequestComments' :key='index'>
-                <img :src='review.myPhoto' width='99' height='99' v-if='review.photo != ""'>
+                <img :src='review.myPhoto' width='99' height='99' v-if='review.myPhoto != ""'>
             </div>
         </div>
         <div class='options'>
@@ -34,8 +34,8 @@
                             <a is="sui-accordion-title" style="padding-right: 5%;"><sui-icon name="dropdown"/>더보기</a>
                             <sui-accordion-content>
                                 <img v-if="review.myPhoto != ''" :src="review.myPhoto" style="width: 300px; height: 300px; margin-right: 5%;">
-                                <img v-if="review.myPhoto2 != null" :src="review.myPhoto2" style="width: 300px; height: 300px; margin-right: 5%;">
-                                <img v-if="review.myPhoto3 != null" :src="review.myPhoto3" style="width: 300px; height: 300px;">
+                                <img v-if="review.myPhoto2 != ''" :src="review.myPhoto2" style="width: 300px; height: 300px; margin-right: 5%;">
+                                <img v-if="review.myPhoto3 != ''" :src="review.myPhoto3" style="width: 300px; height: 300px;">
                             </sui-accordion-content>
                         </sui-accordion>
                         <br>
@@ -75,7 +75,7 @@ import GoodsApi from '../../api/GoodsApi';
                 goodsCode:'',
                 currentOrderRating: null,
                 currentOption: null,
-                goodsOption:['옵션보기',],
+                goodsOption:[{text: '옵션보기', value: '옵션보기'},],
                 options: [
                     {
                         text: '전체보기',
@@ -166,6 +166,7 @@ import GoodsApi from '../../api/GoodsApi';
         width: 96%;
         height: 150px;
         background-color: #fafafa;
+        overflow-x: auto;
     }
 
     h3{
@@ -180,8 +181,8 @@ import GoodsApi from '../../api/GoodsApi';
     .review-img{
         float: left;
         display: inline-block;
-        padding: 2%;
-        overflow: auto;
+        padding-top: 2%;
+        padding-right: 2%;
     }
 
     .review-info{

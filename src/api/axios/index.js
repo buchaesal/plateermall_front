@@ -3,7 +3,7 @@ import axios from 'axios';
 // import router from "../../router";
 
 export const COMMENTS_URL = 'http://192.168.0.66:9999/api/comments';
-export const GOODS_URL = 'http://localhost:9998/api/goods';
+export const GOODS_URL = 'http://192.168.0.65:9999/api/goods';
 
 export const CART_URL = 'http://localhost:9999/api/cart';
 

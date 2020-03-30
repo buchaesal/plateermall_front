@@ -1021,6 +1021,9 @@
     .modal-inner-button {
         height: 3rem;
     }
+    .modal-inner-button .button {
+        font-size: 14px;
+    }
 
     .modal-inner p {
         font-size: 24px;

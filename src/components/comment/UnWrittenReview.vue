@@ -104,13 +104,17 @@ import GoodsApi from '../../api/GoodsApi';
 
             },
             setReview(){
-                this.$store.commit('addCommentValue', 'testid');
-                this.closeReviewModal();
-                this.unwrittenCount-=1;
+                if(confirm("상품평을 작성하시겠습니까?")) {
+                    
+                    alert("작성되었습니다.");
+                    this.$store.commit('addCommentValue', 'testid');
+                    this.closeReviewModal();
+                    this.unwrittenCount-=1;
+                }
             },
 
             async setUnwrittenInfo(userId){
-                this.$store.commit('loadUnwrittenList', userId);
+                
                 this.orderIdList = await requestUnwrittenOrderId(userId);
                 this.unwrittenCount = this.orderIdList.length;
 
@@ -129,6 +133,8 @@ import GoodsApi from '../../api/GoodsApi';
                     let goodsApi = new GoodsApi();
                     this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
                 }
+
+                this.$store.commit('loadUnwrittenList', userId);
             },
             cancelAddComment(){
                 this.closeReviewModal();
@@ -157,7 +163,6 @@ import GoodsApi from '../../api/GoodsApi';
         async created(){
             this.today = new Date().toISOString().slice(0,10);
             await this.setUnwrittenInfo('testId');
-            //this.$store.commit('loadUnWrittenOrderId', 'testId');
         },
         computed:{
             isModalOpen(){
@@ -167,7 +172,7 @@ import GoodsApi from '../../api/GoodsApi';
             getUnwritten(){
                 return this.$store.state.commentStore.unWritten;
             }
-        }
+        },
     }
 </script>
 
@@ -199,7 +204,7 @@ import GoodsApi from '../../api/GoodsApi';
     }
 
     .unwritten-list{
-        height: 800px;
+        height: 500px;
         overflow: auto;
     }
 

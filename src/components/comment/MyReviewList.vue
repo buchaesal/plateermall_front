@@ -122,12 +122,16 @@ import GoodsApi from '../../api/GoodsApi';
 
             },
             setReview(){
-                this.$store.commit('modifyCommentValue');
-                this.closeReviewModal();
+
+                if(confirm("해당 상품평을 수정하시겠습니까?")) {
+                    this.$store.commit('modifyCommentValue');
+                    
+                    alert("수정되었습니다.");
+                    this.closeReviewModal();
+                }
             },
 
             async setWrittenInfo(userId){
-                this.$store.commit('loadMyCommentsByUserId', userId);
                 this.myReviews = await requestMyComments(userId);
                 this.cancelCount = this.myReviews.length;
 
@@ -140,11 +144,13 @@ import GoodsApi from '../../api/GoodsApi';
                     let goodsApi = new GoodsApi();
                     this.goodsList.push(await goodsApi.getGoods(this.myReviews[index].goodsCode));
                 }
+
+                this.$store.commit('loadMyCommentsByUserId', userId);
             },
             async deleteReview(orderId){
                 let info = {
                     orderId: orderId,
-                    userId: 'testId',
+                    userId: 'testid',
                 }
 
                 if(confirm("해당 상품평을 삭제하시겠습니까?")) {
@@ -193,7 +199,7 @@ import GoodsApi from '../../api/GoodsApi';
     }
 
     .my-review-list {
-        height: 800px;
+        height: 500px;
         overflow: auto;
     }
 

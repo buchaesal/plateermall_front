@@ -100,6 +100,17 @@ export const deleteComment = function(orderId){
     });
 }
 
+export const addCommentStatus = function(status){
+
+    return request.post(COMMENTS_URL + `/addcommentstatus`, status).then(
+        (response)=> {
+            return response.data;
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
 class CommentApi{
 
 
