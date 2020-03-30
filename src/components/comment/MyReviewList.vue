@@ -199,7 +199,7 @@ import GoodsApi from '../../api/GoodsApi';
     }
 
     .my-review-list {
-        height: 800px;
+        height: 500px;
         overflow: auto;
     }
 

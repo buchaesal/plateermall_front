@@ -105,7 +105,6 @@ import GoodsApi from '../../api/GoodsApi';
             },
             setReview(){
                 if(confirm("상품평을 작성하시겠습니까?")) {
-                    this.$store.commit('addCommentValue', 'testid');
                     
                     alert("작성되었습니다.");
                     this.$store.commit('addCommentValue', 'testid');
@@ -205,7 +204,7 @@ import GoodsApi from '../../api/GoodsApi';
     }
 
     .unwritten-list{
-        height: 800px;
+        height: 500px;
         overflow: auto;
     }
 
