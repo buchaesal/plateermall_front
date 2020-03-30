@@ -4,15 +4,15 @@
         <p>- 상품평을 작성하시면 L.POINT를 적립하여 드립니다.</p>
         <h6>{{isModalOpen}}</h6>
         <div class='unwritten-summary'>
-            <p id='unwritten-count'>미작성 상품평 <strong>{{orderIdList.length}}</strong>건</p>
+            <p id='unwritten-count'>미작성 상품평 <strong>{{unwrittenCount}}</strong>건</p>
         </div>
         
         <div class='unwritten-list'>
-            <p id='no-unwritten' v-if='orderIdList.length == 0'>작성하실 상품평이 없습니다.</p>
+            <p id='no-unwritten' v-if='unwrittenCount == 0'>작성하실 상품평이 없습니다.</p>
 
             <div v-else>
                 <sui-item-group divided>
-                    <sui-item class='unwritten-item' v-for='(unwritten, index) in orderIdList' :key='index'>
+                    <sui-item class='unwritten-item' v-for='(unwritten, index) in getUnwritten' :key='index'>
                     <sui-item-image size="tiny" :src='goodsList[index].imgUrl'/>
                     <sui-item-content class='unwritten'>
                         <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
@@ -24,8 +24,8 @@
                         <sui-item-description>
                             <span class='purchase-date'>구매일자: {{unwrittenOrderList[index].orderDate}}</span>
                             <span class='due-date'>작성기한: {{dueDate[index]}}</span>
-                            <sui-button v-if='dueDate[index]>today' @click='openReviewModal(unwrittenOrderList[index])' size="tiny" floated="right" basic content="상품평 작성" />
-                            <sui-button v-else size="tiny" floated="right" disabled basic content="기한 만료"/>
+                            <sui-button v-if='dueDate[index]>today' @click='openReviewModal(unwrittenOrderList[index])' size="tiny" floated="right" basic content="상품평 작성" style="margin-right: 2%;"/>
+                            <sui-button v-else size="tiny" floated="right" disabled basic content="기한 만료" style="margin-right: 2%;"/>
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
@@ -75,6 +75,7 @@ import GoodsApi from '../../api/GoodsApi';
                     reviewContent:'',
                     writtenDate:'',
                 },
+                unwrittenCount:0,
                 review:{},
                 dueDate:[],
                 today:'',
@@ -100,13 +101,15 @@ import GoodsApi from '../../api/GoodsApi';
                 this.$store.commit('toggleModalOpen');
             },
             setReview(){
-                this.$store.commit('addCommentValue', this.review);
+                this.$store.commit('addCommentValue', 'testid');
                 this.closeReviewModal();
-                this.$router.push('/myreview');
+                this.unwrittenCount-=1;
             },
 
             async setUnwrittenInfo(userId){
+                this.$store.commit('loadUnwrittenList', userId);
                 this.orderIdList = await requestUnwrittenOrderId(userId);
+                this.unwrittenCount = this.orderIdList.length;
 
                 for(let index in this.orderIdList){                    
                     this.unwrittenOrderList.push(await getOrder(this.orderIdList[index]));
@@ -137,6 +140,10 @@ import GoodsApi from '../../api/GoodsApi';
             isModalOpen(){
                 return this.$store.state.commentStore.isModalOpen;
             },
+
+            getUnwritten(){
+                return this.$store.state.commentStore.unWritten;
+            }
         }
     }
 </script>

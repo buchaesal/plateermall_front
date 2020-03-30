@@ -30,8 +30,8 @@ export const getAnswer = function (postId) {
     });
 }
 
-export const registrationQuestion = function(questionObject) {
-    return request.post(`http://localhost:9999/api/faq/question/registration/`,questionObject).then(
+export const registrationQuestion = function (questionObject) {
+    return request.post(`http://localhost:9999/api/faq/question/registration/`, questionObject).then(
         (response) => {
             return response.data;
         }
@@ -42,7 +42,7 @@ export const registrationQuestion = function(questionObject) {
 
 export const questionDelete = function (postId) {
     request.get(`http://localhost:9999/api/faq/question/delete/${postId}`).then(
-        (response)=>{
+        (response) => {
             return response.data;
         }
     ).catch(function (err) {
@@ -50,12 +50,22 @@ export const questionDelete = function (postId) {
     });
 }
 
-export const questionUpdate = function(questionObject) {
-    return request.post(`http://localhost:9999/api/faq/question/update/`,questionObject).then(
-        (response)=>{
+export const questionUpdate = function (questionObject) {
+    return request.post(`http://localhost:9999/api/faq/question/update/`, questionObject).then(
+        (response) => {
             return response.data;
         }
     ).catch(function (err) {
         console.log(err);
     });
+}
+
+export const searchQuestion = function (searchQuestionObject) {
+    return request.post(`http://localhost:9999/api/faq/question/search/list`, searchQuestionObject).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function (err) {
+        console.log(err);
+    })
 }

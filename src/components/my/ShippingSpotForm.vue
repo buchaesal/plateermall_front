@@ -5,7 +5,7 @@
                 <p class="spot-properties-contents">받으시는 분</p>
             </div>
             <div>
-            <input type="text" v-model="targetShippingSpot.receiverName">
+            <input type="text" v-model="targetShippingSpot.receiver">
             </div>
         </div>
         
@@ -14,7 +14,7 @@
                 <p class="spot-properties-contents">배송지명</p>
             </div>
             <div>
-            <input type="text" v-model="targetShippingSpot.spotName">
+            <input type="text" v-model="targetShippingSpot.spotAlias">
             </div>
         </div>
         <div class="row-wrap">
@@ -22,7 +22,7 @@
                 <p class="spot-properties-contents">연락처</p>
             </div>
             <div>
-            <input type="text" v-model="targetShippingSpot.lineNumber">
+            <input type="text" v-model="targetShippingSpot.contactNumber">
             </div>
         </div>
         <div class="row-wrap">
@@ -138,4 +138,7 @@ input[type="text"]{
     border: 1px solid #333;
     color: black;
 }
+    button{
+        cursor: pointer;
+    }
 </style>
