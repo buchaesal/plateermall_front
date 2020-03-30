@@ -16,7 +16,9 @@
                             {{goodsData.dcRate}}<span class="unit">%</span>
                         </p>
                         <p class="price">
-                            {{priceFormatting(pricing(goodsData.originalPrice, goodsData.dcRate))}}<span
+                            <del>{{priceFormatting(goodsData.originalPrice)}}</del>
+                            <span>{{priceFormatting(pricing(goodsData.originalPrice, goodsData.dcRate,
+                            goodsData.shippingFee))}}</span><span
                                 class="unit">원</span>
                         </p>
                         <ul class="utils">
@@ -60,8 +62,8 @@
                     </div>
                     <div class="summary">
                         <dl class="detail">
-                            <dt v-if="isEmpty(goodsData.cardPromotions)">카드할인</dt>
-                            <dd v-if="isEmpty(goodsData.cardPromotions)">
+                            <dt v-if="!isEmpty(goodsData.cardPromotions)">카드할인</dt>
+                            <dd v-if="!isEmpty(goodsData.cardPromotions)">
                                 <span id="dcMaxInfoTxt">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
                                 <div class="tooltip">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
@@ -193,8 +195,17 @@
                         </div>
                         <div>
                             <sui-button-group class="cart-or-now">
-                                <sui-button color="black" content="쇼핑백" @click="addCart"></sui-button>
-                                <sui-button color="blue" content="바로구매"></sui-button>
+                                <sui-button color="black" content="쇼핑백" @click.native="addCart"></sui-button>
+                                <sui-modal size="tiny" v-model="open">
+                                    <div class="modal-inner">
+                                        <p>선택하신 상품이 <b>쇼핑백</b>에 담겼습니다.</p>
+                                        <sui-button-group class="modal-inner-button">
+                                            <sui-button content="계속 쇼핑하기" @click.native="toggle"></sui-button>
+                                            <sui-button color="black" content="쇼핑백 보러가기" @click="goToCart"></sui-button>
+                                        </sui-button-group>
+                                    </div>
+                                </sui-modal>
+                                <sui-button color="blue" content="바로구매" @click="directOrder"></sui-button>
                             </sui-button-group>
                         </div>
                         <div class="summary">
@@ -223,7 +234,7 @@
             </div>
             <div class="details">
                 <section class="md-details">
-                    <div v-if="isEmpty(goodsData.notice)">
+                    <div v-if="!isEmpty(goodsData.notice)">
                         <sui-accordion exclusive>
                             <sui-accordion-title active class="accordion-title">
                                 <sui-icon name="dropdown"/>
@@ -264,7 +275,7 @@
                 </div>
                 <div class="detail-tab">
                     <sui-tab>
-                        <sui-tab-pane title="구매정보" v-if="isEmpty(goodsData.infoTable)">
+                        <sui-tab-pane title="구매정보" v-if="!isEmpty(goodsData.infoTable)">
                             <table class="ui definition table">
                                 <tbody>
                                 <tr class="hidden-tr">
@@ -426,7 +437,11 @@
                 selectedOptions: [],
                 orderSumQuantity: 0,
                 orderSumPrice: 0,
+                originalPrice: 0,
                 discountedPrice: 0,
+                shippingFee: 0,
+                dcRate: 0,
+                open: false,
             }
         },
         methods: {
@@ -437,25 +452,28 @@
                     obj === "" ||
                     obj.length < 1
                 ) {
-                    return false;
-                } else {
                     return true;
+                } else {
+                    return false;
                 }
             },
             priceFormatting(price) {
-                if (this.isEmpty(price)) {
+                if (!this.isEmpty(price)) {
                     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
             },
-            pricing(originalPrice, dcRate) {
+            pricing(originalPrice, dcRate, shippingFee) {
+                this.shippingFee = shippingFee;
+                this.dcRate = dcRate;
+                this.originalPrice = originalPrice;
                 this.discountedPrice = originalPrice * (100 - dcRate) / 100;
                 return this.discountedPrice;
             },
             isDiscount(dcRate) {
                 if (dcRate !== "0" && dcRate !== null && dcRate !== 0) {
-                    return false;
-                } else {
                     return true;
+                } else {
+                    return false;
                 }
             },
             shippingRadio(index) {
@@ -475,6 +493,9 @@
                         text: option,
                         quantity: 1,
                         price: this.discountedPrice,
+                        originalPrice: this.originalPrice,
+                        dcRate: this.dcRate,
+                        shippingFee: this.shippingFee,
                     };
 
                     addOptions.push(data);
@@ -562,7 +583,34 @@
                     goodsCode: this.$route.params.goodsCode,
                     selectedOptions: this.selectedOptions
                 });
+                this.toggle();
             },
+            toggle() {
+                this.open = !this.open;
+            },
+            goToCart() {
+                this.$router.push("/cart");
+            },
+            directOrder() {
+                if (this.selectedOptions.length == 0) {
+                    alert("옵션을 먼저 선택해주세요.");
+                } else {
+                    this.$router.push({
+                        name: "ordercomplete", params: {
+                            orderData:
+                                {
+                                    goodsCode: this.$route.params.goodsCode,
+                                    selectedOptions: this.selectedOptions,
+                                }
+                        }
+                    });
+                }
+
+                //     requestOrder({
+                //         goodsCode: this.$route.params.goodsCode,
+                //         selectedOptions: this.selectedOptions
+                //     });
+            }
         },
         created() {
             this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
@@ -609,15 +657,15 @@
         color: inherit;
     }
 
+    ul {
+        list-style: none;
+    }
+
     .fix-inner {
         width: 1200px;
         margin: 0 auto;
         min-height: 600px;
         padding-top: 80px;
-    }
-
-    ul {
-        list-style: none;
     }
 
     .goods-detail {
@@ -668,12 +716,32 @@
         margin: 20px 0;
     }
 
+    .discount {
+        display: inline-block;
+        font-size: 32px;
+        vertical-align: bottom;
+    }
+
     .price {
+        display: inline-block;
         font-size: 24px;
         line-height: 33px;
     }
 
-    .unit {
+    .price del {
+        text-decoration: line-through;
+        display: block;
+        font-size: 14px;
+        line-height: 20px;
+        color: #999;
+    }
+
+    .discount .unit {
+        margin-right: 29px;
+        font-size: 24px;
+    }
+
+    .price .unit {
         font-size: 14px;
     }
 
@@ -871,8 +939,8 @@
     }
 
     .ui.basic.blue.active.button {
-        background-color: #2185d0!important;
-        color: white!important;
+        background-color: #2185d0 !important;
+        color: white !important;
     }
 
     .output {
@@ -924,6 +992,25 @@
         width: 100%;
         height: 5rem;
         margin-bottom: 20px;
+    }
+
+    .cart-or-now .button {
+        font-size: 1.3rem;
+    }
+
+    .modal-inner {
+        padding: 40px;
+        text-align: center;
+    }
+
+    .modal-inner-button {
+        height: 3rem;
+    }
+
+    .modal-inner p {
+        font-size: 24px;
+        text-align: center;
+        margin-bottom: 2rem;
     }
 
     .promotion-banner {

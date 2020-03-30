@@ -16,7 +16,7 @@
 <!--            <PasswordChange></PasswordChange>-->
 <!--        </div>-->
         <div v-if="active=='회원정보수정'">
-            <UserInfoEdit></UserInfoEdit>
+            <UserInfoEdit :userInfo="userInfo"></UserInfoEdit>
         </div>
     </div>
     </div>
@@ -27,6 +27,7 @@
     import DeliveryManagement from './DeliveryManagement'
     //import PasswordChange from './PasswordChange'
     import UserInfoEdit from "./UserInfoEdit";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "DeliveryAndUserInfoManagementTaps",
@@ -34,6 +35,7 @@
             return {
                 active: '배송지관리',
                 items: ['배송지관리', '회원정보수정'],
+                userInfo:{}
             };
         },
         methods: {
@@ -48,7 +50,17 @@
             DeliveryManagement,
             //PasswordChange,
             UserInfoEdit,
-        }
+        },
+        async created(){
+            let result = await getCurrentUserInfo();
+            if(result){
+                result.password = '';
+                this.userInfo = result;
+                console.log(this.userInfo);
+            }else{
+                //alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+            }
+        },
     }
 </script>
 

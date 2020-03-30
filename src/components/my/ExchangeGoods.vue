@@ -7,7 +7,7 @@
             <p>★최근 1개월간 진행된 교환/반품 및 3개월 이내 교환/반품 진행 중인 내역만 조회됩니다.</p>
             <p>이전 기간의 내역은 주문배송조회 메뉴에서 확인하세요.</p>
         </div>
-
+        <sui-loader active centered inline v-else-if="exchangeOrderList[0].orderId == ''"/>
         <div class='exchange-list' v-else>
             <p id="exchange-info">교환된 상품이 <span>{{exchangeOrderList.length}}개 있습니다.</span></p>
 
@@ -50,7 +50,18 @@
         name: "Sample",
         data(){
             return{
-                exchangeOrderList: [],
+                exchangeOrderList: [{
+                    orderId : '',
+                    userId : '',
+                    goodsId : '',
+                    goodsCount: -1,
+                    orderPrice : '',
+                    orderState : {
+                        orderId : '',
+                        stateChangeDate : '',
+                        orderState : '',
+                    },
+                }],
                 goodsInExchangeList: [],
                 goodsApi : new GoodsApi(),
             }
@@ -67,15 +78,12 @@
         methods: {
             async getExchangeOrder() {
                 this.exchangeOrderList = await getExchangeOrderList('testid');
-                console.log(this.exchangeOrderList);
                 await this.setGoodsList(this.exchangeOrderList);
             },
             async setGoodsList(exchangeOrderList){
-                console.log("setGoodsList");
                 for(var order in exchangeOrderList){
                     this.goodsInExchangeList.push(await this.goodsApi.getGoods(exchangeOrderList[order].goodsId));
                 }
-                console.log(this.goodsInExchangeList);
             },
         },
     }

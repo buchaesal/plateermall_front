@@ -1,7 +1,8 @@
 import ShippingSpotListApi from "../api/ShippingSpotListApi"
+import {addDeliveryAddress} from "../api/ShippingSpotListApi";
 
 const state = {
-    shippingSpotList: new ShippingSpotListApi().getShippingSpotList(),
+    shippingSpotList: [],
     roadAddress: '',
     zipcodeAddress: '',
 
@@ -41,6 +42,10 @@ const actions = {
             context.commit('getShippingSpotListFromApi');
         })
     },
+    async addShippingSpotListFromApi(context, address){
+        await addDeliveryAddress(address);
+        context.commit('addShippingSpotList',address);
+    }
 }
 
 export default {
