@@ -21,6 +21,7 @@
                         <span class="goods-img">
                         <img :src="goods.imgUrl">
                     </span>
+
                         <div class="my-order-list-info">
                             <p>{{goods.seller}}</p>
                             <p>{{goods.title}}</p>
@@ -52,7 +53,6 @@
         data() {
             return {
                 checkedIndexList: [],
-                // orderList
                 goodsApi : new GoodsApi(),
                 orderList: [{
                     orderId : '',
@@ -82,6 +82,7 @@
                     this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
             },
+
         },
         components: {
             FaqHeader,
