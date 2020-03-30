@@ -8,7 +8,7 @@ export const GOODS_URL = 'http://192.168.0.65:9999/api/goods';
 export const CART_URL = 'http://192.168.0.199:9999/api/cart';
 
 export const FAQ_URL = process.env.VUE_APP_BASE_URL + '/api/faq';
-export const ORDER_URL = 'http://localhost:9999/api/order';
+export const ORDER_URL = 'http://192.168.0.228:9999/api/order';
 export const PURCHASEHISTORY_URL = process.env.PURCHASEHISTORY_APP_BASE_URL + 'api/purchasehistory';
 
 export const USER_URL = process.env.VUE_APP_BASE_URL + '/api/user';

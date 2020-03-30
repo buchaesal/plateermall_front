@@ -40,18 +40,15 @@ export const getReturnOrderList = function (userid) {
     })
 }
 
-export const getReturnOrder = function () {
-    request.put(ORDER_URL + `/returnorderlist`).then(
-        (response) => {
-            return response.data;
-        }
-    ).catch(function (err) {
-        console.log(err);
-    })
-}
-
 export const getOrder = function (orderId) {
-    return request.get(`http://192.168.0.228:9999/api/order/${orderId}`)
+    return request.get(ORDER_URL + `/${orderId}`)
         .then((response) => {return response.data})
         .catch((err) => console.log(err));
+}
+
+export const order = function (order) {
+    return request.post(ORDER_URL + `/order`, order)
+        .then((response) => {return response.data})
+        .catch((err) => console.log(err));
+
 }

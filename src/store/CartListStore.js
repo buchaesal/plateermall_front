@@ -59,7 +59,7 @@ const mutations = {
         console.log("containWishList : " + goodsCodeArr);
 
         const wishListApi = new WishListApi();
-        wishListApi.addGoods(goodsCodeArr);
+        wishListApi.addGoodsWishList(goodsCodeArr);
     },
 
     async changeQuantity(state, changeCart) {
