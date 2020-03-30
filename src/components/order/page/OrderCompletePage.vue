@@ -49,7 +49,7 @@
                             </li>
                         </ul>
                         <div class="saving-point">
-                            <span>적립 예정 포인트 {{priceFormatting(sumOrderPrice / 100)}}점</span>
+                            <span>적립 예정 포인트 {{priceFormatting(point)}}점</span>
                             <ul class="bull-list-dash">
                                 <li>적립 예정 포인트는 상품 발송 2일 후 자동 지급됩니다.</li>
                                 <li>실제 적립된 금액은 예상 금액과 다를 수 있습니다.</li>
@@ -57,8 +57,8 @@
                         </div>
                     </div>
                 </sui-card-content>
-                <sui-card-content extra class="detail-or-home">
-                    <sui-button-group>
+                <sui-card-content extra>
+                    <sui-button-group class="detail-or-home">
                         <sui-button color="black" content="주문상세보기" @click="goToOrderDetail"></sui-button>
                         <sui-button color="blue" content="홈으로 이동" @click="goToHome"></sui-button>
                     </sui-button-group>
@@ -85,6 +85,7 @@
                 sumOriginalPrice: 0,
                 sumDiscountPrice: 0,
                 sumShippingFee: 0,
+                point: 0,
                 orderData: {}
             }
         },
@@ -115,6 +116,7 @@
                 }
 
                 this.sumOrderPrice = this.sumOriginalPrice + this.sumShippingFee - this.sumDiscountPrice;
+                this.point = Math.ceil((this.sumOriginalPrice - this.sumDiscountPrice) / 1000);
             },
             goToOrderDetail() {
                 this.$router.push("/orderList");
@@ -256,5 +258,10 @@
 
     .detail-or-home {
         text-align: center;
+        height: 4rem;
+    }
+
+    .detail-or-home .button {
+        font-size: 1.3rem;
     }
 </style>

@@ -413,6 +413,7 @@
     import RatingGraph from "../../comment/RatingGraph";
     import ReviewList from "../../comment/ReviewList";
     import {requestAddCart} from "../../../api/CartListApi";
+    import WishListApi from "../../../api/WishListApi";
 
     export default {
         name: "GoodsDetail",
@@ -565,6 +566,20 @@
             },
             likeBtnClick() {
                 this.isLike = !this.isLike;
+
+                let wishListApi = new WishListApi();
+
+                if (this.isLike) {
+                    wishListApi.addGoodsWish({
+                        "goodsCode": this.$route.params.goodsCode
+                    });
+
+                    alert("위시리스트에 담겼습니다.")
+                } else {
+                    wishListApi.deleteGoodsWish({
+                        "goodsCode": this.$route.params.goodsCode
+                    });
+                }
             },
             onTooltip1() {
                 this.tooltip1Display = true;
@@ -994,6 +1009,10 @@
         margin-bottom: 20px;
     }
 
+    .cart-or-now .button {
+        font-size: 1.3rem;
+    }
+
     .modal-inner {
         padding: 40px;
         text-align: center;
@@ -1001,6 +1020,9 @@
 
     .modal-inner-button {
         height: 3rem;
+    }
+    .modal-inner-button .button {
+        font-size: 14px;
     }
 
     .modal-inner p {
