@@ -4,16 +4,15 @@
             <h3 class="page_title">위시리스트</h3>
         </header>
         <sui-menu pointing secondary>
-            <a class="select-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item" :content="item" @click="select(item)"/>
+            <a class="select-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item"
+               :content="item" @click="select(item)"/>
         </sui-menu>
-.
         <div v-if="active=='상품'">
             <WishlistDetail/>
         </div>
         <div v-if="active=='브랜드'">
             <NoItem></NoItem>
         </div>
-
 
         <br><br>
 
