@@ -33,7 +33,7 @@
                             </sui-modal-content>
 
                             <sui-modal-actions>
-                                <sui-button basic @click="closeReviewModal()">취소</sui-button>
+                                <sui-button basic @click="cancelAddComment()">취소</sui-button>
                                 <sui-button @click='setReview()' color="black">작성완료</sui-button>
                             </sui-modal-actions>
                         </sui-modal>    
@@ -56,16 +56,18 @@ import {getOrder} from '../../api/OrderApi';
 import GoodsApi from '../../api/GoodsApi';
 
     export default {
-        name: "Sample",
+        name: "UnwrittenReview",
         data(){
             return{
                 open: false,
-                currentReview:{
+                currentReview :{
                     orderId:'',
                     goodsCode:'',
                     userId:'',
                     selectedOptions:'',
                     myPhoto:'',
+                    myPhoto2:'',
+                    myPhoto3:'',
                     quantity:0,
                     recommendCount:0,
                     deliveryValue:0,
@@ -99,6 +101,7 @@ import GoodsApi from '../../api/GoodsApi';
             closeReviewModal(){
                 this.open = false;
                 this.$store.commit('toggleModalOpen');
+
             },
             setReview(){
                 this.$store.commit('addCommentValue', 'testid');
@@ -127,13 +130,33 @@ import GoodsApi from '../../api/GoodsApi';
                     this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
                 }
             },
+            cancelAddComment(){
+                this.closeReviewModal();
+                this.currentReview ={
+                    orderId:'',
+                    goodsCode:'',
+                    userId:'',
+                    selectedOptions:'',
+                    myPhoto:'',
+                    myPhoto2:'',
+                    myPhoto3:'',
+                    quantity:0,
+                    recommendCount:0,
+                    deliveryValue:0,
+                    designValue:0,
+                    sizeValue:0,
+                    starPoint:0,
+                    reviewContent:'',
+                    writtenDate:'',
+                };
+            },
         },
         components:{
             ReviewForm,
         },
-        created(){
+        async created(){
             this.today = new Date().toISOString().slice(0,10);
-            this.setUnwrittenInfo('testId');
+            await this.setUnwrittenInfo('testId');
             //this.$store.commit('loadUnWrittenOrderId', 'testId');
         },
         computed:{
@@ -176,7 +199,7 @@ import GoodsApi from '../../api/GoodsApi';
     }
 
     .unwritten-list{
-        height: 300px;
+        height: 800px;
         overflow: auto;
     }
 
