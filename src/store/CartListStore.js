@@ -1,7 +1,8 @@
-import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, requestChangeStock} from '../api/CartListApi'
+import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, requestChangeQuantity} from '../api/CartListApi'
 import GoodsApi from '../api/GoodsApi'
 //import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
+import router from "../router/index";
 
 const state = {
     cartList: [],
@@ -14,6 +15,7 @@ const getters = {
 const mutations = {
     async getCartList(state) {
         const cartList = await requestCartList();
+
         let goodsCodeArr = [];
         
         let goodsApi = new GoodsApi();
@@ -25,31 +27,32 @@ const mutations = {
 
         const goodsList = await goodsApi.getCartGoodsList(goodsCodeArr);
 
-        console.log("goodsList : " + goodsList);
+        let resultCart = [];
 
-        for (var i=0; i<cartList.length; i++) {
-            cartList[i].goods = goodsList[i];
-        }
-
-        console.log(cartList);
-
-        state.cartList = cartList;
-    },
-
-    async deleteCart(deletedCart) {
-        const result = await requestDeleteCart(deletedCart.goodsCode);
-        console.log(result);
-    },
-
-    async checkedDeleteCartList(checkedCartList) {
-        let goodsCodeArr = [];
-
-        checkedCartList.map((cart) => {
-            goodsCodeArr.push(cart.goodsCode);
+        cartList.forEach(function(cart) {
+            goodsList.forEach(function(goods) {
+                if(cart.goodsCode === goods.goodsCode){
+                    cart.goods = goods;
+                    resultCart.push(cart);
+                }
+            });
         });
 
-        const result = await requestCheckedDeleteCartList(goodsCodeArr);
-        console.log(result);
+        console.log(resultCart);
+
+        state.cartList = resultCart;
+    },
+
+    async deleteCart(state, deletedCart) {
+        console.log(deletedCart);
+
+        await requestDeleteCart(deletedCart);
+        router.go();
+    },
+
+    async checkedDeleteCartList(state, checkedCartList) {
+        await requestCheckedDeleteCartList(checkedCartList);
+        router.go();
     },
 
     containWishList(state, goodsCodeArr) {
@@ -59,9 +62,9 @@ const mutations = {
         wishListApi.addGoods(goodsCodeArr);
     },
 
-    async changeStock(state, changeCart) {
-        const result = await requestChangeStock(changeCart);
-        console.log(result);
+    async changeQuantity(state, changeCart) {
+        await requestChangeQuantity(changeCart);
+        router.go();
     }
 }
 

@@ -7,6 +7,7 @@ import MyPage from '../components/my/page/MyPageIndex';
 import GoodsDetailPage from '../components/goods/page/GoodsDetailPage';
 import MyCart from "../components/my/page/MyCartPage";
 import Error from "../components/share/page/Error";
+import OrderCompletePage from "../components/order/page/OrderCompletePage";
 
 Vue.use(VueRouter);
 
@@ -27,8 +28,10 @@ const routes = [
     {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch'},meta: {authRequired: true}},
     {path: '/answer/:postId', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'},meta: {authRequired: true}},
     {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'},meta: {authRequired: true}},
-    {path: '/error', component: Error}
+    {path: '/error', component: Error},
 
+    {path: '/order/ordercomplete', component: OrderCompletePage}
+    // {path: '/order/ordercomplete', components: OrderCompletePage, props:{OrderCompletePage: 'orderInformation'}}
 ]
 
 export default new VueRouter({

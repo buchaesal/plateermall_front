@@ -1,8 +1,5 @@
 <template>
     <div>
-        <p class="action_info-large">
-            회원정보는 당신 마음대로 수정하면 되겠습니다....
-        </p>
         <div>
             <sui-form-field class="edit-form">
                 <sui-table definition class="edit-table">
@@ -10,28 +7,28 @@
                         <sui-table-row>
                             <sui-table-cell class="form_head">이름</sui-table-cell>
                             <sui-table-cell class="data">
-                                <p>이름은 못바꿈</p>
+                                <p>{{ userInfo.name }}</p>
                             <p class="edit-table-text">실명 정보(이름, 생년월일, 성별, 개인 고유 식별 정보)가 변경된 경우 본인 확인을 통해 정보를 수정하실 수 있습니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">연락처</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" placeholder="변경할 연락처"/>
+                                <sui-input class="edit-data" v-model="userInfo.phoneNumber" placeholder="변경할 연락처"/>
                             <p class="edit-table-text">아이디, 비밀번호 찾기 등 본인확인이 필요한 경우 또는 유료 결제 등 PLATEER MALL로부터 알림을 받을 때 사용할 휴대전화입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">이메일</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" placeholder="변경할 이메일"/>
+                                <p>{{userInfo.email}}</p>
                                 <p class="edit-table-text">PLATEER MALL 계정의 이메일 주소입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">비밀번호</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" placeholder="변경할 비밀번호"/>
+                                <sui-input class="edit-data" v-model="userInfo.password" placeholder="변경할 비밀번호"/>
                                 <p class="edit-table-text">비밀번호 변경시 입력합니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
@@ -44,14 +41,14 @@
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">
-                                <label for="SMS">SMS 수신동의</label></sui-table-cell>
+                                <label>SMS 수신동의</label></sui-table-cell>
                             <sui-table-cell class="data">
                                 <div class="form-radio">
                                     <sui-form-field>
-                                        <sui-checkbox radio name="SMS" label="동의" value="1"/>
+                                        <sui-checkbox radio name="SMS" label="동의" :checked="userInfo.smsAgree"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox radio name="SMS" label="비동의" value="2"/>
+                                        <sui-checkbox radio name="SMS" label="비동의" value="false" v-model="userInfo.smsAgree"/>
                                     </sui-form-field>
                                 </div>
                                 <p class="edit-table-text">PLATEER MALL 서비스 변경/개편/종료, 프로모션 등 PLATEER MALL의 대부분 안내에 대한 동의여부 입니다.</p>
@@ -59,7 +56,7 @@
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">
-                                <label for="Email">Email 수신동의</label></sui-table-cell>
+                                <label>Email 수신동의</label></sui-table-cell>
                             <sui-table-cell class="data">
                                 <div class="form-radio">
                                     <sui-form-field>
@@ -84,23 +81,32 @@
 </template>
 
 <script>
+import {getCurrentUserInfo} from '../../api/UserApi';
+
     export default {
-        name: "UserInfoEdit"
+        name: "UserInfoEdit",
+        data(){
+            return{
+                userInfo:{},
+            }
+        },
+        async created(){
+            let result = await getCurrentUserInfo();
+            if(result){
+                result.password = '';
+                this.userInfo = result;
+            }else{
+                alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+            }
+        },
     }
+
 </script>
 
 <style scoped>
 
     .edit-form {
         text-align: center !important;
-    }
-
-    .action_info-large {
-        margin: 20px 0 40px 0;
-        padding-top: 20px;
-        color: #666;
-        font-size: 14px;
-        font-weight: bold;
     }
 
     .user-info-edit-form {

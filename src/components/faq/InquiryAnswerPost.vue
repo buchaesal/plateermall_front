@@ -3,8 +3,8 @@
         <div class="inquiry_header">
             <FaqHeader :title="'1:1 답변확인'"></FaqHeader>
             <ul class="bull_list-dash">
-                <li>- 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
-                <li>- 문의 상태가 ‘처리중’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
+                <li> 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
+                <li> 문의 상태가 ‘처리중’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
             </ul>
         </div>
 
@@ -47,7 +47,7 @@
                 <sui-button basic secondary v-if="updateBtn" @click="updateBtnChange">수정</sui-button>
                 <sui-button basic secondary  v-if="updateBtn" @click="questionDelete">삭제</sui-button>
                 <sui-button basic secondary v-if="!updateBtn" @click="questionUpdate">수정완료</sui-button>
-                <sui-button basic secondary v-if="!updateBtn">수정취소</sui-button>
+                <sui-button basic secondary v-if="!updateBtn" @click="updateBtnChange">수정취소</sui-button>
             </div>
         </div>
 
@@ -161,6 +161,7 @@
                     console.log(this.updateQuestionObject);
                     questionUpdate(this.updateQuestionObject);
                     alert("문의가 수정되었습니다.");
+                    this.$router.push("/inquiryAnswer");
                 }
             },
             updateBtnChange() {

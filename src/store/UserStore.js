@@ -1,4 +1,5 @@
 import {login, signUp} from "../api/UserApi";
+import {setTokenInLocalStorage, deleteTokenInLocalStorage} from "../utils/tokenStorage";
 import router from "../router/index";
 
 const state = {
@@ -12,6 +13,7 @@ const getters = {
 };
 
 function resetToken(state) {
+    deleteTokenInLocalStorage();
     state.accessToken = null;
 }
 
@@ -26,13 +28,14 @@ const mutations = {
 };
 
 const actions = {
-    async SIGN_UP(context, user){
+    async SIGN_UP(context, user) {
         await signUp(user);
     },
     async REQUEST_LOGIN(context, user) {
         try {
             let msg = '';
             const result = await login(user);
+            setTokenInLocalStorage(result);
             if(result === 'noExist'){
                 msg = '아이디가 존재하지 않습니다';
             }else if(result === 'incorrect'){
@@ -46,7 +49,6 @@ const actions = {
         }
     },
 };
-
 
 
 export default {mutations, state, actions, getters};

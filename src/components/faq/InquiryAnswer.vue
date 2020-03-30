@@ -11,8 +11,7 @@
             <ul class="status" id="div_countDetail">
                 <li>총 문의 건 : <span>{{questionList.length}}</span>건</li>
                 <li>답변완료 : <span>0</span>건</li>
-                <li>처리중 건 : <span>0</span>건</li>
-                <li>접수 건 : <span>0</span>건</li>
+                <li>답변대기 : <span>0</span>건</li>
             </ul>
             <sui-table single-line>
                 <sui-table-header>
@@ -60,6 +59,7 @@
             return {
                 questionList: [],
                 answer: {},
+                answerComplete: '0',
             }
         },
         async created() {
@@ -68,6 +68,9 @@
             this.answer = await getAnswer(postId);
         },
         methods : {
+            answerIncrement() {
+                this.answerComplete++;
+            },
         },
     }
 </script>

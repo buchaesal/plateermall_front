@@ -20,8 +20,10 @@ export const requestAddCart = function(cart) {
     });
 }
 
-export const requestDeleteCart = function(cartCode) {
-    request.delete(CART_URL + `/${cartCode}`).then(
+export const requestDeleteCart = function(cart) {
+    request.delete(CART_URL, {
+            data : cart
+        }).then(
         (response) => {
             return response.data;
         }
@@ -31,7 +33,9 @@ export const requestDeleteCart = function(cartCode) {
 }
 
 export const requestCheckedDeleteCartList = function(cartList) {
-    request.delete(CART_URL + `/list`, cartList).then(
+    request.delete(CART_URL + `/list`, { 
+            data : cartList
+        }).then(
         (response) => {
             return response.data;
         }
@@ -40,7 +44,7 @@ export const requestCheckedDeleteCartList = function(cartList) {
     })
 }
 
-export const requestChangeStock = function(cart) {
+export const requestChangeQuantity = function(cart) {
     request.put(CART_URL, cart).then(
         (response) => {
             return response.data;

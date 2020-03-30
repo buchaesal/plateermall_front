@@ -3,16 +3,16 @@
         <p>- 작성하신 상품평 내역을 조회하실 수 있습니다. 판매가 종료된 상품은 목록에서 보이지 않습니다.
 
             <div class='summary'>
-        <p id='my-review-count'>작성한 상품평 <strong>{{myReviews.length}}</strong>건</p>
+        <p id='my-review-count'>작성한 상품평 <strong>{{cancelCount}}</strong>건</p>
     </div>
 
     <div class='my-review-list'>
-        <p id='no-review' v-if='myReviews.length == 0'>작성한 상품평이 없습니다.</p>
+        <p id='no-review' v-if='cancelCount == 0'>작성한 상품평이 없습니다.</p>
 
         <div v-else style="min-height: 500px">
             <sui-item-group divided>
-                <sui-item class='review-item' v-for='(review, index) in myReviews' :key='index'>
-                    <sui-item-image size="tiny" :src='photo'/>
+                <sui-item class='review-item' v-for='(review, index) in getReviews' :key='index'>
+                    <sui-item-image size="tiny" :src='review.myPhoto'/>
                     <sui-item-content class='review'>
                         <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
                         <sui-item-meta>
@@ -21,7 +21,6 @@
                         </sui-item-meta>
                         <sui-item-description>
                             <p>{{review.reviewContent}}</p>
-                            {{review.selectedOptions}}
                             <sui-form-field>
                                 <sui-accordion>
                                     <a is="sui-accordion-title" style="float:right; padding-right: 5%;">
@@ -36,7 +35,7 @@
                                                 <sui-item-content>
                                                 <sui-item-header>{{review.starPoint}}<sui-rating id="starAvg" :rating="review.starPoint" :max-rating="5" /></sui-item-header>
                                                 <sui-item-meta>
-                                                    <img class='detail-image' style="margin-right: 3%;" :src='photo' width='99' height='99'>    
+                                                    <img class='detail-image' style="margin-right: 3%;" :src="review.myPhoto" width='99' height='99'>    
                                                 </sui-item-meta>
                                                     
                                                 <sui-item-description>
@@ -47,7 +46,7 @@
                                                 </sui-item-description>
 
                                                     <sui-button @click='openReviewModal(review)' class="modify-button" size="tiny">수정</sui-button>
-                                                    <sui-button @click='deleteReview()' class="delete-button" size="tiny">삭제</sui-button>
+                                                    <sui-button @click='deleteReview(review.orderId)' class="delete-button" size="tiny">삭제</sui-button>
 
                                                     
                                                 </sui-item-content>
@@ -96,15 +95,17 @@ import GoodsApi from '../../api/GoodsApi';
                 orderList:[],
                 currentReview:{},
                 selectedReview:{},
-                photo: require('../../assets/review.jpg'),
                 review:{},
+                cancelCount:0,
             }
         },
         created() {
             this.setWrittenInfo("testId");
         },
         computed: {
-
+            getReviews(){
+                return this.$store.state.commentStore.myReviews;
+            }
         },
         methods: {
 
@@ -126,17 +127,13 @@ import GoodsApi from '../../api/GoodsApi';
             },
 
             async setWrittenInfo(userId){
+                this.$store.commit('loadMyCommentsByUserId', userId);
                 this.myReviews = await requestMyComments(userId);
-
-                console.log("----------------------");
-                console.log(this.myReviews);
+                this.cancelCount = this.myReviews.length;
 
                 for(let index in this.myReviews){
                      this.orderList.push(await getOrder(this.myReviews[index].orderId));
                 }
-
-                console.log("---------------------");
-                console.log(this.orderList.goodsId);
 
                 for(let index in this.myReviews){
                     
@@ -144,6 +141,21 @@ import GoodsApi from '../../api/GoodsApi';
                     this.goodsList.push(await goodsApi.getGoods(this.myReviews[index].goodsCode));
                 }
             },
+            async deleteReview(orderId){
+                let info = {
+                    orderId: orderId,
+                    userId: 'testId',
+                }
+
+                if(confirm("해당 상품평을 삭제하시겠습니까?")) {
+                    
+                    await this.$store.commit('deleteComment', info);
+                    alert("삭제되었습니다.");
+                    
+                    this.cancelCount -= 1;
+                    this.myReviews = this.$store.state.commentStore.myReviews;
+                }
+            }
         },
         components:{
             ReviewForm,
