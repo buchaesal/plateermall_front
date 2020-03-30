@@ -19,8 +19,8 @@
                     <div class="my-order-list-goods">
                         <sui-checkbox class="goods-checkbox"/>
                         <span class="goods-img">
-                        <img :src="goodsInOrderList[index].imgUrl">
-                    </span>
+                            <img :src="goodsInOrderList[index].imgUrl">
+                        </span>
                         <div class="my-order-list-info">
                             <p>{{goodsInOrderList[index].seller}}</p>
                             <p>{{goodsInOrderList[index].title}}</p>
@@ -52,7 +52,6 @@
         data() {
             return {
                 checkedIndexList: [],
-                // orderList
                 goodsApi : new GoodsApi(),
                 orderList: [{
                     orderId : '',
@@ -82,6 +81,7 @@
                     this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
             },
+
         },
         components: {
             FaqHeader,
