@@ -994,6 +994,10 @@
         margin-bottom: 20px;
     }
 
+    .cart-or-now .button {
+        font-size: 1.3rem;
+    }
+
     .modal-inner {
         padding: 40px;
         text-align: center;

@@ -64,7 +64,7 @@
     import UnWrittenReview from './UnWrittenReview.vue'
 
     export default {
-        name: "Sample",
+        name: "MyReview",
         data() {
             return {
                 items: ['상품평 작성', '작성한 상품평'],
