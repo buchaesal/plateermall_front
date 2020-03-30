@@ -13,7 +13,7 @@
             <div>
                 <sui-card-group :items-per-row="4">
                     <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
-                              @click="goToGoodsDetail">
+                              @click="goToGoodsDetail(goodsData.goodsCode)">
                         <sui-image :src=" goodsData.imgUrl" width="100%"/>
                         <sui-card-content>
                             <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
