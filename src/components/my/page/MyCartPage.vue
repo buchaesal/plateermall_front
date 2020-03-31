@@ -65,10 +65,10 @@
                                         </sui-segment>
                                         <sui-segment>
                                             <div>
-                                                <span class="goods-original-price">{{priceFormatting(cart.goods.originalPrice)}}원</span>
+                                                <span class="goods-original-price">{{cart.goods.originalPrice.toLocaleString()}}원</span>
                                             </div>
                                             <div>
-                                                <span class="goods-dc-price">{{priceFormatting(pricing(cart.goods.originalPrice, cart.goods.dcRate))}}원</span>
+                                                <span class="goods-dc-price">{{pricing(cart.goods.originalPrice, cart.goods.dcRate).toLocaleString()}}원</span>
                                             </div>
                                         </sui-segment>
                                     </sui-grid-column>
@@ -87,7 +87,7 @@
                                 <span>상품금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>{{priceFormatting(totalGoodsPrice())}}원</span>
+                                <span>{{totalGoodsPrice().toLocaleString()}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -95,7 +95,7 @@
                                 <span>배송비</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>+{{priceFormatting(totalShippingFee())}}원</span>
+                                <span>+{{totalShippingFee().toLocaleString()}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -103,7 +103,7 @@
                                 <span>할인금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>-{{priceFormatting(totalDcRatePrice())}}원</span>
+                                <span>-{{totalDcRatePrice().toLocaleString()}}원</span>
                             </div>
                         </div>
                         <sui-divider />
@@ -112,7 +112,7 @@
                                 <span>결제예정금액</span>
                             </div>
                             <div class="goods-price-won">
-                                <span>{{priceFormatting(totalCartPrice())}}원</span>
+                                <span>{{totalCartPrice().toLocaleString()}}원</span>
                             </div>
                         </div>
                         <div class="goods-price-info">
@@ -197,9 +197,6 @@
                 let price = originalPrice * (100 - dcRate) / 100;
                 return price;
             },
-            priceFormatting(price) {
-                return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-            },
 
             checkWholeItem() {
                 if(!this.isTotalChecked) {
@@ -279,7 +276,7 @@
                 });
 
                 this.$store.dispatch('containWishList', goodsCodeArr);
-                alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.")
+                alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.");
             },
 
             goToGoodsDetail(goodsCode) {
