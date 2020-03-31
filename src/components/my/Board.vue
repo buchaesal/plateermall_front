@@ -101,8 +101,10 @@
                     //     }
                     // }
 
-                    this.searchList = this.questionList.filter(item => {
-                        return (item.title).includes(this.searchQuestionObject.searchQuestionText);
+                    this.searchList = this.questionList.filter(dropDown => {
+                        return (dropDown.title).includes(this.searchQuestionObject.searchDropdown);
+                    });this.searchList = this.questionList.filter(searchText => {
+                        return (searchText.title).includes(this.searchQuestionObject.searchQuestionText);
                     });
                 }
             },
