@@ -188,15 +188,16 @@
                     this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0;
                     this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
                     alert('배송지가 등록되었습니다.');
+                    this.setDefaultOption();
                     this.openShippingSpotFormFlag = false;
                 }
             },
             modifyAddress(address){
                 if(confirm('수정하시겠습니까?')){
-                    this.$store.dispatch('MODIFY_USER',address);
+                    this.$store.dispatch('MODIFY_ADDRESS',address);
                     alert('배송지가 수정되었습니다.');
                     this.isModifyForm = -1;
-                    this.getShippingSpotListFromApi();
+                    this.setDefaultOption();
                 }
             },
             setDefaultOption(){

@@ -10,8 +10,8 @@ export const login = function (user) {
         .catch((err) => console.log(err))
 }
 
-export const duplicateCheck = function (user) {
-    request.get(USER_URL + `/isduplicate/${user}`)
+export const duplicateCheck = function (email) {
+    return request.get(USER_URL + `/duplicateCheck/${email}`)
         .then((response) => {
             return response.data
         })
