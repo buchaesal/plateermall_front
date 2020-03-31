@@ -1,6 +1,7 @@
 import request,{FAQ_URL} from './axios';
 
 export const getQuestionList = function () {
+
     return request.get(FAQ_URL+"/question/list").then(
         (response) => {
             return response.data;
