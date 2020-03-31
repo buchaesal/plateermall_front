@@ -191,6 +191,7 @@
                     alert('배송지가 등록되었습니다.');
                     //this.setDefaultOption();
                     this.openShippingSpotFormFlag = false;
+                    this.newShippingSpotModel = new ShippingSpotModel();
                 }
             },
             modifyAddress(address){
