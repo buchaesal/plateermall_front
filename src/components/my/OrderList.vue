@@ -74,18 +74,15 @@
                 this.$router.push('/deliveryanduserinfomanagement');
             },
             async getOrderList(){
-                console.log("getOrderList");
                 this.orderList = await getOrderList("testid");
                 this.setGoodsList(this.orderList);
             },
             async setGoodsList(orderList){
-                console.log("setGoodsList")
                 for(let order in orderList){
                     this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
             },
             async cancelOrder(index){
-                console.log("cancelOrder")
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
                 this.orderList = [{
                     orderId : '',
