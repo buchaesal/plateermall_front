@@ -122,19 +122,17 @@
             this.updateQuestionObject = await this.questionDetail;
             this.answer = await getAnswer(postId);
             this.userInfo = await getCurrentUserInfo();
-
         },
         methods: {
             async questionDelete() {
                 const postId = this.$route.params.postId;
 
-                if (this.answer) {
-                    alert("답변이 완료된 문의는 삭제할 수 없습니다.");
-                }
-                else if(this.questionDetail.writer!=this.userInfo.name){
+                if (this.questionDetail.writer != this.userInfo.name) {
                     alert("삭제 권한이 없습니다.");
-                }else {
-                    if(confirm("해당 문의를 삭제하시겠습니까?")) {
+                } else if (this.answer) {
+                    alert("답변이 완료된 문의는 삭제할 수 없습니다.");
+                } else {
+                    if (confirm("해당 문의를 삭제하시겠습니까?")) {
                         await questionDelete(postId);
                         alert("삭제되었습니다.")
                         this.$router.push("/inquiryAnswer");
@@ -153,11 +151,11 @@
                 // }
             },
             updateBtnChange() {
-                if(this.answer){
-                    alert("답변이 완료된 문의는 수정할 수 없습니다.");
-                } else if(this.questionDetail.writer!=this.userInfo.name) {
+                if (this.questionDetail.writer != this.userInfo.name) {
                     alert("수정 권한이 없습니다.");
-                } else if(this.updateBtn==0) {
+                } else if (this.answer) {
+                    alert("답변이 완료된 문의는 수정할 수 없습니다.");
+                } else if (this.updateBtn == 0) {
                     this.updateBtn = 1;
                 } else {
                     this.updateBtn = 0;

@@ -3,16 +3,18 @@ import {
     addDeliveryAddress,
     getShippingSpotList,
     deleteDeliveryAddress,
-    setDefaultAddress
+    setDefaultAddress,
+    modifyAddress
 } from "../api/ShippingSpotListApi";
 
 const state = {
     shippingSpotList: [],
     roadAddress: '',
     zipcodeAddress: '',
-
     newShippingSpotForm: {},
     modifyShippingSPotForm: {},
+    selectedDefaultId: null,
+    defaultAddress: {},
 }
 
 const getters = {}
@@ -35,26 +37,33 @@ const mutations = {
     cleanAddress(state) {
         state.roadAddress = '';
         state.zipcodeAddress = '';
+    },
+    setDefaultId(state, defaultAddress) {
+        state.selectedDefaultId = defaultAddress.id + '';
     }
 }
 
 const actions = {
-    async getShippingSpotListFromApi(context) {
-        let list = await getShippingSpotList()
+    async ADDRESS_LIST(context) {
+        await getShippingSpotList()
             .then((response) => {
-                    context.commit('getShippingSpotListFromApi', response.data);
-                    return response.data
+                    let addressList = response.data;
+                    let defalutAddress = addressList.filter((item) => {
+                        return item.isDefault === 1;
+                    })[0];
+                    if (defalutAddress) {
+                        context.commit('setDefaultId', defalutAddress);
+                    }
+                    context.commit('getShippingSpotListFromApi', addressList);
                 }
             ).catch(function (error) {
                 console.log(error);
             });
-
-        return list;
     },
     async addShippingSpotListFromApi(context, address) {
         await addDeliveryAddress(address)
             .then(() => {
-                context.dispatch('getShippingSpotListFromApi');
+                context.dispatch('ADDRESS_LIST');
             })
             .catch(function (err) {
                 console.log(err);
@@ -63,15 +72,22 @@ const actions = {
     async deleteShippingSpot(context, id) {
         await deleteDeliveryAddress(id)
             .then(() => {
-                context.dispatch('getShippingSpotListFromApi');
+                context.dispatch('ADDRESS_LIST');
             });
     },
-    async setDefaultShippingSpot(context, id) {
-        await setDefaultAddress(id)
+    async setDefaultShippingSpot(context) {
+        await setDefaultAddress(context.state.selectedDefaultId)
             .then(() => {
-                context.dispatch('getShippingSpotListFromApi');
+                context.dispatch('ADDRESS_LIST');
             });
     }
+    ,
+    async MODIFY_ADDRESS(context, address) {
+        await modifyAddress(address)
+            .then(() => {
+                context.dispatch('ADDRESS_LIST');
+            });
+    },
 }
 
 export default {

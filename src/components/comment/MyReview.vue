@@ -9,7 +9,7 @@
             <div v-if="active=='상품평 작성'">
                 <UnWrittenReview/>
             </div>
-            <div v-else>
+            <div v-if="active!='상품평 작성'">
                 <MyReviewList/>
             </div>
             <br>
@@ -67,6 +67,7 @@
         name: "MyReview",
         data() {
             return {
+                user:{},
                 items: ['상품평 작성', '작성한 상품평'],
                 active: '상품평 작성',
             };
@@ -83,6 +84,9 @@
             MyReviewList,
             UnWrittenReview,
         },
+        async created(){
+            
+        }
     }
 </script>
 

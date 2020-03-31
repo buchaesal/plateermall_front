@@ -61,12 +61,12 @@ export const questionUpdate = function (questionObject) {
     });
 }
 
-export const searchQuestion = function (searchQuestionObject) {
-    return request.post(FAQ_URL+`/question/search/list`, searchQuestionObject).then(
-        (response) => {
-            return response.data;
-        }
-    ).catch(function (err) {
-        console.log(err);
-    })
-}
+// export const searchQuestion = function (searchQuestionObject) {
+//     return request.post(FAQ_URL+`/question/search/list`, searchQuestionObject).then(
+//         (response) => {
+//             return response.data;
+//         }
+//     ).catch(function (err) {
+//         console.log(err);
+//     })
+// }

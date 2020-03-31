@@ -115,17 +115,21 @@
                 otherShippingSpots: [],
                 isModifyForm: false,
                 defaultShippingSpotCopy: {},
-                defaultAddress: {},
                 shippingSpotSize: -1,
                 checkedRadio: 'defaultShippingSpot',
-                selectedDefaultId: null
+
             }
         },
         computed: {
             shippingSpots: function () {
-                console.log('this.shippingSpots')
                 return this.$store.state.shippingSpotListStore.shippingSpotList;
             },
+            selectedDefaultId: function () {
+                return this.$store.state.shippingSpotListStore.selectedDefaultId;
+            },
+            defaultAddress: function () {
+                return this.$store.state.shippingSpotListStore.defaultAddress;
+            }
         },
         methods: {
             openShippingSpotForm() {
@@ -139,13 +143,6 @@
                 this.openShippingSpotFormFlag = false;
                 this.newShippingSpotModel = new ShippingSpotModel();
             },
-            openModifyDefaultSpotForm() {
-                this.openModifyShippingSpotFormFlag = true;
-                this.defaultShippingSpotCopy = JSON.parse(JSON.stringify(this.defaultShippingSpot));
-            },
-            closeModifyDefaultSpotForm() {
-                this.openModifyShippingSpotFormFlag = false;
-            },
             deleteShippingSpot(id) {
                 if(confirm('삭제하시겠습니까?')){
                     this.$store.dispatch('deleteShippingSpot', id);
@@ -153,23 +150,26 @@
                 }
             },
             async setDefaultShippingSpot() {
-                console.log('setDefaultShippingSpot')
+                if(this.shippingSpots.length === 0){
+                    alert('등록된 배송지가 없습니다.');
+                    return;
+                }
+
                 if (this.selectedDefaultId === this.defaultAddress.id) {
                     alert("기본 배송지입니다.");
                     return;
                 }
-                await this.$store.dispatch('setDefaultShippingSpot', this.selectedDefaultId);
+                await this.$store.dispatch('setDefaultShippingSpot');
                 alert('기본 배송지로 설정하였습니다.')
             },
             updateShippingSpotList(defaultShippingSpot, otherShippingSpots) {
-                console.log('updateSPot')
                 otherShippingSpots.push(defaultShippingSpot);
                 this.$store.commit('updateShippingSpotList', otherShippingSpots);
                 this.filterDefaultAndOtherSpots();
             },
             async getShippingSpotListFromApi() {
-                await this.$store.dispatch('getShippingSpotListFromApi');
-                this.setDefaultOption();
+                await this.$store.dispatch('ADDRESS_LIST');
+                //this.setDefaultOption();
             },
             filterDefaultAndOtherSpots() {
                 console.log('filterDefault')
@@ -185,28 +185,30 @@
             },
             registerNewShippingSpot() {
                 if(confirm('저장 하시겠습니까?')){
-                    this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0;
+                    this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0 ? 1 : 0;
+                    console.log(this.newShippingSpotModel);
                     this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
                     alert('배송지가 등록되었습니다.');
+                    //this.setDefaultOption();
                     this.openShippingSpotFormFlag = false;
                 }
             },
             modifyAddress(address){
                 if(confirm('수정하시겠습니까?')){
-                    this.$store.dispatch('MODIFY_USER',address);
+                    this.$store.dispatch('MODIFY_ADDRESS',address);
                     alert('배송지가 수정되었습니다.');
                     this.isModifyForm = -1;
-                    this.getShippingSpotListFromApi();
+                    //this.setDefaultOption();
                 }
             },
-            setDefaultOption(){
-                this.defaultAddress = this.shippingSpots.filter((item) => {
-                    return item.default === true;
-                })[0];
-                if (this.defaultAddress) {
-                    this.selectedDefaultId = this.defaultAddress.id + '';
-                }
-            }
+            // setDefaultOption(){
+            //     this.defaultAddress = this.shippingSpots.filter((item) => {
+            //         return item.isDefault === 1;
+            //     })[0];
+            //     if (this.defaultAddress) {
+            //         this.selectedDefaultId = this.defaultAddress.id + '';
+            //     }
+            // }
         },
         created: function () {
             this.getShippingSpotListFromApi();

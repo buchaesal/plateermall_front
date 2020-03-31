@@ -3,7 +3,7 @@
         <div class="user_box charge_box">
             <div class="user">
                 <p class="name charge">
-                    <span>{{user.name}}님의 마이페이지 입니다.</span>
+                    <span>{{userInfo.name}} 님의 마이페이지 입니다.</span>
                 </p>
             </div>
         </div>
@@ -50,20 +50,25 @@
         </div>
     </div>
 </template>
-i
+
 <script>
+    import {getCurrentUserInfo} from "../../api/UserApi";
+
     export default {
         name: "UserInfo",
         data() {
             return {
+                userInfo: '',
                 user: {
-                    name: '김뫄뫄',
                     pPoint: 2022,
                     localPoint: 101,
                     keepMoney: 10000,
                     coupon: ['할인', '50%']
                 }
             }
+        },
+        async created() {
+            this.userInfo = await getCurrentUserInfo();
         }
     }
 </script>

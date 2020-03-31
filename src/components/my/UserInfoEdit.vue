@@ -8,14 +8,16 @@
                             <sui-table-cell class="form_head">이름</sui-table-cell>
                             <sui-table-cell class="data">
                                 <p>{{ userInfo.name }}</p>
-                            <p class="edit-table-text">실명 정보(이름, 생년월일, 성별, 개인 고유 식별 정보)가 변경된 경우 본인 확인을 통해 정보를 수정하실 수 있습니다.</p>
+                                <p class="edit-table-text">실명 정보(이름, 생년월일, 성별, 개인 고유 식별 정보)가 변경된 경우 본인 확인을 통해 정보를 수정하실 수
+                                    있습니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">연락처</sui-table-cell>
                             <sui-table-cell class="data">
                                 <sui-input class="edit-data" v-model="userInfo.phoneNumber" placeholder="변경할 연락처"/>
-                            <p class="edit-table-text">아이디, 비밀번호 찾기 등 본인확인이 필요한 경우 또는 유료 결제 등 PLATEER MALL로부터 알림을 받을 때 사용할 휴대전화입니다.</p>
+                                <p class="edit-table-text">아이디, 비밀번호 찾기 등 본인확인이 필요한 경우 또는 유료 결제 등 PLATEER MALL로부터 알림을 받을
+                                    때 사용할 휴대전화입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
@@ -45,13 +47,16 @@
                             <sui-table-cell class="data">
                                 <div class="form-radio">
                                     <sui-form-field>
-                                        <sui-checkbox radio name="SMS" label="동의" value="true" v-model="userInfo.smsAgree"/>
+                                        <sui-checkbox radio name="SMS" label="동의" value="true"
+                                                      v-model="userInfo.smsAgree"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox radio name="SMS" label="비동의" value="false" v-model="userInfo.smsAgree"/>
+                                        <sui-checkbox radio name="SMS" label="비동의" value="false"
+                                                      v-model="userInfo.smsAgree"/>
                                     </sui-form-field>
                                 </div>
-                                <p class="edit-table-text">PLATEER MALL 서비스 변경/개편/종료, 프로모션 등 PLATEER MALL의 대부분 안내에 대한 동의여부 입니다.</p>
+                                <p class="edit-table-text">PLATEER MALL 서비스 변경/개편/종료, 프로모션 등 PLATEER MALL의 대부분 안내에 대한
+                                    동의여부 입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
@@ -60,13 +65,16 @@
                             <sui-table-cell class="data">
                                 <div class="form-radio">
                                     <sui-form-field>
-                                        <sui-checkbox radio name="Email" label="동의" value="true" v-model="userInfo.emailAgree"/>
+                                        <sui-checkbox radio name="Email" label="동의" value="true"
+                                                      v-model="userInfo.emailAgree"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox radio name="Email" label="비동의" value="false" v-model="userInfo.emailAgree"/>
+                                        <sui-checkbox radio name="Email" label="비동의" value="false"
+                                                      v-model="userInfo.emailAgree"/>
                                     </sui-form-field>
                                 </div>
-                                <p class="edit-table-text">PLATEER MALL 서비스 변경/개편/종료, 프로모션 등 PLATEER MALL의 대부분 안내에 대한 동의여부 입니다.</p>
+                                <p class="edit-table-text">PLATEER MALL 서비스 변경/개편/종료, 프로모션 등 PLATEER MALL의 대부분 안내에 대한
+                                    동의여부 입니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                     </sui-table-body>
@@ -81,28 +89,41 @@
 </template>
 
 <script>
-import {getCurrentUserInfo} from '../../api/UserApi';
+    import {getCurrentUserInfo} from '../../api/UserApi';
+    import {modifyUser} from "../../api/UserApi";
 
     export default {
         name: "UserInfoEdit",
-        data(){
-            return{
-                userInfo:{},
+        data() {
+            return {
+                userInfo: {},
             }
         },
-        async created(){
-            let result = await getCurrentUserInfo();
-            if(result){
-                result.password = '';
-                this.userInfo = result;
-                console.log(this.userInfo);
-            }else{
-                alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
-            }
+        created() {
+            this.init();
         },
-        methods:{
-            modifyUser(){
-                this.$store.dispatch('update',this.userInfo);
+        methods: {
+            async init() {
+                let result = await getCurrentUserInfo();
+                if (result) {
+                    result.password = '';
+                    result.smsAgree = result.smsAgree + '';
+                    result.emailAgree = result.emailAgree + '';
+                    this.userInfo = result;
+                } else {
+                    alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+                }
+            },
+            modifyUser() {
+                if (confirm('수정하시겠습니까?')) {
+                    this.userInfo.smsAgree = this.userInfo.smsAgree === 'true';
+                    this.userInfo.emailAgree = this.userInfo.emailAgree === 'true';
+                    modifyUser(this.userInfo)
+                        .then(() => {
+                            this.init();
+                        })
+                        .catch((err) => console.log(err));
+                }
             }
         }
     }
