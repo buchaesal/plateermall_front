@@ -15,7 +15,7 @@ const routes = [
     {path: '/', component: MainPage},
     {path: '/login', component: LoginForm},
     {path: '/signup', component: SignUpPage},
-    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent', userInfo:false},meta: {authRequired: true}},
+    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent', userInfo:false}},
     {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'},meta: {authRequired: true}},
     {path: '/inquiryAnswer', component: MyPage, props:{selectedComponent:'InquiryAnswer'},meta: {authRequired: true}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'},meta: {authRequired: true}},
