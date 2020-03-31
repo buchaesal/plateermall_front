@@ -1,104 +1,107 @@
 <template>
     <div id="main-page-container">
         <Header></Header>
-        <div class="loading-area" v-if="goodsData.goodsCode != goodsCode">
-            <sui-loader active centered inline/>
-        </div>
-        <div class="fix-inner" v-else>
-            <section class="goods-detail">
-                <div class="gallery">
-                    <img :src="goodsData.imgUrl" width="714px">
-                </div>
-                <div class="info">
-                    <p class="seller">
-                        <a href="#">{{goodsData.seller}}</a>
-                    </p>
-                    <h3 class="title">{{goodsData.title}}</h3>
-                    <div class="price-area">
-                        <p class="discount" v-if="isDiscount(goodsData.dcRate)">
-                            {{goodsData.dcRate}}<span class="unit">%</span>
-                        </p>
-                        <p class="price">
-                            <del>
-                                {{(goodsData.originalPrice).toLocaleString()}}
-                            </del>
-                            <span>{{(pricing(goodsData.originalPrice, goodsData.dcRate,
-                            goodsData.shippingFee)).toLocaleString()}}</span><span
-                                class="unit">원</span>
-                        </p>
-                        <ul class="utils">
-                            <li class="share" @mouseover="onShareList" @mouseleave="offShareList">
-                                <button class="circular ui icon basic button btn-share">
-                                    <i class="share alternate icon"></i>
-                                </button>
-                                <ul class="share-list" v-if="shareDisplay">
-                                    <li>
-                                        <button class="circular ui icon basic button facebook"><i
-                                                class="facebook icon"></i>
-                                        </button>
-                                        <br><span class="share-text">페이스북</span>
-                                    </li>
-                                    <li>
-                                        <button class="circular ui icon basic button twitter"><i
-                                                class="twitter icon"></i>
-                                        </button>
-                                        <br><span class="share-text">트위터</span>
-                                    </li>
-                                    <li>
-                                        <button class="circular ui icon basic button kakaotalk"><i
-                                                class="comment icon"></i>
-                                        </button>
-                                        <br><span class="share-text">카카오톡</span>
-                                    </li>
-                                    <li>
-                                        <button class="circular ui icon basic button url"><i class="linkify icon"></i>
-                                        </button>
-                                        <br><span class="share-text">URL복사</span>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <button class="circular ui icon basic button btn-like" @click="likeBtnClick">
-                                    <i class="heart icon red" v-if="isLike"></i>
-                                    <i class="heart outline icon" v-else></i>
-                                </button>
-                            </li>
-                        </ul>
+        <div class="container">
+            <div class="fix-inner" v-if="goodsData.goodsCode != goodsCode">
+                <sui-loader active centered inline/>
+            </div>
+            <div class="fix-inner" v-else>
+                <section class="goods-detail">
+                    <div class="gallery">
+                        <img :src="goodsData.imgUrl" width="714px">
                     </div>
-                    <div class="summary">
-                        <dl class="detail">
-                            <dt v-if="!isEmpty(goodsData.cardPromotions)">카드할인</dt>
-                            <dd v-if="!isEmpty(goodsData.cardPromotions)">
-                                <span id="dcMaxInfoTxt">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
-                                <div class="tooltip">
-                                    <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
-                                            @mouseleave="offTooltip1"><i class="info icon"></i>
+                    <div class="info">
+                        <p class="seller">
+                            <a href="#">{{goodsData.seller}}</a>
+                        </p>
+                        <h3 class="title">{{goodsData.title}}</h3>
+                        <div class="price-area">
+                            <p class="discount" v-if="isDiscount(goodsData.dcRate)">
+                                {{goodsData.dcRate}}<span class="unit">%</span>
+                            </p>
+                            <p class="price">
+                                <del>
+                                    {{(goodsData.originalPrice).toLocaleString()}}
+                                </del>
+                                <span>{{(pricing(goodsData.originalPrice, goodsData.dcRate,
+                            goodsData.shippingFee)).toLocaleString()}}</span><span
+                                    class="unit">원</span>
+                            </p>
+                            <ul class="utils">
+                                <li class="share" @mouseover="onShareList" @mouseleave="offShareList">
+                                    <button class="circular ui icon basic button btn-share">
+                                        <i class="share alternate icon"></i>
                                     </button>
-                                    <div role="tooltip" class="tooltip-conts" v-if="tooltip1Display">
-                                        <p class="desc-tit">카드 할인 혜택</p>
-                                        <ul class="benefit-list">
-                                            <li><p class="item">청구할인</p>
-                                                <div class="cards"
-                                                     v-for="(cardPromotion, index) in goodsData.cardPromotions"
-                                                     :key="index">
-                                                    <p>{{cardPromotion.card}}
-                                                        {{cardPromotion.percentage}}%</p>
-                                                    <ul class="list-square">
-                                                        <li>- {{(cardPromotion.minimum).toLocaleString()}}원 이상
-                                                            {{cardPromotion.percentage}}% 청구할인
-                                                        </li>
-                                                        <li>- 1일 할인한도 최대
-                                                            {{(cardPromotion.maximum).toLocaleString()}}원
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </li>
-                                        </ul>
+                                    <ul class="share-list" v-if="shareDisplay">
+                                        <li>
+                                            <button class="circular ui icon basic button facebook"><i
+                                                    class="facebook icon"></i>
+                                            </button>
+                                            <br><span class="share-text">페이스북</span>
+                                        </li>
+                                        <li>
+                                            <button class="circular ui icon basic button twitter"><i
+                                                    class="twitter icon"></i>
+                                            </button>
+                                            <br><span class="share-text">트위터</span>
+                                        </li>
+                                        <li>
+                                            <button class="circular ui icon basic button kakaotalk"><i
+                                                    class="comment icon"></i>
+                                            </button>
+                                            <br><span class="share-text">카카오톡</span>
+                                        </li>
+                                        <li>
+                                            <button class="circular ui icon basic button url"><i
+                                                    class="linkify icon"></i>
+                                            </button>
+                                            <br><span class="share-text">URL복사</span>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <button class="circular ui icon basic button btn-like" @click="likeBtnClick">
+                                        <i class="heart icon red" v-if="isLike"></i>
+                                        <i class="heart outline icon" v-else></i>
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="summary">
+                            <dl class="detail">
+                                <dt v-if="!isEmpty(goodsData.cardPromotions)">카드할인</dt>
+                                <dd v-if="!isEmpty(goodsData.cardPromotions)">
+                                    <span id="dcMaxInfoTxt">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
+                                    <div class="tooltip">
+                                        <button class="circular ui icon basic button btn-tooltip"
+                                                @mouseover="onTooltip1"
+                                                @mouseleave="offTooltip1"><i class="info icon"></i>
+                                        </button>
+                                        <div role="tooltip" class="tooltip-conts" v-if="tooltip1Display">
+                                            <p class="desc-tit">카드 할인 혜택</p>
+                                            <ul class="benefit-list">
+                                                <li><p class="item">청구할인</p>
+                                                    <div class="cards"
+                                                         v-for="(cardPromotion, index) in goodsData.cardPromotions"
+                                                         :key="index">
+                                                        <p>{{cardPromotion.card}}
+                                                            {{cardPromotion.percentage}}%</p>
+                                                        <ul class="list-square">
+                                                            <li>- {{(cardPromotion.minimum).toLocaleString()}}원 이상
+                                                                {{cardPromotion.percentage}}% 청구할인
+                                                            </li>
+                                                            <li>- 1일 할인한도 최대
+                                                                {{(cardPromotion.maximum).toLocaleString()}}원
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
-                            </dd>
-                            <dt>포인트</dt>
-                            <dd>
+                                </dd>
+                                <dt>포인트</dt>
+                                <dd>
                                 <span class="oners-txt mt-none">플래티어 오너스 L.POINT 0.5% 적립
                                 <div class="tooltip tooltip-oners-saving">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
@@ -135,272 +138,284 @@
                                     </div>
                                 </div>
                                 </span>
-                                *오너스 회원가로 결제 시, 표기 된 카드혜택가 및 적립 내역과 상이할 수 있습니다.
-                            </dd>
-                        </dl>
-                    </div>
-                    <div class="goods-option">
-                        <div class="option-select">
-                            <sui-dropdown class="option-dropdown"
-                                          placeholder="옵션 선택"
-                                          selection
-                                          :options="goodsData.options"
-                                          v-model="option"
-                            />
-                        </div>
-                        <div class="selected-list">
-                            <sui-message
-                                    v-for="(option, index) in selectedOptions"
-                                    :key="index"
-                                    :header="option.text"
-                                    dismissable
-                                    @dismiss="handleDismiss(index)"
-                            >
-                                <div class="option-body">
-                                    <div class="amount">
-                                        <sui-button circular icon="plus" class="ico-plus"
-                                                    @click="OptionQuantityPlus(index)"/>
-                                        <input type="number" transparent class="output" :value="option.quantity"
-                                               disabled>
-                                        <sui-button circular icon="minus" class="ico-minus"
-                                                    @click="OptionQuantityMinus(index)"/>
-                                    </div>
-                                    <div class="option-price">
-                                        <span>{{(selectedOptions[index].price).toLocaleString()}}</span>
-                                        <span class="unit">원</span>
-                                    </div>
-                                </div>
-                            </sui-message>
-                        </div>
-                        <div class="subtotal" id="priceSumInfo">
-                            <input type="hidden" id="orderSumQty" :value="orderSumQuantity">
-                            <p class="price"><span class="item" id="orderSumQtyTxt">총 {{orderSumQuantity}}개 : </span>
-                                <span id="orderDcSumPrcTxt">{{(orderSumPrice).toLocaleString()}}</span> <span
-                                        class="unit">원</span></p>
-                        </div>
-                        <div>
-                            <sui-button-group class="shipping-option">
-                                <sui-button toggle
-                                            content="택배"
-                                            basic="basic"
-                                            :color="radioButtonsColor[0]"
-                                            :active="radioButtons[0]"
-                                            @click="shippingRadio(0)"></sui-button>
-                                <sui-button toggle basic
-                                            content="방문 수령"
-                                            :color="radioButtonsColor[1]"
-                                            :active="radioButtons[1]"
-                                            @click="shippingRadio(1)"></sui-button>
-                                <sui-button toggle basic
-                                            content="빠른 배송"
-                                            :color="radioButtonsColor[2]"
-                                            :active="radioButtons[2]"
-                                            @click="shippingRadio(2)"></sui-button>
-                            </sui-button-group>
-                        </div>
-                        <div>
-                            <sui-button-group class="cart-or-now">
-                                <sui-button color="black" content="쇼핑백" @click.native="addCart"></sui-button>
-                                <sui-modal size="tiny" v-model="open">
-                                    <div class="modal-inner">
-                                        <p>선택하신 상품이 <b>쇼핑백</b>에 담겼습니다.</p>
-                                        <sui-button-group class="modal-inner-button">
-                                            <sui-button content="계속 쇼핑하기" @click.native="toggle"></sui-button>
-                                            <sui-button color="black" content="쇼핑백 보러가기" @click="goToCart"></sui-button>
-                                        </sui-button-group>
-                                    </div>
-                                </sui-modal>
-                                <sui-button color="blue" content="바로구매" @click="directOrder"></sui-button>
-                            </sui-button-group>
-                        </div>
-                        <div class="summary">
-                            <dl class="detail">
-                                <dt>모델번호</dt>
-                                <dd>{{goodsData.modelNo}}</dd>
-                                <dt>상품번호</dt>
-                                <dd>{{goodsData.goodsCode}}</dd>
-                                <dt>배송정보</dt>
-                                <dd id="deliveryInfoTxt">{{calculateDays(goodsData.shippingDays)}} 이내 택배 도착예정<br>(도착
-                                    예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
+                                    *오너스 회원가로 결제 시, 표기 된 카드혜택가 및 적립 내역과 상이할 수 있습니다.
                                 </dd>
                             </dl>
                         </div>
-                        <div class="review-summary-box">
-                            <RatingStarPoint class="review-summary"/>
+                        <div class="goods-option">
+                            <div class="option-select">
+                                <sui-dropdown class="option-dropdown"
+                                              placeholder="옵션 선택"
+                                              selection
+                                              :options="goodsData.options"
+                                              v-model="option"
+                                />
+                            </div>
+                            <div class="selected-list">
+                                <sui-message
+                                        v-for="(option, index) in selectedOptions"
+                                        :key="index"
+                                        :header="option.text"
+                                        dismissable
+                                        @dismiss="handleDismiss(index)"
+                                >
+                                    <div class="option-body">
+                                        <div class="amount">
+                                            <sui-button circular icon="plus" class="ico-plus"
+                                                        @click="OptionQuantityPlus(index)"/>
+                                            <input type="number" transparent class="output" :value="option.quantity"
+                                                   disabled>
+                                            <sui-button circular icon="minus" class="ico-minus"
+                                                        @click="OptionQuantityMinus(index)"/>
+                                        </div>
+                                        <div class="option-price">
+                                            <span>{{(selectedOptions[index].price).toLocaleString()}}</span>
+                                            <span class="unit">원</span>
+                                        </div>
+                                    </div>
+                                </sui-message>
+                            </div>
+                            <div class="subtotal" id="priceSumInfo">
+                                <input type="hidden" id="orderSumQty" :value="orderSumQuantity">
+                                <p class="price"><span class="item"
+                                                       id="orderSumQtyTxt">총 {{orderSumQuantity}}개 : </span>
+                                    <span id="orderDcSumPrcTxt">{{(orderSumPrice).toLocaleString()}}</span> <span
+                                            class="unit">원</span></p>
+                            </div>
+                            <div>
+                                <sui-button-group class="shipping-option">
+                                    <sui-button toggle
+                                                content="택배"
+                                                basic="basic"
+                                                :color="radioButtonsColor[0]"
+                                                :active="radioButtons[0]"
+                                                @click="shippingRadio(0)"></sui-button>
+                                    <sui-button toggle basic
+                                                content="방문 수령"
+                                                :color="radioButtonsColor[1]"
+                                                :active="radioButtons[1]"
+                                                @click="shippingRadio(1)"></sui-button>
+                                    <sui-button toggle basic
+                                                content="빠른 배송"
+                                                :color="radioButtonsColor[2]"
+                                                :active="radioButtons[2]"
+                                                @click="shippingRadio(2)"></sui-button>
+                                </sui-button-group>
+                            </div>
+                            <div>
+                                <sui-button-group class="cart-or-now">
+                                    <sui-button color="black" content="쇼핑백" @click.native="addCart"></sui-button>
+                                    <sui-modal size="tiny" v-model="open">
+                                        <div class="modal-inner">
+                                            <p>선택하신 상품이 <b>쇼핑백</b>에 담겼습니다.</p>
+                                            <sui-button-group class="modal-inner-button">
+                                                <sui-button content="계속 쇼핑하기" @click.native="toggle"></sui-button>
+                                                <sui-button color="black" content="쇼핑백 보러가기"
+                                                            @click="goToCart"></sui-button>
+                                            </sui-button-group>
+                                        </div>
+                                    </sui-modal>
+                                    <sui-button color="blue" content="바로구매" @click="directOrder"></sui-button>
+                                </sui-button-group>
+                            </div>
+                            <div class="summary">
+                                <dl class="detail">
+                                    <dt>모델번호</dt>
+                                    <dd>{{goodsData.modelNo}}</dd>
+                                    <dt>상품번호</dt>
+                                    <dd>{{goodsData.goodsCode}}</dd>
+                                    <dt>배송정보</dt>
+                                    <dd id="deliveryInfoTxt">{{calculateDays(goodsData.shippingDays)}} 이내 택배 도착예정<br>(도착
+                                        예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="review-summary-box">
+                                <RatingStarPoint class="review-summary"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+                <div class="promotion-banner">
+                    <div class="banner-text">
+                        <a href="#">프로모션 배너</a>
+                    </div>
+                </div>
+                <div class="details">
+                    <section class="md-details">
+                        <div v-if="!isEmpty(goodsData.notice)">
+                            <sui-accordion exclusive>
+                                <sui-accordion-title active class="accordion-title">
+                                    <sui-icon name="dropdown"/>
+                                    NOTICE
+                                </sui-accordion-title>
+                                <sui-accordion-content active class="accordion-content">
+                                    <p>
+                                        {{goodsData.notice}}
+                                    </p>
+                                </sui-accordion-content>
+                            </sui-accordion>
+                        </div>
+                        <h4 class="subheading">상품 상세 설명</h4>
+                        <div class="goods-more-detail">
+                            {{goodsData.goodsDetail}}
+                        </div>
+                        <div>
+                            <sui-accordion exclusive>
+                                <sui-accordion-title active class="accordion-title">
+                                    <sui-icon name="dropdown"/>
+                                    상품평
+                                </sui-accordion-title>
+                                <sui-accordion-content active class="review-content">
+                                    <div>
+                                        <RatingStarPoint/>
+                                        <RatingGraph/>
+                                        <ReviewList/>
+                                    </div>
+                                </sui-accordion-content>
+                            </sui-accordion>
                         </div>
 
+                    </section>
+                    <div class="brand-banner">
+                        <div class="banner-text">
+                            <a href="#">{{goodsData.seller}}</a>
+                        </div>
                     </div>
-                </div>
-            </section>
-            <div class="promotion-banner">
-                <div class="banner-text">
-                    <a href="#">프로모션 배너</a>
-                </div>
-            </div>
-            <div class="details">
-                <section class="md-details">
-                    <div v-if="!isEmpty(goodsData.notice)">
-                        <sui-accordion exclusive>
-                            <sui-accordion-title active class="accordion-title">
-                                <sui-icon name="dropdown"/>
-                                NOTICE
-                            </sui-accordion-title>
-                            <sui-accordion-content active class="accordion-content">
+                    <div class="detail-tab">
+                        <sui-tab>
+                            <sui-tab-pane title="구매정보" v-if="!isEmpty(goodsData.infoTable)">
+                                <table class="ui definition table">
+                                    <tbody>
+                                    <tr class="hidden-tr">
+                                        <td class="two wide column"></td>
+                                    </tr>
+                                    <tr v-for="(row, index) in goodsData.infoTable"
+                                        :key="index">
+                                        <td>{{row.head}}</td>
+                                        <td>{{row.body}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </sui-tab-pane>
+                            <sui-tab-pane title="Q&A">
                                 <p>
-                                    {{goodsData.notice}}
+                                    Q&A Vue
                                 </p>
-                            </sui-accordion-content>
-                        </sui-accordion>
-                    </div>
-                    <h4 class="subheading">상품 상세 설명</h4>
-                    <div class="goods-more-detail">
-                        {{goodsData.goodsDetail}}
-                    </div>
-                    <div>
-                        <sui-accordion exclusive>
-                            <sui-accordion-title active class="accordion-title">
-                                <sui-icon name="dropdown"/>
-                                상품평
-                            </sui-accordion-title>
-                            <sui-accordion-content active class="review-content">
-                                <div>
-                                    <RatingStarPoint/>
-                                    <RatingGraph/>
-                                    <ReviewList/>
+                            </sui-tab-pane>
+                            <sui-tab-pane title="배송/결제/교환/반품 정보">
+                                <h3 is="sui-header" dividing>
+                                    배송안내
+                                </h3>
+                                <table class="ui definition table">
+                                    <tbody>
+                                    <tr>
+                                        <td class="two wide column">배송비</td>
+                                        <td>{{(goodsData.shippingFee).toLocaleString()}}원 (30,000원이상 무료배송)<br>
+                                            제주/도서산간 지역의 경우, 추가비용 발생 가능
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>배송정보</td>
+                                        <td>택배
+                                            {{calculateDays(goodsData.shippingDays)}} 이내 택배 도착예정<br>
+                                            (도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>배송지역</td>
+                                        <td>전국(일부지역 제외)</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                                <h3 is="sui-header" dividing>
+                                    교환/반품 접수안내
+                                </h3>
+                                <div>교환/반품 접수 방법 안내
+                                    1. 마이플래티어 > 주문/배송조회로 이동
+                                    2. 주문건에서 '교환/반품접수' 버튼 선택
+                                    주문배송조회 바로가기
+                                    MY PLATEER에서 접수가 어려우신 경우, 고객만족센터 02-554-4668 으로 문의하여 주시기 바랍니다.
                                 </div>
-                            </sui-accordion-content>
-                        </sui-accordion>
-                    </div>
 
-                </section>
-                <div class="brand-banner">
-                    <div class="banner-text">
-                        <a href="#">{{goodsData.seller}}</a>
-                    </div>
-                </div>
-                <div class="detail-tab">
-                    <sui-tab>
-                        <sui-tab-pane title="구매정보" v-if="!isEmpty(goodsData.infoTable)">
-                            <table class="ui definition table">
-                                <tbody>
-                                <tr class="hidden-tr">
-                                    <td class="two wide column"></td>
-                                </tr>
-                                <tr v-for="(row, index) in goodsData.infoTable"
-                                    :key="index">
-                                    <td>{{row.head}}</td>
-                                    <td>{{row.body}}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </sui-tab-pane>
-                        <sui-tab-pane title="Q&A">
-                            <p>
-                                Q&A Vue
-                            </p>
-                        </sui-tab-pane>
-                        <sui-tab-pane title="배송/결제/교환/반품 정보">
-                            <h3 is="sui-header" dividing>
-                                배송안내
-                            </h3>
-                            <table class="ui definition table">
-                                <tbody>
-                                <tr>
-                                    <td class="two wide column">배송비</td>
-                                    <td>{{(goodsData.shippingFee).toLocaleString()}}원 (30,000원이상 무료배송)<br>
-                                        제주/도서산간 지역의 경우, 추가비용 발생 가능
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>배송정보</td>
-                                    <td>택배
-                                        {{calculateDays(goodsData.shippingDays)}} 이내 택배 도착예정<br>
-                                        (도착 예정일은 상품재고 현황에 따라 변경될 수 있습니다.)
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>배송지역</td>
-                                    <td>전국(일부지역 제외)</td>
-                                </tr>
-                                </tbody>
-                            </table>
-
-                            <h3 is="sui-header" dividing>
-                                교환/반품 접수안내
-                            </h3>
-                            <div>교환/반품 접수 방법 안내
-                                1. 마이플래티어 > 주문/배송조회로 이동
-                                2. 주문건에서 '교환/반품접수' 버튼 선택
-                                주문배송조회 바로가기
-                                MY PLATEER에서 접수가 어려우신 경우, 고객만족센터 02-554-4668 으로 문의하여 주시기 바랍니다.
-                            </div>
-
-                            <h3 is="sui-header" dividing>
-                                교환/반품 규정안내
-                            </h3>
-                            <table class="ui definition table">
-                                <tbody>
-                                <tr>
-                                    <td class="two wide column">교환/반품 비용</td>
-                                    <td>
-                                        <div>
+                                <h3 is="sui-header" dividing>
+                                    교환/반품 규정안내
+                                </h3>
+                                <table class="ui definition table">
+                                    <tbody>
+                                    <tr>
+                                        <td class="two wide column">교환/반품 비용</td>
+                                        <td>
+                                            <div>
+                                                <sui-list bulleted>
+                                                    <sui-list-item>예상 반품비 :
+                                                        {{(goodsData.shippingFee).toLocaleString()}}원,
+                                                        예상 교환비 : {{(goodsData.shippingFee * 2).toLocaleString()}}원 (주문
+                                                        상품을
+                                                        1개씩 각각 반품/교환 시
+                                                        상품 별로 발생하는 비용임)
+                                                    </sui-list-item>
+                                                    <sui-list-item>정확한 반품/교환비는 MY PLATEER에서 반품/교환 접수 시 또는 고객센터로 문의 시 확인
+                                                        가능합니다.
+                                                    </sui-list-item>
+                                                    <sui-list-item>고객님의 단순변심으로 인하여 교환/반품을 하시는 경우에는 상품등의 반환에 필요한 비용을 고객님이
+                                                        부담하셔야 합니다.
+                                                    </sui-list-item>
+                                                    <sui-list-item>고객님이 받으신 상품 등의 내용이 표시/광고 내용과 다르거나 계약내용과 다르게 이행되어
+                                                        교환/반품을
+                                                        하시는 경우에는, 교환·반품 배송비는 무료입니다.
+                                                    </sui-list-item>
+                                                    <sui-list-item>고객님께서 직접 택배로 발송하실 경우 택배비는 본인 부담입니다.</sui-list-item>
+                                                    <sui-list-item>중/대형 가전, 가구등 설치상품의 경우 상품, 지역, 설치비 등에 따라 반품/교환 비용이 상이할
+                                                        수
+                                                        있습니다.
+                                                    </sui-list-item>
+                                                    <sui-list-item>회원등급에 따라 반품·교환 비용이 상이할 수 있습니다.</sui-list-item>
+                                                </sui-list>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>교환/반품 신청일 기준</td>
+                                        <td>
                                             <sui-list bulleted>
-                                                <sui-list-item>예상 반품비 : {{(goodsData.shippingFee).toLocaleString()}}원,
-                                                    예상 교환비 : {{(goodsData.shippingFee * 2).toLocaleString()}}원 (주문 상품을
-                                                    1개씩 각각 반품/교환 시
-                                                    상품 별로 발생하는 비용임)
+                                                <sui-list-item>단순변심으로 인한 교환/반품은 상품을 받으신 날부터 7일 이내 신청 가능합니다.
                                                 </sui-list-item>
-                                                <sui-list-item>정확한 반품/교환비는 MY PLATEER에서 반품/교환 접수 시 또는 고객센터로 문의 시 확인
-                                                    가능합니다.
+                                                <sui-list-item>상품의 상세정보 등이 표기/광고한 내용과 다르거나, 계약내용이 다르게 이행되어 교환/반품을 하는 경우
+                                                    상품을
+                                                    받으신 날부터 3개월 이내 혹은 사실을 알게 된 날 또는 알 수 있었던 날부터 30일 이내 신청 가능합니다.
                                                 </sui-list-item>
-                                                <sui-list-item>고객님의 단순변심으로 인하여 교환/반품을 하시는 경우에는 상품등의 반환에 필요한 비용을 고객님이
-                                                    부담하셔야 합니다.
+                                                <sui-list-item>상품 교환·반품 안내</sui-list-item>
+                                                <sui-list-item>식품 7일 이내, 의류·보석 15일 이내, 그 밖의 일반 상품 30일 이내 교환 반품 가능합니다.
                                                 </sui-list-item>
-                                                <sui-list-item>고객님이 받으신 상품 등의 내용이 표시/광고 내용과 다르거나 계약내용과 다르게 이행되어 교환/반품을
-                                                    하시는 경우에는, 교환·반품 배송비는 무료입니다.
+                                                <sui-list-item>주문제작 상품 등 일부 상품은 교환·반품 기준이 상이할 수 있습니다.</sui-list-item>
+                                                <sui-list-item>전자상거래법에 따른 교환·반품 규정이 상품공급업체가 개별적으로 지정한 교환·반품 조건 보다 우선
+                                                    합니다.
                                                 </sui-list-item>
-                                                <sui-list-item>고객님께서 직접 택배로 발송하실 경우 택배비는 본인 부담입니다.</sui-list-item>
-                                                <sui-list-item>중/대형 가전, 가구등 설치상품의 경우 상품, 지역, 설치비 등에 따라 반품/교환 비용이 상이할 수
-                                                    있습니다.
+                                                <sui-list-item>방문 수령 픽업 배송상품은 해당 픽업 지점에 상품도착일로부터 5일까지 픽업 가능합니다. 픽업가능일 경과
+                                                    시 자동으로 반품되며 반품배송비 차감 후 환불됩니다.
                                                 </sui-list-item>
-                                                <sui-list-item>회원등급에 따라 반품·교환 비용이 상이할 수 있습니다.</sui-list-item>
                                             </sui-list>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>교환/반품 신청일 기준</td>
-                                    <td>
-                                        <sui-list bulleted>
-                                            <sui-list-item>단순변심으로 인한 교환/반품은 상품을 받으신 날부터 7일 이내 신청 가능합니다.</sui-list-item>
-                                            <sui-list-item>상품의 상세정보 등이 표기/광고한 내용과 다르거나, 계약내용이 다르게 이행되어 교환/반품을 하는 경우 상품을
-                                                받으신 날부터 3개월 이내 혹은 사실을 알게 된 날 또는 알 수 있었던 날부터 30일 이내 신청 가능합니다.
-                                            </sui-list-item>
-                                            <sui-list-item>상품 교환·반품 안내</sui-list-item>
-                                            <sui-list-item>식품 7일 이내, 의류·보석 15일 이내, 그 밖의 일반 상품 30일 이내 교환 반품 가능합니다.
-                                            </sui-list-item>
-                                            <sui-list-item>주문제작 상품 등 일부 상품은 교환·반품 기준이 상이할 수 있습니다.</sui-list-item>
-                                            <sui-list-item>전자상거래법에 따른 교환·반품 규정이 상품공급업체가 개별적으로 지정한 교환·반품 조건 보다 우선 합니다.
-                                            </sui-list-item>
-                                            <sui-list-item>방문 수령 픽업 배송상품은 해당 픽업 지점에 상품도착일로부터 5일까지 픽업 가능합니다. 픽업가능일 경과
-                                                시 자동으로 반품되며 반품배송비 차감 후 환불됩니다.
-                                            </sui-list-item>
-                                        </sui-list>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
 
-                            <h3 is="sui-header" dividing>
-                                교환/반품 규정 안내
-                            </h3>
-                            <div>
-                                상품 정보 페이지에 협력업체가 개별적으로 게시한 "반품, 교환, 환불"(이하 "청약철회"라 합니다)에 관한 내용이 "전자상거래등에서의소비자보호에관한법률"
-                                (이하 전상법이라 합니다)에서 규정한 내용보다 고객님께 유리한 경우에는 개별적으로 게시한 해당 "청약철회" 내용을 우선 적용하며, "전상법"의 규정보다 불리한
-                                경우에는 "전상법"의 규정을 우선하여 적용합니다.
-                            </div>
-                        </sui-tab-pane>
-                    </sui-tab>
+                                <h3 is="sui-header" dividing>
+                                    교환/반품 규정 안내
+                                </h3>
+                                <div>
+                                    상품 정보 페이지에 협력업체가 개별적으로 게시한 "반품, 교환, 환불"(이하 "청약철회"라 합니다)에 관한 내용이
+                                    "전자상거래등에서의소비자보호에관한법률"
+                                    (이하 전상법이라 합니다)에서 규정한 내용보다 고객님께 유리한 경우에는 개별적으로 게시한 해당 "청약철회" 내용을 우선 적용하며, "전상법"의 규정보다
+                                    불리한
+                                    경우에는 "전상법"의 규정을 우선하여 적용합니다.
+                                </div>
+                            </sui-tab-pane>
+                        </sui-tab>
+                    </div>
                 </div>
             </div>
         </div>
@@ -433,7 +448,7 @@
         },
         data() {
             return {
-                userId: getCurrentUserInfo(),
+                userInfo: null,
                 goodsCode: null,
                 option: null,
                 current: null,
@@ -597,9 +612,8 @@
                 this.tooltip2Display = false;
             },
             addCart() {
-                console.log(this.userId)
                 requestAddCart({
-                    userId: this.userId,
+                    userId: (this.userInfo).email,
                     goodsCode: this.$route.params.goodsCode,
                     selectedOptions: this.selectedOptions
                 });
@@ -632,7 +646,8 @@
                 //     });
             }
         },
-        created() {
+        async created() {
+            this.userInfo = await getCurrentUserInfo();
             this.goodsCode = this.$route.params.goodsCode;
             this.$store.commit("getGoodsModel", this.goodsCode);
             this.$store.commit("loadCommentByGoodsCode", this.goodsCode);
@@ -682,16 +697,15 @@
         list-style: none;
     }
 
-    .loading-area {
+    .container {
+        width: 100%;
         min-height: 600px;
-        padding: 10%;
+        padding-top: 80px;
     }
 
     .fix-inner {
         width: 1200px;
         margin: 0 auto;
-        min-height: 600px;
-        padding-top: 80px;
     }
 
     .goods-detail {
