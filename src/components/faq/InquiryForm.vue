@@ -147,13 +147,7 @@
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/inquiryAnswer");
                 }
-            },
-            // goToLogIn() {
-            //     if(!this.userInfo) {
-            //         alert("로그인 후 이용할 수 있는 기능입니다.")
-            //         this.$router.push("/login");
-            //     }
-            // },
+            }
         },
         async created() {
             this.userInfo = await getCurrentUserInfo();
