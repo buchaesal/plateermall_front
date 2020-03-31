@@ -117,7 +117,7 @@
                     territory: '',
                     state:'',
                     date: new Date().getFullYear()+' - '+ (new Date().getMonth()+1) + ' - ' + new Date().getDate(),
-                    writer: '로그인한 사용자 정보',
+                    writer: '',
                     goodsCode: '',
                     title: '',
                     description: '',
