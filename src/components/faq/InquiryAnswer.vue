@@ -28,8 +28,7 @@
                     </sui-table-row>
                 </sui-table-body>
                 <sui-table-body v-else>
-                    <sui-table-row v-for="(post, index) in questionList" :key="index">
-
+                    <sui-table-row v-for="(post, index) in questionList" :key="index" v-show="post.writer===userInfo.name">
                         <sui-table-cell v-if="post.state">답변완료</sui-table-cell>
                         <sui-table-cell v-else>답변대기</sui-table-cell>
 
@@ -49,23 +48,26 @@
     import FaqHeader from "./FaqHeader";
     // import FaqApi from "../../api/FaqApi";
     import {getAnswer, getQuestionList} from "../../api/FaqApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "InquiryAnswer",
-        components: {
-            FaqHeader,
-        },
         data() {
             return {
                 questionList: [],
                 answer: {},
                 answerComplete: '0',
+                userInfo: '',
             }
+        },
+        components: {
+            FaqHeader,
         },
         async created() {
             const postId = this.$route.params.postId;
             this.questionList = await getQuestionList();
             this.answer = await getAnswer(postId);
+            this.userInfo = await getCurrentUserInfo();
         },
         methods : {
             answerIncrement() {

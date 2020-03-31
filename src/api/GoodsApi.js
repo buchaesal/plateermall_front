@@ -23,6 +23,16 @@ class GoodsApi {
         });
     }
 
+    getCategoryGoodsList(categoryCode) {
+        return request.get(GOODS_URL + `/goodslist/${categoryCode}`).then(
+            (response) => {
+                return response.data;
+            }
+        ).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     getCartGoodsList(goodsCodeList) {
         return request.post(GOODS_URL + `/goodslist/cart/`, goodsCodeList).then(
             (response) => {

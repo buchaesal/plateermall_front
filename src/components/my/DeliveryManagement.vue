@@ -169,12 +169,7 @@
             },
             async getShippingSpotListFromApi() {
                 await this.$store.dispatch('getShippingSpotListFromApi');
-                this.defaultAddress = this.shippingSpots.filter((item) => {
-                    return item.default === true;
-                })[0];
-                if (this.defaultAddress) {
-                    this.selectedDefaultId = this.defaultAddress.id + '';
-                }
+                this.setDefaultOption();
             },
             filterDefaultAndOtherSpots() {
                 console.log('filterDefault')
@@ -194,11 +189,23 @@
                     this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
                     alert('배송지가 등록되었습니다.');
                     this.openShippingSpotFormFlag = false;
-                    this.getShippingSpotListFromApi();
                 }
             },
             modifyAddress(address){
-                console.log(address);
+                if(confirm('수정하시겠습니까?')){
+                    this.$store.dispatch('MODIFY_USER',address);
+                    alert('배송지가 수정되었습니다.');
+                    this.isModifyForm = -1;
+                    this.getShippingSpotListFromApi();
+                }
+            },
+            setDefaultOption(){
+                this.defaultAddress = this.shippingSpots.filter((item) => {
+                    return item.default === true;
+                })[0];
+                if (this.defaultAddress) {
+                    this.selectedDefaultId = this.defaultAddress.id + '';
+                }
             }
         },
         created: function () {
