@@ -419,6 +419,7 @@
     import ReviewList from "../../comment/ReviewList";
     import {requestAddCart} from "../../../api/CartListApi";
     import WishListApi from "../../../api/WishListApi";
+    import {getCurrentUserInfo} from "../../../api/UserApi";
 
     export default {
         name: "GoodsDetail",
@@ -432,6 +433,7 @@
         },
         data() {
             return {
+                userId: getCurrentUserInfo(),
                 goodsCode: null,
                 option: null,
                 current: null,
@@ -595,7 +597,9 @@
                 this.tooltip2Display = false;
             },
             addCart() {
+                console.log(this.userId)
                 requestAddCart({
+                    userId: this.userId,
                     goodsCode: this.$route.params.goodsCode,
                     selectedOptions: this.selectedOptions
                 });

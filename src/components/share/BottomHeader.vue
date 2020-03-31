@@ -4,8 +4,7 @@
             <div class="left_bar">
                 <span class="item"><a @click="goToHome">HOME</a></span>
                 <span class="item" v-for="(category, index) in categoryList"
-                      :key="index"><a>{{category.name}}</a></span>
-
+                      :key="index"><a @click="goToCategory(category.categoryCode)">{{category.name}}</a></span>
             </div>
 
             <div class="right_bar">
@@ -26,7 +25,10 @@
         methods: {
             goToHome() {
                 this.$router.push('/');
-            }
+            },
+            goToCategory(categoryCode) {
+                this.$router.push('/category/' + categoryCode);
+            },
         },
         created() {
             this.$store.commit("getTopCategoryList");
