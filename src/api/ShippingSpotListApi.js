@@ -23,7 +23,7 @@ export const deleteDeliveryAddress = function (id) {
 }
 
 export const setDefaultAddress = function (id) {
-    return request.get(`http://localhost:9999/api/address/${id}`);
+    return request.get(`http://localhost:9999/api/address/setDefaultAddr/${id}`);
 }
 class ShippingSpotListApi {
 }

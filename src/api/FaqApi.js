@@ -1,7 +1,7 @@
-import request from './axios';
+import request,{FAQ_URL} from './axios';
 
 export const getQuestionList = function () {
-    return request.get("http://localhost:9999/api/faq/question/list").then(
+    return request.get(FAQ_URL+"/question/list").then(
         (response) => {
             return response.data;
         }
@@ -11,7 +11,7 @@ export const getQuestionList = function () {
 }
 
 export const getQuestion = function (postId) {
-    return request.get(`http://localhost:9999/api/faq/question/detail/${postId}`).then(
+    return request.get(FAQ_URL+`/question/detail/${postId}`).then(
         (response) => {
             return response.data;
         }
@@ -21,7 +21,7 @@ export const getQuestion = function (postId) {
 }
 
 export const getAnswer = function (postId) {
-    return request.get(`http://localhost:9999/api/faq/answer/${postId}`).then(
+    return request.get(FAQ_URL+`/answer/${postId}`).then(
         (response) => {
             return response.data;
         }
@@ -31,7 +31,7 @@ export const getAnswer = function (postId) {
 }
 
 export const registrationQuestion = function (questionObject) {
-    return request.post(`http://localhost:9999/api/faq/question/registration/`, questionObject).then(
+    return request.post(FAQ_URL+`/question/registration/`, questionObject).then(
         (response) => {
             return response.data;
         }
@@ -41,7 +41,7 @@ export const registrationQuestion = function (questionObject) {
 }
 
 export const questionDelete = function (postId) {
-    request.get(`http://localhost:9999/api/faq/question/delete/${postId}`).then(
+    request.get(FAQ_URL+`/question/delete/${postId}`).then(
         (response) => {
             return response.data;
         }
@@ -51,7 +51,7 @@ export const questionDelete = function (postId) {
 }
 
 export const questionUpdate = function (questionObject) {
-    return request.post(`http://localhost:9999/api/faq/question/update/`, questionObject).then(
+    return request.post(FAQ_URL+`/question/update/`, questionObject).then(
         (response) => {
             return response.data;
         }
@@ -61,7 +61,7 @@ export const questionUpdate = function (questionObject) {
 }
 
 export const searchQuestion = function (searchQuestionObject) {
-    return request.post(`http://localhost:9999/api/faq/question/search/list`, searchQuestionObject).then(
+    return request.post(FAQ_URL+`/question/search/list`, searchQuestionObject).then(
         (response) => {
             return response.data;
         }
