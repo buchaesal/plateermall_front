@@ -178,6 +178,7 @@
     import Footer from '../../share/Footer.vue';
     import {order} from "../../../api/OrderApi";
     import OrderModel from "../model/OrderModel";
+    import {addCommentStatus} from "../../../api/CommentApi";
 
     export default {
         name: "MyCart",
@@ -199,9 +200,7 @@
             priceFormatting(price) {
                 return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
             },
-            addCartList() {
-                this.$store.commit('addCartList');
-            },
+
             checkWholeItem() {
                 if(!this.isTotalChecked) {
                     this.checkedCartList = this.$store.state.cartListStore.cartList;
@@ -260,14 +259,14 @@
             deleteCart(deletedCart) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
-                    this.$store.commit('deleteCart', deletedCart);
+                    this.$store.dispatch('deleteCart', deletedCart);
                 }
             },
 
             checkedDeleteCartList() {
                 const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
                 if (result) {
-                    this.$store.commit('checkedDeleteCartList', this.checkedCartList);
+                    this.$store.dispatch('checkedDeleteCartList', this.checkedCartList);
                 }
             },
 
@@ -279,7 +278,8 @@
                     });
                 });
 
-                this.$store.commit('containWishList', goodsCodeArr);
+                this.$store.dispatch('containWishList', goodsCodeArr);
+                alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.")
             },
 
             goToGoodsDetail(goodsCode) {
@@ -287,10 +287,13 @@
             },
 
             changeQuantity(cart) {
-                this.$store.commit('changeQuantity', cart);
+                const result = confirm("수량을 변경하시겠습니까?");
+                if (result) {
+                    this.$store.dispatch('changeQuantity', cart);
+                }
             },
 
-            buyCartList() {
+            async buyCartList() {
                 let today = new Date();
                 let year = today.getFullYear();
                 let month = today.getMonth()+1;
@@ -303,8 +306,14 @@
 
                 for (let cart of this.checkedCartList) {
                     let option = cart.text + ", " + cart.quantity;
-                    let orderModel = new OrderModel('', "testid", cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
-                    order(orderModel);
+                    let orderModel = new OrderModel('', "testId", cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
+                    let orderId = await order(orderModel);
+
+                    await addCommentStatus({
+                        "orderId": orderId,
+                        "userId": "testId",
+                        "isWritten": "N"
+                    });
                 }
             },
         },
@@ -317,12 +326,6 @@
                   return this.$store.state.cartListStore.cartList;
             },
         },
-        watch: {
-            getCartList(val, oldVal) {
-                console.log("val : ", val);
-                console.log("oldVal : ", oldVal);
-            }
-        }
     }
 </script>
 
