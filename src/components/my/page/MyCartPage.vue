@@ -149,9 +149,6 @@
         </sui-container>
         <!--
         <div>
-            <sui-button @click="addCartList">장바구니 추가</sui-button>
-        </div>
-        <div>
             <div>
                 <hr/>
                 state에 cartList 값
@@ -179,13 +176,12 @@
     import {order} from "../../../api/OrderApi";
     import OrderModel from "../model/OrderModel";
     import {addCommentStatus} from "../../../api/CommentApi";
-    import {getCurrentUserInfo} from "../../../api/UserApi";
 
     export default {
         name: "MyCart",
         data() {
             return {
-                userId: getCurrentUserInfo(),
+                userInfo : {},
                 isTotalChecked:false,
                 checkedCartList:[],
             }
@@ -255,17 +251,19 @@
                 cart.quantity += 1;
             },
 
-            deleteCart(deletedCart) {
+            async deleteCart(deletedCart) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
-                    this.$store.dispatch('deleteCart', deletedCart);
+                    await this.$store.dispatch('deleteCart', deletedCart);
+                    this.checkedCartList = [];
                 }
             },
 
-            checkedDeleteCartList() {
+            async checkedDeleteCartList() {
                 const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
                 if (result) {
-                    this.$store.dispatch('checkedDeleteCartList', this.checkedCartList);
+                    await this.$store.dispatch('checkedDeleteCartList', this.checkedCartList);
+                    this.checkedCartList = [];
                 }
             },
 
@@ -315,8 +313,9 @@
                 }
             },
         },
-        created() {
-            this.$store.dispatch('getCartList', this.userId);
+        async created() {
+            await this.$store.dispatch('getLoginUserInfo');
+            await this.$store.dispatch('getCartList');
         },
 
         computed: {

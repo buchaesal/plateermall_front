@@ -2,9 +2,11 @@ import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, reques
 import GoodsApi from '../api/GoodsApi'
 //import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
+import {getCurrentUserInfo} from "../api/UserApi";
 
 const state = {
     cartList: [],
+    userInfo: {}
 }
 
 const getters = {
@@ -14,14 +16,16 @@ const getters = {
 const mutations = {
     getCartList(state, resultCart) {
         state.cartList = resultCart;
+    },
+
+    getLoginUserInfo(state, userInfo) {
+        state.userInfo = userInfo;
     }
 }
 
 const actions = {
-    async getCartList(context, userId) {
-        console.log(userId);
-
-        const cartList = await requestCartList().then(
+    async getCartList(context) {
+        const cartList = await requestCartList(state.userInfo.email).then(
             (response) => {
                 return response.data;
             }
@@ -89,9 +93,15 @@ const actions = {
         await wishListApi.addGoodsWishList(goodsCodeArr)
             .then(() => {
                 alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.");
-                context.dispatch('getCartList');
             });
     },
+
+    async getLoginUserInfo(context) {
+        let userInfo = await getCurrentUserInfo();
+        console.log("email : ", userInfo.email);
+
+        context.commit('getLoginUserInfo', userInfo);
+    }
 }
 
 export default {

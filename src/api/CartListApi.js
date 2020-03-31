@@ -1,7 +1,7 @@
 import request,{CART_URL} from './axios';
 
-export const requestCartList = function(){
-    return request.get(CART_URL);
+export const requestCartList = function(userId){
+    return request.get(CART_URL + `/${userId}`);
 }
 
 export const requestAddCart = function(cart) {
