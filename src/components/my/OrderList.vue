@@ -31,7 +31,7 @@
                         <span class="my-order-list-price">{{orderList[index].orderPrice}}원</span>
                         <div class="my-order-list-button">
                             <button class="btn1" @click="changeDeliveryAddress">배송지변경</button>
-                            <button>주문취소</button>
+                            <button @click="cancelOrder(index)">주문취소</button>
                         </div>
                     </div>
                     <hr>
@@ -45,7 +45,7 @@
     import FaqHeader from "../faq/FaqHeader";
     import OrderStatusBox from "./OrderStatusBox";
     import NoItem from "../share/NoItem";
-    import {getOrderList} from "../../api/OrderApi";
+    import {getOrderList, changeState} from "../../api/OrderApi";
     import GoodsApi from "../../api/GoodsApi";
 
     export default {
@@ -76,13 +76,18 @@
             async getOrderList(){
                 this.orderList = await getOrderList("testid");
                 this.setGoodsList(this.orderList);
+                console.log(this.orderList);
             },
             async setGoodsList(orderList){
                 for(let order in orderList){
                     this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
             },
-
+            async cancelOrder(index){
+                await changeState('normal', 'cancel', this.orderList[index].orderId);
+                alert("주문이 취소되었습니다.")
+                this.getOrderList();
+            }
         },
         components: {
             FaqHeader,

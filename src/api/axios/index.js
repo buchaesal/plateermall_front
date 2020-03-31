@@ -7,37 +7,36 @@ export const GOODS_URL = 'http://192.168.0.65:9999/api/goods';
 
 export const CART_URL = 'http://192.168.0.199:9999/api/cart';
 
-export const FAQ_URL = process.env.VUE_APP_BASE_URL + '/api/faq';
+export const FAQ_URL = 'http://192.168.0.17:9999/api/faq';
 export const ORDER_URL = 'http://192.168.0.228:9999/api/order';
 export const PURCHASEHISTORY_URL = process.env.PURCHASEHISTORY_APP_BASE_URL + 'api/purchasehistory';
 
-export const USER_URL = process.env.VUE_APP_BASE_URL + '/api/user';
+export const USER_URL =  'http://192.168.0.95:9999/api/user';
 export const SHIPPINGSPOT_URL = process.env.VUE_APP_BASE_URL + '/api/shippingspot';
 export const WISHLIST_URL = 'http://192.168.0.199:9999/api/wishlist';
 
 const instance = axios.create({
     withCredentials: true
 });
-//
-// instance.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
-// /*
-//     모든 요청 전 header에 access_token을 담아 전송한다.
-//  */
-//
-// instance.interceptors.request.use(
-//     config => {
-//         let accessToken = localStorage.getItem('access_token');
-//         if (accessToken !== null) {
-//             config.headers.Authorization = accessToken;
-//         }
-//         // console.log('Interceptors Request is', config);
-//         return config
-//     },
-//     error => {
-//         // console.log('Interceptors Request Error is', error.response, new Date());
-//         return Promise.reject(error);
-//     }
-// );
+
+/*
+    모든 요청 전 header에 access_token을 담아 전송한다.
+ */
+
+instance.interceptors.request.use(
+    config => {
+        let accessToken = localStorage.getItem('access_token');
+        if (accessToken !== null) {
+            config.headers.Authorization = accessToken;
+        }
+        // console.log('Interceptors Request is', config);
+        return config
+    },
+    error => {
+        // console.log('Interceptors Request Error is', error.response, new Date());
+        return Promise.reject(error);
+    }
+);
 
 
 /*

@@ -45,7 +45,7 @@
                             <sui-table-cell class="data">
                                 <div class="form-radio">
                                     <sui-form-field>
-                                        <sui-checkbox radio name="SMS" label="동의" :checked="userInfo.smsAgree"/>
+                                        <sui-checkbox radio name="SMS" label="동의" value="true" v-model="userInfo.smsAgree"/>
                                     </sui-form-field>
                                     <sui-form-field>
                                         <sui-checkbox radio name="SMS" label="비동의" value="false" v-model="userInfo.smsAgree"/>
@@ -60,10 +60,10 @@
                             <sui-table-cell class="data">
                                 <div class="form-radio">
                                     <sui-form-field>
-                                        <sui-checkbox radio name="Email" label="동의" value="1"/>
+                                        <sui-checkbox radio name="Email" label="동의" value="true" v-model="userInfo.emailAgree"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox radio name="Email" label="비동의" value="2"/>
+                                        <sui-checkbox radio name="Email" label="비동의" value="false" v-model="userInfo.emailAgree"/>
                                     </sui-form-field>
                                 </div>
                                 <p class="edit-table-text">PLATEER MALL 서비스 변경/개편/종료, 프로모션 등 PLATEER MALL의 대부분 안내에 대한 동의여부 입니다.</p>
@@ -74,7 +74,7 @@
             </sui-form-field>
         </div>
         <div id="buttons">
-            <sui-button secondary>수정</sui-button>
+            <sui-button secondary @click="modifyUser">수정</sui-button>
             <sui-button basic secondary>취소</sui-button>
         </div>
     </div>
@@ -95,10 +95,16 @@ import {getCurrentUserInfo} from '../../api/UserApi';
             if(result){
                 result.password = '';
                 this.userInfo = result;
+                console.log(this.userInfo);
             }else{
-                //alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
+                alert('로그인이 만료되었습니다. 다시 로그인해주세요.');
             }
         },
+        methods:{
+            modifyUser(){
+                this.$store.dispatch('update',this.userInfo);
+            }
+        }
     }
 
 </script>

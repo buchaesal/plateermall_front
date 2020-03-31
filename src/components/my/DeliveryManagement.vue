@@ -73,7 +73,8 @@
                         </div>
                     </sui-table-cell>
                     <sui-table-cell>
-                        <button class="modify-btn" @click="deleteShippingSpot(shippingSpot.id)">삭제</button>
+                        <button class="modify-btn" v-if="shippingSpot.default" @click="openModifyDefaultSpotForm">수정</button>
+                        <button class="modify-btn" v-else @click="deleteShippingSpot(shippingSpot.id)">삭제</button>
                     </sui-table-cell>
                 </sui-table-row>
 
@@ -149,9 +150,8 @@
                 this.closeModifyDefaultSpotForm();
             },
             deleteShippingSpot(id) {
-                console.log(id, '삭제할 주소 아이디');
-                // this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
-                // alert('배송지가 삭제되었습니다.');
+                this.$store.dispatch('deleteShippingSpot',id);
+                alert('배송지가 삭제되었습니다.');
             },
             async setDefaultShippingSpot() {
                 console.log('setDefaultShippingSpot')
