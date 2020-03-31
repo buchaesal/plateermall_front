@@ -10,8 +10,8 @@
             </div>
             <ul class="status" id="div_countDetail">
                 <li>총 문의 건 : <span>{{questionList.length}}</span>건</li>
-                <li>답변완료 : <span>0</span>건</li>
-                <li>답변대기 : <span>0</span>건</li>
+                <li>답변완료 : <span>{{answerComplete}}</span>건</li>
+                <li>답변대기 : <span>{{answerStandBy}}</span>건</li>
             </ul>
             <sui-table single-line>
                 <sui-table-header>
@@ -30,7 +30,7 @@
                 </sui-table-body>
                 <sui-table-body v-else>
                     <sui-table-row v-for="(post, index) in questionList" :key="index">
-                        <sui-table-cell v-if="post.state==true">답변완료</sui-table-cell>
+                        <sui-table-cell v-if="post.state">답변완료</sui-table-cell>
                         <sui-table-cell v-else>답변대기</sui-table-cell>
                         <sui-table-cell>{{post.territory}}</sui-table-cell>
                         <sui-table-cell><router-link :to="`/answer/${post.postId}`">{{ post.title }}</router-link></sui-table-cell>
@@ -67,6 +67,8 @@
             return {
                 questionList: [],
                 questionDetail: {},
+                answerComplete: '0',
+                answerStandBy: '0',
                 searchQuestionObject:[
                     {searchDropdown:''},
                     {searchQuestionText:''}
@@ -82,16 +84,26 @@
         async created() {
             this.questionList = await getQuestionList();
             this.questionDetail = await getQuestion();
+            this.answerCount();
         },
         methods: {
-          searchQuestion() {
-              if(!this.searchQuestionObject.searchQuestionText) {
-                  alert("검색할 내용을 입력해주세요.");
-              } else {
-                  console.log(this.searchQuestionObject);
-                  searchQuestion(this.searchQuestionObject);
-              }
-          }
+            searchQuestion() {
+                if (!this.searchQuestionObject.searchQuestionText) {
+                    alert("검색할 내용을 입력해주세요.");
+                } else {
+                    console.log(this.searchQuestionObject);
+                    searchQuestion(this.searchQuestionObject);
+                }
+            },
+            answerCount() {
+                for (let i = 0; i < this.questionList.length; i++) {
+                    if (this.questionList[i].state) {
+                        this.answerComplete++;
+                    } else {
+                        this.answerStandBy++;
+                    }
+                }
+            },
         },
     }
 </script>

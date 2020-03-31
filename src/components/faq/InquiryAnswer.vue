@@ -10,8 +10,8 @@
             </div>
             <ul class="status" id="div_countDetail">
                 <li>총 문의 건 : <span>{{questionList.length}}</span>건</li>
-                <li>답변완료 : <span>0</span>건</li>
-                <li>답변대기 : <span>0</span>건</li>
+                <li>답변완료 : <span>{{answerComplete}}</span>건</li>
+                <li>답변대기 : <span>{{answerStandBy}}</span>건</li>
             </ul>
             <sui-table single-line>
                 <sui-table-header>
@@ -57,6 +57,7 @@
                 questionList: [],
                 answer: {},
                 answerComplete: '0',
+                answerStandBy: '0',
                 userInfo: '',
             }
         },
@@ -68,10 +69,17 @@
             this.questionList = await getQuestionList();
             this.answer = await getAnswer(postId);
             this.userInfo = await getCurrentUserInfo();
+            this.answerIncrement();
         },
         methods : {
             answerIncrement() {
-                this.answerComplete++;
+                for(let i=0 ; i<this.questionList.length ; i++) {
+                    if (this.questionList[i].state) {
+                        this.answerComplete++;
+                    } else {
+                        this.answerStandBy++;
+                    }
+                }
             },
         },
     }
