@@ -37,11 +37,11 @@ const actions = {
             let msg = '';
             const result = await login(user);
             setTokenInLocalStorage(result);
-            if(result === 'noExist'){
+            if (result === 'noExist') {
                 msg = '아이디가 존재하지 않습니다';
-            }else if(result === 'incorrect'){
+            } else if (result === 'incorrect') {
                 msg = '패스워드가 올바르지 않습니다.';
-            }else{
+            } else {
                 context.commit('LOGIN');
             }
             return msg;
@@ -49,7 +49,7 @@ const actions = {
             alert('Error!');
         }
     },
-    async update(context, user){
+    async update(context, user) {
         await modifyUser(user);
     }
 };
