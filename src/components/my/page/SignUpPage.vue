@@ -152,6 +152,10 @@
         },
         methods: {
             signUp() {
+                if(!this.isUsableEmail){
+                    alert('아이디 중복체크를 해주세요.');
+                    return;
+                }
                 this.user.email = `${this.user.email}@${this.domain}`;
                 this.user.phoneNumber = `${this.currentHeadNumber}${this.user.phoneNumber}`;
                 this.$store.dispatch('SIGN_UP',this.user);
