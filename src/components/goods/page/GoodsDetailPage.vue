@@ -1,7 +1,10 @@
 <template>
     <div id="main-page-container">
         <Header></Header>
-        <div class="fix-inner">
+        <div class="loading-area" v-if="goodsData.goodsCode != goodsCode">
+            <sui-loader active centered inline/>
+        </div>
+        <div class="fix-inner" v-else>
             <section class="goods-detail">
                 <div class="gallery">
                     <img :src="goodsData.imgUrl" width="714px">
@@ -16,9 +19,11 @@
                             {{goodsData.dcRate}}<span class="unit">%</span>
                         </p>
                         <p class="price">
-                            <del>{{priceFormatting(goodsData.originalPrice)}}</del>
-                            <span>{{priceFormatting(pricing(goodsData.originalPrice, goodsData.dcRate,
-                            goodsData.shippingFee))}}</span><span
+                            <del>
+                                {{(goodsData.originalPrice).toLocaleString()}}
+                            </del>
+                            <span>{{(pricing(goodsData.originalPrice, goodsData.dcRate,
+                            goodsData.shippingFee)).toLocaleString()}}</span><span
                                 class="unit">원</span>
                         </p>
                         <ul class="utils">
@@ -79,11 +84,11 @@
                                                     <p>{{cardPromotion.card}}
                                                         {{cardPromotion.percentage}}%</p>
                                                     <ul class="list-square">
-                                                        <li>- {{priceFormatting(cardPromotion.minimum)}}원 이상
+                                                        <li>- {{(cardPromotion.minimum).toLocaleString()}}원 이상
                                                             {{cardPromotion.percentage}}% 청구할인
                                                         </li>
                                                         <li>- 1일 할인한도 최대
-                                                            {{priceFormatting(cardPromotion.maximum)}}원
+                                                            {{(cardPromotion.maximum).toLocaleString()}}원
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -161,7 +166,7 @@
                                                     @click="OptionQuantityMinus(index)"/>
                                     </div>
                                     <div class="option-price">
-                                        <span>{{priceFormatting(selectedOptions[index].price)}}</span>
+                                        <span>{{(selectedOptions[index].price).toLocaleString()}}</span>
                                         <span class="unit">원</span>
                                     </div>
                                 </div>
@@ -170,7 +175,7 @@
                         <div class="subtotal" id="priceSumInfo">
                             <input type="hidden" id="orderSumQty" :value="orderSumQuantity">
                             <p class="price"><span class="item" id="orderSumQtyTxt">총 {{orderSumQuantity}}개 : </span>
-                                <span id="orderDcSumPrcTxt">{{priceFormatting(orderSumPrice)}}</span> <span
+                                <span id="orderDcSumPrcTxt">{{(orderSumPrice).toLocaleString()}}</span> <span
                                         class="unit">원</span></p>
                         </div>
                         <div>
@@ -302,7 +307,7 @@
                                 <tbody>
                                 <tr>
                                     <td class="two wide column">배송비</td>
-                                    <td>{{priceFormatting(goodsData.shippingFee)}}원 (30,000원이상 무료배송)<br>
+                                    <td>{{(goodsData.shippingFee).toLocaleString()}}원 (30,000원이상 무료배송)<br>
                                         제주/도서산간 지역의 경우, 추가비용 발생 가능
                                     </td>
                                 </tr>
@@ -340,8 +345,8 @@
                                     <td>
                                         <div>
                                             <sui-list bulleted>
-                                                <sui-list-item>예상 반품비 : {{priceFormatting(goodsData.shippingFee)}}원,
-                                                    예상 교환비 : {{priceFormatting(goodsData.shippingFee * 2)}}원 (주문 상품을
+                                                <sui-list-item>예상 반품비 : {{(goodsData.shippingFee).toLocaleString()}}원,
+                                                    예상 교환비 : {{(goodsData.shippingFee * 2).toLocaleString()}}원 (주문 상품을
                                                     1개씩 각각 반품/교환 시
                                                     상품 별로 발생하는 비용임)
                                                 </sui-list-item>
@@ -427,6 +432,7 @@
         },
         data() {
             return {
+                goodsCode: null,
                 option: null,
                 current: null,
                 shareDisplay: false,
@@ -456,11 +462,6 @@
                     return true;
                 } else {
                     return false;
-                }
-            },
-            priceFormatting(price) {
-                if (!this.isEmpty(price)) {
-                    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
             },
             pricing(originalPrice, dcRate, shippingFee) {
@@ -628,9 +629,10 @@
             }
         },
         created() {
-            this.$store.commit("getGoodsModel", this.$route.params.goodsCode);
-            this.$store.commit("loadCommentByGoodsCode", this.$route.params.goodsCode);
-            this.$store.commit("addSawList", this.$route.params.goodsCode);
+            this.goodsCode = this.$route.params.goodsCode;
+            this.$store.commit("getGoodsModel", this.goodsCode);
+            this.$store.commit("loadCommentByGoodsCode", this.goodsCode);
+            this.$store.commit("addSawList", this.goodsCode);
         },
         computed: {
             goodsData() {
@@ -674,6 +676,11 @@
 
     ul {
         list-style: none;
+    }
+
+    .loading-area {
+        min-height: 600px;
+        padding: 10%;
     }
 
     .fix-inner {
@@ -1021,6 +1028,7 @@
     .modal-inner-button {
         height: 3rem;
     }
+
     .modal-inner-button .button {
         font-size: 14px;
     }
