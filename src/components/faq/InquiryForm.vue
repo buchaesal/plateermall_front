@@ -151,6 +151,7 @@
         },
         async created() {
             this.userInfo = await getCurrentUserInfo();
+            this.questionObject.writer = this.userInfo.name;
         },
     }
 </script>
