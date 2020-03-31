@@ -14,7 +14,7 @@ export const duplicateCheck = function(user) {
 }
 
 export const signUp = function(user) {
-    request.post(USER_URL+'/signUp', user)
+    request.post('http://localhost:9999/api/user/signUp', user)
         .then((response) => {response.data})
         .catch((err) => console.log(err));
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 // import router from "../../router";
 
 export const COMMENTS_URL = 'http://192.168.0.66:9999/api/comments';
-export const GOODS_URL = 'http://192.168.0.65:9999/api/goods';
+export const GOODS_URL = 'http://localhost:9999/api/goods';
 
 export const CART_URL = 'http://localhost:9999/api/cart';
 
@@ -18,25 +18,26 @@ export const WISHLIST_URL = 'http://192.168.0.199:9999/api/wishlist';
 const instance = axios.create({
     withCredentials: true
 });
-
-
-/*
-    모든 요청 전 header에 access_token을 담아 전송한다.
- */
-instance.interceptors.request.use(
-    config => {
-        let accessToken = localStorage.getItem('access_token');
-        if (accessToken !== null) {
-            config.headers.Authorization = accessToken;
-        }
-        // console.log('Interceptors Request is', config);
-        return config
-    },
-    error => {
-        // console.log('Interceptors Request Error is', error.response, new Date());
-        return Promise.reject(error);
-    }
-);
+//
+// instance.defaults.headers.common['Authorization'] = localStorage.getItem('access_token');
+// /*
+//     모든 요청 전 header에 access_token을 담아 전송한다.
+//  */
+//
+// instance.interceptors.request.use(
+//     config => {
+//         let accessToken = localStorage.getItem('access_token');
+//         if (accessToken !== null) {
+//             config.headers.Authorization = accessToken;
+//         }
+//         // console.log('Interceptors Request is', config);
+//         return config
+//     },
+//     error => {
+//         // console.log('Interceptors Request Error is', error.response, new Date());
+//         return Promise.reject(error);
+//     }
+// );
 
 
 /*
