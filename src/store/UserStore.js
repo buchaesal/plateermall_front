@@ -1,4 +1,4 @@
-import {login, signUp} from "../api/UserApi";
+import {login, signUp, modifyUser} from "../api/UserApi";
 import {setTokenInLocalStorage, deleteTokenInLocalStorage} from "../utils/tokenStorage";
 import router from "../router/index";
 
@@ -24,6 +24,7 @@ const mutations = {
     },
     LOGOUT(state) {
         resetToken(state);
+        router.push('/');
     }
 };
 
@@ -48,6 +49,9 @@ const actions = {
             alert('Error!');
         }
     },
+    async update(context, user){
+        await modifyUser(user);
+    }
 };
 
 
