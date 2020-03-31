@@ -19,6 +19,10 @@ export const deleteDeliveryAddress = function (id) {
 export const setDefaultAddress = function (id) {
     return request.get(SHIPPINGSPOT_URL+`/setDefaultAddr/${id}`);
 }
+
+export const modifyAddress = function (address) {
+    return request.put(SHIPPINGSPOT_URL+'/update',address);
+}
 class ShippingSpotListApi {
 }
 
