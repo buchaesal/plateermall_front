@@ -23,20 +23,20 @@ const instance = axios.create({
     모든 요청 전 header에 access_token을 담아 전송한다.
  */
 
-// instance.interceptors.request.use(
-//     config => {
-//         let accessToken = localStorage.getItem('access_token');
-//         if (accessToken !== null) {
-//             config.headers.Authorization = accessToken;
-//         }
-//         // console.log('Interceptors Request is', config);
-//         return config
-//     },
-//     error => {
-//         // console.log('Interceptors Request Error is', error.response, new Date());
-//         return Promise.reject(error);
-//     }
-// );
+instance.interceptors.request.use(
+    config => {
+        let accessToken = localStorage.getItem('access_token');
+        if (accessToken !== null) {
+            config.headers.Authorization = accessToken;
+        }
+        // console.log('Interceptors Request is', config);
+        return config
+    },
+    error => {
+        // console.log('Interceptors Request Error is', error.response, new Date());
+        return Promise.reject(error);
+    }
+);
 
 
 /*

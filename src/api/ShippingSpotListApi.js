@@ -9,13 +9,7 @@ export const getShippingSpotList = function () {
 }
 
 export const addDeliveryAddress = function (deliveryAddress) {
-    request.post(SHIPPINGSPOT_URL+'/add', deliveryAddress)
-        .then((res) => {
-            return res.data;
-        })
-        .catch(function (err) {
-            console.log(err);
-        })
+    return request.post(SHIPPINGSPOT_URL+'/add', deliveryAddress)
 }
 
 export const deleteDeliveryAddress = function (id) {

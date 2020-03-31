@@ -1,5 +1,10 @@
 // import ShippingSpotListApi from "../api/ShippingSpotListApi"
-import {addDeliveryAddress, getShippingSpotList, deleteDeliveryAddress, setDefaultAddress} from "../api/ShippingSpotListApi";
+import {
+    addDeliveryAddress,
+    getShippingSpotList,
+    deleteDeliveryAddress,
+    setDefaultAddress
+} from "../api/ShippingSpotListApi";
 
 const state = {
     shippingSpotList: [],
@@ -47,18 +52,23 @@ const actions = {
         return list;
     },
     async addShippingSpotListFromApi(context, address) {
-        await addDeliveryAddress(address);
-        context.commit('addShippingSpotList', address);
+        await addDeliveryAddress(address)
+            .then(() => {
+                context.dispatch('getShippingSpotListFromApi');
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
     },
-    async deleteShippingSpot(context, id){
+    async deleteShippingSpot(context, id) {
         await deleteDeliveryAddress(id)
-            .then(()=>{
+            .then(() => {
                 context.dispatch('getShippingSpotListFromApi');
             });
     },
-    async setDefaultShippingSpot(context, id){
+    async setDefaultShippingSpot(context, id) {
         await setDefaultAddress(id)
-            .then(()=>{
+            .then(() => {
                 context.dispatch('getShippingSpotListFromApi');
             });
     }

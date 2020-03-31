@@ -49,7 +49,7 @@ const actions = {
             alert('Error!');
         }
     },
-    async update(context, user) {
+    async MODIFY_USER(context, user) {
         await modifyUser(user);
     }
 };
