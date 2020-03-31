@@ -58,6 +58,7 @@ const actions = {
 
     async changeQuantity(context, changeCart) {
         await requestChangeQuantity(changeCart);
+        alert("수량이 변경되었습니다.");
         context.commit('getCartList');
     },
 
@@ -66,6 +67,8 @@ const actions = {
 
         const wishListApi = new WishListApi();
         await wishListApi.addGoodsWishList(goodsCodeArr);
+        alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.");
+        context.commit('getCartList');
     },
 }
 

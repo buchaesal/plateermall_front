@@ -276,7 +276,6 @@
                 });
 
                 this.$store.dispatch('containWishList', goodsCodeArr);
-                alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.");
             },
 
             goToGoodsDetail(goodsCode) {
