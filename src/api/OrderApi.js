@@ -52,3 +52,9 @@ export const order = function (order) {
         .catch((err) => console.log(err));
 
 }
+
+export const changeState = function (original, changed, orderId) {
+    return request.get(ORDER_URL + `/${original}/${changed}/${orderId}`)
+        .then(response => response.data)
+        .catch(err => console.log(err));
+}
