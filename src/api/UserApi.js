@@ -32,6 +32,12 @@ export const getCurrentUserInfo = function () {
         .catch((error)=>console.log(error));
 }
 
+export const modifyUser = function (user) {
+    request.put('http://localhost:9999/api/user/updateUserInfo', user)
+        .then((res)=>{return res.data})
+        .catch((err)=>console.log(err));
+}
+
 class UserApi {
 
 }
