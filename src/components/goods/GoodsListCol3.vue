@@ -16,7 +16,7 @@
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
                         <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}} ~</span><span class="unit"></span>
+                            goodsData.dcRate).toLocaleString()}} ~</span><span class="unit"></span>
                         <span class="original-price">{{goodsData.originalPrice}}</span>
                         <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
@@ -37,9 +37,7 @@
         },
         methods: {
             pricing(originalPrice, dcRate) {
-                var price = originalPrice * (100 - dcRate) / 100;
-                price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                return price;
+                return originalPrice * (100 - dcRate) / 100;
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);

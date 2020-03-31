@@ -3,7 +3,8 @@ import {
     addDeliveryAddress,
     getShippingSpotList,
     deleteDeliveryAddress,
-    setDefaultAddress
+    setDefaultAddress,
+    modifyAddress
 } from "../api/ShippingSpotListApi";
 
 const state = {
@@ -68,6 +69,13 @@ const actions = {
     },
     async setDefaultShippingSpot(context, id) {
         await setDefaultAddress(id)
+            .then(() => {
+                context.dispatch('getShippingSpotListFromApi');
+            });
+    }
+    ,
+    async MODIFY_ADDRESS(context, address){
+        await modifyAddress(address)
             .then(() => {
                 context.dispatch('getShippingSpotListFromApi');
             });
