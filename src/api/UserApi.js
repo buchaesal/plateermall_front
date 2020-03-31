@@ -42,10 +42,7 @@ export const getCurrentUserInfo = function () {
 
 export const modifyUser = function (user) {
     request.put(USER_URL + '/updateUserInfo', user)
-        .then((res) => {
-            return res.data
-        })
-        .catch((err) => console.log(err));
+
 }
 
 class UserApi {
