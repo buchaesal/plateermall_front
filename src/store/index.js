@@ -6,6 +6,7 @@ import ShippingSpotListStore from './ShippingSpotListStore';
 import PurchaseHistoryStore from './PurchaseHistoryStore';
 import WishListStore from "./WishListStore";
 import UserStore from "./UserStore";
+import CategoryStore from "./CategoryStore";
 
 import Vuex from 'vuex';
 import Vue from 'vue';
@@ -25,6 +26,7 @@ export default new Vuex.Store({
         shippingSpotListStore: ShippingSpotListStore,
         purchaseHistoryStore: PurchaseHistoryStore,
         wishListStore: WishListStore,
-        userStore: UserStore
+        userStore: UserStore,
+        categoryStore: CategoryStore,
     }
 })
