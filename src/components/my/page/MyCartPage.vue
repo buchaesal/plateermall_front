@@ -179,11 +179,13 @@
     import {order} from "../../../api/OrderApi";
     import OrderModel from "../model/OrderModel";
     import {addCommentStatus} from "../../../api/CommentApi";
+    import {getCurrentUserInfo} from "../../../api/UserApi";
 
     export default {
         name: "MyCart",
         data() {
             return {
+                userId: getCurrentUserInfo(),
                 isTotalChecked:false,
                 checkedCartList:[],
             }
@@ -313,8 +315,8 @@
                 }
             },
         },
-        async created() {
-            await this.$store.commit('getCartList');
+        created() {
+            this.$store.dispatch('getCartList', this.userId);
         },
 
         computed: {

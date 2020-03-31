@@ -12,11 +12,25 @@ const getters = {
 }
 
 const mutations = {
-    async getCartList(state) {
-        const cartList = await requestCartList();
+    getCartList(state, resultCart) {
+        state.cartList = resultCart;
+    }
+}
+
+const actions = {
+    async getCartList(context, userId) {
+        console.log(userId);
+
+        const cartList = await requestCartList().then(
+            (response) => {
+                return response.data;
+            }
+        ).catch(function (error) {
+            console.log(error);
+        });
 
         let goodsCodeArr = [];
-        
+
         let goodsApi = new GoodsApi();
 
         cartList.map((cart) => {
@@ -37,38 +51,46 @@ const mutations = {
             });
         });
 
-        console.log(resultCart);
+        context.commit('getCartList', resultCart);
+    },
 
-        state.cartList = resultCart;
-    }
-}
-
-const actions = {
     async deleteCart(context, deletedCart) {
         console.log(deletedCart);
 
-        await requestDeleteCart(deletedCart);
-        context.commit('getCartList');
+        await requestDeleteCart(deletedCart)
+            .then(() => {
+                context.dispatch('getCartList');
+            }).catch(function(error) {
+                console.log(error);
+            });
     },
 
     async checkedDeleteCartList(context, checkedCartList) {
-        await requestCheckedDeleteCartList(checkedCartList);
-        context.commit('getCartList');
+        await requestCheckedDeleteCartList(checkedCartList)
+            .then(() => {
+                context.dispatch('getCartList');
+            }).catch(function(error) {
+                console.log(error);
+            });
     },
 
     async changeQuantity(context, changeCart) {
-        await requestChangeQuantity(changeCart);
-        alert("수량이 변경되었습니다.");
-        context.commit('getCartList');
+        await requestChangeQuantity(changeCart)
+            .then(() => {
+                alert("수량이 변경되었습니다.");
+                context.dispatch('getCartList');
+            });
     },
 
     async containWishList(context, goodsCodeArr) {
         console.log("containWishList : " + goodsCodeArr);
 
         const wishListApi = new WishListApi();
-        await wishListApi.addGoodsWishList(goodsCodeArr);
-        alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.");
-        context.commit('getCartList');
+        await wishListApi.addGoodsWishList(goodsCodeArr)
+            .then(() => {
+                alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.");
+                context.dispatch('getCartList');
+            });
     },
 }
 
