@@ -1,34 +1,51 @@
-import request,{USER_URL} from './axios';
+import request, {USER_URL} from './axios';
+import store from '../store';
 
 
 export const login = function (user) {
-    return request.post(USER_URL+'/login', user)
-        .then((response) => {return response.data})
+    return request.post(USER_URL + '/login', user)
+        .then((response) => {
+            return response.data
+        })
         .catch((err) => console.log(err))
 }
 
-export const duplicateCheck = function(user) {
+export const duplicateCheck = function (user) {
     request.get(USER_URL + `/isduplicate/${user}`)
-        .then((response) => {return response.data})
+        .then((response) => {
+            return response.data
+        })
         .catch((err) => console.log(err));
 }
 
-export const signUp = function(user) {
-    request.post(USER_URL+'/signUp', user)
-        .then((response) => {response.data})
+export const signUp = function (user) {
+    request.post(USER_URL + '/signUp', user)
+        .then((response) => {
+            response.data
+        })
         .catch((err) => console.log(err));
 }
 
 export const getCurrentUserInfo = function () {
-    return request.get(USER_URL+'/getCurrentUserInfo')
-        .then((response) => {return response.data})
-        .catch((error)=>console.log(error));
+    return request.get(USER_URL + '/getCurrentUserInfo')
+        .then((response) => {
+             if (response.data) {
+                return response.data;
+            } else {
+                alert('로그인이 만료되었습니다. 로그아웃 됩니다.');
+                store.commit('LOGOUT');
+             }
+        })
+        .catch((error) => console.log(error));
+
 }
 
 export const modifyUser = function (user) {
-    request.put(USER_URL+'/updateUserInfo', user)
-        .then((res)=>{return res.data})
-        .catch((err)=>console.log(err));
+    request.put(USER_URL + '/updateUserInfo', user)
+        .then((res) => {
+            return res.data
+        })
+        .catch((err) => console.log(err));
 }
 
 class UserApi {
