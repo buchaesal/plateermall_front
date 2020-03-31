@@ -33,7 +33,7 @@
                             </sui-modal-content>
 
                             <sui-modal-actions>
-                                <sui-button basic @click="closeReviewModal()">취소</sui-button>
+                                <sui-button basic @click="cancelAddComment()">취소</sui-button>
                                 <sui-button @click='setReview()' color="black">작성완료</sui-button>
                             </sui-modal-actions>
                         </sui-modal>    
@@ -56,16 +56,18 @@ import {getOrder} from '../../api/OrderApi';
 import GoodsApi from '../../api/GoodsApi';
 
     export default {
-        name: "Sample",
+        name: "UnwrittenReview",
         data(){
             return{
                 open: false,
-                currentReview:{
+                currentReview :{
                     orderId:'',
                     goodsCode:'',
                     userId:'',
                     selectedOptions:'',
                     myPhoto:'',
+                    myPhoto2:'',
+                    myPhoto3:'',
                     quantity:0,
                     recommendCount:0,
                     deliveryValue:0,
@@ -99,15 +101,20 @@ import GoodsApi from '../../api/GoodsApi';
             closeReviewModal(){
                 this.open = false;
                 this.$store.commit('toggleModalOpen');
+
             },
             setReview(){
-                this.$store.commit('addCommentValue', 'testid');
-                this.closeReviewModal();
-                this.unwrittenCount-=1;
+                if(confirm("상품평을 작성하시겠습니까?")) {
+                    
+                    alert("작성되었습니다.");
+                    this.$store.commit('addCommentValue', 'testid');
+                    this.closeReviewModal();
+                    this.unwrittenCount-=1;
+                }
             },
 
             async setUnwrittenInfo(userId){
-                this.$store.commit('loadUnwrittenList', userId);
+                
                 this.orderIdList = await requestUnwrittenOrderId(userId);
                 this.unwrittenCount = this.orderIdList.length;
 
@@ -126,15 +133,36 @@ import GoodsApi from '../../api/GoodsApi';
                     let goodsApi = new GoodsApi();
                     this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
                 }
+
+                this.$store.commit('loadUnwrittenList', userId);
+            },
+            cancelAddComment(){
+                this.closeReviewModal();
+                this.currentReview ={
+                    orderId:'',
+                    goodsCode:'',
+                    userId:'',
+                    selectedOptions:'',
+                    myPhoto:'',
+                    myPhoto2:'',
+                    myPhoto3:'',
+                    quantity:0,
+                    recommendCount:0,
+                    deliveryValue:0,
+                    designValue:0,
+                    sizeValue:0,
+                    starPoint:0,
+                    reviewContent:'',
+                    writtenDate:'',
+                };
             },
         },
         components:{
             ReviewForm,
         },
-        created(){
+        async created(){
             this.today = new Date().toISOString().slice(0,10);
-            this.setUnwrittenInfo('testId');
-            //this.$store.commit('loadUnWrittenOrderId', 'testId');
+            await this.setUnwrittenInfo('testId');
         },
         computed:{
             isModalOpen(){
@@ -144,7 +172,7 @@ import GoodsApi from '../../api/GoodsApi';
             getUnwritten(){
                 return this.$store.state.commentStore.unWritten;
             }
-        }
+        },
     }
 </script>
 
@@ -176,7 +204,7 @@ import GoodsApi from '../../api/GoodsApi';
     }
 
     .unwritten-list{
-        height: 300px;
+        height: 500px;
         overflow: auto;
     }
 

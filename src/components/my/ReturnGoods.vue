@@ -7,24 +7,24 @@
             <p>★최근 1개월간 진행된 교환/반품 및 3개월 이내 교환/반품 진행 중인 내역만 조회됩니다.</p>
             <p>이전 기간의 내역은 주문배송조회 메뉴에서 확인하세요.</p>
         </div>
-
+        <sui-loader active centered inline v-else-if="returnOrderList[0].orderId == ''"/>
         <div class='return-list' v-else>
             <p id="return-info">반품된 상품이 <span>{{returnOrderList.length}}개 있습니다.</span></p>
 
-            <div v-for='(returnItem, index) in returnOrderList' :key='index'>
+            <div v-for='(returnGoods, index) in goodsInReturnList' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>{{returnItem.orderDate}}</span>
-                    <span class='return-date'>반품일: {{returnItem.orderState.stateChangeDate}}</span>
+                    <span class='item-info'>{{returnOrderList[index].orderDate}}</span>
+                    <span class='return-date'>반품일: {{returnOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='return-item'>
-                    <span><img :src='goodsInReturnList[index].imgUrl' width='130' height='130'></span>
+                    <span><img :src='returnGoods.imgUrl' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{goodsInReturnList[index].seller}}</strong></span>
+                        <span><strong>{{returnGoods.seller}}</strong></span>
                         <br>
-                        <span>{{goodsInReturnList[index].title}}</span>
+                        <span>{{returnGoods.title}}</span>
                         <br><br>
-                        <span>수량: {{returnItem.goodsCount}}개</span>
+                        <span>수량: {{returnOrderList[index].goodsCount}}개</span>
                     </div>
 
                     <div class='process'>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class='result'>
-                        <span class='return-price'>{{returnItem.orderPrice}}</span>
+                        <span class='return-price'>{{returnOrderList[index].orderPrice}}</span>
                     </div>
                 </div>
                 <br>
@@ -50,7 +50,18 @@
         name: "Sample",
         data(){
             return{
-                returnOrderList: [],
+                returnOrderList: [{
+                    orderId : '',
+                    userId : '',
+                    goodsId : '',
+                    goodsCount: -1,
+                    orderPrice : '',
+                    orderState : {
+                        orderId : '',
+                        stateChangeDate : '',
+                        orderState : '',
+                    },
+                }],
                 goodsInReturnList: [],
                 goodsApi : new GoodsApi(),
             }
@@ -67,15 +78,12 @@
         methods: {
             async getReturnOrder() {
                 this.returnOrderList = await getReturnOrderList('testid');
-                console.log(this.returnOrderList);
                 await this.setGoodsList(this.returnOrderList);
             },
             async setGoodsList(returnOrderList){
-                console.log("setGoodsList");
                 for(var order in returnOrderList){
                     this.goodsInReturnList.push(await this.goodsApi.getGoods(returnOrderList[order].goodsId));
                 }
-                console.log(this.goodsInReturnList);
             },
         },
     }

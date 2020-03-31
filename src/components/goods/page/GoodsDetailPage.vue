@@ -16,7 +16,9 @@
                             {{goodsData.dcRate}}<span class="unit">%</span>
                         </p>
                         <p class="price">
-                            {{priceFormatting(pricing(goodsData.originalPrice, goodsData.dcRate))}}<span
+                            <del>{{priceFormatting(goodsData.originalPrice)}}</del>
+                            <span>{{priceFormatting(pricing(goodsData.originalPrice, goodsData.dcRate,
+                            goodsData.shippingFee))}}</span><span
                                 class="unit">원</span>
                         </p>
                         <ul class="utils">
@@ -60,8 +62,8 @@
                     </div>
                     <div class="summary">
                         <dl class="detail">
-                            <dt v-if="isEmpty(goodsData.cardPromotions)">카드할인</dt>
-                            <dd v-if="isEmpty(goodsData.cardPromotions)">
+                            <dt v-if="!isEmpty(goodsData.cardPromotions)">카드할인</dt>
+                            <dd v-if="!isEmpty(goodsData.cardPromotions)">
                                 <span id="dcMaxInfoTxt">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 청구할인</span>
                                 <div class="tooltip">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip1"
@@ -232,7 +234,7 @@
             </div>
             <div class="details">
                 <section class="md-details">
-                    <div v-if="isEmpty(goodsData.notice)">
+                    <div v-if="!isEmpty(goodsData.notice)">
                         <sui-accordion exclusive>
                             <sui-accordion-title active class="accordion-title">
                                 <sui-icon name="dropdown"/>
@@ -273,7 +275,7 @@
                 </div>
                 <div class="detail-tab">
                     <sui-tab>
-                        <sui-tab-pane title="구매정보" v-if="isEmpty(goodsData.infoTable)">
+                        <sui-tab-pane title="구매정보" v-if="!isEmpty(goodsData.infoTable)">
                             <table class="ui definition table">
                                 <tbody>
                                 <tr class="hidden-tr">
@@ -411,6 +413,7 @@
     import RatingGraph from "../../comment/RatingGraph";
     import ReviewList from "../../comment/ReviewList";
     import {requestAddCart} from "../../../api/CartListApi";
+    import WishListApi from "../../../api/WishListApi";
 
     export default {
         name: "GoodsDetail",
@@ -435,7 +438,10 @@
                 selectedOptions: [],
                 orderSumQuantity: 0,
                 orderSumPrice: 0,
+                originalPrice: 0,
                 discountedPrice: 0,
+                shippingFee: 0,
+                dcRate: 0,
                 open: false,
             }
         },
@@ -447,25 +453,28 @@
                     obj === "" ||
                     obj.length < 1
                 ) {
-                    return false;
-                } else {
                     return true;
+                } else {
+                    return false;
                 }
             },
             priceFormatting(price) {
-                if (this.isEmpty(price)) {
+                if (!this.isEmpty(price)) {
                     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
             },
-            pricing(originalPrice, dcRate) {
+            pricing(originalPrice, dcRate, shippingFee) {
+                this.shippingFee = shippingFee;
+                this.dcRate = dcRate;
+                this.originalPrice = originalPrice;
                 this.discountedPrice = originalPrice * (100 - dcRate) / 100;
                 return this.discountedPrice;
             },
             isDiscount(dcRate) {
                 if (dcRate !== "0" && dcRate !== null && dcRate !== 0) {
-                    return false;
-                } else {
                     return true;
+                } else {
+                    return false;
                 }
             },
             shippingRadio(index) {
@@ -485,6 +494,9 @@
                         text: option,
                         quantity: 1,
                         price: this.discountedPrice,
+                        originalPrice: this.originalPrice,
+                        dcRate: this.dcRate,
+                        shippingFee: this.shippingFee,
                     };
 
                     addOptions.push(data);
@@ -554,6 +566,20 @@
             },
             likeBtnClick() {
                 this.isLike = !this.isLike;
+
+                let wishListApi = new WishListApi();
+
+                if (this.isLike) {
+                    wishListApi.addGoodsWish({
+                        "goodsCode": this.$route.params.goodsCode
+                    });
+
+                    alert("위시리스트에 담겼습니다.")
+                } else {
+                    wishListApi.deleteGoodsWish({
+                        "goodsCode": this.$route.params.goodsCode
+                    });
+                }
             },
             onTooltip1() {
                 this.tooltip1Display = true;
@@ -578,9 +604,23 @@
                 this.open = !this.open;
             },
             goToCart() {
-                this.$router.push('/cart');
+                this.$router.push("/cart");
             },
             directOrder() {
+                if (this.selectedOptions.length == 0) {
+                    alert("옵션을 먼저 선택해주세요.");
+                } else {
+                    this.$router.push({
+                        name: "ordercomplete", params: {
+                            orderData:
+                                {
+                                    goodsCode: this.$route.params.goodsCode,
+                                    selectedOptions: this.selectedOptions,
+                                }
+                        }
+                    });
+                }
+
                 //     requestOrder({
                 //         goodsCode: this.$route.params.goodsCode,
                 //         selectedOptions: this.selectedOptions
@@ -632,15 +672,15 @@
         color: inherit;
     }
 
+    ul {
+        list-style: none;
+    }
+
     .fix-inner {
         width: 1200px;
         margin: 0 auto;
         min-height: 600px;
         padding-top: 80px;
-    }
-
-    ul {
-        list-style: none;
     }
 
     .goods-detail {
@@ -691,12 +731,32 @@
         margin: 20px 0;
     }
 
+    .discount {
+        display: inline-block;
+        font-size: 32px;
+        vertical-align: bottom;
+    }
+
     .price {
+        display: inline-block;
         font-size: 24px;
         line-height: 33px;
     }
 
-    .unit {
+    .price del {
+        text-decoration: line-through;
+        display: block;
+        font-size: 14px;
+        line-height: 20px;
+        color: #999;
+    }
+
+    .discount .unit {
+        margin-right: 29px;
+        font-size: 24px;
+    }
+
+    .price .unit {
         font-size: 14px;
     }
 
@@ -949,6 +1009,10 @@
         margin-bottom: 20px;
     }
 
+    .cart-or-now .button {
+        font-size: 1.3rem;
+    }
+
     .modal-inner {
         padding: 40px;
         text-align: center;
@@ -956,6 +1020,9 @@
 
     .modal-inner-button {
         height: 3rem;
+    }
+    .modal-inner-button .button {
+        font-size: 14px;
     }
 
     .modal-inner p {

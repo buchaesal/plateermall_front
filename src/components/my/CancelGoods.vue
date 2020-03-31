@@ -7,24 +7,24 @@
             <p>★최근 1개월간 진행된 교환/반품 및 3개월 이내 교환/반품 진행 중인 내역만 조회됩니다.</p>
             <p>이전 기간의 내역은 주문배송조회 메뉴에서 확인하세요.</p>
         </div>
-
+        <sui-loader active centered inline v-else-if="cancelOrderList[0].orderId == ''"/>
         <div class='cancel-list' v-else>
             <p id="cancel-info">취소된 상품이 <span>{{cancelOrderList.length}}개 있습니다.</span></p>
 
-            <div v-for='(cancelItem, index) in cancelOrderList' :key='index'>
+            <div v-for='(cancelGoods, index) in goodsInCancelList' :key='index'>
                 <div class='summary'>
-                    <span class='item-info'>주문 날짜 : {{cancelItem.orderDate}}</span>
-                    <span class='cancel-date'>취소일: {{cancelItem.orderState.stateChangeDate}}</span>
+                    <span class='item-info'>주문 날짜 : {{cancelOrderList[index].orderDate}}</span>
+                    <span class='cancel-date'>취소일: {{cancelOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='cancel-item'>
-                    <span><img :src='goodsInCancelList[index].imgUrl' width='130' height='130'></span>
+                    <span><img :src='cancelGoods.imgUrl' width='130' height='130'></span>
                     <div class='detail-item'>
-                        <span><strong>{{goodsInCancelList[index].seller}}</strong></span>
+                        <span><strong>{{cancelGoods.seller}}</strong></span>
                         <br>
-                        <span>{{goodsInCancelList[index].title}}</span>
+                        <span>{{cancelGoods.title}}</span>
                         <br><br>
-                        <span>수량: {{cancelItem.goodsCount}}개</span>
+                        <span>수량: {{cancelOrderList[index].goodsCount}}개</span>
                     </div>
 
                     <div class='process'>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class='result'>
-                        <span class='cancel-price'>{{cancelItem.orderPrice}}</span>
+                        <span class='cancel-price'>{{cancelOrderList[index].orderPrice}}</span>
                     </div>
                 </div>
                 <br>
@@ -50,13 +50,23 @@
         name: "Sample",
         data(){
             return{
-                cancelOrderList: [],
+                cancelOrderList: [{
+                    orderId : '',
+                    userId : '',
+                    goodsId : '',
+                    goodsCount: -1,
+                    orderPrice : '',
+                    orderState : {
+                        orderId : '',
+                        stateChangeDate : '',
+                        orderState : '',
+                    },
+                }],
                 goodsInCancelList: [],
                 goodsApi : new GoodsApi(),
             }
         },
         created(){
-            // this.$store.commit('loadCancelGoodsInfo', 'testId');
             this.getCancelOrder();
         },
         computed: {
@@ -68,15 +78,12 @@
         methods: {
             async getCancelOrder() {
                 this.cancelOrderList = await getCancelOrderList('testid');
-                console.log(this.cancelOrderList);
                 await this.setGoodsList(this.cancelOrderList);
             },
             async setGoodsList(cancelOrderList){
-                console.log("setGoodsList");
                 for(var order in cancelOrderList){
                     this.goodsInCancelList.push(await this.goodsApi.getGoods(cancelOrderList[order].goodsId));
                 }
-                console.log(this.goodsInCancelList);
             },
         }
     }

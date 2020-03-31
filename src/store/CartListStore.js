@@ -2,7 +2,7 @@ import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, reques
 import GoodsApi from '../api/GoodsApi'
 //import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
-import router from "../router/index";
+//import router from "../router/index";
 
 const state = {
     cartList: [],
@@ -47,24 +47,24 @@ const mutations = {
         console.log(deletedCart);
 
         await requestDeleteCart(deletedCart);
-        router.go();
+        //router.go();
     },
 
     async checkedDeleteCartList(state, checkedCartList) {
         await requestCheckedDeleteCartList(checkedCartList);
-        router.go();
+        //router.go();
     },
 
     containWishList(state, goodsCodeArr) {
         console.log("containWishList : " + goodsCodeArr);
 
         const wishListApi = new WishListApi();
-        wishListApi.addGoods(goodsCodeArr);
+        wishListApi.addGoodsWishList(goodsCodeArr);
     },
 
     async changeQuantity(state, changeCart) {
         await requestChangeQuantity(changeCart);
-        router.go();
+        //router.go();
     }
 }
 

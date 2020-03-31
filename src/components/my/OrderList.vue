@@ -7,26 +7,28 @@
         <hr>
 
         <div class="my-order-list">
-            <NoItem v-if="orderList.length<1"></NoItem>
+            <NoItem v-if="orderList.length==0"></NoItem>
+            <sui-loader active centered inline v-else-if="orderList[0].orderId == ''"/>
             <div v-else>
-                <div v-for="(order, index) in orderList" v-bind:key="index" class="goods-list">
+                <div v-for="(goods, index) in goodsInOrderList" v-bind:key="index" class="goods-list">
                     <div class="my-order-list-title">
-                        <p class="order-date">{{order.orderState.stateChangeDate}}</p>
+                        <p class="order-date">{{orderList[index].orderState.stateChangeDate}}</p>
                         <a href="#" class="order-detail">자세히보기 ></a>
                     </div>
 
                     <div class="my-order-list-goods">
                         <sui-checkbox class="goods-checkbox"/>
                         <span class="goods-img">
-                        <img :src="goodsInOrderList[index].imgUrl">
+                        <img :src="goods.imgUrl">
                     </span>
+
                         <div class="my-order-list-info">
-                            <p>{{goodsInOrderList[index].seller}}</p>
-                            <p>{{goodsInOrderList[index].title}}</p>
-                            <p>{{order.goodsCount}}</p>
-                            <p>{{order.orderState.orderState}}</p>
+                            <p>{{goods.seller}}</p>
+                            <p>{{goods.title}}</p>
+                            <p>{{orderList[index].goodsCount}}</p>
+                            <p>{{orderList[index].orderState.orderState}}</p>
                         </div>
-                        <span class="my-order-list-price">{{order.orderPrice}}원</span>
+                        <span class="my-order-list-price">{{orderList[index].orderPrice}}원</span>
                         <div class="my-order-list-button">
                             <button class="btn1" @click="changeDeliveryAddress">배송지변경</button>
                             <button>주문취소</button>
@@ -51,7 +53,6 @@
         data() {
             return {
                 checkedIndexList: [],
-                // orderList
                 goodsApi : new GoodsApi(),
                 orderList: [{
                     orderId : '',
@@ -73,22 +74,15 @@
                 this.$router.push('/deliveryanduserinfomanagement');
             },
             async getOrderList(){
-                var model = await getOrderList("testid");
-                console.log(model);
-                this.orderList =model;
-                console.log(this.orderList);
+                this.orderList = await getOrderList("testid");
                 this.setGoodsList(this.orderList);
             },
             async setGoodsList(orderList){
-                console.log("setGoodsList");
-                console.log(orderList[0].goodsId);
-                // console.log(await this.goodsApi.getGoods(orderList[0].imgUrl));
                 for(let order in orderList){
-                    console.log(orderList[order].goodsId);
                     this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
-                console.log("this.goddsInOrderList" + this.goodsInOrderList);
             },
+
         },
         components: {
             FaqHeader,
@@ -182,5 +176,4 @@
         margin: 4px 2px;
         cursor: pointer;
     }
-
 </style>

@@ -1,9 +1,10 @@
 <template>
     <div>
+        
         <div class="photo-review">
             <h3>포토<br>상품평</h3>
             <div class='review-img' v-for='(review, index) in getRequestComments' :key='index'>
-                <img :src='review.myPhoto' width='99' height='99' v-if='review.photo != ""'>
+                <img :src='review.myPhoto' width='99' height='99' v-if='review.myPhoto != ""'>
             </div>
         </div>
         <div class='options'>
@@ -20,14 +21,24 @@
             />
         </div>
         <br>
-        <div class='review-list'>
+        <div v-if='reviewList.length != 0' class='review-list'>
             <sui-item-group divided>
                 <sui-item v-for='(review, index) in getRequestComments' :key='index'>
                     <sui-item-content>
                     <sui-item-header><sui-rating id="starAvg" :rating="review.starPoint" :max-rating="5" /><span style="font-size: 15px; ">{{review.selectedOptions}}</span></sui-item-header>
+                                        
                     <sui-item-meta>
                         <p>{{review.reviewContent}}</p>
-                        <img :src='review.myPhoto' width='99' height='99'>
+                        <img v-if="review.myPhoto != ''" :src='review.myPhoto' width='99' height='99'>
+                        <sui-accordion v-if="review.myPhoto != ''">
+                            <a is="sui-accordion-title" style="padding-right: 5%;"><sui-icon name="dropdown"/>더보기</a>
+                            <sui-accordion-content>
+                                <img v-if="review.myPhoto != ''" :src="review.myPhoto" style="width: 300px; height: 300px; margin-right: 5%;">
+                                <img v-if="review.myPhoto2 != ''" :src="review.myPhoto2" style="width: 300px; height: 300px; margin-right: 5%;">
+                                <img v-if="review.myPhoto3 != ''" :src="review.myPhoto3" style="width: 300px; height: 300px;">
+                            </sui-accordion-content>
+                        </sui-accordion>
+                        <br>
                         <p>{{review.userId}} | {{review.writtenDate}}</p>
 
                         <span class='recommend-review'><sui-button size="tiny" floated="right" basic content="신고 하기"/></span>
@@ -39,6 +50,13 @@
     </sui-item>
     
     </sui-item-group>
+    </div>
+
+        <div v-else class="review-info" >
+            <sui-icon name="info" size="huge" circular color="grey" style='margin-bottom: 3%;'/>
+            <p>현재 등록된 상품평이 없습니다.</p>
+            <p>상품평을 작성하시면 L.POINT를 드립니다.(e쿠폰상품 제외)</p>
+            <p>※ L.POINT 는 L.POINT 통합회원에 한해 지급가능합니다. (간편회원 적립 불가)</p>
         </div>
     </div>
 
@@ -52,11 +70,12 @@ import GoodsApi from '../../api/GoodsApi';
         name: "Sample",
         data(){
             return{
+                reviewList:[],
                 goods:{},
                 goodsCode:'',
                 currentOrderRating: null,
                 currentOption: null,
-                goodsOption:['옵션보기',],
+                goodsOption:[{text: '옵션보기', value: '옵션보기'},],
                 options: [
                     {
                         text: '전체보기',
@@ -86,10 +105,11 @@ import GoodsApi from '../../api/GoodsApi';
             for(let index in this.goods.options){
                 this.goodsOption.push(this.goods.options[index]);
             }
+
+            this.reviewList = this.$store.state.commentStore.reviews.commentList;
         },
         computed: {
             getRequestComments(){
-               
                 return this.$store.state.commentStore.reviews.commentList;
             },     
         },
@@ -116,8 +136,6 @@ import GoodsApi from '../../api/GoodsApi';
                     orderOption: this.currentOrderRating,
                 }
 
-                console.log(this.goods.goodsCode);
-                console.log(this.currentOrderRating);
                 this.$store.commit('loadCommentByFilter', options);
             },
         },
@@ -148,6 +166,7 @@ import GoodsApi from '../../api/GoodsApi';
         width: 96%;
         height: 150px;
         background-color: #fafafa;
+        overflow-x: auto;
     }
 
     h3{
@@ -162,7 +181,13 @@ import GoodsApi from '../../api/GoodsApi';
     .review-img{
         float: left;
         display: inline-block;
-        padding: 2%;
-        overflow: auto;
+        padding-top: 2%;
+        padding-right: 2%;
+    }
+
+    .review-info{
+        text-align: center;
+        margin-top: 5%;
+        margin-bottom: 5%;
     }
 </style>

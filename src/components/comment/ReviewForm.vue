@@ -30,7 +30,7 @@
                     <sui-table-row>
                         <sui-table-cell>별점</sui-table-cell>
                         <sui-table-cell>
-                            <sui-rating :rating="currentReview.starPoint" :max-rating="5" @rate="handleRate" @click="changeValue"/>
+                            <sui-rating :rating="currentReview.starPoint" :max-rating="5" @rate="handleRate" @change="changeValue"/>
                         </sui-table-cell>
                     </sui-table-row>
       
@@ -41,39 +41,39 @@
                                 <sui-form-fields inline>
                                     <label>배송</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" @click="changeValue" v-model="currentReview.deliveryValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" @change="changeValue" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 빨라요" radio value="2" @click="changeValue" v-model="currentReview.deliveryValue"/>
+                                    <sui-checkbox label="생각보다 빨라요" radio value="2" @change="changeValue" v-model="currentReview.deliveryValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 느려요" radio value="3" @click="changeValue" v-model="currentReview.deliveryValue" />
+                                        <sui-checkbox label="생각보다 느려요" radio value="3" @change="changeValue" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                
                                 <sui-form-fields inline>
                                     <label>디자인</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" @click="changeValue" v-model="currentReview.designValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" @change="changeValue" v-model="currentReview.designValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 예뻐요" radio value="2" @click="changeValue" v-model="currentReview.designValue"/>
+                                    <sui-checkbox label="생각보다 예뻐요" radio value="2" @change="changeValue" v-model="currentReview.designValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 별로에요" radio value="3" @click="changeValue" v-model="currentReview.designValue" />
+                                        <sui-checkbox label="생각보다 별로에요" radio value="3" @change="changeValue" v-model="currentReview.designValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
 
                                 <sui-form-fields inline>
                                     <label>사이즈</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" @click="changeValue" v-model="currentReview.sizeValue" />
+                                        <sui-checkbox label="적당해요" radio value="1" @change="changeValue" v-model="currentReview.sizeValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 커요" radio value="2" @click="changeValue" v-model="currentReview.sizeValue"/>
+                                    <sui-checkbox label="생각보다 커요" radio value="2" @change="changeValue" v-model="currentReview.sizeValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 작아요" radio value="3" @click="changeValue" v-model="currentReview.sizeValue" />
+                                        <sui-checkbox label="생각보다 작아요" radio value="3" @change="changeValue" v-model="currentReview.sizeValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                 
@@ -85,13 +85,19 @@
                     <sui-table-row>
                         <sui-table-cell>사진 올리기</sui-table-cell>
                         <sui-table-cell>
-                            <img class="image1" v-if="currentReview.myPhoto != ''" :src='currentReview.myPhoto' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
-                            <img class="image1" v-else :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            <div id='img-group'>
+                            <img class="image" @change="changeValue" @click="cancelUpload(0)" v-if="currentReview.myPhoto != ''" :src='currentReview.myPhoto' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            <img class="image" @change="changeValue" v-if="currentReview.myPhoto == ''" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             
-                            <img id="image2" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
-                            <img id="image3" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/><br><br>
-                            <input v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%;"/>
+                            <img class="image" @change="changeValue" @click="cancelUpload(1)" v-if="currentReview.myPhoto2 != ''" :src='currentReview.myPhoto2' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            <img class="image" @change="changeValue" v-if="currentReview.myPhoto2 == ''" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+
+                            <img class="image" @change="changeValue" @click="cancelUpload(2)" v-if="currentReview.myPhoto3 != ''" :src='currentReview.myPhoto3' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
+                            <img class="image" @change="changeValue" v-if="currentReview.myPhoto3 == ''" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             
+                            <input id="image-input" v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" text="" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%; color: transparent;"/>
+                            </div>
+
                             <p>- 매월 우수상품평 작성자 50명에게 L.POINT 2000점을 적립해 드립니다.</p>
                             <p>- 첨부가능 파일형식: JPG, JPEG, GIF, PNG</p>
                             <p>- 파일명: 영문파일명만 가능</p>
@@ -101,7 +107,7 @@
 
                     <sui-table-row>
                         <sui-table-cell>상품평 작성</sui-table-cell>
-                        <sui-table-cell><textarea @click="changeValue" v-model="currentReview.reviewContent" id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
+                        <sui-table-cell><textarea @change="changeValue" v-model="currentReview.reviewContent" id="review-textarea" placeholder="* 배송, 상품교환 등의 민원 사항은 고객센터 1:1 e-mail을 이용해주세요.
 이 곳에 작성하시면 답변을 받지 못합니다.">
                         </textarea></sui-table-cell>
                     </sui-table-row>
@@ -118,23 +124,15 @@
         name: "Sample",
         data(){
             return{
-                
+                photoList:[],
+                copyReview:{},
             }
         },
-        
         computed: {
             formattedPayload() {
                 return JSON.stringify(this.currentReview.payload, null, 2);
             },
             isModalOpen(){
-                return this.$store.state.commentStore.isModalOpen;
-            },
-
-            clearValue(){
-                // if(!this.$store.state.commentStore.isModalOpen){
-                //     this.clearPlease();
-                // }
-
                 return this.$store.state.commentStore.isModalOpen;
             },
         },
@@ -147,45 +145,66 @@
                 this.$store.commit('updateComment', this.currentReview);
             },
             fileSelect(review){
+
                 if (this.$refs.commentimage.files && this.$refs.commentimage.files[0]) {
                     let reader = new FileReader();
                     
                     reader.onload = function(event){
                         review.myPhoto = event.target.result;
-                        
-                        console.log(review.myPhoto);
-                        
-                        let image = document.getElementById('image1'); 
-                        image.setAttribute("src", review.myPhoto);
                     }
-
+                    
                     this.changeValue();
                     reader.readAsDataURL(this.$refs.commentimage.files[0]);
+                }
+
+                if(this.$refs.commentimage.files && this.$refs.commentimage.files[1]){
+                    let reader = new FileReader();
+
+                    reader.onload = function(event){
+                        review.myPhoto2 = event.target.result;
+                    }
                     
+                    this.changeValue();
+                    reader.readAsDataURL(this.$refs.commentimage.files[1]);
+                }
+
+                if(this.$refs.commentimage.files && this.$refs.commentimage.files[2]){
+                    let reader = new FileReader();
+                    
+                    reader.onload = function(event){
+                        review.myPhoto3 = event.target.result;
+                    }
+                    
+                    this.changeValue();
+                    reader.readAsDataURL(this.$refs.commentimage.files[2]);
                 }
             },
-            // clearPlease(){
-            //     this.currentReview = {
-            //         purchaseCode:'',
-            //         goodsCode:'',
-            //         userId:'',
-            //         selectedOption:'',
-            //         myPhoto:'',
-            //         quantity:0,
-            //         recommendCount:0,
-            //         deliveryValue:0,
-            //         designValue:0,
-            //         sizeValue:0,
-            //         starPoint:0,
-            //         reviewContent:'',
-            //         writtenDate:'',
-            //     }
-            // }
-        },
-        mounted(){
-            
-        },
+            cancelUpload(index){
+                if(confirm("사진을 삭제하시겠습니까?")) {
+                    
+                    if(index == 0){
+                        if(this.currentReview.myPhoto2 == ''){
+                            this.currentReview.myPhoto = '';
+                        }else{
+                            this.currentReview.myPhoto = this.currentReview.myPhoto2;                        
+                        }
 
+                        this.currentReview.myPhoto2 = this.currentReview.myPhoto3;
+                        this.currentReview.myPhoto3 = '';
+                    }
+                    else if(index == 1){
+                        this.currentReview.myPhoto2 = this.currentReview.myPhoto3;
+                        this.currentReview.myPhoto3 = '';
+                    }else{
+                        this.currentReview.myPhoto3 = '';
+                    }
+
+                        this.changeValue();
+                    }
+                
+                    alert("삭제되었습니다.");
+            }
+        },
     }
 </script>
 
