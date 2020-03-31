@@ -3,11 +3,11 @@ import axios from 'axios';
 // import router from "../../router";
 
 export const COMMENTS_URL = 'http://192.168.0.66:9999/api/comments';
-export const GOODS_URL = 'http://localhost:9999/api/goods';
+export const GOODS_URL = 'http://192.168.0.65:9999/api/goods';
 
 export const CART_URL = 'http://localhost:9999/api/cart';
 
-export const FAQ_URL = process.env.VUE_APP_BASE_URL + '/api/faq';
+export const FAQ_URL = 'http://192.168.0.17:9999/api/faq';
 export const ORDER_URL = 'http://192.168.0.228:9999/api/order';
 export const PURCHASEHISTORY_URL = process.env.PURCHASEHISTORY_APP_BASE_URL + 'api/purchasehistory';
 

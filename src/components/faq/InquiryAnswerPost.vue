@@ -146,8 +146,8 @@
                 if (this.answer) {
                     alert("답변이 완료된 문의는 삭제할 수 없습니다.");
                 } else {
-                    questionDelete(postId);
                     if(confirm("해당 문의를 삭제하시겠습니까?")) {
+                        questionDelete(postId);
                         alert("삭제되었습니다.")
                         this.$router.push("/inquiryAnswer");
                     }
