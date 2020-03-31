@@ -74,17 +74,33 @@
                 this.$router.push('/deliveryanduserinfomanagement');
             },
             async getOrderList(){
+                console.log("getOrderList");
                 this.orderList = await getOrderList("testid");
                 this.setGoodsList(this.orderList);
             },
             async setGoodsList(orderList){
+                console.log("setGoodsList")
                 for(let order in orderList){
                     this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
             },
             async cancelOrder(index){
+                console.log("cancelOrder")
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
-                this.getOrderList();
+                this.orderList = [{
+                    orderId : '',
+                    userId : '',
+                    goodsId : '',
+                    goodsCount: -1,
+                    orderPrice : '',
+                    orderState : {
+                        orderId : '',
+                        stateChangeDate : '',
+                        orderState : '',
+                    },
+                }];
+                this.goodsInOrderList = [];
+                await this.getOrderList();
                 alert("주문이 취소되었습니다.")
             }
         },
