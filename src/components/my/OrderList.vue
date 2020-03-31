@@ -76,7 +76,6 @@
             async getOrderList(){
                 this.orderList = await getOrderList("testid");
                 this.setGoodsList(this.orderList);
-                console.log(this.orderList);
             },
             async setGoodsList(orderList){
                 for(let order in orderList){
@@ -85,8 +84,8 @@
             },
             async cancelOrder(index){
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
-                alert("주문이 취소되었습니다.")
                 this.getOrderList();
+                alert("주문이 취소되었습니다.")
             }
         },
         components: {
