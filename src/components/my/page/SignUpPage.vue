@@ -111,8 +111,7 @@
 </template>
 
 <script>
-    import UserModel from "../model/UserModel";
-    // import UserApi from "../../../api/UserApi";
+    import {duplicateCheck} from "../../../api/UserApi";
 
     export default {
         name: "Sample",
@@ -147,11 +146,16 @@
                     {text: '016', value: '016'},
                     {text: '018', value: '018'},
                 ],
-                domain: ''
+                domain: '',
+                isUsableEmail: false
             };
         },
         methods: {
             signUp() {
+                if(!this.isUsableEmail){
+                    alert('아이디 중복체크를 해주세요.');
+                    return;
+                }
                 this.user.email = `${this.user.email}@${this.domain}`;
                 this.user.phoneNumber = `${this.currentHeadNumber}${this.user.phoneNumber}`;
                 this.$store.dispatch('SIGN_UP',this.user);
@@ -174,13 +178,13 @@
                 this.smsAgree = false;
                 this.user.acceptSms = 'N';
             },
-            duplicateCheck() {
-                //
-                this.user = new UserModel();
-                this.user.username = this.userName;
-                this.user.email = this.userEmailId + '@' + this.currentEmailDomain;
-                this.user.phone = this.currentHeadNumber + '-' + this.backPhoneNumber;
-                this.isNotDuplicated = true;
+            async duplicateCheck() {
+                if(await duplicateCheck(`${this.user.email}@${this.domain}`)){
+                    alert('이미 등록된 이메일입니다.')
+                }else{
+                    this.isUsableEmail = true;
+                    alert('사용 가능한 이메일입니다.')
+                }
             },
         },
         watch: {

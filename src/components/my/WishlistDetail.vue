@@ -72,7 +72,6 @@
         },
         methods: {
             async setGoodsFromGoodsCodes() {
-                console.log("test")
                 let goodsApi = new GoodsApi();
                 for (let index in this.wishListGoodsCodes) {
                     this.wishListGoods.push(await goodsApi.getGoods(this.wishListGoodsCodes[index]));
@@ -88,7 +87,6 @@
                 this.$router.push('/goodsDetail/' + goodsCode);
             },
             async setWishList() {
-                console.log("setWishList")
                 let wishListApi = new WishListApi();
                 this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes();
                 await this.setGoodsFromGoodsCodes();

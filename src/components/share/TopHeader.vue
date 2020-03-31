@@ -6,6 +6,7 @@
         </div>
         <div class="right_bar">
             <a v-if="!isAuthenticated" @click="goToLoginForm" href="#">로그인</a>
+            <a v-if="isAuthenticated" @click="goToMyPage" href="#">{{userInfo.name}} 님 반갑습니다.</a>
             <a v-if="isAuthenticated" @click="logout" href="#">로그아웃</a>
             <router-link v-else to="/signup" href="#">회원가입</router-link>
             <router-link to="/faq">고객센터</router-link>
@@ -17,8 +18,16 @@
 </template>
 
 <script>
+
+    import {getCurrentUserInfo} from "../../api/UserApi";
+
     export default {
         name: "TopHeader.vue",
+        data() {
+            return {
+                userInfo: '',
+            }
+        },
         computed: {
             isAuthenticated(){
                 return this.$store.getters.isAuthenticated;
@@ -31,7 +40,13 @@
             logout(){
                 this.$store.commit('LOGOUT');
                 alert('로그아웃 되었습니다.');
+            },
+            goToMyPage() {
+                this.$router.push('/myPageMain');
             }
+        },
+        async created() {
+            this.userInfo = await getCurrentUserInfo();
         }
     }
 </script>

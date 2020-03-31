@@ -17,8 +17,7 @@ router.beforeEach(function (to, from, next) {
     })) {
         if (!store.getters.isAuthenticated) {
             // 이동할 페이지에 인증 정보가 필요하면 경고 창을 띄우고 페이지 전환은 하지 않음
-            alert('로그인 해주세요.');
-            router.push('/');
+            router.push('/login');
         }else {
             next(); // 페이지 전환
         }

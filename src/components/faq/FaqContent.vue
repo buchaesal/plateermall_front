@@ -18,7 +18,7 @@
             FaqSearchForm,
             // FaqCategoryList,
             FaqList
-        }
+        },
     }
 </script>
 

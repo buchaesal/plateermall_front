@@ -6,6 +6,7 @@ const state = {
     goodsModelsCol4: [],
     goodsModelsCol5: [],
     goodsModel: {},
+    categoryGoodsModels: [],
     goodsCount: 0
 }
 
@@ -27,7 +28,9 @@ const mutations = {
     async getCartGoodsModelList(state, goodsCodeList) {
         state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
     },
-
+    async getCategoryGoodsModelList(state, categoryCode) {
+        state.categoryGoodsModels = await goodsApi.getCategoryGoodsList(categoryCode);
+    },
 }
 
 const actions = {}

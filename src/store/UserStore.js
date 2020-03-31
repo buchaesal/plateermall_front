@@ -1,4 +1,4 @@
-import {login, signUp, modifyUser} from "../api/UserApi";
+import {login, signUp} from "../api/UserApi";
 import {setTokenInLocalStorage, deleteTokenInLocalStorage} from "../utils/tokenStorage";
 import router from "../router/index";
 
@@ -36,21 +36,22 @@ const actions = {
         try {
             let msg = '';
             const result = await login(user);
-            setTokenInLocalStorage(result);
-            if(result === 'noExist'){
+            if (result === 'noExist') {
                 msg = '아이디가 존재하지 않습니다';
-            }else if(result === 'incorrect'){
+            } else if (result === 'incorrect') {
                 msg = '패스워드가 올바르지 않습니다.';
-            }else{
-                context.commit('LOGIN');
-            }
+            } else if (result === 'failed') {
+                msg = '로그인에 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.'
+            }else
+                {
+                    setTokenInLocalStorage(result);
+                    context.commit('LOGIN');
+                }
+
             return msg;
         } catch (e) {
             alert('Error!');
         }
-    },
-    async update(context, user){
-        await modifyUser(user);
     }
 };
 

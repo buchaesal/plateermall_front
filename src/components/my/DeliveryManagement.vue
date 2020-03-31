@@ -43,18 +43,6 @@
                     </sui-table-cell>
                 </sui-table-row>
 
-
-                <sui-table-row v-else>
-                    <sui-table-cell v-if="openModifyShippingSpotFormFlag">
-                        <p>
-                            <button class="cancel-btn" @click="closeModifyDefaultSpotForm">취소</button>
-                        </p>
-                        <p>
-                            <button class="save-btn" @click="modifyShippingSpot">저장</button>
-                        </p>
-                    </sui-table-cell>
-                </sui-table-row>
-
                 <sui-table-row v-for="(shippingSpot, index) in shippingSpots" :key="index" text-align="center">
                     <sui-table-cell>
                         <sui-checkbox radio :value="''+shippingSpot.id" v-model="selectedDefaultId"/>
@@ -64,19 +52,34 @@
                     </sui-table-cell>
 
                     <sui-table-cell text-align="left">
-                        <p class="user-name">{{shippingSpot.receiver}}</p>
-                        <div class="spot-details">
-                            <p>{{shippingSpot.contactNumber}}/{{shippingSpot.phoneNumber}}</p>
-                            <p>도로명 주소 : {{shippingSpot.roadAddress}}</p>
-                            <p>지번 주소 : {{shippingSpot.zipcodeAddress}}</p>
-                            <p>나머지 주소 : {{shippingSpot.remainAddress}}</p>
+                        <ShippingSpotForm v-if="isModifyForm === index" :targetShippingSpot="shippingSpot"></ShippingSpotForm>
+                        <div v-else>
+                            <p class="user-name">{{shippingSpot.receiver}}</p>
+                            <div class="spot-details">
+                                <p>{{shippingSpot.contactNumber}}/{{shippingSpot.phoneNumber}}</p>
+                                <p>도로명 주소 : {{shippingSpot.roadAddress}}</p>
+                                <p>지번 주소 : {{shippingSpot.zipcodeAddress}}</p>
+                                <p>나머지 주소 : {{shippingSpot.remainAddress}}</p>
+                            </div>
                         </div>
                     </sui-table-cell>
                     <sui-table-cell>
-                        <button class="modify-btn" v-if="shippingSpot.default" @click="openModifyDefaultSpotForm">수정</button>
-                        <button class="modify-btn" v-else @click="deleteShippingSpot(shippingSpot.id)">삭제</button>
+                        <div v-if="isModifyForm === index">
+                            <p>
+                                <button class="cancel-btn" @click="isModifyForm = -1">취소</button>
+                            </p>
+                            <p>
+                                <button class="save-btn" @click="modifyAddress(shippingSpot)">저장</button>
+                            </p>
+                        </div>
+                        <div v-else>
+                            <button class="modify-btn" v-if="shippingSpot.default" @click="isModifyForm = index">수정
+                            </button>
+                            <button class="modify-btn" v-else @click="deleteShippingSpot(shippingSpot.id)">삭제</button>
+                        </div>
                     </sui-table-cell>
                 </sui-table-row>
+
 
             </sui-table-body>
 
@@ -110,19 +113,23 @@
                 openModifyShippingSpotFormFlag: false,
                 defaultShippingSpot: {},
                 otherShippingSpots: [],
-
+                isModifyForm: false,
                 defaultShippingSpotCopy: {},
-                defaultAddress:{},
                 shippingSpotSize: -1,
                 checkedRadio: 'defaultShippingSpot',
-                selectedDefaultId: null
+
             }
         },
         computed: {
             shippingSpots: function () {
-                console.log('this.shippingSpots')
                 return this.$store.state.shippingSpotListStore.shippingSpotList;
             },
+            selectedDefaultId: function () {
+                return this.$store.state.shippingSpotListStore.selectedDefaultId;
+            },
+            defaultAddress: function () {
+                return this.$store.state.shippingSpotListStore.defaultAddress;
+            }
         },
         methods: {
             openShippingSpotForm() {
@@ -136,49 +143,33 @@
                 this.openShippingSpotFormFlag = false;
                 this.newShippingSpotModel = new ShippingSpotModel();
             },
-            openModifyDefaultSpotForm() {
-                this.openModifyShippingSpotFormFlag = true;
-                this.defaultShippingSpotCopy = JSON.parse(JSON.stringify(this.defaultShippingSpot));
-            },
-            closeModifyDefaultSpotForm() {
-                this.openModifyShippingSpotFormFlag = false;
-            },
-            modifyShippingSpot() {
-                this.defaultShippingSpot = JSON.parse(JSON.stringify(this.defaultShippingSpotCopy));
-                this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
-                alert("수정되었습니다.")
-                this.closeModifyDefaultSpotForm();
-            },
             deleteShippingSpot(id) {
-                this.$store.dispatch('deleteShippingSpot',id);
-                alert('배송지가 삭제되었습니다.');
+                if(confirm('삭제하시겠습니까?')){
+                    this.$store.dispatch('deleteShippingSpot', id);
+                    alert('배송지가 삭제되었습니다.');
+                }
             },
             async setDefaultShippingSpot() {
-                console.log('setDefaultShippingSpot')
+                if(this.shippingSpots.length === 0){
+                    alert('등록된 배송지가 없습니다.');
+                    return;
+                }
+
                 if (this.selectedDefaultId === this.defaultAddress.id) {
                     alert("기본 배송지입니다.");
                     return;
                 }
-                await this.$store.dispatch('setDefaultShippingSpot', this.selectedDefaultId);
-                // this.defaultShippingSpot.isDefault = false;
-                // this.otherShippingSpots[this.checkedRadio].isDefault = true;
-                // this.updateShippingSpotList(this.defaultShippingSpot, this.otherShippingSpots);
+                await this.$store.dispatch('setDefaultShippingSpot');
                 alert('기본 배송지로 설정하였습니다.')
             },
             updateShippingSpotList(defaultShippingSpot, otherShippingSpots) {
-                console.log('updateSPot')
                 otherShippingSpots.push(defaultShippingSpot);
                 this.$store.commit('updateShippingSpotList', otherShippingSpots);
                 this.filterDefaultAndOtherSpots();
             },
             async getShippingSpotListFromApi() {
-                await this.$store.dispatch('getShippingSpotListFromApi');
-                this.defaultAddress = this.shippingSpots.filter((item) => {
-                    return item.default === true;
-                })[0];
-                if ( this.defaultAddress) {
-                    this.selectedDefaultId =  this.defaultAddress.id + '';
-                }
+                await this.$store.dispatch('ADDRESS_LIST');
+                //this.setDefaultOption();
             },
             filterDefaultAndOtherSpots() {
                 console.log('filterDefault')
@@ -193,13 +184,31 @@
                 });
             },
             registerNewShippingSpot() {
-                this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0;
-                console.log(this.newShippingSpotModel.isDefault, "defalut니?");
-                this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
-                alert('배송지가 등록되었습니다.');
-                this.openShippingSpotFormFlag = false;
-                this.getShippingSpotListFromApi();
+                if(confirm('저장 하시겠습니까?')){
+                    this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0 ? 1 : 0;
+                    console.log(this.newShippingSpotModel);
+                    this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
+                    alert('배송지가 등록되었습니다.');
+                    //this.setDefaultOption();
+                    this.openShippingSpotFormFlag = false;
+                }
             },
+            modifyAddress(address){
+                if(confirm('수정하시겠습니까?')){
+                    this.$store.dispatch('MODIFY_ADDRESS',address);
+                    alert('배송지가 수정되었습니다.');
+                    this.isModifyForm = -1;
+                    //this.setDefaultOption();
+                }
+            },
+            // setDefaultOption(){
+            //     this.defaultAddress = this.shippingSpots.filter((item) => {
+            //         return item.isDefault === 1;
+            //     })[0];
+            //     if (this.defaultAddress) {
+            //         this.selectedDefaultId = this.defaultAddress.id + '';
+            //     }
+            // }
         },
         created: function () {
             this.getShippingSpotListFromApi();

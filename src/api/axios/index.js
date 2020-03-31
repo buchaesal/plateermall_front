@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const COMMENTS_URL = 'http://192.168.0.66:9999/api/comments';
 export const GOODS_URL = 'http://192.168.0.65:9999/api/goods';
-
+export const CATEGORY_URL = 'http://192.168.0.65:9999/api/category';
 export const CART_URL = 'http://192.168.0.199:9999/api/cart';
 
 export const FAQ_URL = 'http://192.168.0.17:9999/api/faq';
@@ -12,7 +12,7 @@ export const ORDER_URL = 'http://192.168.0.228:9999/api/order';
 export const PURCHASEHISTORY_URL = process.env.PURCHASEHISTORY_APP_BASE_URL + 'api/purchasehistory';
 
 export const USER_URL =  'http://192.168.0.95:9999/api/user';
-export const SHIPPINGSPOT_URL = process.env.VUE_APP_BASE_URL + '/api/shippingspot';
+export const SHIPPINGSPOT_URL = 'http://192.168.0.95:9999/api/address';
 export const WISHLIST_URL = 'http://192.168.0.199:9999/api/wishlist';
 
 const instance = axios.create({

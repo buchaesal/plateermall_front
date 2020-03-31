@@ -8,6 +8,7 @@ import GoodsDetailPage from '../components/goods/page/GoodsDetailPage';
 import MyCart from "../components/my/page/MyCartPage";
 import Error from "../components/share/page/Error";
 import OrderCompletePage from "../components/order/page/OrderCompletePage";
+import CategoryPage from '../components/category/page/CategoryPage';
 
 Vue.use(VueRouter);
 
@@ -15,7 +16,7 @@ const routes = [
     {path: '/', component: MainPage},
     {path: '/login', component: LoginForm},
     {path: '/signup', component: SignUpPage},
-    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent', userInfo:false},meta: {authRequired: true}},
+    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent', userInfo:false}},
     {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'},meta: {authRequired: true}},
     {path: '/inquiryAnswer', component: MyPage, props:{selectedComponent:'InquiryAnswer'},meta: {authRequired: true}},
     {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'},meta: {authRequired: true}},
@@ -30,6 +31,7 @@ const routes = [
     {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'},meta: {authRequired: true}},
     {path: '/error', component: Error},
 
+    {path: '/category/:categoryCode', component: CategoryPage},
     {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true}
 ]
 

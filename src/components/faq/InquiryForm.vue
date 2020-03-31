@@ -49,7 +49,7 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">답변 알림</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-checkbox label="010-4726-4128" v-model="questionObject.smsAlarm"/>
+                                        <sui-checkbox :label="userInfo.phoneNumber" v-model="questionObject.smsAlarm"/>
                                         <router-link to="/deliveryanduserinfomanagement">
                                             <sui-button style="float: right">회원 정보 수정</sui-button>
                                         </router-link>
@@ -58,7 +58,7 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">이메일 수신</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-checkbox label="eks4116@gmail.com" v-model="questionObject.emailAlarm"/>
+                                        <sui-checkbox :label="userInfo.email" v-model="questionObject.emailAlarm"/>
                                     </sui-table-cell>
                                 </sui-table-row>
                             </sui-table-body>
@@ -102,6 +102,7 @@
 <script>
     import FaqHeader from "./FaqHeader";
     import {registrationQuestion} from "../../api/FaqApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "InquiryForm",
@@ -111,11 +112,12 @@
         data() {
             return {
                 open: false,
+                userInfo: '',
                 questionObject: {
                     territory: '',
                     state:'',
                     date: new Date().getFullYear()+' - '+ (new Date().getMonth()+1) + ' - ' + new Date().getDate(),
-                    writer: '로그인한 사용자 정보',
+                    writer: '',
                     goodsCode: '',
                     title: '',
                     description: '',
@@ -145,11 +147,12 @@
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/inquiryAnswer");
                 }
-            },
+            }
         },
-        // created() {
-        //     this.questionObject.date = new Date().getFullYear()+'-'+new Date().getMonth() + '-' + new Date().getDay();
-        // }
+        async created() {
+            this.userInfo = await getCurrentUserInfo();
+            this.questionObject.writer = this.userInfo.name;
+        },
     }
 </script>
 

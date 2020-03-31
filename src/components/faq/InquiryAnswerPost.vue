@@ -92,12 +92,14 @@
 <script>
     import FaqHeader from "./FaqHeader";
     import {getQuestion, getAnswer, questionDelete, questionUpdate} from "../../api/FaqApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "InquiryAnswerPost",
         data() {
             return {
                 updateBtn: '0',
+                userInfo: '',
                 options: [
                     {text: '주문내역확인', value: '주문내역확인',},
                     {text: '배송확인', value: '배송확인',},
@@ -108,15 +110,6 @@
                 questionDetail: {},
                 answer: {},
                 updateQuestionObject: {
-                    // postId: '',
-                    // state: '',
-                    // date: '',
-                    // territory: '',
-                    // goodsCode: '',
-                    // title: '',
-                    // description: '',
-                    // smsAlarm: '',
-                    // emailAlarm: '',
                 },
             }
         },
@@ -127,27 +120,20 @@
             const postId = this.$route.params.postId;
             this.questionDetail = await getQuestion(postId);
             this.updateQuestionObject = await this.questionDetail;
-            // console.log(this.updateQuestionObject);
-            // this.updateQuestionObject.postId = this.questionDetail.postId;
-            // this.updateQuestionObject.state = this.questionDetail.state;
-            // this.updateQuestionObject.date = this.questionDetail.postId;
-            // this.updateQuestionObject.territory = this.questionDetail.postId;
-            // this.updateQuestionObject.goodsCode = this.questionDetail.postId;
-            // this.updateQuestionObject.title = this.questionDetail.postId;
-            // this.updateQuestionObject.description = this.questionDetail.postId;
-            // this.updateQuestionObject.smsAlarm = this.questionDetail.postId;
-            // this.updateQuestionObject.emailAlarm = this.questionDetail.postId;
             this.answer = await getAnswer(postId);
+            this.userInfo = await getCurrentUserInfo();
         },
         methods: {
-            questionDelete() {
+            async questionDelete() {
                 const postId = this.$route.params.postId;
 
-                if (this.answer) {
+                if (this.questionDetail.writer != this.userInfo.name) {
+                    alert("삭제 권한이 없습니다.");
+                } else if (this.answer) {
                     alert("답변이 완료된 문의는 삭제할 수 없습니다.");
                 } else {
-                    if(confirm("해당 문의를 삭제하시겠습니까?")) {
-                        questionDelete(postId);
+                    if (confirm("해당 문의를 삭제하시겠습니까?")) {
+                        await questionDelete(postId);
                         alert("삭제되었습니다.")
                         this.$router.push("/inquiryAnswer");
                     }
@@ -165,9 +151,11 @@
                 // }
             },
             updateBtnChange() {
-                if(this.answer){
+                if (this.questionDetail.writer != this.userInfo.name) {
+                    alert("수정 권한이 없습니다.");
+                } else if (this.answer) {
                     alert("답변이 완료된 문의는 수정할 수 없습니다.");
-                } else if(this.updateBtn==0) {
+                } else if (this.updateBtn == 0) {
                     this.updateBtn = 1;
                 } else {
                     this.updateBtn = 0;

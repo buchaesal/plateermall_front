@@ -3,18 +3,8 @@
         <div class="inner_bar">
             <div class="left_bar">
                 <span class="item"><a @click="goToHome">HOME</a></span>
-                <span class="item"><a>OUTLET</a></span>
-                <span class="item"><a>BEAUTY</a></span>
-                <span class="item"><a>BAG & ACC</a></span>
-                <span class="item"><a>SHOES</a></span>
-                <span class="item"><a>WOMEN</a></span>
-                <span class="item"><a>MEN</a></span>
-                <span class="item"><a>CASUAL</a></span>
-                <span class="item"><a>SPORTS</a></span>
-                <span class="item"><a>KIDS</a></span>
-                <span class="item"><a>LIVING</a></span>
-                <span class="item"><a>FOODS</a></span>
-
+                <span class="item" v-for="(category, index) in categoryList"
+                      :key="index"><a @click="goToCategory(category.categoryCode)">{{category.name}}</a></span>
             </div>
 
             <div class="right_bar">
@@ -35,8 +25,19 @@
         methods: {
             goToHome() {
                 this.$router.push('/');
+            },
+            goToCategory(categoryCode) {
+                this.$router.push('/category/' + categoryCode);
+            },
+        },
+        created() {
+            this.$store.commit("getTopCategoryList");
+        },
+        computed: {
+            categoryList() {
+                return this.$store.state.categoryStore.topCategoryList;
             }
-        }
+        },
     }
 </script>
 
