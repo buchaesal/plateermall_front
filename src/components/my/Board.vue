@@ -100,6 +100,7 @@
         },
         methods: {
             searchQuestion() {
+                this.searchList = [];
                 if (!this.searchQuestionObject.searchQuestionText) {
                     alert("검색할 내용을 입력해주세요.");
                 } else {
