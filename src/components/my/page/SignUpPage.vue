@@ -3,7 +3,7 @@
         <!-- <AgreementPage/> -->
         <div>
             <router-link to="/">
-                <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_icon_top_logo.jpg" size="small"/>
+                <sui-image src="../../../assets/PlateerMall.png" size="small"/>
             </router-link>
         </div>
         <div>
