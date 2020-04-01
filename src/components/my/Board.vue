@@ -101,7 +101,10 @@
         methods: {
             searchQuestion() {
                 this.searchList = [];
-                if (!this.searchQuestionObject.searchQuestionText) {
+                if (!this.searchQuestionObject.searchDropdown) {
+                    alert("검색할 카테고리를 선택해주세요.");
+                }
+                else if(!this.searchQuestionObject.searchQuestionText) {
                     alert("검색할 내용을 입력해주세요.");
                 } else {
                     for (let i = 0; i < this.questionList.length; i++) {
