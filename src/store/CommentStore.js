@@ -1,30 +1,23 @@
 import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, increaseRecommend, goodsOptionList, deleteComment, requestUnwrittenOrderId} from '../../src/api/CommentApi';
-import {getOrder} from '../../src/api/OrderApi';
-import GoodsApi from '../../src/api/GoodsApi';
+
 
 const state = {
     reviews:{},
     reviewSummary:{},
     myReviews:[],
-    orderIdInfo:[],
-    unwrittenReviews:[],
-    goodsInfo:[],
-    orderInfo:[],
-    unwrittenCount:0,
+    unWritten:[],
     isModalOpen: false,
     writtenReview:{}, //바뀐 리뷰
 
 }
 
 const getters = {
-    orderInfoLength: state => {
-        return state.orderInfo.length;
-      }
 
 }
 
 //state를 바꿀 때
 const mutations = {
+
     async loadCommentByGoodsCode(state, goodsCode){
 
         let reviewInfo = await requestComments(goodsCode);
@@ -44,7 +37,7 @@ const mutations = {
 
         state.myReviews = await requestMyComments(testId);
     },
-    
+
     async deleteComment(state, info){
 
         await deleteComment(info.orderId);
@@ -68,23 +61,8 @@ const mutations = {
     },
 
     async loadUnwrittenList(state, userId){
-        state.orderInfo = [];
-        state.goodsInfo = [];
-        
-        state.orderIdInfo = await requestUnwrittenOrderId(userId);
 
-        for(let index in state.orderIdInfo){                    
-            state.orderInfo.push(await getOrder(state.orderIdInfo[index]));
-        }
-
-        state.unwrittenCount = state.orderInfo.length;
-        console.log(state.unwrittenCount + '스토어카운트');
-
-        var goodsApi = new GoodsApi();
-
-        for(let index in state.orderInfo){
-            state.goodsInfo.push(await goodsApi.getGoods(state.orderInfo[index].goodsId));
-        }
+        state.unWritten = await requestUnwrittenOrderId(userId);
     },
 
     toggleModalOpen(state){
@@ -96,7 +74,7 @@ const mutations = {
     },
 
     async addCommentValue(state, userId){
-        
+
         await requestAddComment(state.writtenReview);
         state.unWritten = await requestUnwrittenOrderId(userId);
     },
@@ -111,7 +89,7 @@ const mutations = {
 
 //비동기 통신
 const actions = {
-    
+
 }
 
 export default {

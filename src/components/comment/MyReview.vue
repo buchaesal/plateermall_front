@@ -84,9 +84,6 @@
             MyReviewList,
             UnWrittenReview,
         },
-        async created(){
-            
-        }
     }
 </script>
 

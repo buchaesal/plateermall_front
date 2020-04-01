@@ -1,23 +1,22 @@
 <template>
-       <div id='unwritten-review'>
+    <div>
         <p>- 구매하신 상품의 상품평을 등록하실 수 있습니다. 판매가 종료된 상품은 목록에서 보이지 않습니다.</p>
         <p>- 상품평을 작성하시면 L.POINT를 적립하여 드립니다.</p>
-        <h6>{{getUnwritten}}</h6>
         <div class='unwritten-summary'>
             <p id='unwritten-count'>미작성 상품평 <strong>{{unwrittenCount}}</strong>건</p>
         </div>
-        
+
         <div class='unwritten-list'>
             <p id='no-unwritten' v-if='unwrittenCount == 0'>작성하실 상품평이 없습니다.</p>
-
+            <sui-loader active centered inline v-else-if="getUnwritten == ''"/>
             <div v-else>
                 <sui-item-group divided>
                     <sui-item class='unwritten-item' v-for='(unwritten, index) in getUnwritten' :key='index'>
-                    <sui-item-image size="tiny" :src='unWrittengoodsList[index].imgUrl'/>
+                    <sui-item-image size="tiny" :src='goodsList[index].imgUrl'/>
                     <sui-item-content class='unwritten'>
-                        <sui-item-header>{{unWrittengoodsList[index].seller}}</sui-item-header>
+                        <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
                         <sui-item-meta>
-                            <p class="itemName">{{unWrittengoodsList[index].title}}</p>
+                            <p class="itemName">{{goodsList[index].title}}</p>
                             <p class="option">{{unwrittenOrderList[index].selectedOptions}}</p>
                         </sui-item-meta>
                         <br>
@@ -29,21 +28,21 @@
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='unWrittengoodsList[index]' :currentReview='currentReview'/>
+                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview'/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
                                 <sui-button basic @click="cancelAddComment()">취소</sui-button>
                                 <sui-button @click='setReview()' color="black">작성완료</sui-button>
                             </sui-modal-actions>
-                        </sui-modal>    
+                        </sui-modal>
                         <!--모달 끝-->
                         </sui-item-description>
                     </sui-item-content>
                     </sui-item>
                 </sui-item-group>
-                        
-            
+
+
             </div>
         </div>
     </div>
@@ -51,16 +50,14 @@
 
 <script>
 import ReviewForm from './ReviewForm.vue';
-//import {requestUnwrittenOrderId} from '../../api/CommentApi';
-//import {getOrder} from '../../api/OrderApi';
-//import GoodsApi from '../../api/GoodsApi';
-import {getCurrentUserInfo} from '../../api/UserApi.js'
+import {requestUnwrittenOrderId} from '../../api/CommentApi';
+import {getOrder} from '../../api/OrderApi';
+import GoodsApi from '../../api/GoodsApi';
 
     export default {
         name: "UnwrittenReview",
         data(){
             return{
-                user:{},
                 open: false,
                 currentReview :{
                     orderId:'',
@@ -85,12 +82,12 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
                 today:'',
                 orderIdList:[],
                 unwrittenOrderList:[],
-                unWrittengoodsList:[],
+                goodsList:[],
             }
         },
         methods:{
             openReviewModal(selectedReview){
-                
+
                 this.open = true;
                 this.$store.commit('toggleModalOpen');
 
@@ -107,29 +104,23 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
             },
             setReview(){
                 if(confirm("상품평을 작성하시겠습니까?")) {
-                    
+
                     alert("작성되었습니다.");
-                    this.$store.commit('addCommentValue', this.user.email);
+                    this.$store.commit('addCommentValue', 'testid');
                     this.closeReviewModal();
                     this.unwrittenCount-=1;
                 }
             },
 
-            setUnwrittenInfo(){
-                
-                this.unwrittenOrderList = this.$store.state.commentStore.orderInfo;
-                console.log(this.unwrittenOrderList, "힝");
-                this.unwrittenCount = this.$store.state.commentStore.unwrittenCount;
-                console.log(this.unwrittenCount,"카운트");
+            async setUnwrittenInfo(userId){
 
-                this.unWrittengoodsList = this.$store.state.commentStore.goodsInfo;
-                console.log(this.unwrittenOrderList, 'unWrittengoodsList');
+                this.orderIdList = await requestUnwrittenOrderId(userId);
+                this.unwrittenCount = this.orderIdList.length;
 
+                for(let index in this.orderIdList){
+                    this.unwrittenOrderList.push(await getOrder(this.orderIdList[index]));
+                }
 
-
-
-
-                //제한시간 계산
                 for(let index in this.unwrittenOrderList){
                     let year = this.unwrittenOrderList[index].orderDate.substr(0,4);
                     let month = this.unwrittenOrderList[index].orderDate.substr(5,2);
@@ -137,10 +128,12 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
 
                     let date = new Date(year, month, day).toISOString().slice(0,10);
                     this.dueDate.push(date);
+
+                    let goodsApi = new GoodsApi();
+                    this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
                 }
 
-                
-               
+                this.$store.commit('loadUnwrittenList', userId);
             },
             cancelAddComment(){
                 this.closeReviewModal();
@@ -162,22 +155,13 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
                     writtenDate:'',
                 };
             },
-
         },
         components:{
             ReviewForm,
         },
         async created(){
-            console.log('상품평작성 created()');
-           
-            this.user = await getCurrentUserInfo();
-            await this.$store.commit('loadUnwrittenList', this.user.email);
-            
             this.today = new Date().toISOString().slice(0,10);
-            
-            await this.setUnwrittenInfo(this.user.email);
-            
-           
+            await this.setUnwrittenInfo('testId');
         },
         computed:{
             isModalOpen(){
@@ -185,7 +169,7 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
             },
 
             getUnwritten(){
-                return this.$store.state.commentStore.orderIdInfo;
+                return this.$store.state.commentStore.unWritten;
             }
         },
     }
