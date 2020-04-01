@@ -1,9 +1,9 @@
 import {login, signUp} from "../api/UserApi";
-import {setTokenInLocalStorage, deleteTokenInLocalStorage} from "../utils/tokenStorage";
+import {setTokenInSessionStorage, deleteTokenInSessionStorage} from "../utils/tokenStorage";
 import router from "../router/index";
 
 const state = {
-    accessToken: localStorage.getItem('access_token'),
+    accessToken: sessionStorage.getItem('access_token'),
 };
 
 const getters = {
@@ -13,13 +13,13 @@ const getters = {
 };
 
 function resetToken(state) {
-    deleteTokenInLocalStorage();
+    deleteTokenInSessionStorage();
     state.accessToken = null;
 }
 
 const mutations = {
     LOGIN(state) {
-        state.accessToken = localStorage.getItem('access_token');
+        state.accessToken = sessionStorage.getItem('access_token');
         router.push('/');
     },
     LOGOUT(state) {
@@ -44,7 +44,7 @@ const actions = {
                 msg = '로그인에 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.'
             }else
                 {
-                    setTokenInLocalStorage(result);
+                    setTokenInSessionStorage(result);
                     context.commit('LOGIN');
                 }
 

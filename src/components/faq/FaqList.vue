@@ -30,6 +30,7 @@
 
     export default {
         name: "Faq-list",
+        searchText: '',
         components: {
             FaqHeader
         },
@@ -177,6 +178,9 @@
                 this.active = name;
                 this.faqList = this.items.find(element => element.name == name).list;
             },
+            // search(searchText) {
+            //
+            // }
         },
     }
 </script>

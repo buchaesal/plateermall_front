@@ -29,25 +29,38 @@
                     </sui-table-row>
                 </sui-table-body>
                 <sui-table-body v-else>
-                    <sui-table-row v-for="(post, index) in questionList" :key="index">
+                    <sui-table-row v-for="(post, index) in questionList" :key="'all' + index" v-show="searchList.length==0">
                         <sui-table-cell v-if="post.state">답변완료</sui-table-cell>
                         <sui-table-cell v-else>답변대기</sui-table-cell>
                         <sui-table-cell>{{post.territory}}</sui-table-cell>
-                        <sui-table-cell><router-link :to="`/answer/${post.postId}`">{{ post.title }}</router-link></sui-table-cell>
+                        <sui-table-cell>
+                            <router-link :to="`/answer/${post.postId}`">{{ post.title }}</router-link>
+                        </sui-table-cell>
+                        <sui-table-cell>{{post.writer}}</sui-table-cell>
+                        <sui-table-cell>{{post.date}}</sui-table-cell>
+                    </sui-table-row>
+
+                    <sui-table-row v-for="(post, index) in searchList" :key="'search' + index" v-show="searchList.length>0">
+                        <sui-table-cell v-if="post.state">답변완료</sui-table-cell>
+                        <sui-table-cell v-else>답변대기</sui-table-cell>
+                        <sui-table-cell>{{post.territory}}</sui-table-cell>
+                        <sui-table-cell>
+                            <router-link :to="`/answer/${post.postId}`">{{ post.title }}</router-link>
+                        </sui-table-cell>
                         <sui-table-cell>{{post.writer}}</sui-table-cell>
                         <sui-table-cell>{{post.date}}</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
             </sui-table>
             <div class="search-box">
-                    <sui-dropdown class="search-dropdown"
-                        placeholder="제목"
-                        selection
-                        :options="options"
-                        v-model="searchQuestionObject.searchDropdown"
+                <sui-dropdown class="search-dropdown"
+                              placeholder="카테고리 선택"
+                              selection
+                              :options="options"
+                              v-model="searchQuestionObject.searchDropdown"
                 />
                 <sui-input class="search-input" v-model="searchQuestionObject.searchQuestionText"/>
-                <sui-button secondary class="search-btn" @click="searchQuestion">검색</sui-button>
+                <sui-button secondary class="search-btn" @click="searchQuestion"><a href="#">검색</a></sui-button>
             </div>
         </div>
     </div>
@@ -56,7 +69,7 @@
 <script>
 
     import FaqHeader from "../faq/FaqHeader";
-    import {getQuestionList, getQuestion, searchQuestion} from "../../api/FaqApi";
+    import {getQuestionList} from "../../api/FaqApi";
 
     export default {
         name: "Board",
@@ -66,16 +79,16 @@
         data() {
             return {
                 questionList: [],
-                questionDetail: {},
+                searchList: [],
                 answerComplete: '0',
                 answerStandBy: '0',
-                searchQuestionObject:[
-                    {searchDropdown:''},
-                    {searchQuestionText:''}
+                searchQuestionObject: [
+                    {searchDropdown: ''},
+                    {searchQuestionText: ''}
                 ],
                 options: [
                     {text: '제목', value: '제목',},
-                    {text: '내용', value: '제목',},
+                    {text: '내용', value: '내용',},
                     {text: '작성자', value: '작성자',},
                     {text: '제목+내용', value: '제목+내용',},
                 ],
@@ -83,16 +96,45 @@
         },
         async created() {
             this.questionList = await getQuestionList();
-            this.questionDetail = await getQuestion();
             this.answerCount();
         },
         methods: {
             searchQuestion() {
-                if (!this.searchQuestionObject.searchQuestionText) {
+                this.searchList = [];
+                if (!this.searchQuestionObject.searchDropdown) {
+                    alert("검색할 카테고리를 선택해주세요.");
+                }
+                else if(!this.searchQuestionObject.searchQuestionText) {
                     alert("검색할 내용을 입력해주세요.");
                 } else {
-                    console.log(this.searchQuestionObject);
-                    searchQuestion(this.searchQuestionObject);
+                    for (let i = 0; i < this.questionList.length; i++) {
+                        switch (this.searchQuestionObject.searchDropdown) {
+                            case "제목":
+                                if (this.questionList[i].title.includes(this.searchQuestionObject.searchQuestionText)) {
+                                    this.searchList.push(this.questionList[i]);
+                                }
+                                break;
+                            case "내용":
+                                if (this.questionList[i].description.includes(this.searchQuestionObject.searchQuestionText)) {
+                                    this.searchList.push(this.questionList[i]);
+                                }
+                                break;
+                            case "작성자":
+                                if (this.questionList[i].writer.includes(this.searchQuestionObject.searchQuestionText)) {
+                                    this.searchList.push(this.questionList[i]);
+                                }
+                                break;
+                            case "제목+내용":
+                                if (this.questionList[i].title.includes(this.searchQuestionObject.searchQuestionText) ||
+                                    this.questionList[i].description.includes(this.searchQuestionObject.searchQuestionText)) {
+                                    this.searchList.push(this.questionList[i]);
+                                }
+                                break;
+                        }
+                    }
+                    if (this.searchList.length == 0) {
+                        alert("해당 게시글을 찾을 수 없습니다.");
+                    }
                 }
             },
             answerCount() {
@@ -114,12 +156,6 @@
         border-top: 3px solid #000;
     }
 
-    /*.page_title {*/
-    /*    padding: 16px 0 14px;*/
-    /*    font-size: 24px;*/
-    /*    font-weight: normal;*/
-    /*}*/
-
     .inquiry_header {
         position: relative;
         border-top: 3px solid #000;
@@ -135,10 +171,6 @@
     ul {
         list-style: none;
     }
-
-    /*.form_head {*/
-    /*    width: 25%;*/
-    /*}*/
 
     tr {
         height: 60px;
@@ -163,10 +195,6 @@
         position: relative;
     }
 
-    /*.ui.table {*/
-    /*    margin: 0*/
-    /*}*/
-
     .search-box {
         width: 100%;
         text-align: center;
@@ -177,5 +205,10 @@
         height: 36px;
         vertical-align: middle;
         max-height: 200px;
+    }
+
+    .search-btn a {
+        text-decoration: none;
+        color: white;
     }
 </style>

@@ -3,7 +3,7 @@
         <div class="user_box charge_box">
             <div class="user">
                 <p class="name charge">
-                    <span>{{userInfo.name}}님의 마이페이지 입니다.</span>
+                    <span>{{userInfo.name}} 님의 마이페이지 입니다.</span>
                 </p>
             </div>
         </div>

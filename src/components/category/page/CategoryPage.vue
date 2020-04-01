@@ -2,7 +2,7 @@
     <div id="main-page-container">
         <Header></Header>
         <div class="container">
-            <div class="fix-inner" v-if="categoryGoods != categoryGoods">
+            <div class="fix-inner" v-if="categoryCode != categoryInfo.categoryCode">
                 <sui-loader active centered inline/>
             </div>
             <div class="fix-inner" v-else>
@@ -23,7 +23,7 @@
                 </div>
                 <div class="goods-area">
                     <div class="goods-content">
-                        <h2 class="page-title">{{categoryName}}</h2>
+                        <h2 class="page-title">{{categoryInfo.name}}</h2>
 
                         <div class="goods-sort">
                             <ul class="option-field sort-setting">
@@ -56,7 +56,7 @@
                         </div>
                         <div class="goods-card">
                             <sui-card-group :items-per-row="items_per_row">
-                                <sui-card class="goods-card" v-for="(goodsData, index) in goodsList" :key="index"
+                                <sui-card class="goods-card" v-for="(goodsData, index) in categoryGoods" :key="index"
                                           @click="goToGoodsDetail(goodsData.goodsCode)">
                                     <sui-image :src="goodsData.imgUrl" width="100%"/>
                                     <sui-card-content>
@@ -86,7 +86,6 @@
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
     import SideBanner from "../../share/SideBanner";
-    import CategoryApi from "../../../api/CategoryApi";
 
     export default {
         name: "CategoryPage",
@@ -97,8 +96,7 @@
         },
         data() {
             return {
-                categoryCode: null,
-                categoryName: null,
+                categoryCode: "",
                 items_per_row: 4,
             }
         },
@@ -109,24 +107,26 @@
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);
             },
+            setCategoryInfo() {
+                this.categoryCode = this.$route.params.categoryCode;
+                this.$store.commit("getCategoryGoodsModelList", this.categoryCode);
+                this.$store.commit("getCategory", this.categoryCode);
+            }
         },
-        async created() {
-            let categoryApi = new CategoryApi();
-            let category = await categoryApi.getCategory(this.$route.params.categoryCode);
-            console.log(category);
-            this.categoryCode = category.categoryCode;
-            this.categoryName = category.name;
-
+        created() {
+            this.setCategoryInfo();
         },
         computed: {
             categoryGoods() {
-                return this.$store.commit("getCategoryGoodsModelList", this.$route.params.categoryCode);
-            },
-            goodsList() {
                 return this.$store.state.goodsStore.categoryGoodsModels;
             },
+            categoryInfo() {
+                return this.$store.state.categoryStore.categoryInfo;
+            }
         },
-        watch: {}
+        watch: {
+            '$route': "setCategoryInfo",
+        },
     }
 </script>
 
@@ -218,16 +218,20 @@
         position: absolute;
     }
 
-    .goods-sort input[type="radio"]+label {
+    .goods-sort input[type="radio"] + label {
         padding: 0 20px;
         color: #666;
         font-size: 16px;
     }
 
-    .goods-sort input[type="radio"]:checked+label {
+    .goods-sort input[type="radio"]:checked + label {
         font-weight: 700;
         color: #000;
         font-size: 16px;
+    }
+
+    .goods-card {
+        position: relative;
     }
 
 </style>
