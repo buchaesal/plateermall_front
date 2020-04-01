@@ -448,10 +448,10 @@
         },
         data() {
             return {
-                userInfo: null,
-                goodsCode: null,
-                option: null,
-                current: null,
+                userInfo: "",
+                goodsCode: "",
+                option: "",
+                current: "",
                 shareDisplay: false,
                 isLike: false,
                 tooltip1Display: false,
@@ -659,15 +659,15 @@
             },
         },
         watch: {
-            option: function () {
+            option() {
                 this.addOptions(this.option);
             },
-            selectedOptions: function () {
+            selectedOptions() {
                 this.calculateOrderSum();
             },
-            orderSumPrice: function () {
+            orderSumPrice() {
             },
-            orderSumQuantity: function () {
+            orderSumQuantity() {
             },
         }
     }
