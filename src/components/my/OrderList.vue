@@ -47,6 +47,7 @@
     import NoItem from "../share/NoItem";
     import {getOrderList, changeState} from "../../api/OrderApi";
     import GoodsApi from "../../api/GoodsApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "OrderList",
@@ -74,7 +75,8 @@
                 this.$router.push('/deliveryanduserinfomanagement');
             },
             async getOrderList(){
-                this.orderList = await getOrderList("testid");
+                let userData = await getCurrentUserInfo();
+                this.orderList = await getOrderList(userData.email);
                 this.setGoodsList(this.orderList);
             },
             async setGoodsList(orderList){
