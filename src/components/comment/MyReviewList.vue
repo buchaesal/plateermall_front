@@ -11,7 +11,7 @@
 
         <div v-else style="min-height: 800px">
             <sui-item-group divided>
-                <sui-item class='review-item' v-for='(review, index) in getReviews' :key='index'>
+                <sui-item class='review-item' v-for='(review, index) in goodsList' :key='index'>
                     <sui-item-image size="tiny" :src='goodsList[index].imgUrl'/>
                     <sui-item-content class='review'>
                         <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
@@ -20,7 +20,7 @@
                             <p class="option">{{orderList[index].selectedOptions}}</p>
                         </sui-item-meta>
                         <sui-item-description>
-                            <p>{{review.reviewContent}}</p>
+                            <p>{{myReviews[index].reviewContent}}</p>
                             <sui-form-field>
                                 <sui-accordion>
                                     <a is="sui-accordion-title" style="float:right; padding-right: 5%;">
@@ -33,21 +33,21 @@
                                             <sui-item-group divided>
                                                 <sui-item>
                                                 <sui-item-content>
-                                                <sui-item-header>{{review.starPoint}}<sui-rating id="starAvg" :rating="review.starPoint" :max-rating="5" /></sui-item-header>
+                                                <sui-item-header>{{myReviews[index].starPoint}}<sui-rating id="starAvg" :rating="myReviews[index].starPoint" :max-rating="5" /></sui-item-header>
                                                 <sui-item-meta>
-                                                    <img class='detail-image' v-if="review.myPhoto != ''" style="margin-right: 3%;" :src="review.myPhoto" width='99' height='99'>    
-                                                    <img class='detail-image' v-if="review.myPhoto == ''" style="margin-right: 3%;" :src="require('../../assets/frame.png')" width='99' height='99'>                                                        
+                                                    <img class='detail-image' v-if="myReviews[index].myPhoto != ''" style="margin-right: 3%;" :src="myReviews[index].myPhoto" width='99' height='99'>    
+                                                    <img class='detail-image' v-if="myReviews[index].myPhoto == ''" style="margin-right: 3%;" :src="require('../../assets/frame.png')" width='99' height='99'>                                                        
                                                 </sui-item-meta>
                                                     
                                                 <sui-item-description>
-                                                <span>배송:<span v-if="review.deliveryValue==1">적당해요</span><span v-if="review.deliveryValue==2">생각보다 빨라요</span><span v-if="review.deliveryValue==3">생각보다 느려요</span></span>
-                                                    <span style="margin-left: 3%;">디자인:<span v-if="review.designValue==1">적당해요</span><span v-if="review.designValue==2">생각보다 예뻐요</span><span v-if="review.designValue==3">생각보다 별로에요</span></span>
-                                                    <span style="margin-left: 3%;">사이즈:<span v-if="review.sizeValue==1">적당해요</span><span v-if="review.sizeValue==2">생각보다 커요</span><span v-if="review.sizeValue==3">생각보다 작아요</span></span>
-                                                    <p style="margin-top: 1%;">{{review.reviewContent}}</p>
+                                                <span>배송:<span v-if="myReviews[index].deliveryValue==1">적당해요</span><span v-if="myReviews[index].deliveryValue==2">생각보다 빨라요</span><span v-if="myReviews[index].deliveryValue==3">생각보다 느려요</span></span>
+                                                    <span style="margin-left: 3%;">디자인:<span v-if="myReviews[index].designValue==1">적당해요</span><span v-if="myReviews[index].designValue==2">생각보다 예뻐요</span><span v-if="myReviews[index].designValue==3">생각보다 별로에요</span></span>
+                                                    <span style="margin-left: 3%;">사이즈:<span v-if="myReviews[index].sizeValue==1">적당해요</span><span v-if="myReviews[index].sizeValue==2">생각보다 커요</span><span v-if="myReviews[index].sizeValue==3">생각보다 작아요</span></span>
+                                                    <p style="margin-top: 1%;">{{myReviews[index].reviewContent}}</p>
                                                 </sui-item-description>
 
-                                                <sui-button @click='openReviewModal(review)' class="modify-button" size="tiny">수정</sui-button>
-                                                <sui-button @click='deleteReview(review.orderId)' class="delete-button" size="tiny">삭제</sui-button>
+                                                <sui-button @click='openReviewModal(myReviews[index])' class="modify-button" size="tiny">수정</sui-button>
+                                                <sui-button @click='deleteReview(myReviews[index].orderId)' class="delete-button" size="tiny">삭제</sui-button>
     
                                                 </sui-item-content>
                                                 </sui-item>
@@ -84,11 +84,13 @@ import ReviewForm from './ReviewForm.vue';
 import {requestMyComments} from '../../api/CommentApi';
 import {getOrder} from '../../api/OrderApi';
 import GoodsApi from '../../api/GoodsApi';
+import {getCurrentUserInfo} from '../../api/UserApi.js'
 
     export default {
         name: "MyReviewList",
         data() {
             return {
+                user:{},
                 open: false,
                 myReviews:[],
                 goodsList:[],
@@ -97,16 +99,22 @@ import GoodsApi from '../../api/GoodsApi';
                 review:{},
                 cancelCount:0,
                 copyReview:{},
+                goodsApi: new GoodsApi(),
             }
         },
-        created() {
-            this.setWrittenInfo("testId");
+        async created() {
+            console.log("작성한상품평 created()");
+            this.user = await getCurrentUserInfo();
+            await this.$store.commit('loadMyCommentsByUserId', this.user.email);
+            await this.setWrittenInfo(this.user.email);
+            console.log(this.goodsList,'goodsList');
         },
-        computed: {
-            getReviews(){
-                return this.$store.state.commentStore.myReviews;
-            }
-        },
+        // computed: {
+        //     getReviews(){
+ 
+        //         return this.$store.state.commentStore.myReviews;
+        //     }
+        // },
         methods: {
 
             openReviewModal(review){
@@ -121,7 +129,7 @@ import GoodsApi from '../../api/GoodsApi';
                 this.$store.commit('toggleModalOpen');
 
             },
-            setReview(){
+            async setReview(){
 
                 if(confirm("해당 상품평을 수정하시겠습니까?")) {
                     this.$store.commit('modifyCommentValue');
@@ -129,6 +137,8 @@ import GoodsApi from '../../api/GoodsApi';
                     alert("수정되었습니다.");
                     this.closeReviewModal();
                 }
+                this.clearValue();
+                await this.setWrittenInfo(this.user.email);
             },
 
             async setWrittenInfo(userId){
@@ -140,12 +150,11 @@ import GoodsApi from '../../api/GoodsApi';
                 }
 
                 for(let index in this.myReviews){
-                    
-                    let goodsApi = new GoodsApi();
-                    this.goodsList.push(await goodsApi.getGoods(this.myReviews[index].goodsCode));
+                    this.goodsList.push(await this.goodsApi.getGoods(this.myReviews[index].goodsCode));
                 }
 
-                this.$store.commit('loadMyCommentsByUserId', userId);
+                console.log(this.myReviews);
+                
             },
             async deleteReview(orderId){
                 let info = {
@@ -166,6 +175,11 @@ import GoodsApi from '../../api/GoodsApi';
                 await this.$store.commit('updateComment', this.currentReview);
                 this.closeReviewModal();
             },
+            clearValue(){
+                this.myReviews=[],
+                this.goodsList=[],
+                this.orderList=[]
+            }
         },
         components:{
             ReviewForm,

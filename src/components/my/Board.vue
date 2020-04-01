@@ -56,7 +56,7 @@
 <script>
 
     import FaqHeader from "../faq/FaqHeader";
-    import {getQuestionList, getQuestion, searchQuestion} from "../../api/FaqApi";
+    import {getQuestionList, getQuestion} from "../../api/FaqApi";
 
     export default {
         name: "Board",
@@ -66,6 +66,7 @@
         data() {
             return {
                 questionList: [],
+                searchList: [],
                 questionDetail: {},
                 answerComplete: '0',
                 answerStandBy: '0',
@@ -92,7 +93,19 @@
                     alert("검색할 내용을 입력해주세요.");
                 } else {
                     console.log(this.searchQuestionObject);
-                    searchQuestion(this.searchQuestionObject);
+                    // searchQuestion(this.searchQuestionObject);
+
+                    // for (let i = 0; i < this.questionList.length; i++) {
+                    //     if (this.questionList[i].title.includes(this.searchQuestionObject.searchQuestionText)) {
+                    //         this.searchList.add(this.questionList[i]);
+                    //     }
+                    // }
+
+                    this.searchList = this.questionList.filter(dropDown => {
+                        return (dropDown.title).includes(this.searchQuestionObject.searchDropdown);
+                    });this.searchList = this.questionList.filter(searchText => {
+                        return (searchText.title).includes(this.searchQuestionObject.searchQuestionText);
+                    });
                 }
             },
             answerCount() {
