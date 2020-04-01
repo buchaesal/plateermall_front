@@ -179,6 +179,11 @@
                 this.user.acceptSms = 'N';
             },
             async duplicateCheck() {
+                if(!this.user.email){
+                    alert('이메일을 입력해주세요.');
+                    return;
+                }
+
                 if(await duplicateCheck(`${this.user.email}@${this.domain}`)){
                     alert('이미 등록된 이메일입니다.')
                 }else{
