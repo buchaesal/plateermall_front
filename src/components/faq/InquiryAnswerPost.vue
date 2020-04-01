@@ -139,11 +139,11 @@
                     }
                 }
             },
-            questionUpdate() {
+            async questionUpdate() {
                 this.updateBtnChange();
-                questionUpdate(this.updateQuestionObject);
+                await questionUpdate(this.updateQuestionObject);
                 alert("문의가 수정되었습니다.");
-                this.$router.push("/inquiryAnswer");
+                await this.$router.push("/inquiryAnswer");
             },
             updateBtnChange() {
                 if (this.questionDetail.writer != this.userInfo.name) {

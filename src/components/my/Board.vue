@@ -29,7 +29,7 @@
                     </sui-table-row>
                 </sui-table-body>
                 <sui-table-body v-else>
-                    <sui-table-row v-for="(post, index) in questionList" :key="index" v-show="searchList.length==0">
+                    <sui-table-row v-for="(post, index) in questionList" :key="'all' + index" v-show="searchList.length==0">
                         <sui-table-cell v-if="post.state">답변완료</sui-table-cell>
                         <sui-table-cell v-else>답변대기</sui-table-cell>
                         <sui-table-cell>{{post.territory}}</sui-table-cell>
@@ -40,7 +40,7 @@
                         <sui-table-cell>{{post.date}}</sui-table-cell>
                     </sui-table-row>
 
-                    <sui-table-row v-for="(post, index) in searchList" :key="index" v-show="searchList.length>0">
+                    <sui-table-row v-for="(post, index) in searchList" :key="'search' + index" v-show="searchList.length>0">
                         <sui-table-cell v-if="post.state">답변완료</sui-table-cell>
                         <sui-table-cell v-else>답변대기</sui-table-cell>
                         <sui-table-cell>{{post.territory}}</sui-table-cell>
