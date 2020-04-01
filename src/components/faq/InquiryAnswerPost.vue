@@ -140,15 +140,10 @@
                 }
             },
             questionUpdate() {
-                // if(this.answer) {
-                //     alert("답변이 완료된 문의는 수정할 수 없습니다.");
-                // } else {
-                    this.updateBtnChange();
-                    console.log(this.updateQuestionObject);
-                    questionUpdate(this.updateQuestionObject);
-                    alert("문의가 수정되었습니다.");
-                    this.$router.push("/inquiryAnswer");
-                // }
+                this.updateBtnChange();
+                questionUpdate(this.updateQuestionObject);
+                alert("문의가 수정되었습니다.");
+                this.$router.push("/inquiryAnswer");
             },
             updateBtnChange() {
                 if (this.questionDetail.writer != this.userInfo.name) {

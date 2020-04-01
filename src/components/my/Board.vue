@@ -60,7 +60,7 @@
                               v-model="searchQuestionObject.searchDropdown"
                 />
                 <sui-input class="search-input" v-model="searchQuestionObject.searchQuestionText"/>
-                <sui-button secondary class="search-btn" @click="searchQuestion">검색</sui-button>
+                <sui-button secondary class="search-btn" @click="searchQuestion"><a href="#">검색</a></sui-button>
             </div>
         </div>
     </div>
@@ -202,5 +202,10 @@
         height: 36px;
         vertical-align: middle;
         max-height: 200px;
+    }
+
+    .search-btn a {
+        text-decoration: none;
+        color: white;
     }
 </style>
