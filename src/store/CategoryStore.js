@@ -4,11 +4,16 @@ const state = {
     topCategoryList: [],
     categoryList: [],
     categoryInfo: {},
+    errorInfo: "",
 }
 
 let categoryApi = new CategoryApi();
 
 const mutations = {
+    getError(state, error) {
+        console.log(error);
+        state.errorInfo = error;
+    },
     async getCategory(state, categoryCode) {
         state.categoryInfo = await categoryApi.getCategoryInfo(categoryCode);
     },
