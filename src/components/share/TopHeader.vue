@@ -46,7 +46,9 @@
             }
         },
         async created() {
-            this.userInfo = await getCurrentUserInfo();
+            if(this.isAuthenticated){
+                this.userInfo = await getCurrentUserInfo();
+            }
         }
     }
 </script>
