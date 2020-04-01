@@ -121,12 +121,17 @@
                                     this.searchList.push(this.questionList[i]);
                                 }
                                 break;
+                            case "제목+내용":
+                                if (this.questionList[i].title.includes(this.searchQuestionObject.searchQuestionText) ||
+                                    this.questionList[i].description.includes(this.searchQuestionObject.searchQuestionText)) {
+                                    this.searchList.push(this.questionList[i]);
+                                }
+                                break;
                         }
                     }
                     if (this.searchList.length == 0) {
                         alert("해당 게시글을 찾을 수 없습니다.");
                     }
-                    // console.log(this.searchList);
                 }
             },
             answerCount() {
@@ -139,10 +144,6 @@
                 }
             },
         },
-        // beforeDestroy() {
-        //     console.log(this.searchList.length);
-        //     this.searchList = '';
-        // }
     }
 </script>
 
