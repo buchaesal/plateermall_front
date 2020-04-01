@@ -1,9 +1,9 @@
-const setTokenInLocalStorage = (token) => {
+const setTokenInSessionStorage = (token) => {
     // console.log('SET LOCAL STORAGE')
-    localStorage.setItem("access_token", 'Bearer ' + token);
+    sessionStorage.setItem("access_token", 'Bearer ' + token);
 };
 
-const deleteTokenInLocalStorage = () => {
-    localStorage.removeItem("access_token");
+const deleteTokenInSessionStorage = () => {
+    sessionStorage.removeItem("access_token");
 };
-export {deleteTokenInLocalStorage, setTokenInLocalStorage}
+export {deleteTokenInSessionStorage, setTokenInSessionStorage}
