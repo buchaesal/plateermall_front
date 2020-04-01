@@ -27,7 +27,13 @@
                 this.$router.push('/');
             },
             goToCategory(categoryCode) {
-                this.$router.push('/category/' + categoryCode);
+                this.$router.push('/category/' + categoryCode).catch(error => {
+                    if (error.name == "NavigationDuplicated") {
+                        this.$store.commit("getError", error.message);
+                    } else {
+                        throw error;
+                    }
+                });
             },
         },
         created() {
