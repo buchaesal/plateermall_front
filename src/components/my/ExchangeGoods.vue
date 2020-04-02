@@ -28,7 +28,7 @@
                     </div>
 
                     <div class='process'>
-                        <span class='exchange-process'>교환 완료</span>
+                        <span class='exchange-process'>{{exchangeOrderList[index].orderState.orderState}}</span>
                     </div>
 
                     <div class='result'>
@@ -45,6 +45,7 @@
 <script>
     import GoodsApi from "../../api/GoodsApi";
     import {getExchangeOrderList} from "../../api/OrderApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "Sample",
@@ -77,7 +78,8 @@
         },
         methods: {
             async getExchangeOrder() {
-                this.exchangeOrderList = await getExchangeOrderList('testid');
+                let userData = await getCurrentUserInfo();
+                this.exchangeOrderList = await getExchangeOrderList(userData.email);
                 await this.setGoodsList(this.exchangeOrderList);
             },
             async setGoodsList(exchangeOrderList){

@@ -28,7 +28,7 @@
                     </div>
 
                     <div class='process'>
-                        <span class='cancel-process'>주문 취소</span>
+                        <span class='cancel-process'>{{cancelOrderList[index].orderState.orderState}}</span>
                     </div>
 
                     <div class='result'>
@@ -45,6 +45,7 @@
 <script>
     import {getCancelOrderList} from "../../api/OrderApi";
     import GoodsApi from "../../api/GoodsApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "Sample",
@@ -70,14 +71,12 @@
             this.getCancelOrder();
         },
         computed: {
-            getCancelGoodsInfo(){
-                return this.$store.state.purchaseHistoryStore.cancelInfo;
-            }
 
         },
         methods: {
             async getCancelOrder() {
-                this.cancelOrderList = await getCancelOrderList('testid');
+                let userData = await getCurrentUserInfo();
+                this.cancelOrderList = await getCancelOrderList(userData.email);
                 await this.setGoodsList(this.cancelOrderList);
             },
             async setGoodsList(cancelOrderList){

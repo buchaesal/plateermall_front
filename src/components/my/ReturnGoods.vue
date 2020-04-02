@@ -28,7 +28,7 @@
                     </div>
 
                     <div class='process'>
-                        <span class='return-process'>반품 완료</span>
+                        <span class='return-process'>{{returnOrderList[index].orderState.orderState}}</span>
                     </div>
 
                     <div class='result'>
@@ -45,6 +45,7 @@
 <script>
     import GoodsApi from "../../api/GoodsApi";
     import {getReturnOrderList} from "../../api/OrderApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "Sample",
@@ -71,13 +72,12 @@
             this.getReturnOrder();
         },
         computed: {
-            getReturnGoodsInfo(){
-                return this.$store.state.purchaseHistoryStore.returnInfo;
-            }
+
         },
         methods: {
             async getReturnOrder() {
-                this.returnOrderList = await getReturnOrderList('testid');
+                let userData = await getCurrentUserInfo();
+                this.returnOrderList = await getReturnOrderList(userData.email);
                 await this.setGoodsList(this.returnOrderList);
             },
             async setGoodsList(returnOrderList){

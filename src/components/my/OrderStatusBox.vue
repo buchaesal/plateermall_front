@@ -3,35 +3,35 @@
         <div class="order-box-div">
             <ul class="total-order-box">
                 <li class="order-box">
-                    <a href="#" class="order-quantity">0</a>
+                    <a href="#" class="order-quantity">{{orderCompleteCount}}</a>
                     <p class="order-state">주문접수</p>
                 </li>
                 <li class="order-box">
                     <sui-icon name="chevron right" class="search_btn" size="big" color="grey"/>
                 </li>
                 <li class="order-box">
-                    <a href="#" class="order-quantity">0</a>
-                    <p class="order-state">결재완료</p>
+                    <a href="#" class="order-quantity">{{paymentCompleteCount}}</a>
+                    <p class="order-state">결제완료</p>
                 </li>
                 <li class="order-box">
                     <sui-icon name="chevron right" class="search_btn" size="big" color="grey"/>
                 </li>
                 <li class="order-box">
-                    <a href="#" class="order-quantity">0</a>
+                    <a href="#" class="order-quantity">{{shippingReadyCount}}</a>
                     <p class="order-state">배송준비중</p>
                 </li>
                 <li class="order-box">
                     <sui-icon name="chevron right" class="search_btn" size="big" color="grey"/>
                 </li>
                 <li class="order-box">
-                    <a href="#" class="order-quantity">0</a>
+                    <a href="#" class="order-quantity">{{shippingCount}}</a>
                     <p class="order-state">배송중</p>
                 </li>
                 <li class="order-box">
                     <sui-icon name="chevron right" class="search_btn" size="big" color="grey"/>
                 </li>
                 <li class="order-box">
-                    <a href="#" class="order-quantity">0</a>
+                    <a href="#" class="order-quantity">{{shippingCompleteCount}}</a>
                     <p class="order-state">배송완료</p>
                 </li>
             </ul>
@@ -41,7 +41,24 @@
 
 <script>
     export default {
-        name: "OrderStatusBox"
+        name: "OrderStatusBox",
+        computed: {
+            orderCompleteCount: function () {
+                return this.$store.state.orderStateStore.orderCompleteCount;
+            },
+            paymentCompleteCount: function() {
+                return this.$store.state.orderStateStore.paymentCompleteCount;
+            },
+            shippingReadyCount: function () {
+                return this.$store.state.orderStateStore.shippingReadyCount;
+            },
+            shippingCount: function () {
+                return this.$store.state.orderStateStore.shippingCount;
+            },
+            shippingCompleteCount: function () {
+                return this.$store.state.orderStateStore.shippingCompleteCount;
+            }
+        },
     }
 </script>
 
