@@ -2,14 +2,15 @@
     <div>
         <div class="no-order">
             <sui-icon name="info" size="huge" circular color="grey"/>
-            <p class="no-order-msg">데이터가 없습니다.</p>
+            <p class="no-order-msg">{{message}}</p>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        name: "NoItem"
+        name: "NoItem",
+        props: ["message"]
     }
 </script>
 
