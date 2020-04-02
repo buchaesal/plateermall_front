@@ -55,8 +55,8 @@
             const id = localStorage.getItem('saveId');
 
             if (id) {
-
                 this.user.email = id;
+                this.saveId = true;
             }
         }
     };

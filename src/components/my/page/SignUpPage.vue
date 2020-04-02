@@ -14,10 +14,10 @@
         <br>
         <br>
         <div>
-            <sui-input v-model="user.name" class="id-input" type="text" placeholder="이름"/>
+            <sui-input maxlength="10" v-model="user.name" class="id-input" type="text" placeholder="이름"/>
             <br>
             <br>
-            <sui-input v-model="user.email" class="email-input" type="text" placeholder="이메일"/>
+            <sui-input maxlength="10" v-model="user.email" class="email-input" type="text" placeholder="이메일"/>
             @
             <sui-input v-if="currentEmailDomain === '직접입력'" v-model="domain" class="email-input" type="text"
                        placeholder="직접입력"/>
@@ -45,11 +45,11 @@
         <br>
         <br>
         <div class="signup-detail-main">
-            <sui-input class="password-input" type="password" placeholder="비밀번호" v-model="user.password"/>
+            <sui-input maxlength="15" class="password-input" type="password" placeholder="비밀번호" v-model="user.password"/>
             <br>
             <br>
             <p>* 영문, 숫자, 특수문자를 혼합한 8자 이상 ~15자 이내</p>
-            <sui-input class="password-input" type="password" placeholder="비밀번호 재입력" v-model="passwordCheck"/>
+            <sui-input maxlength="15" class="password-input" type="password" placeholder="비밀번호 재입력" v-model="passwordCheck"/>
             <div class="marketing-check">
                 <br>
                 <br>
