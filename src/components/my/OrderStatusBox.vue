@@ -40,6 +40,8 @@
 </template>
 
 <script>
+    import {getCurrentUserInfo} from "../../api/UserApi";
+
     export default {
         name: "OrderStatusBox",
         computed: {
@@ -59,6 +61,15 @@
                 return this.$store.state.orderStateStore.shippingCompleteCount;
             }
         },
+        methods: {
+            async setStateCounts() {
+                let userData = await getCurrentUserInfo();
+                this.$store.dispatch('updateOrderCount', userData);
+            },
+        },
+        created() {
+            this.setStateCounts();
+        }
     }
 </script>
 
