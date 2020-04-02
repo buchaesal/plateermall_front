@@ -36,7 +36,7 @@
     }
 
     .container {
-        padding-top: 15%;
+        padding-top: 10%;
         width: 100%;
         min-height: 600px;
     }

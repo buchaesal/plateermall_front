@@ -14,20 +14,19 @@
         <br>
         <br>
         <div>
-            <sui-input v-model="user.name" class="id-input" type="text" placeholder="이름" :disabled="isNotDuplicated"/>
+            <sui-input maxlength="10" v-model="user.name" class="id-input" type="text" placeholder="이름"/>
             <br>
             <br>
-            <sui-input v-model="user.email" class="email-input" type="text" placeholder="이메일"
-                       :disabled="isNotDuplicated"/>
+            <sui-input maxlength="10" v-model="user.email" class="email-input" type="text" placeholder="이메일"/>
             @
             <sui-input v-if="currentEmailDomain === '직접입력'" v-model="domain" class="email-input" type="text"
-                       placeholder="직접입력" :disabled="isNotDuplicated"/>
+                       placeholder="직접입력"/>
             <sui-input v-else v-model="currentEmailDomain" class="email-input" type="text" :disabled="true"/>
             <sui-dropdown class="email-input"
                           placeholder="직접입력"
                           selection
                           :options="emailDomain"
-                          v-model="currentEmailDomain" :disabled="isNotDuplicated"
+                          v-model="currentEmailDomain"
             />
             <br>
             <br>
@@ -36,21 +35,21 @@
                           placeholder="State"
                           selection
                           :options="headNumber"
-                          v-model="currentHeadNumber" :disabled="isNotDuplicated"
+                          v-model="currentHeadNumber"
             />
             <!-- <sui-input class="phone-input-front" type="text"/> -->
-            <sui-input class="phone-input-back" v-model="user.phoneNumber" :disabled="isNotDuplicated" type="list"/>
+            <sui-input class="phone-input-back" v-model="user.phoneNumber" type="number"/>
         </div>
         <br>
         <sui-button @click="duplicateCheck" class="signup-btn">중복확인</sui-button>
         <br>
         <br>
         <div class="signup-detail-main">
-            <sui-input class="password-input" type="password" placeholder="비밀번호" v-model="user.password"/>
+            <sui-input maxlength="15" class="password-input" type="password" placeholder="비밀번호" v-model="user.password"/>
             <br>
             <br>
             <p>* 영문, 숫자, 특수문자를 혼합한 8자 이상 ~15자 이내</p>
-            <sui-input class="password-input" type="password" placeholder="비밀번호 재입력"/>
+            <sui-input maxlength="15" class="password-input" type="password" placeholder="비밀번호 재입력" v-model="passwordCheck"/>
             <div class="marketing-check">
                 <br>
                 <br>
@@ -72,29 +71,25 @@
                         </sui-table-row>
                     </sui-table-body>
                 </sui-table>
-                <p>※ 동의를 거부하시는 경우에도 롯데쇼핑이 제공하는 다른 서비스는 이용 하실 수 있습니다.
-                    <br> (단, 롯데쇼핑㈜의 쇼핑정보 및 상품정보 등 서비스 정보를 안내 받을 수 없습니다.)</p>
+                <p>※ 동의를 거부하시는 경우에도 플래티어몰이 제공하는 다른 서비스는 이용 하실 수 있습니다.
+                    <br> (단, 플래티어몰의 쇼핑정보 및 상품정보 등 서비스 정보를 안내 받을 수 없습니다.)</p>
             </div>
             <br>
             <div class="checkbox-wrap">
                 <div class="email-checkbox-wrap">
                     <span class="email-comp">이메일 수신</span>
-                    <input class="email-comp" type="radio" id="emailAgree" value="Y" :checked="user.emailAgree"
-                           @click="emailAgreeRadio">
+                    <input class="email-comp" type="radio" id="emailAgree" :value="1" v-model="user.emailAgree">
                     <label for="emailAgree"> 동의 </label>
 
-                    <input class="email-comp" type="radio" id="emailDisagree" value="N" :checked="!user.emailAgree"
-                           @click="emailDisagreeRadio">
+                    <input class="email-comp" type="radio" id="emailDisagree" :value="0" v-model="user.emailAgree">
                     <label for="emailDisagree"> 동의안함 </label>
                 </div>
                 <div class="sms-checkbox-wrap">
                     <span class="sms-comp">SMS 수신</span>
-                    <input class="sms-comp" type="radio" id="smsAgree" value="Y" :checked="user.smsAgree"
-                           @click="smsAgreeRadio">
+                    <input class="sms-comp" type="radio" id="smsAgree" :value="1" v-model="user.smsAgree">
                     <label for="smsAgree"> 동의 </label>
 
-                    <input class="sms-comp-disagree" type="radio" id="smsDisagree" value="N" :checked="!user.smsAgree"
-                           @click="smsDisagreeRadio">
+                    <input class="sms-comp-disagree" type="radio" id="smsDisagree" :value="0" v-model="user.smsAgree">
                     <label for="smsDisagree"> 동의안함 </label>
                 </div>
             </div>
@@ -122,15 +117,12 @@
                     email: '',
                     password: '',
                     phoneNumber: '',
-                    emailAgree: false,
-                    smsAgree: false,
+                    emailAgree: 0,
+                    smsAgree: 0,
                 },
-                isNotDuplicated: false,
                 userName: '',
-                userEmailId: '',
                 currentEmailDomain: '직접입력',
                 currentHeadNumber: '010',
-                backPhoneNumber: '',
                 emailDomain: [
                     {text: 'gmail.com', value: 'gmail.com'},
                     {text: 'naver.com', value: 'naver.com'},
@@ -147,44 +139,51 @@
                     {text: '018', value: '018'},
                 ],
                 domain: '',
-                isUsableEmail: false
+                isUsableEmail: false,
+                passwordCheck: ''
             };
         },
         methods: {
             signUp() {
+                if(!this.user.name){
+                    alert('이름을 입력해주세요.');
+                    return;
+                }
+
                 if(!this.isUsableEmail){
                     alert('아이디 중복체크를 해주세요.');
                     return;
                 }
-                this.user.email = `${this.user.email}@${this.domain}`;
+
+                if(!this.user.phoneNumber){
+                    alert('휴대폰 번호를 입력해주세요.');
+                    return;
+                }
+
+                if(!this.user.password){
+                    alert('비밀번호를 입력해주세요.');
+                    return;
+                }
+
+                if(this.user.password !== this.passwordCheck){
+                    alert('비밀번호 확인이 같지 않습니다.');
+                    return;
+                }
+
+                this.user.email = this.userEmailId;
                 this.user.phoneNumber = `${this.currentHeadNumber}${this.user.phoneNumber}`;
+
                 this.$store.dispatch('SIGN_UP',this.user);
                 alert('회원가입이 완료되었습니다. 로그인해주세요.');
                 this.$router.push('/');
             },
-            emailAgreeRadio() {
-                this.emailAgree = true;
-                this.user.acceptEmail = 'Y';
-            },
-            emailDisagreeRadio() {
-                this.emailAgree = false;
-                this.user.acceptEmail = 'N';
-            },
-            smsAgreeRadio() {
-                this.smsAgree = true;
-                this.user.acceptSms = 'Y';
-            },
-            smsDisagreeRadio() {
-                this.smsAgree = false;
-                this.user.acceptSms = 'N';
-            },
             async duplicateCheck() {
-                if(!this.user.email){
+                if(!this.user.email || !this.domain){
                     alert('이메일을 입력해주세요.');
                     return;
                 }
 
-                if(await duplicateCheck(`${this.user.email}@${this.domain}`)){
+                if(await duplicateCheck(this.userEmailId)){
                     alert('이미 등록된 이메일입니다.')
                 }else{
                     this.isUsableEmail = true;
@@ -192,12 +191,22 @@
                 }
             },
         },
+        computed:{
+            userEmailId(){
+                return `${this.user.email}@${this.domain}`;
+            }
+        },
         watch: {
             currentEmailDomain: function (value) {
                 if (value !== '직접입력') {
                     this.domain = value;
                 } else {
                     this.domain = '';
+                }
+            },
+            userEmailId: function () {
+                if(this.isUsableEmail){
+                    this.isUsableEmail = false;
                 }
             }
         }

@@ -67,7 +67,6 @@
         name: "MyReview",
         data() {
             return {
-                user:{},
                 items: ['상품평 작성', '작성한 상품평'],
                 active: '상품평 작성',
             };
@@ -84,9 +83,6 @@
             MyReviewList,
             UnWrittenReview,
         },
-        async created(){
-            
-        }
     }
 </script>
 

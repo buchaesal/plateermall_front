@@ -13,6 +13,9 @@ class WishListApi {
 
     addGoodsWishList(goodsCodeArr) {
         return request.post(WISHLIST_URL + `/list`, goodsCodeArr)
+            .then(() => {
+
+            })
             .catch(function (error) {
                 console.log(error);
             });
@@ -29,10 +32,7 @@ class WishListApi {
     }
 
     deleteGoodsWish(goodsCode) {
-        request.delete(WISHLIST_URL + `/${goodsCode}`)
-            .catch(function (error) {
-                console.log(error);
-            });
+        return request.delete(WISHLIST_URL + `/${goodsCode}`);
     }
 }
 
