@@ -106,6 +106,7 @@
             },
             // async setSpecificStateOrderList(state){
                 //이벤트로 받아서 실행하기
+
             // }
         },
         components: {
