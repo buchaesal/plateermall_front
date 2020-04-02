@@ -11,7 +11,7 @@
             <WishlistDetail/>
         </div>
         <div v-if="active=='브랜드'">
-            <NoItem></NoItem>
+            <NoItem :message="noItemMessage"/>
         </div>
 
         <br><br>
@@ -27,6 +27,7 @@
         name: "Wishlist",
         data() {
             return {
+                noItemMessage: "데이터가 없습니다.",
                 active: '상품',
                 items: ['상품', '브랜드'],
             };

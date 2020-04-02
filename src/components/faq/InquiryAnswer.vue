@@ -46,8 +46,7 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
-    // import FaqApi from "../../api/FaqApi";
-    import {getAnswer, getQuestionList} from "../../api/FaqApi";
+    import {getQuestionList} from "../../api/FaqApi";
     import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
@@ -65,9 +64,7 @@
             FaqHeader,
         },
         async created() {
-            const postId = this.$route.params.postId;
             this.questionList = await getQuestionList();
-            this.answer = await getAnswer(postId);
             this.userInfo = await getCurrentUserInfo();
             this.answerIncrement();
         },

@@ -14,7 +14,7 @@
             <div v-for='(cancelGoods, index) in goodsInCancelList' :key='index'>
                 <div class='summary'>
                     <span class='item-info'>주문 날짜 : {{cancelOrderList[index].orderDate}}</span>
-                    <span class='cancel-date'>취소일: {{cancelOrderList[index].orderState.stateChangeDate}}</span>
+                    <span class='cancel-date'>취소요청 날짜 : {{cancelOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='cancel-item'>
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class='process'>
-                        <span class='cancel-process'>주문 취소</span>
+                        <span class='cancel-process'>{{cancelOrderList[index].orderState.orderState}}</span>
                     </div>
 
                     <div class='result'>
@@ -45,6 +45,7 @@
 <script>
     import {getCancelOrderList} from "../../api/OrderApi";
     import GoodsApi from "../../api/GoodsApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "Sample",
@@ -69,15 +70,10 @@
         created(){
             this.getCancelOrder();
         },
-        computed: {
-            getCancelGoodsInfo(){
-                return this.$store.state.purchaseHistoryStore.cancelInfo;
-            }
-
-        },
         methods: {
             async getCancelOrder() {
-                this.cancelOrderList = await getCancelOrderList('testid');
+                let userData = await getCurrentUserInfo();
+                this.cancelOrderList = await getCancelOrderList(userData.email);
                 await this.setGoodsList(this.cancelOrderList);
             },
             async setGoodsList(cancelOrderList){

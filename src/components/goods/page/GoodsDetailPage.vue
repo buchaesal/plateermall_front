@@ -183,7 +183,7 @@
                                             class="unit">원</span></p>
                             </div>
                             <div>
-                                <sui-button-group class="shipping-option">
+                                <sui-button-group class="two shipping-option">
                                     <sui-button toggle
                                                 content="택배"
                                                 basic="basic"
@@ -195,16 +195,11 @@
                                                 :color="radioButtonsColor[1]"
                                                 :active="radioButtons[1]"
                                                 @click="shippingRadio(1)"></sui-button>
-                                    <sui-button toggle basic
-                                                content="빠른 배송"
-                                                :color="radioButtonsColor[2]"
-                                                :active="radioButtons[2]"
-                                                @click="shippingRadio(2)"></sui-button>
                                 </sui-button-group>
                             </div>
                             <div>
-                                <sui-button-group class="cart-or-now">
-                                    <sui-button color="black" content="쇼핑백" @click.native="addCart"></sui-button>
+                                <sui-button-group class="two cart-or-now">
+                                    <sui-button content="쇼핑백" @click.native="addCart"></sui-button>
                                     <sui-modal size="tiny" v-model="open">
                                         <div class="modal-inner">
                                             <p>선택하신 상품이 <b>쇼핑백</b>에 담겼습니다.</p>
@@ -215,7 +210,7 @@
                                             </sui-button-group>
                                         </div>
                                     </sui-modal>
-                                    <sui-button color="blue" content="바로구매" @click="directOrder"></sui-button>
+                                    <sui-button secondary content="바로구매" @click="directOrder"></sui-button>
                                 </sui-button-group>
                             </div>
                             <div class="summary">
@@ -298,11 +293,6 @@
                                     </tr>
                                     </tbody>
                                 </table>
-                            </sui-tab-pane>
-                            <sui-tab-pane title="Q&A">
-                                <p>
-                                    Q&A Vue
-                                </p>
                             </sui-tab-pane>
                             <sui-tab-pane title="배송/결제/교환/반품 정보">
                                 <h3 is="sui-header" dividing>
@@ -448,10 +438,10 @@
         },
         data() {
             return {
-                userInfo: null,
-                goodsCode: null,
-                option: null,
-                current: null,
+                userInfo: "",
+                goodsCode: "",
+                option: "",
+                current: "",
                 shareDisplay: false,
                 isLike: false,
                 tooltip1Display: false,
@@ -496,11 +486,11 @@
                 }
             },
             shippingRadio(index) {
-                let changedRadio = [false, false, false];
+                let changedRadio = [false, false];
                 changedRadio[index] = true;
                 this.radioButtons = changedRadio;
 
-                let changedRadioColor = ["grey", "grey", "grey"];
+                let changedRadioColor = ["grey", "grey"];
                 changedRadioColor[index] = "blue";
                 this.radioButtonsColor = changedRadioColor;
             },
@@ -659,15 +649,15 @@
             },
         },
         watch: {
-            option: function () {
+            option() {
                 this.addOptions(this.option);
             },
-            selectedOptions: function () {
+            selectedOptions() {
                 this.calculateOrderSum();
             },
-            orderSumPrice: function () {
+            orderSumPrice() {
             },
-            orderSumQuantity: function () {
+            orderSumQuantity() {
             },
         }
     }
