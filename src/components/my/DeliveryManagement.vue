@@ -48,7 +48,7 @@
                         <sui-checkbox radio :value="''+shippingSpot.id" v-model="selectedDefaultId"/>
                     </sui-table-cell>
 
-                    <sui-table-cell class="spot-type">{{shippingSpot.spotAlias}}<br><span v-if="shippingSpot.default">(기본배송지)</span>
+                    <sui-table-cell class="spot-type">{{shippingSpot.spotAlias}}<br><span v-if="shippingSpot.isDefault">(기본배송지)</span>
                     </sui-table-cell>
 
                     <sui-table-cell text-align="left">
@@ -73,7 +73,7 @@
                             </p>
                         </div>
                         <div v-else>
-                            <button class="modify-btn" v-if="shippingSpot.default" @click="isModifyForm = index">수정
+                            <button class="modify-btn" v-if="shippingSpot.isDefault" @click="isModifyForm = index">수정
                             </button>
                             <button class="modify-btn" v-else @click="deleteShippingSpot(shippingSpot.id)">삭제</button>
                         </div>
@@ -186,7 +186,6 @@
             registerNewShippingSpot() {
                 if(confirm('저장 하시겠습니까?')){
                     this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0 ? 1 : 0;
-                    console.log(this.newShippingSpotModel);
                     this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
                     alert('배송지가 등록되었습니다.');
                     //this.setDefaultOption();
