@@ -31,7 +31,7 @@ const routes = [
     {path: '/answer/:postId', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'},meta: {authRequired: true}},
     {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'},meta: {authRequired: true}},
     {path: '/error', component: Error},
-    {path: '/404', component: PageNotFound},
+    {path: '*', component: PageNotFound},
 
     {path: '/category/:categoryCode', component: CategoryPage},
     {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true}
