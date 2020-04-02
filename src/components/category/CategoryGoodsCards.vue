@@ -33,7 +33,7 @@
                 </ul>
             </div>
             <div class="goods-card">
-                <sui-card-group :items-per-row="items_per_row">
+                <sui-card-group v-if="categoryGoods.length > 0" :items-per-row="items_per_row">
                     <sui-card class="goods-card" v-for="(goodsData, index) in categoryGoods" :key="index"
                               @click="goToGoodsDetail(goodsData.goodsCode)">
                         <sui-image :src="goodsData.imgUrl" width="100%"/>
@@ -45,23 +45,30 @@
                         <sui-card-content extra class="price">
                             <sui-icon name="won sign icon"/>
                             <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
+                            goodsData.dcRate).toLocaleString()}}</span>
                         </sui-card-content>
                     </sui-card>
                 </sui-card-group>
+                <NoItem v-else :message="noItemMessage"/>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import NoItem from "../share/NoItem";
+
     export default {
         name: "CategoryGoodsCards",
         props: [
             "categoryInfo",
         ],
+        components: {
+            NoItem,
+        },
         data() {
             return {
+                noItemMessage: "현재 등록된 상품이 없습니다.",
                 categoryCode: "",
                 items_per_row: 4,
             }

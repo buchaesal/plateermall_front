@@ -11,7 +11,6 @@ let categoryApi = new CategoryApi();
 
 const mutations = {
     getError(state, error) {
-        console.log(error);
         state.errorInfo = error;
     },
     async getCategory(state, categoryCode) {

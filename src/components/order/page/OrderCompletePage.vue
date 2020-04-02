@@ -28,7 +28,7 @@
                             <div class="total-wrap">
                                 <p class="total">
                                     <span class="total-txt">결제금액</span>
-                                    <span class="price"><strong>{{priceFormatting(sumOrderPrice)}}</strong><em>원</em></span>
+                                    <span class="price"><strong>{{sumOrderPrice.toLocaleString()}}</strong><em>원</em></span>
                                 </p>
                                 <!-- 결제수단 -->
                                 <p class="pay-option">무통장입금(국민은행)</p>
@@ -37,19 +37,19 @@
                         <ul class="price-detail">
                             <li>
                                 <span class="item">상품금액</span>
-                                <span class="price">{{priceFormatting(sumOriginalPrice)}} 원</span>
+                                <span class="price">{{sumOriginalPrice.toLocaleString()}} 원</span>
                             </li>
                             <li>
                                 <span class="item">배송비</span>
-                                <span class="price">+ {{priceFormatting(sumShippingFee)}} 원</span>
+                                <span class="price">+ {{sumShippingFee.toLocaleString()}} 원</span>
                             </li>
                             <li>
                                 <span class="item">할인금액</span>
-                                <span class="price">- {{priceFormatting(sumDiscountPrice)}} 원</span>
+                                <span class="price">- {{sumDiscountPrice.toLocaleString()}} 원</span>
                             </li>
                         </ul>
                         <div class="saving-point">
-                            <span>적립 예정 포인트 {{priceFormatting(point)}}점</span>
+                            <span>적립 예정 포인트 {{point.toLocaleString()}}점</span>
                             <ul class="bull-list-dash">
                                 <li>적립 예정 포인트는 상품 발송 2일 후 자동 지급됩니다.</li>
                                 <li>실제 적립된 금액은 예상 금액과 다를 수 있습니다.</li>
@@ -58,7 +58,7 @@
                     </div>
                 </sui-card-content>
                 <sui-card-content extra>
-                    <sui-button-group class="detail-or-home">
+                    <sui-button-group class="two detail-or-home">
                         <sui-button color="black" content="주문상세보기" @click="goToOrderDetail"></sui-button>
                         <sui-button color="blue" content="홈으로 이동" @click="goToHome"></sui-button>
                     </sui-button-group>
@@ -100,11 +100,6 @@
                     return true;
                 } else {
                     return false;
-                }
-            },
-            priceFormatting(price) {
-                if (!this.isEmpty(price)) {
-                    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                 }
             },
             pricing(orderData) {

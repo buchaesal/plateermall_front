@@ -20,7 +20,7 @@
                 </sui-grid>
             </div>
             <div v-else>
-                <NoItem></NoItem>
+                <NoItem :message="noItemMessage"/>
             </div>
         </div>
     </div>
@@ -39,9 +39,15 @@
             OrderStatusBox,
             Wishlist,
             NoItem
-        },methods : {
+        },
+        data() {
+            return {
+                noItemMessage: "데이터가 없습니다.",
+            }
+        },
+        methods: {
             goToGoodsDetail(goodsCode) {
-                this.$router.push('/goodsDetail/'+goodsCode);
+                this.$router.push('/goodsDetail/' + goodsCode);
             },
         },
         computed: {
@@ -61,7 +67,7 @@
         text-overflow: ellipsis !important;
         white-space: nowrap !important;
     }
-    
+
     .fluid {
         cursor: pointer;
     }

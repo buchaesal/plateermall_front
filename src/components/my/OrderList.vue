@@ -7,7 +7,7 @@
         <hr>
 
         <div class="my-order-list">
-            <NoItem v-if="orderList.length==0"></NoItem>
+            <NoItem v-if="orderList.length==0" :message="noItemMessage"></NoItem>
             <sui-loader active centered inline v-else-if="orderList[0].orderId == ''"/>
             <div v-else>
                 <div v-for="(goods, index) in goodsInOrderList" v-bind:key="index" class="goods-list">
@@ -53,6 +53,7 @@
         name: "OrderList",
         data() {
             return {
+                noItemMessage: "데이터가 없습니다.",
                 checkedIndexList: [],
                 goodsApi : new GoodsApi(),
                 orderList: [{
