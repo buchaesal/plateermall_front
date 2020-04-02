@@ -12,13 +12,10 @@ class WishListApi {
     }
 
     addGoodsWishList(goodsCodeArr) {
-        return request.post(WISHLIST_URL + `/list`, goodsCodeArr).then(
-            (response) => {
-                return response.data;
-            }
-        ).catch(function (error) {
-            console.log(error);
-        });
+        return request.post(WISHLIST_URL + `/list`, goodsCodeArr)
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     getWishListGoodsCodes() {
@@ -32,13 +29,10 @@ class WishListApi {
     }
 
     deleteGoodsWish(goodsCode) {
-        return request.delete(WISHLIST_URL + `/${goodsCode}`).then(
-            (response) => {
-                return response.data;
-            }
-        ).catch(function (error) {
-           console.log(error);
-        });
+        request.delete(WISHLIST_URL + `/${goodsCode}`)
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 }
 

@@ -1,9 +1,9 @@
 <template>
     <div class="login-main">
         <p class="member_txt-small">
-            롯데백화점 공식 쇼핑몰
+            PLATEER 공식 쇼핑몰
             <br/>
-            <span class="member-txt-small-brown">엘롯데</span>에 오신 것을 환영합니다.
+            <span class="member-txt-small-brown">PLATEER MALL</span>에 오신 것을 환영합니다.
         </p>
 
         <h2 class="member_title">로그인</h2>
@@ -21,19 +21,9 @@
         <p class="btns-wrap">
             <button type="button" class="loginBtn" @click="login" style="cursor: pointer">로그인</button>
         </p>
-        <sui-checkbox label="아이디 저장"/>
-        <div class="link_box">
-            <ul class="link_list">
-
-                <a href="#" id="requestId" class="lPointMember">아이디 찾기</a>
-
-                <a href="#" id="requestPW" class="lPointMember">비밀번호 찾기</a>
-
-
-                <a @click="goToSignUpPage" href="#" class="requestReg">회원가입</a>
-
-            </ul>
-        </div>
+        <sui-checkbox label="아이디 저장" value="true" v-model="saveId"/>
+        <router-link to="/signUp" class="requestReg">회원가입</router-link>
+        <router-link to="/" class="requestReg">메인으로</router-link>
     </div>
 </template>
 
@@ -45,20 +35,28 @@
                 user: {
                     email: '',
                     password: ''
-                }
+                },
+                saveId: 'false'
             }
         },
         methods: {
-            goToSignUpPage() {
-                this.$router.push('/signup');
-            },
             login() {
                 this.$store.dispatch('REQUEST_LOGIN', this.user)
                     .then((res) => {
-                        if(res){
+                        if (res) {
                             alert(res);
+                        } else {
+                            if (this.saveId === 'true') {
+                                localStorage.setItem('saveId', this.user.email);
+                            }
                         }
                     })
+            }
+        },
+        created() {
+            const id = localStorage.getItem('saveId');
+            if (id) {
+                this.user.email = id;
             }
         }
     };
@@ -83,13 +81,6 @@
         color: #8d685a;
     }
 
-    .btns_wrap {
-        margin: 32px auto 0;
-        width: 384px;
-        height: 64px;
-        text-align: center;
-    }
-
     .loginBtn {
         margin-top: 2.5%;
         padding-top: 2.5%;
@@ -105,28 +96,9 @@
         outline: 0;
     }
 
-    .link_box {
-        margin-top: 15px;
-        /* text-align: center; */
-    }
-
-    .link_list {
-        width: 100%;
-        display: inline-block;
-    }
-
-    .lpointMemberId {
-        margin-left: 7%;
-        color: gray;
-    }
-
-    .lPointMember {
-        margin-left: 13%;
-        color: gray;
-    }
-
     .requestReg {
-        margin-left: 13%;
-        color: gray;
+        margin-left: 5%;
+        color: rgba(4, 4, 4, 0.82);
+        font-weight: bolder;
     }
 </style>

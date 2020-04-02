@@ -3,14 +3,18 @@ import CategoryApi from "../api/CategoryApi";
 const state = {
     topCategoryList: [],
     categoryList: [],
-    category: {},
+    categoryInfo: {},
+    errorInfo: "",
 }
 
 let categoryApi = new CategoryApi();
 
 const mutations = {
+    getError(state, error) {
+        state.errorInfo = error;
+    },
     async getCategory(state, categoryCode) {
-        state.category = await categoryApi.getCategory(categoryCode);
+        state.categoryInfo = await categoryApi.getCategoryInfo(categoryCode);
     },
     async getTopCategoryList(state) {
         state.topCategoryList = await categoryApi.getTopCategoryList();

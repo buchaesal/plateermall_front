@@ -42,7 +42,7 @@ export const registrationQuestion = function (questionObject) {
 }
 
 export const questionDelete = function (postId) {
-    request.get(FAQ_URL+`/question/delete/${postId}`).then(
+    request.delete(FAQ_URL+`/question/delete/${postId}`).then(
         (response) => {
             return response.data;
         }
@@ -52,7 +52,7 @@ export const questionDelete = function (postId) {
 }
 
 export const questionUpdate = function (questionObject) {
-    return request.post(FAQ_URL+`/question/update/`, questionObject).then(
+    return request.put(FAQ_URL+`/question/update/`, questionObject).then(
         (response) => {
             return response.data;
         }

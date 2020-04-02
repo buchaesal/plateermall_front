@@ -14,7 +14,7 @@
             <div v-for='(returnGoods, index) in goodsInReturnList' :key='index'>
                 <div class='summary'>
                     <span class='item-info'>{{returnOrderList[index].orderDate}}</span>
-                    <span class='return-date'>반품일: {{returnOrderList[index].orderState.stateChangeDate}}</span>
+                    <span class='return-date'>반품요청 날짜: {{returnOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='return-item'>
@@ -28,7 +28,7 @@
                     </div>
 
                     <div class='process'>
-                        <span class='return-process'>반품 완료</span>
+                        <span class='return-process'>{{returnOrderList[index].orderState.orderState}}</span>
                     </div>
 
                     <div class='result'>
@@ -45,6 +45,7 @@
 <script>
     import GoodsApi from "../../api/GoodsApi";
     import {getReturnOrderList} from "../../api/OrderApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "Sample",
@@ -67,17 +68,12 @@
             }
         },
         created(){
-            this.$store.commit('loadReturnGoodsInfo', 'testid');
             this.getReturnOrder();
-        },
-        computed: {
-            getReturnGoodsInfo(){
-                return this.$store.state.purchaseHistoryStore.returnInfo;
-            }
         },
         methods: {
             async getReturnOrder() {
-                this.returnOrderList = await getReturnOrderList('testid');
+                let userData = await getCurrentUserInfo();
+                this.returnOrderList = await getReturnOrderList(userData.email);
                 await this.setGoodsList(this.returnOrderList);
             },
             async setGoodsList(returnOrderList){

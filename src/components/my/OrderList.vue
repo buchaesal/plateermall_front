@@ -7,7 +7,7 @@
         <hr>
 
         <div class="my-order-list">
-            <NoItem v-if="orderList.length==0"></NoItem>
+            <NoItem v-if="orderList.length==0" :message="noItemMessage"></NoItem>
             <sui-loader active centered inline v-else-if="orderList[0].orderId == ''"/>
             <div v-else>
                 <div v-for="(goods, index) in goodsInOrderList" v-bind:key="index" class="goods-list">
@@ -47,11 +47,13 @@
     import NoItem from "../share/NoItem";
     import {getOrderList, changeState} from "../../api/OrderApi";
     import GoodsApi from "../../api/GoodsApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "OrderList",
         data() {
             return {
+                noItemMessage: "데이터가 없습니다.",
                 checkedIndexList: [],
                 goodsApi : new GoodsApi(),
                 orderList: [{
@@ -74,9 +76,10 @@
                 this.$router.push('/deliveryanduserinfomanagement');
             },
             async getOrderList(){
-                this.orderList = await getOrderList("testid");
+                let userData = await getCurrentUserInfo();
+                this.$store.dispatch('updateOrderCount', userData);
+                this.orderList = await getOrderList(userData.email);
                 this.setGoodsList(this.orderList);
-                console.log(this.orderList);
             },
             async setGoodsList(orderList){
                 for(let order in orderList){
@@ -85,8 +88,21 @@
             },
             async cancelOrder(index){
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
+                this.orderList = [{
+                    orderId : '',
+                    userId : '',
+                    goodsId : '',
+                    goodsCount: -1,
+                    orderPrice : '',
+                    orderState : {
+                        orderId : '',
+                        stateChangeDate : '',
+                        orderState : '',
+                    },
+                }];
+                this.goodsInOrderList = [];
+                await this.getOrderList();
                 alert("주문이 취소되었습니다.")
-                this.getOrderList();
             }
         },
         components: {

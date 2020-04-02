@@ -149,9 +149,6 @@
         </sui-container>
         <!--
         <div>
-            <sui-button @click="addCartList">장바구니 추가</sui-button>
-        </div>
-        <div>
             <div>
                 <hr/>
                 state에 cartList 값
@@ -184,6 +181,7 @@
         name: "MyCart",
         data() {
             return {
+                userInfo : {},
                 isTotalChecked:false,
                 checkedCartList:[],
             }
@@ -253,17 +251,19 @@
                 cart.quantity += 1;
             },
 
-            deleteCart(deletedCart) {
+            async deleteCart(deletedCart) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
-                    this.$store.dispatch('deleteCart', deletedCart);
+                    await this.$store.dispatch('deleteCart', deletedCart);
+                    this.checkedCartList = [];
                 }
             },
 
-            checkedDeleteCartList() {
+            async checkedDeleteCartList() {
                 const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
                 if (result) {
-                    this.$store.dispatch('checkedDeleteCartList', this.checkedCartList);
+                    await this.$store.dispatch('checkedDeleteCartList', this.checkedCartList);
+                    this.checkedCartList = [];
                 }
             },
 
@@ -314,7 +314,8 @@
             },
         },
         async created() {
-            await this.$store.commit('getCartList');
+            await this.$store.dispatch('getLoginUserInfo');
+            await this.$store.dispatch('getCartList');
         },
 
         computed: {

@@ -3,7 +3,7 @@
         <!-- <AgreementPage/> -->
         <div>
             <router-link to="/">
-                <sui-image src="https://simage.lotte.com/ellotte/images/login/newel_icon_top_logo.jpg" size="small"/>
+                <sui-image src="../../../assets/PlateerMall.png" size="small"/>
             </router-link>
         </div>
         <div>
@@ -179,6 +179,11 @@
                 this.user.acceptSms = 'N';
             },
             async duplicateCheck() {
+                if(!this.user.email){
+                    alert('이메일을 입력해주세요.');
+                    return;
+                }
+
                 if(await duplicateCheck(`${this.user.email}@${this.domain}`)){
                     alert('이미 등록된 이메일입니다.')
                 }else{
