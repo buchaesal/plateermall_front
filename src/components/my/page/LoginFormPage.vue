@@ -21,7 +21,7 @@
         <p class="btns-wrap">
             <button type="button" class="loginBtn" @click="login" style="cursor: pointer">로그인</button>
         </p>
-        <sui-checkbox label="아이디 저장" value="true" :checked="saveId"/>
+        <sui-checkbox label="아이디 저장" v-model="saveId"/>
         <router-link to="/signUp" class="requestReg">회원가입</router-link>
         <router-link to="/" class="requestReg">메인으로</router-link>
     </div>
@@ -41,7 +41,6 @@
         },
         methods: {
             login() {
-                console.log(this.saveId);
                 this.$store.dispatch('REQUEST_LOGIN', {
                     user : this.user,
                     isSaveId: this.saveId})
