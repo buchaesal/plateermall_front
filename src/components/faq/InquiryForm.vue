@@ -113,6 +113,7 @@
             return {
                 open: false,
                 userInfo: '',
+                currentQuestion: {},
                 questionObject: {
                     territory: '',
                     state:'',
@@ -142,9 +143,10 @@
                 if(!(this.questionObject.territory) || !(this.questionObject.title) || !(this.questionObject.description)) {
                     alert("문의내용을 채워주세요.")
                 } else {
-                    await registrationQuestion(this.questionObject);
+                    this.currentQuestion = await registrationQuestion(this.questionObject);
+                    alert(this.currentQuestion.title);
                     alert("등록이 완료되었습니다.");
-                    await this.$router.push("/inquiryAnswer");
+                    await this.$router.push("/myPageMain");
                 }
             }
         },
