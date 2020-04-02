@@ -96,7 +96,6 @@ const actions = {
 
     async getLoginUserInfo(context) {
         let userInfo = await getCurrentUserInfo();
-        console.log("email : ", userInfo.email);
 
         context.commit('getLoginUserInfo', userInfo);
     }

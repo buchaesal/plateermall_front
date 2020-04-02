@@ -291,13 +291,13 @@
                 today = year + "-" + month + "-" + date;
 
                 for (let cart of this.checkedCartList) {
-                    let option = cart.text + ", " + cart.quantity;
-                    let orderModel = new OrderModel('', this.$store.state.userInfo.email, cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
+                    let option = cart.text;
+                    let orderModel = new OrderModel('', this.$store.state.cartListStore.userInfo.email, cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
                     let orderId = await order(orderModel);
 
                     await addCommentStatus({
                         "orderId": orderId,
-                        "userId": this.$store.state.userInfo.email,
+                        "userId": this.$store.state.cartListStore.userInfo.email,
                         "isWritten": "N"
                     });
                 }
@@ -395,5 +395,9 @@
     .quantity-change-btn {
         width: 83px;
         margin-top: 40%;
+    }
+
+    .ui.container {
+        overflow: hidden;
     }
 </style>
