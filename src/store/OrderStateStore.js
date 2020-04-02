@@ -1,3 +1,5 @@
+import {getStateCount} from "../api/OrderApi";
+
 
 
 const state = {
@@ -10,11 +12,22 @@ const state = {
 
 const getters = {}
 
-const mutations = {}
+const mutations = {
+    setNormalOrderStateCounts(state, data){
+      state.orderCompleteCount = data.ORDER_COMPLETE;
+      state.paymentCompleteCount = data.PAYMENT_COMPLETE;
+      state.shippingReadyCount = data.SHIPPING_READY;
+      state.shippingCount = data.SHIPPING;
+      state.shippingCompleteCount = data.SHIPPING_COMPLETE;
+    },
+}
 
 const actions = {
-    updateOrderCount: async function () {
-
+    updateOrderCount: async function (context, userData) {
+        getStateCount("normal", userData.email)
+            .then(data => {
+                context.commit('setNormalOrderStateCounts', data);
+            });
     }
 }
 

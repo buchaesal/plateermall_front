@@ -76,6 +76,7 @@
             },
             async getOrderList(){
                 let userData = await getCurrentUserInfo();
+                this.$store.dispatch('updateOrderCount', userData);
                 this.orderList = await getOrderList(userData.email);
                 this.setGoodsList(this.orderList);
             },

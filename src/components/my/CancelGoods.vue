@@ -14,7 +14,7 @@
             <div v-for='(cancelGoods, index) in goodsInCancelList' :key='index'>
                 <div class='summary'>
                     <span class='item-info'>주문 날짜 : {{cancelOrderList[index].orderDate}}</span>
-                    <span class='cancel-date'>취소일: {{cancelOrderList[index].orderState.stateChangeDate}}</span>
+                    <span class='cancel-date'>취소요청 날짜 : {{cancelOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='cancel-item'>
@@ -69,9 +69,6 @@
         },
         created(){
             this.getCancelOrder();
-        },
-        computed: {
-
         },
         methods: {
             async getCancelOrder() {

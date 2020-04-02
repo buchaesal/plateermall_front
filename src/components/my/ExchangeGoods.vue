@@ -14,7 +14,7 @@
             <div v-for='(exchangeGoods, index) in goodsInExchangeList' :key='index'>
                 <div class='summary'>
                     <span class='item-info'>{{exchangeOrderList[index].orderDate}}</span>
-                    <span class='exchange-date'>교환 신청일: {{exchangeOrderList[index].orderState.stateChangeDate}}</span>
+                    <span class='exchange-date'>교환신청 날짜 : {{exchangeOrderList[index].orderState.stateChangeDate}}</span>
                 </div>
 
                 <div class='exchange-item'>
@@ -68,13 +68,7 @@
             }
         },
         created(){
-            this.$store.commit('loadExchangeGoodsInfo', 'testid');
             this.getExchangeOrder();
-        },
-        computed: {
-            getExchangeGoodsInfo(){
-                return this.$store.state.purchaseHistoryStore.exchangeInfo;
-            }
         },
         methods: {
             async getExchangeOrder() {

@@ -59,4 +59,8 @@ export const changeState = function (original, changed, orderId) {
         .catch(err => console.log(err));
 }
 
-
+export const getStateCount = function (state, userid) {
+    return request.get(ORDER_URL + `/count/${state}/${userid}`)
+        .then(response => response.data)
+        .catch((err) => console.log(err));
+}
