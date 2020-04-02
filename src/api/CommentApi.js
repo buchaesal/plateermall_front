@@ -36,13 +36,7 @@ export const requestWrittenComment = function(purchaseCode){
 
 export const requestAddComment = function(comment){
 
-    return request.post(COMMENTS_URL, comment).then(
-        (response) => {
-            return response.data;
-        }
-    ).catch(function (err) {
-        console.log(err);
-    })
+    return request.post(COMMENTS_URL, comment);
 }
 
 export const requestModifyComment = function(comment){

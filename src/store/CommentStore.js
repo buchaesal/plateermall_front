@@ -1,11 +1,25 @@
 import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, increaseRecommend, goodsOptionList, deleteComment, requestUnwrittenOrderId} from '../../src/api/CommentApi';
+import {getOrder} from '../../src/api/OrderApi';
+import GoodsApi from '../../src/api/GoodsApi';
 
 
 const state = {
     reviews:{},
     reviewSummary:{},
-    myReviews:[],
-    unWritten:[],
+    written:{
+        reviewList:[],
+        writtenCount:0,
+        orderInfo:[],
+        goodsInfo:[],
+    },
+
+    unwritten:{
+        orderIdInfo:[],
+        orderInfo:[],
+        goodsInfo:[],
+        unWrittenCount:0,
+        duedate:[],
+    },
     isModalOpen: false,
     writtenReview:{}, //바뀐 리뷰
 
@@ -33,17 +47,6 @@ const mutations = {
         state.reviews.commentList = await goodsOptionList(options.goodsCode, options.goodsOption, options.orderOption);
     },
 
-    async loadMyCommentsByUserId(state, testId){
-
-        state.myReviews = await requestMyComments(testId);
-    },
-
-    async deleteComment(state, info){
-
-        await deleteComment(info.orderId);
-        state.myReviews = await requestMyComments(info.userId);
-    },
-
     async loadCommentByPurchaseCode(state, purchaseCode){
 
         state.currentReview = await requestWrittenComment(purchaseCode);
@@ -60,29 +63,55 @@ const mutations = {
         state.reviewInfo = comment;
     },
 
-    async loadUnwrittenList(state, userId){
+    //작성한
+    async loadMyCommentsByUserId(state, userId){
 
-        state.unWritten = await requestUnwrittenOrderId(userId);
+        state.written.orderInfo = [];
+        state.written.goodsInfo = [];
+
+        state.written.reviewList = await requestMyComments(userId);
+        state.written.writtenCount = state.written.reviewList.length;
+
+        var goodsApi = new GoodsApi();
+
+        for(let index in state.written.reviewList){
+            state.written.orderInfo.push(await getOrder(state.written.reviewList[index].orderId));
+            state.written.goodsInfo.push(await goodsApi.getGoods(state.written.reviewList[index].goodsCode));
+        }
+
     },
 
-    toggleModalOpen(state){
-        state.isModalOpen ? state.isModalOpen= false : state.isModalOpen=true;
+    //미작성
+    async loadUnwrittenList(state, userId){
+
+        state.unwritten.orderInfo = [];
+        state.unwritten.goodsInfo = [];
+        state.unwritten.duedate= [];
+
+        state.unwritten.orderIdInfo = await requestUnwrittenOrderId(userId);
+        state.unwritten.unWrittenCount = state.unwritten.orderIdInfo.length;
+
+        for(let index in state.unwritten.orderIdInfo){
+            state.unwritten.orderInfo.push(await getOrder(state.unwritten.orderIdInfo[index]));
+        }
+
+        var goodsApi = new GoodsApi();
+
+        for(let index in state.unwritten.orderInfo){
+
+            let year = state.unwritten.orderInfo[index].orderDate.substr(0,4);
+            let month = state.unwritten.orderInfo[index].orderDate.substr(5,2);
+            let day = state.unwritten.orderInfo[index].orderDate.substr(8,2);
+
+            let date = new Date(year, month, day).toISOString().slice(0,10);
+            state.unwritten.duedate.push(date);
+
+            state.unwritten.goodsInfo.push(await goodsApi.getGoods(state.unwritten.orderInfo[index].goodsId));
+        }
     },
 
     updateComment(state, review){
         state.writtenReview = review;
-    },
-
-    async addCommentValue(state, userId){
-
-        await requestAddComment(state.writtenReview);
-        state.unWritten = await requestUnwrittenOrderId(userId);
-    },
-
-    async modifyCommentValue(state){
-
-        await requestModifyComment(state.writtenReview);
-        state.myReviews = await requestMyComments(state.writtenReview.userId);
     },
 
 }
@@ -90,6 +119,34 @@ const mutations = {
 //비동기 통신
 const actions = {
 
+    async ADD_COMMENT(context, userId){
+
+        await requestAddComment(state.writtenReview).then(() => {
+           
+            context.commit('loadUnwrittenList', userId);
+        }
+        ).catch(function (error) {
+            console.log(error);
+        });
+    },
+
+    async UPDATE_COMMENT(context, userId){
+        await requestModifyComment(state.writtenReview).then(() => {
+
+            context.commit('loadMyCommentsByUserId', userId);
+        }).catch(function(error){
+            console.log(error);
+        });
+    },
+
+    async DELETE_COMMENT(context, info){
+        await deleteComment(info.orderId).then(() => {
+
+            context.commit('loadMyCommentsByUserId', info.userId);
+        }).catch(function(error){
+            console.log(error);
+        });
+    }
 }
 
 export default {

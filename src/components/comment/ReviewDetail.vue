@@ -22,7 +22,7 @@
 
                     <sui-modal v-model="open">
                         <sui-modal-content scrolling image>
-                            <ReviewForm :orderInfo='orderList[index]' :goodsInfo='goodsList[index]' :currentReview='copyReview'/>
+                            <ReviewForm :orderInfo='orderInfo' :goodsInfo='goodsInfo' :currentReview='copyReview'/>
                                 </sui-modal-content>
 
                                 <sui-modal-actions>
@@ -42,14 +42,52 @@ import ReviewForm from './ReviewForm.vue';
 
     export default {
         name: "ReviewDetail",
-        props:['review'],
+        props:['review', 'orderInfo', 'goodsInfo', 'userId'],
         data() {
             return {
-
+                open: false,
+                copyReview:{},
             }
         },
+        methods:{
+            openReviewModal(review){
+
+                this.open = true;
+                this.copyReview = JSON.parse (JSON.stringify(review)); //리뷰 복사
+            },
+            closeReviewModal(){
+                this.open = false;
+            },
+            setReview(){
+
+                if(confirm("해당 상품평을 수정하시겠습니까?")) {
+                    this.$store.dispatch('UPDATE_COMMENT', this.userId);
+
+                    alert("수정되었습니다.");
+                    this.closeReviewModal();
+                }
+            },
+            async deleteReview(orderId){
+                let info = {
+                    orderId: orderId,
+                    userId: this.userId,
+                }
+
+                if(confirm("해당 상품평을 삭제하시겠습니까?")) {
+
+                    this.$store.dispatch('DELETE_COMMENT', info);
+                    alert("삭제되었습니다.");
+
+                    this.cancelCount -= 1;
+                    this.myReviews = this.$store.state.commentStore.myReviews;
+                }
+            },
+            async cancelAddComment(){
+                await this.$store.commit('updateComment', this.review);
+                this.closeReviewModal();
+            },
+        },
         created(){
-            console.log(this.review);
         },
         components:{
             ReviewForm,
@@ -68,5 +106,19 @@ import ReviewForm from './ReviewForm.vue';
 
     .detail-image{
         float: left;
+    }
+
+    .modify-button{
+        margin-top: 4%;
+        float: right;
+    }
+
+    .delete-button{
+        margin-top: 4%;
+        float: right;
+    }
+
+    span{
+        font-weight: bold;
     }
 </style>

@@ -3,32 +3,31 @@
         <p>- 구매하신 상품의 상품평을 등록하실 수 있습니다. 판매가 종료된 상품은 목록에서 보이지 않습니다.</p>
         <p>- 상품평을 작성하시면 L.POINT를 적립하여 드립니다.</p>
         <div class='unwritten-summary'>
-            <p id='unwritten-count'>미작성 상품평 <strong>{{unwrittenCount}}</strong>건</p>
+            <p id='unwritten-count'>미작성 상품평 <strong>{{getCount}}</strong>건</p>
         </div>
-
         <div class='unwritten-list'>
-            <p id='no-unwritten' v-if='unwrittenCount == 0'>작성하실 상품평이 없습니다.</p>
-            <sui-loader active centered inline v-else-if="getUnwritten == ''"/>
+            <p id='no-unwritten' v-if='getCount == 0'>작성하실 상품평이 없습니다.</p>
+            <sui-loader active centered inline v-else-if="getCount == ''"/>
             <div v-else>
                 <sui-item-group divided>
-                    <sui-item class='unwritten-item' v-for='(unwritten, index) in getUnwritten' :key='index'>
-                    <sui-item-image size="tiny" :src='goodsList[index].imgUrl'/>
+                    <sui-item class='unwritten-item' v-for='(unwritten, index) in getInfoList.goodsInfo' :key='index'>
+                    <sui-item-image size="tiny" :src='unwritten.imgUrl'/>
                     <sui-item-content class='unwritten'>
-                        <sui-item-header>{{goodsList[index].seller}}</sui-item-header>
+                        <sui-item-header>{{unwritten.seller}}</sui-item-header>
                         <sui-item-meta>
-                            <p class="itemName">{{goodsList[index].title}}</p>
-                            <p class="option">{{unwrittenOrderList[index].selectedOptions}}</p>
+                            <p class="itemName">{{unwritten.title}}</p>
+                            <p class="option">{{getInfoList.orderInfo[index].selectedOptions}}</p>
                         </sui-item-meta>
                         <br>
                         <sui-item-description>
-                            <span class='purchase-date'>구매일자: {{unwrittenOrderList[index].orderDate}}</span>
-                            <span class='due-date'>작성기한: {{dueDate[index]}}</span>
-                            <sui-button v-if='dueDate[index]>today' @click='openReviewModal(unwrittenOrderList[index])' size="tiny" floated="right" basic content="상품평 작성" style="margin-right: 2%;"/>
+                            <span class='purchase-date'>구매일자: {{getInfoList.orderInfo[index].orderDate}}</span>
+                            <span class='due-date'>작성기한: {{getInfoList.duedate[index]}}</span>
+                            <sui-button v-if='getInfoList.duedate[index]>today' @click='openReviewModal(getInfoList.orderInfo[index])' size="tiny" floated="right" basic content="상품평 작성" style="margin-right: 2%;"/>
                             <sui-button v-else size="tiny" floated="right" disabled basic content="기한 만료" style="margin-right: 2%;"/>
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :orderInfo='unwrittenOrderList[index]' :goodsInfo='goodsList[index]' :currentReview='currentReview'/>
+                                <ReviewForm :orderInfo='getInfoList.orderInfo[index]' :goodsInfo='unwritten' :currentReview='currentReview'/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
@@ -50,10 +49,10 @@
 
 <script>
 import ReviewForm from './ReviewForm.vue';
-import {requestUnwrittenOrderId} from '../../api/CommentApi';
-import {getOrder} from '../../api/OrderApi';
-import GoodsApi from '../../api/GoodsApi';
-
+//import {requestUnwrittenOrderId} from '../../api/CommentApi';
+//import {getOrder} from '../../api/OrderApi';
+//import GoodsApi from '../../api/GoodsApi';
+import {getCurrentUserInfo} from '../../api/UserApi.js'
     export default {
         name: "UnwrittenReview",
         data(){
@@ -83,13 +82,13 @@ import GoodsApi from '../../api/GoodsApi';
                 orderIdList:[],
                 unwrittenOrderList:[],
                 goodsList:[],
+                user:{},
             }
         },
         methods:{
             openReviewModal(selectedReview){
 
                 this.open = true;
-                this.$store.commit('toggleModalOpen');
 
                 this.currentReview.orderId = selectedReview.orderId;
                 this.currentReview.goodsCode = selectedReview.goodsId;
@@ -99,41 +98,18 @@ import GoodsApi from '../../api/GoodsApi';
             },
             closeReviewModal(){
                 this.open = false;
-                this.$store.commit('toggleModalOpen');
 
             },
             setReview(){
                 if(confirm("상품평을 작성하시겠습니까?")) {
 
                     alert("작성되었습니다.");
-                    this.$store.commit('addCommentValue', 'testid');
+                    
+                    this.$store.dispatch('ADD_COMMENT', this.user.email);
+
                     this.closeReviewModal();
-                    this.unwrittenCount-=1;
+                   
                 }
-            },
-
-            async setUnwrittenInfo(userId){
-
-                this.orderIdList = await requestUnwrittenOrderId(userId);
-                this.unwrittenCount = this.orderIdList.length;
-
-                for(let index in this.orderIdList){
-                    this.unwrittenOrderList.push(await getOrder(this.orderIdList[index]));
-                }
-
-                for(let index in this.unwrittenOrderList){
-                    let year = this.unwrittenOrderList[index].orderDate.substr(0,4);
-                    let month = this.unwrittenOrderList[index].orderDate.substr(5,2);
-                    let day = this.unwrittenOrderList[index].orderDate.substr(8,2);
-
-                    let date = new Date(year, month, day).toISOString().slice(0,10);
-                    this.dueDate.push(date);
-
-                    let goodsApi = new GoodsApi();
-                    this.goodsList.push(await goodsApi.getGoods(this.unwrittenOrderList[index].goodsId));
-                }
-
-                this.$store.commit('loadUnwrittenList', userId);
             },
             cancelAddComment(){
                 this.closeReviewModal();
@@ -160,17 +136,19 @@ import GoodsApi from '../../api/GoodsApi';
             ReviewForm,
         },
         async created(){
+            this.user = await getCurrentUserInfo();
+
             this.today = new Date().toISOString().slice(0,10);
-            await this.setUnwrittenInfo('testId');
+            await this.$store.commit('loadUnwrittenList', this.user.email);
         },
         computed:{
-            isModalOpen(){
-                return this.$store.state.commentStore.isModalOpen;
+            getInfoList(){
+                return this.$store.state.commentStore.unwritten;
             },
 
-            getUnwritten(){
-                return this.$store.state.commentStore.unWritten;
-            }
+            getCount(){
+                return this.$store.state.commentStore.unwritten.unWrittenCount;
+            },
         },
     }
 </script>
