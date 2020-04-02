@@ -3,7 +3,8 @@
         <!-- <AgreementPage/> -->
         <div>
             <router-link to="/">
-                <sui-image src="../../../assets/PlateerMall.png" size="small"/>
+                <img src="../../../assets/PlateerMall.png" />
+                <!--<sui-image src="../../../assets/PlateerMall.png" size="small"/>-->
             </router-link>
         </div>
         <div>
