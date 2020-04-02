@@ -25,13 +25,12 @@ const mutations = {
 
 const actions = {
     async getCartList(context) {
-        const cartList = await requestCartList(state.userInfo.email).then(
-            (response) => {
-                return response.data;
-            }
-        ).catch(function (error) {
-            console.log(error);
-        });
+        const cartList = await requestCartList(state.userInfo.email);
+
+        if (cartList.length === 0) {
+            state.cartList = [];
+            return;
+        }
 
         let goodsCodeArr = [];
 
@@ -40,7 +39,6 @@ const actions = {
         cartList.map((cart) => {
             goodsCodeArr.push(cart.goodsCode);
         });
-        console.log("goodsCodeArr : " + goodsCodeArr);
 
         const goodsList = await goodsApi.getCartGoodsList(goodsCodeArr);
 
@@ -58,10 +56,10 @@ const actions = {
         context.commit('getCartList', resultCart);
     },
 
-    async deleteCart(context, deletedCart) {
+    deleteCart(context, deletedCart) {
         console.log(deletedCart);
 
-        await requestDeleteCart(deletedCart)
+        requestDeleteCart(deletedCart)
             .then(() => {
                 context.dispatch('getCartList');
             }).catch(function(error) {
@@ -69,8 +67,8 @@ const actions = {
             });
     },
 
-    async checkedDeleteCartList(context, checkedCartList) {
-        await requestCheckedDeleteCartList(checkedCartList)
+    checkedDeleteCartList(context, checkedCartList) {
+        requestCheckedDeleteCartList(checkedCartList)
             .then(() => {
                 context.dispatch('getCartList');
             }).catch(function(error) {
@@ -78,19 +76,19 @@ const actions = {
             });
     },
 
-    async changeQuantity(context, changeCart) {
-        await requestChangeQuantity(changeCart)
+    changeQuantity(context, changeCart) {
+        requestChangeQuantity(changeCart)
             .then(() => {
                 alert("수량이 변경되었습니다.");
                 context.dispatch('getCartList');
             });
     },
 
-    async containWishList(context, goodsCodeArr) {
+    containWishList(context, goodsCodeArr) {
         console.log("containWishList : " + goodsCodeArr);
 
         const wishListApi = new WishListApi();
-        await wishListApi.addGoodsWishList(goodsCodeArr)
+        wishListApi.addGoodsWishList(goodsCodeArr)
             .then(() => {
                 alert(goodsCodeArr.length + "개의 상품이 위시 리스트에 담겼습니다.");
             });
