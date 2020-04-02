@@ -3,8 +3,14 @@ import CategoryApi from "../api/CategoryApi";
 const state = {
     topCategoryList: [],
     categoryList: [],
-    categoryInfo: {},
-    errorInfo: "",
+    categoryInfo: {
+        "uuid": null,
+        "name": null,
+        "categoryCode": null,
+        "parentsCode": null,
+        "goodsList": null
+    },
+    errorInfo: {},
 }
 
 let categoryApi = new CategoryApi();
