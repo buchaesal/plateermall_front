@@ -46,9 +46,6 @@
 
 <script>
 
-//import {requestMyComments} from '../../api/CommentApi';
-//import {getOrder} from '../../api/OrderApi';
-//import GoodsApi from '../../api/GoodsApi';
 import ReviewDetail from './ReviewDetail.vue';
 import {getCurrentUserInfo} from '../../api/UserApi.js'
 

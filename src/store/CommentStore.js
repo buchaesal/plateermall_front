@@ -98,16 +98,25 @@ const mutations = {
         var goodsApi = new GoodsApi();
 
         for(let index in state.unwritten.orderInfo){
+            console.log(state.unwritten.orderInfo[index].orderDate);
+        }
 
+        for(let index in state.unwritten.orderInfo){
+            console.log(state.unwritten.orderInfo[index].orderDate);
             let year = state.unwritten.orderInfo[index].orderDate.substr(0,4);
             let month = state.unwritten.orderInfo[index].orderDate.substr(5,2);
             let day = state.unwritten.orderInfo[index].orderDate.substr(8,2);
 
             let date = new Date(year, month, day).toISOString().slice(0,10);
+
+            console.log(year + ' ' + month+ ' ' + day);
+            console.log(date);
             state.unwritten.duedate.push(date);
 
             state.unwritten.goodsInfo.push(await goodsApi.getGoods(state.unwritten.orderInfo[index].goodsId));
         }
+
+        console.log(state.unwritten.duedate);
     },
 
     updateComment(state, review){
