@@ -46,6 +46,8 @@ const actions = {
                 console.log(payload.isSaveId);
                 if(payload.isSaveId){
                     localStorage.setItem('saveId', payload.user.email);
+                }else{
+                    localStorage.removeItem('saveId');
                 }
                 setTokenInSessionStorage(result);
                 context.commit('LOGIN');

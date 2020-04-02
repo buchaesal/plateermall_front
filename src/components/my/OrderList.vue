@@ -103,7 +103,10 @@
                 this.goodsInOrderList = [];
                 await this.getOrderList();
                 alert("주문이 취소되었습니다.")
-            }
+            },
+            // async setSpecificStateOrderList(state){
+                //이벤트로 받아서 실행하기
+            // }
         },
         components: {
             FaqHeader,

@@ -49,9 +49,6 @@
 
 <script>
 import ReviewForm from './ReviewForm.vue';
-//import {requestUnwrittenOrderId} from '../../api/CommentApi';
-//import {getOrder} from '../../api/OrderApi';
-//import GoodsApi from '../../api/GoodsApi';
 import {getCurrentUserInfo} from '../../api/UserApi.js'
     export default {
         name: "UnwrittenReview",
@@ -96,10 +93,6 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
                 this.currentReview.quantity = selectedReview.goodsCount;
                 this.currentReview.selectedOptions = selectedReview.selectedOptions;
             },
-            closeReviewModal(){
-                this.open = false;
-
-            },
             setReview(){
                 if(confirm("상품평을 작성하시겠습니까?")) {
 
@@ -107,12 +100,12 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
                     
                     this.$store.dispatch('ADD_COMMENT', this.user.email);
 
-                    this.closeReviewModal();
+                    this.open = false;
                    
                 }
             },
             cancelAddComment(){
-                this.closeReviewModal();
+                this.open = false;
                 this.currentReview ={
                     orderId:'',
                     goodsCode:'',

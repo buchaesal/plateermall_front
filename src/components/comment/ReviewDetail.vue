@@ -55,16 +55,13 @@ import ReviewForm from './ReviewForm.vue';
                 this.open = true;
                 this.copyReview = JSON.parse (JSON.stringify(review)); //리뷰 복사
             },
-            closeReviewModal(){
-                this.open = false;
-            },
             setReview(){
 
                 if(confirm("해당 상품평을 수정하시겠습니까?")) {
                     this.$store.dispatch('UPDATE_COMMENT', this.userId);
 
                     alert("수정되었습니다.");
-                    this.closeReviewModal();
+                    this.open = false;
                 }
             },
             async deleteReview(orderId){
@@ -84,7 +81,7 @@ import ReviewForm from './ReviewForm.vue';
             },
             async cancelAddComment(){
                 await this.$store.commit('updateComment', this.review);
-                this.closeReviewModal();
+                this.open = false;
             },
         },
         created(){

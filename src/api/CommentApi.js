@@ -41,13 +41,7 @@ export const requestAddComment = function(comment){
 
 export const requestModifyComment = function(comment){
 
-    return request.put(COMMENTS_URL, comment).then(
-        (response) => {
-            return response.data;
-        }
-    ).catch(function (err) {
-        console.log(err);
-    })
+    return request.put(COMMENTS_URL, comment);
 }
 
 export const requestUnwrittenOrderId = function(userId){
@@ -85,13 +79,7 @@ export const goodsOptionList = function(goodsCode, goodsOption, orderBYOption){
 
 export const deleteComment = function(orderId){
 
-    return request.delete(COMMENTS_URL + `/${orderId}`).then(
-        (response)=> {
-            return response.data;
-        }
-    ).catch(function(error){
-        console.log(error);
-    });
+    return request.delete(COMMENTS_URL + `/${orderId}`);
 }
 
 export const addCommentStatus = function(status){

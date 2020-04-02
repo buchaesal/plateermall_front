@@ -3,8 +3,8 @@
         
         <div class="photo-review">
             <h3>포토<br>상품평</h3>
-            <div class='review-img' v-for='(review, index) in getRequestComments' :key='index'>
-                <img :src='review.myPhoto' width='99' height='99' v-if='review.myPhoto != ""'>
+            <div class='review-img' v-for='(review, index) in getRequestComments' v-show='review.myPhoto != ""' :key='index'>
+                <img :src='review.myPhoto' width='99' height='99'>
             </div>
         </div>
         <div class='options'>

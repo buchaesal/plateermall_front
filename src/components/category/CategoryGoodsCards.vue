@@ -182,4 +182,8 @@
         position: relative;
     }
 
+    .ui.four.cards {
+        margin-bottom: auto;
+    }
+
 </style>
