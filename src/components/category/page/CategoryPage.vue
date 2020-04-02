@@ -2,25 +2,22 @@
     <div id="main-page-container">
         <Header></Header>
         <div class="container">
-            <div class="fix-inner" v-if="categoryCode != categoryInfo.categoryCode">
-                <sui-loader active centered inline/>
-            </div>
-            <div class="fix-inner" v-else>
+            <div class="fix-inner">
                 <div class="category-nav">
                     <sui-accordion exclusive>
-                        <sui-accordion-title active>
-                            <div class="nav-title">
-                                <div class="title-text">카테고리</div>
-                                <div class="title-icon">
-                                    <sui-icon name="dropdown"/>
-                                </div>
+                        <sui-accordion-title class="nav-title" active v-if="categoryList.length > 0">
+                            <div class="title-text">카테고리</div>
+                            <div class="title-icon">
+                                <sui-icon name="dropdown"/>
                             </div>
                         </sui-accordion-title>
-                        <sui-accordion-content active>
+                        <sui-accordion-content active v-if="categoryList.length > 0">
                             <div class="nav-content">
-                                <div v-for="(categoryData, index) in categoryList" :key="index"
-                                     @click="changeCategory(categoryData.categoryCode)">{{categoryData.name}}
-                                </div>
+                                <ul>
+                                    <li class="sub-category" v-for="(categoryData, index) in categoryList" :key="index"
+                                        @click="changeCategory(categoryData.categoryCode)">{{categoryData.name}}
+                                    </li>
+                                </ul>
                             </div>
                         </sui-accordion-content>
                         <sui-accordion-title>
@@ -32,24 +29,30 @@
                             </div>
                         </sui-accordion-title>
                         <sui-accordion-content>
-                            <sui-form>
-                                <sui-form-field>
-                                    <sui-checkbox radio label="Small" value="1" v-model="priceOption"/>
-                                </sui-form-field>
-                                <sui-form-field>
-                                    <sui-checkbox radio label="Medium" value="2" v-model="priceOption"/>
-                                </sui-form-field>
-                                <sui-form-field>
-                                    <sui-checkbox radio label="Large" value="3" v-model="priceOption"/>
-                                </sui-form-field>
-                                <sui-form-field>
-                                    <sui-checkbox radio label="X-Large" value="4" v-model="priceOption"/>
-                                </sui-form-field>
-                            </sui-form>
+                            <div class="nav-content">
+                                <sui-form>
+                                    <sui-form-field>
+                                        <sui-checkbox radio label="전체" value="1" v-model="priceOption"/>
+                                    </sui-form-field>
+                                    <sui-form-field>
+                                        <sui-checkbox radio label="5만원 이하" value="2" v-model="priceOption"/>
+                                    </sui-form-field>
+                                    <sui-form-field>
+                                        <sui-checkbox radio label="5만원 ~ 10만원" value="3" v-model="priceOption"/>
+                                    </sui-form-field>
+                                    <sui-form-field>
+                                        <sui-checkbox radio label="10만원 ~ 30만원" value="4" v-model="priceOption"/>
+                                    </sui-form-field>
+                                    <sui-button secondary type="submit">검색</sui-button>
+                                </sui-form>
+                            </div>
                         </sui-accordion-content>
                     </sui-accordion>
                 </div>
-                <CategoryGoodsCards :categoryInfo="categoryInfo"/>
+                <div v-if="categoryCode != categoryInfo.categoryCode">
+                    <sui-loader active centered inline/>
+                </div>
+                <CategoryGoodsCards v-else :categoryInfo="categoryInfo"/>
             </div>
         </div>
         <Footer></Footer>
@@ -75,13 +78,13 @@
         data() {
             return {
                 categoryCode: "",
+                isActive: true,
                 priceOption: "",
             }
         },
         methods: {
             getCategoryCode() {
                 this.categoryCode = this.$route.params.categoryCode;
-                console.log(this.categoryCode);
             },
             changeCategory(categoryCode) {
                 this.categoryCode = categoryCode;
@@ -93,10 +96,10 @@
                 this.$store.commit("getCategoryList", this.categoryCode);
             },
         },
-        async created() {
+        created() {
             this.getCategoryCode();
-            await this.getCategoryInfo();
-            await this.getCategoryList();
+            this.getCategoryInfo();
+            this.getCategoryList();
         },
         computed: {
             categoryInfo() {
@@ -105,12 +108,12 @@
             categoryList() {
                 return this.$store.state.categoryStore.categoryList;
             },
-            errorState(){
+            errorState() {
                 return this.$store.state.categoryStore.errorInfo;
             }
         },
         watch: {
-            "$route": ["getCategoryCode", "getCategoryInfo"],
+            "$route": ["getCategoryCode", "getCategoryList"],
             "categoryCode": "getCategoryInfo",
             errorState() {
                 this.getCategoryCode();
@@ -125,6 +128,7 @@
         min-height: 600px;
         padding-top: 80px;
         margin-bottom: 80px;
+        overflow: hidden;
     }
 
     .fix-inner {
@@ -165,4 +169,17 @@
         float: right;
     }
 
+    .nav-content {
+        padding-bottom: 15px;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin-top: 12px;
+    }
 </style>

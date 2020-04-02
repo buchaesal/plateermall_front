@@ -29,7 +29,7 @@
             goToCategory(categoryCode) {
                 this.$router.push('/category/' + categoryCode).catch(error => {
                     if (error.name == "NavigationDuplicated") {
-                        this.$store.commit("getError", error.message);
+                        this.$store.commit("getError", error);
                     } else {
                         throw error;
                     }

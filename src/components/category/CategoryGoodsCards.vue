@@ -45,7 +45,7 @@
                         <sui-card-content extra class="price">
                             <sui-icon name="won sign icon"/>
                             <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate)}}</span>
+                            goodsData.dcRate).toLocaleString()}}</span>
                         </sui-card-content>
                     </sui-card>
                 </sui-card-group>
