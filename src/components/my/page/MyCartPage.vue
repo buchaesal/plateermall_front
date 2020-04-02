@@ -121,27 +121,16 @@
                         <div class="goods-price-info">
                             <h3>카드 청구할인 정보</h3>
                         </div>
-                        <div class="goods-price-info">
-                            <h3>롯데카드</h3>
-                            <p>
-                                - 70,000원 이상 결제시 10% (~03/17)
-                                - 1일 할인한도 최대 70,000원
-                            </p>
-                        </div>
-                        <sui-divider />
-                        <div class="goods-price-info">
-                            <h3>KB국민카드</h3>
-                            <p>
-                                - 70,000원 이상 결제시 10% (~03/17)
-                                - 1일 할인한도 최대 70,000원
+
+                        <div v-for="(cardInfoObj, index) in cardInfoList" v-bind:key="index" class="goods-price-info">
+                            <h3>{{cardInfoObj.cardName}}</h3>
+                            <p v-html="cardInfoObj.cardInfo">
+
                             </p>
                         </div>
                         <sui-divider />
                         <div class="goods-price-info">
                             <span>* 체크/법인/기프트/선불카드 제외</span>
-                        </div>
-                        <div class="goods-price-info">
-                            <sui-button>카드 무이자 할부 안내</sui-button>
                         </div>
                     </div>
                 </div>
@@ -176,14 +165,15 @@
     import {order} from "../../../api/OrderApi";
     import OrderModel from "../model/OrderModel";
     import {addCommentStatus} from "../../../api/CommentApi";
+    import {requestCardDiscountInfo} from "../../../api/CartListApi";
 
     export default {
         name: "MyCart",
         data() {
             return {
-                userInfo : {},
                 isTotalChecked:false,
                 checkedCartList:[],
+                cardInfoList:[],
             }
         },
         components: {
@@ -301,13 +291,13 @@
                 today = year + "-" + month + "-" + date;
 
                 for (let cart of this.checkedCartList) {
-                    let option = cart.text + ", " + cart.quantity;
-                    let orderModel = new OrderModel('', "testId", cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
+                    let option = cart.text;
+                    let orderModel = new OrderModel('', this.$store.state.cartListStore.userInfo.email, cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
                     let orderId = await order(orderModel);
 
                     await addCommentStatus({
                         "orderId": orderId,
-                        "userId": "testId",
+                        "userId": this.$store.state.cartListStore.userInfo.email,
                         "isWritten": "N"
                     });
                 }
@@ -316,6 +306,7 @@
         async created() {
             await this.$store.dispatch('getLoginUserInfo');
             await this.$store.dispatch('getCartList');
+            this.cardInfoList = await requestCardDiscountInfo();
         },
 
         computed: {
@@ -404,5 +395,9 @@
     .quantity-change-btn {
         width: 83px;
         margin-top: 40%;
+    }
+
+    .ui.container {
+        overflow: hidden;
     }
 </style>

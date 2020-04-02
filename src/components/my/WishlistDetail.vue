@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="my-cancel" v-if="wishProductCount.length===0">
+        <div class="my-cancel" v-if="wishProductCount === 0">
             <i class="huge exclamation icon"></i>
             <br/>
             <br/>
@@ -23,7 +23,7 @@
                                     {{pricing(goodsData.originalPrice,
                                     goodsData.dcRate)}}<span class="unit">원</span>
                                 </div>
-                                <div class="cancel-wish" @click="cancelWish(goodsData.goodsCode)">
+                                <div class="cancel-wish" @click.stop="cancelWish(goodsData.goodsCode)">
                                     <i class="close icon"></i>
                                 </div>
                             </sui-card-description>
@@ -32,7 +32,6 @@
                 </sui-card-group>
             </div>
         </div>
-
     </div>
 </template>
 
@@ -68,11 +67,12 @@
             // },
             wishProductCount: function () {
                 return this.wishListGoodsCodes.length;
-            }
+            },
         },
         methods: {
             async setGoodsFromGoodsCodes() {
                 let goodsApi = new GoodsApi();
+
                 for (let index in this.wishListGoodsCodes) {
                     this.wishListGoods.push(await goodsApi.getGoods(this.wishListGoodsCodes[index]));
                 }
@@ -94,7 +94,15 @@
             },
             cancelWish(goodsCode) {
                 let wishListApi = new WishListApi();
-                wishListApi.deleteGoodsWish(goodsCode);
+                wishListApi.deleteGoodsWish(goodsCode)
+                    .then(() => {
+                        this.wishListGoodsCodes = [];
+                        this.wishListGoods = [];
+                        this.setWishList();
+                    })
+                    .catch(function(error) {
+                        console.log(error);
+                    });
             }
         },
         created: function () {
