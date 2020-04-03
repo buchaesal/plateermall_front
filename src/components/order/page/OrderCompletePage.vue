@@ -105,7 +105,7 @@
             pricing(orderData) {
                 for (let i in orderData.selectedOptions) {
                     let option = orderData.selectedOptions[i];
-                    this.sumOriginalPrice += option.originalPrice;
+                    this.sumOriginalPrice += option.price;
                     this.sumDiscountPrice += (option.originalPrice / 100 * option.dcRate);
                     this.sumShippingFee += option.shippingFee;
                 }
