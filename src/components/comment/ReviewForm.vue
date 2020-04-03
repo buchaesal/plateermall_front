@@ -41,13 +41,13 @@
                                 <sui-form-fields inline>
                                     <label>배송</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" @change="changeValue" v-model="currentReview.deliveryValue" />
+                                        <sui-checkbox radio label="적당해요" value="1" @change="changeValue" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 빨라요" radio value="2" @change="changeValue" v-model="currentReview.deliveryValue"/>
+                                    <sui-checkbox radio label="생각보다 빨라요" value="2" @change="changeValue" v-model="currentReview.deliveryValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 느려요" radio value="3" @change="changeValue" v-model="currentReview.deliveryValue" />
+                                        <sui-checkbox radio label="생각보다 느려요" value="3" @change="changeValue" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                
@@ -185,6 +185,7 @@
                     if(index == 0){
                         if(this.currentReview.myPhoto2 == ''){
                             this.currentReview.myPhoto = '';
+                            
                         }else{
                             this.currentReview.myPhoto = this.currentReview.myPhoto2;                        
                         }
@@ -199,10 +200,10 @@
                         this.currentReview.myPhoto3 = '';
                     }
 
-                        this.changeValue();
-                    }
+                    this.changeValue();
+                }
                 
-                    alert("삭제되었습니다.");
+                alert("삭제되었습니다.");
             }
         },
     }

@@ -1,12 +1,11 @@
 <template>
     <div>
-        
-        <div class="photo-review">
+        <!--<div class="photo-review">
             <h3>포토<br>상품평</h3>
             <div class='review-img' v-for='(review, index) in getRequestComments' v-show='review.myPhoto != ""' :key='index'>
                 <img :src='review.myPhoto' width='99' height='99'>
             </div>
-        </div>
+        </div>-->
         <div class='options'>
             <sui-dropdown style="margin-right: 3%;" text="옵션보기"
                 selection
@@ -65,6 +64,7 @@
 
 <script>
 import GoodsApi from '../../api/GoodsApi';
+import {getCurrentUserInfo} from '../../api/UserApi.js'
 
     export default {
         name: "Sample",
@@ -72,6 +72,11 @@ import GoodsApi from '../../api/GoodsApi';
             return{
                 reviewList:[],
                 goods:{},
+                info:{
+                    orderId:'',
+                    email:'',
+                    index:0,
+                },
                 goodsCode:'',
                 currentOrderRating: null,
                 currentOption: null,
@@ -96,6 +101,8 @@ import GoodsApi from '../../api/GoodsApi';
                 ],
             }
         },
+        components:{
+        },
         async created(){
             this.goodsCode = this.$route.params.goodsCode;
 
@@ -114,8 +121,16 @@ import GoodsApi from '../../api/GoodsApi';
             },     
         },
         methods:{
-            recommendComment(index){
-                this.$store.commit('increaseRecommendCount', index);
+            async recommendComment(index){
+                let user = await getCurrentUserInfo();
+
+                if(user == null){
+                    alert('로그인 후에 추천할 수 있습니다.');
+                }else{
+                    this.info.email = user.email;
+                    this.info.index = index;
+                    this.$store.dispatch('RECOMMEND_COMMENT', this.info);                    
+                }
             },
         },
         watch:{
