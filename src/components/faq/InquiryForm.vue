@@ -113,7 +113,7 @@
             return {
                 open: false,
                 userInfo: '',
-                currentQuestion: {},
+                currentQuestionPostId: '',
                 questionObject: {
                     territory: '',
                     state:'',
@@ -143,8 +143,8 @@
                 if(!(this.questionObject.territory) || !(this.questionObject.title) || !(this.questionObject.description)) {
                     alert("문의내용을 채워주세요.")
                 } else {
-                    this.currentQuestion = await registrationQuestion(this.questionObject);
-                    alert(this.currentQuestion.title);
+                    this.currentQuestionPostId = await registrationQuestion(this.questionObject);
+                    alert(this.currentQuestionPostId);
                     alert("등록이 완료되었습니다.");
                     await this.$router.push("/myPageMain");
                 }
