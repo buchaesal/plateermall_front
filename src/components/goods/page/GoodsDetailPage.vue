@@ -23,8 +23,7 @@
                                 <del>
                                     {{(goodsData.originalPrice).toLocaleString()}}
                                 </del>
-                                <span>{{(pricing(goodsData.originalPrice, goodsData.dcRate,
-                            goodsData.shippingFee)).toLocaleString()}}</span><span
+                                <span>{{goodsData.benefitPrice.toLocaleString()}}</span><span
                                     class="unit">원</span>
                             </p>
                             <ul class="utils">
@@ -451,10 +450,6 @@
                 selectedOptions: [],
                 orderSumQuantity: 0,
                 orderSumPrice: 0,
-                originalPrice: 0,
-                discountedPrice: 0,
-                shippingFee: 0,
-                dcRate: 0,
                 open: false,
             }
         },
@@ -470,13 +465,6 @@
                 } else {
                     return false;
                 }
-            },
-            pricing(originalPrice, dcRate, shippingFee) {
-                this.shippingFee = shippingFee;
-                this.dcRate = dcRate;
-                this.originalPrice = originalPrice;
-                this.discountedPrice = originalPrice * (100 - dcRate) / 100;
-                return this.discountedPrice;
             },
             isDiscount(dcRate) {
                 if (dcRate !== "0" && dcRate !== null && dcRate !== 0) {
@@ -501,10 +489,11 @@
                     let data = {
                         text: option,
                         quantity: 1,
-                        price: this.discountedPrice,
-                        originalPrice: this.originalPrice,
-                        dcRate: this.dcRate,
-                        shippingFee: this.shippingFee,
+                        price: this.goodsData.benefitPrice,
+                        originalPrice: this.goodsData.originalPrice,
+                        dcRate: this.goodsData.dcRate,
+                        benefitPrice: this.goodsData.benefitPrice,
+                        shippingFee: this.goodsData.shippingFee,
                     };
 
                     addOptions.push(data);
@@ -555,7 +544,7 @@
             },
             optionPricing(index) {
                 this.selectedOptions[index].price =
-                    this.discountedPrice *
+                    this.goodsData.benefitPrice *
                     this.selectedOptions[index].quantity
             },
             calculateOrderSum() {
@@ -629,11 +618,6 @@
                         }
                     });
                 }
-
-                //     requestOrder({
-                //         goodsCode: this.$route.params.goodsCode,
-                //         selectedOptions: this.selectedOptions
-                //     });
             }
         },
         async created() {
