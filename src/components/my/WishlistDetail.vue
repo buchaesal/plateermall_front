@@ -20,8 +20,7 @@
                             <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                             <sui-card-description class="price">
                                 <div class="price-area">
-                                    {{pricing(goodsData.originalPrice,
-                                    goodsData.dcRate)}}<span class="unit">원</span>
+                                    {{goodsData.benefitPrice.toLocaleString()}}<span class="unit">원</span>
                                 </div>
                                 <div class="cancel-wish" @click.stop="cancelWish(goodsData.goodsCode)">
                                     <i class="close icon"></i>
@@ -76,12 +75,6 @@
                 for (let index in this.wishListGoodsCodes) {
                     this.wishListGoods.push(await goodsApi.getGoods(this.wishListGoodsCodes[index]));
                 }
-            }
-            ,
-            pricing(originalPrice, dcRate) {
-                var price = originalPrice * (100 - dcRate) / 100;
-                price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                return price;
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);
@@ -100,7 +93,7 @@
                         this.wishListGoods = [];
                         this.setWishList();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                     });
             }

@@ -6,29 +6,24 @@
             <div class="goods-sort">
                 <ul class="option-field sort-setting">
                     <li>
-                        <input type="radio" name="sort" id="sort-result1" value="RANK/DESC,DATE/DESC"
-                               checked="checked"><label
-                            for="sort-result1">추천순</label>
+                        <input type="radio" name="sort" id="sort-result1"
+                               checked="checked" @click="reOrder('goodsCode/DESC')">
+                        <label for="sort-result1">최근등록순</label>
                     </li>
                     <li>
-                        <input type="radio" name="sort" id="sort-result2" value="SALESCNT15/DESC"><label
-                            for="sort-result2">판매순</label>
+                        <input type="radio" name="sort" id="sort-result2"
+                               @click="reOrder('saleCnt/DESC')">
+                        <label for="sort-result2">판매순</label>
                     </li>
                     <li>
-                        <input type="radio" name="sort" id="sort-result3" value="GSRVCNT/DESC"><label
-                            for="sort-result3">상품평 많은순</label>
+                        <input type="radio" name="sort" id="sort-result5"
+                               @click="reOrder('benefitPrice/ASC')">
+                        <label for="sort-result5">낮은 가격순</label>
                     </li>
                     <li>
-                        <input type="radio" name="sort" id="sort-result4" value="DATE/DESC"><label
-                            for="sort-result4">최근등록순</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="sort" id="sort-result5" value="BENEFITPRICE/ASC"><label
-                            for="sort-result5">낮은 가격순</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="sort" id="sort-result6" value="BENEFITPRICE/DESC"><label
-                            for="sort-result6">높은 가격순</label>
+                        <input type="radio" name="sort" id="sort-result6"
+                               @click="reOrder('benefitPrice/DESC')">
+                        <label for="sort-result6">높은 가격순</label>
                     </li>
                 </ul>
             </div>
@@ -44,8 +39,7 @@
                         </sui-card-content>
                         <sui-card-content extra class="price">
                             <sui-icon name="won sign icon"/>
-                            <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate).toLocaleString()}}</span>
+                            <span class="price">{{goodsData.benefitPrice.toLocaleString()}}</span>
                         </sui-card-content>
                     </sui-card>
                 </sui-card-group>
@@ -70,6 +64,7 @@
             return {
                 noItemMessage: "현재 등록된 상품이 없습니다.",
                 categoryCode: "",
+                orderSet: "goodsCode/DESC",
                 items_per_row: 4,
             }
         },
@@ -83,13 +78,20 @@
                 console.log("card" + this.categoryCode);
             },
             getCategoryGoods() {
-                this.$store.commit("getCategoryGoodsModelList", this.categoryCode);
-            },
-            pricing(originalPrice, dcRate) {
-                return originalPrice * (100 - dcRate) / 100;
+                console.log(this.categoryCode + ", " + this.orderSet)
+                this.$store.commit("getCategoryGoodsModelList",
+                    {
+                        categoryCode: this.categoryCode,
+                        orderSet: this.orderSet
+                    }
+                );
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push("/goodsDetail/" + goodsCode);
+            },
+            reOrder(orderSet) {
+                this.orderSet = orderSet;
+                this.getCategoryGoods();
             },
         },
         computed: {

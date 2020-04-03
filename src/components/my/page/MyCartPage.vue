@@ -68,7 +68,7 @@
                                                 <span class="goods-original-price">{{cart.goods.originalPrice.toLocaleString()}}원</span>
                                             </div>
                                             <div>
-                                                <span class="goods-dc-price">{{pricing(cart.goods.originalPrice, cart.goods.dcRate).toLocaleString()}}원</span>
+                                                <span class="goods-dc-price">{{cart.goods.benefitPrice.toLocaleString()}}원</span>
                                             </div>
                                         </sui-segment>
                                     </sui-grid-column>
@@ -181,11 +181,6 @@
             Footer,
         },
         methods: {
-            pricing(originalPrice, dcRate) {
-                let price = originalPrice * (100 - dcRate) / 100;
-                return price;
-            },
-
             checkWholeItem() {
                 if(!this.isTotalChecked) {
                     this.checkedCartList = this.$store.state.cartListStore.cartList;
@@ -209,7 +204,7 @@
             totalDcRatePrice() {
                 let totalDcRatePrice = 0;
                 this.checkedCartList.map((cart) => {
-                    totalDcRatePrice += (cart.goods.originalPrice - this.pricing(cart.goods.originalPrice, cart.goods.dcRate));
+                    totalDcRatePrice += (cart.goods.originalPrice - cart.goods.benefitPrice);
                 });
                 return totalDcRatePrice;
             },
@@ -226,7 +221,7 @@
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalCartPrice += ((cart.goods.originalPrice * cart.quantity) + cart.goods.shippingFee - (cart.goods.originalPrice - this.pricing(cart.goods.originalPrice, cart.goods.dcRate)));
+                    totalCartPrice += ((cart.goods.originalPrice * cart.quantity) + cart.goods.shippingFee - (cart.goods.originalPrice - cart.goods.benefitPrice));
                 });
                 return totalCartPrice;
             },
