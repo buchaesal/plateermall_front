@@ -1,7 +1,6 @@
 import request,{FAQ_URL} from './axios';
 
 export const getQuestionList = function () {
-
     return request.get(FAQ_URL+"/question/list").then(
         (response) => {
             return response.data;
@@ -53,6 +52,16 @@ export const questionDelete = function (postId) {
 
 export const questionUpdate = function (questionObject) {
     return request.put(FAQ_URL+`/question/update/`, questionObject).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function (err) {
+        console.log(err);
+    });
+}
+
+export const getMyQuestionList = function (userName) {
+    return request.get(FAQ_URL + `/question/list/${userName}`).then(
         (response) => {
             return response.data;
         }
