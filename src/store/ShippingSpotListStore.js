@@ -24,7 +24,6 @@ const mutations = {
         state.shippingSpotList = list;
     },
     getShippingSpotListFromApi(state, list) {
-        //state.shippingSpotList = new ShippingSpotListApi().getShippingSpotList();
         state.shippingSpotList = list;
     },
     addShippingSpotList(state, shippingSpot) {
@@ -75,8 +74,10 @@ const actions = {
                 context.dispatch('ADDRESS_LIST');
             });
     },
-    async setDefaultShippingSpot(context) {
-        await setDefaultAddress(context.state.selectedDefaultId)
+    async setDefaultShippingSpot(context, id) {
+        let target = id?id:context.state.selectedDefaultId;
+
+        await setDefaultAddress(target)
             .then(() => {
                 context.dispatch('ADDRESS_LIST');
             });

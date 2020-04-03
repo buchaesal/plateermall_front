@@ -45,14 +45,15 @@
 
                 <sui-table-row v-for="(shippingSpot, index) in shippingSpots" :key="index" text-align="center">
                     <sui-table-cell>
-                        <sui-checkbox radio :value="''+shippingSpot.id" v-model="selectedDefaultId"/>
+                        <sui-checkbox radio :value="''+shippingSpot.id" v-model="selectedDefault"/>
                     </sui-table-cell>
 
                     <sui-table-cell class="spot-type">{{shippingSpot.spotAlias}}<br><span v-if="shippingSpot.isDefault">(기본배송지)</span>
                     </sui-table-cell>
 
                     <sui-table-cell text-align="left">
-                        <ShippingSpotForm v-if="isModifyForm === index" :targetShippingSpot="shippingSpot"></ShippingSpotForm>
+                        <ShippingSpotForm v-if="isModifyForm === index"
+                                          :targetShippingSpot="modifyShippingSpotModel"></ShippingSpotForm>
                         <div v-else>
                             <p class="user-name">{{shippingSpot.receiver}}</p>
                             <div class="spot-details">
@@ -66,14 +67,14 @@
                     <sui-table-cell>
                         <div v-if="isModifyForm === index">
                             <p>
-                                <button class="cancel-btn" @click="isModifyForm = -1">취소</button>
+                                <button class="cancel-btn" @click="closeModifyForm">취소</button>
                             </p>
                             <p>
-                                <button class="save-btn" @click="modifyAddress(shippingSpot)">저장</button>
+                                <button class="save-btn" @click="modifyAddress">저장</button>
                             </p>
                         </div>
                         <div v-else>
-                            <button class="modify-btn" v-if="shippingSpot.isDefault" @click="isModifyForm = index">수정
+                            <button class="modify-btn" v-if="shippingSpot.isDefault" @click="openModifyForm(index)">수정
                             </button>
                             <button class="modify-btn" v-else @click="deleteShippingSpot(shippingSpot.id)">삭제</button>
                         </div>
@@ -99,6 +100,7 @@
 <script>
     import ShippingSpotForm from './ShippingSpotForm';
     import ShippingSpotModel from "./model/ShippingSpotModel";
+    import _ from 'lodash';
 
     export default {
         name: "DeliveryManagement",
@@ -117,7 +119,8 @@
                 defaultShippingSpotCopy: {},
                 shippingSpotSize: -1,
                 checkedRadio: 'defaultShippingSpot',
-
+                selectedDefault: 0,
+                modifyShippingSpotModel: {}
             }
         },
         computed: {
@@ -144,13 +147,13 @@
                 this.newShippingSpotModel = new ShippingSpotModel();
             },
             deleteShippingSpot(id) {
-                if(confirm('삭제하시겠습니까?')){
+                if (confirm('삭제하시겠습니까?')) {
                     this.$store.dispatch('deleteShippingSpot', id);
                     alert('배송지가 삭제되었습니다.');
                 }
             },
             async setDefaultShippingSpot() {
-                if(this.shippingSpots.length === 0){
+                if (this.shippingSpots.length === 0) {
                     alert('등록된 배송지가 없습니다.');
                     return;
                 }
@@ -159,7 +162,7 @@
                     alert("기본 배송지입니다.");
                     return;
                 }
-                await this.$store.dispatch('setDefaultShippingSpot');
+                await this.$store.dispatch('setDefaultShippingSpot', this.selectedDefault);
                 alert('기본 배송지로 설정하였습니다.')
             },
             updateShippingSpotList(defaultShippingSpot, otherShippingSpots) {
@@ -169,7 +172,6 @@
             },
             async getShippingSpotListFromApi() {
                 await this.$store.dispatch('ADDRESS_LIST');
-                //this.setDefaultOption();
             },
             filterDefaultAndOtherSpots() {
                 console.log('filterDefault')
@@ -184,34 +186,32 @@
                 });
             },
             registerNewShippingSpot() {
-                if(confirm('저장 하시겠습니까?')){
+                if (confirm('저장 하시겠습니까?')) {
                     this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0 ? 1 : 0;
                     this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
                     alert('배송지가 등록되었습니다.');
-                    //this.setDefaultOption();
                     this.openShippingSpotFormFlag = false;
                     this.newShippingSpotModel = new ShippingSpotModel();
                 }
             },
-            modifyAddress(address){
-                if(confirm('수정하시겠습니까?')){
-                    this.$store.dispatch('MODIFY_ADDRESS',address);
+            modifyAddress() {
+                if (confirm('수정하시겠습니까?')) {
+                    this.$store.dispatch('MODIFY_ADDRESS', this.modifyShippingSpotModel);
                     alert('배송지가 수정되었습니다.');
                     this.isModifyForm = -1;
-                    //this.setDefaultOption();
                 }
             },
-            // setDefaultOption(){
-            //     this.defaultAddress = this.shippingSpots.filter((item) => {
-            //         return item.isDefault === 1;
-            //     })[0];
-            //     if (this.defaultAddress) {
-            //         this.selectedDefaultId = this.defaultAddress.id + '';
-            //     }
-            // }
+            openModifyForm(index) {
+                this.isModifyForm = index;
+                this.modifyShippingSpotModel = _.cloneDeep(this.shippingSpots[index]);
+            },
+            closeModifyForm() {
+                this.isModifyForm = -1;
+            }
         },
-        created: function () {
-            this.getShippingSpotListFromApi();
+        created: async function () {
+            await this.getShippingSpotListFromApi();
+            this.selectedDefault = this.selectedDefaultId;
         }
 
     };
