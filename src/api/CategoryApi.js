@@ -12,16 +12,6 @@ class CategoryApi {
         });
     }
 
-    getTopCategoryList() {
-        return request.get(CATEGORY_URL +  `/`).then(
-            (response) => {
-                return response.data;
-            }
-        ).catch(function (error) {
-            console.log(error);
-        });
-    }
-
     getCategoryList(categoryCode) {
         return request.get(CATEGORY_URL + `/list/${categoryCode}`).then(
             (response) => {
