@@ -1,5 +1,6 @@
 import request, {GOODS_URL} from './axios';
 import GoodsSetApiModel from './model/GoodsSetApiModel';
+import CategoryGoodsSetApiModel from './model/CategoryGoodsSetApiModel';
 
 class GoodsApi {
     getGoods(goodsCode) {
@@ -23,8 +24,11 @@ class GoodsApi {
         });
     }
 
-    getCategoryGoodsList(categoryCode) {
-        return request.get(GOODS_URL + `/goodslist/${categoryCode}`).then(
+    getCategoryGoodsList(categoryCode, orderSet) {
+
+        console.log("api " + categoryCode + ", " + orderSet)
+        let categoryGoodsSetApiModel = new CategoryGoodsSetApiModel(categoryCode, orderSet);
+        return request.get(GOODS_URL + `/categorygoodslist`, {params: categoryGoodsSetApiModel}).then(
             (response) => {
                 return response.data;
             }
