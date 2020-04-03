@@ -3,16 +3,15 @@
         <div class="inner_bar">
             <div class="left_bar">
                 <span class="item"><a @click="goToHome">HOME</a></span>
-                <span class="item" v-for="(category, index) in categoryList"
+                <span class="item" v-for="(category, index) in leftCategoryList"
                       :key="index"><a @click="goToCategory(category.categoryCode)">{{category.name}}</a></span>
             </div>
 
             <div class="right_bar">
-                <span class="item"><a>3D 쇼핑</a></span>
-                <span class="item"><a>ZIPSA</a></span>
-                <span class="item"><a>온앤더뷰티</a></span>
+                <span class="item" v-for="(category, index) in rightCategoryList"
+                      :key="index"><a @click="goToRightCategory(category.categoryCode)">{{category.name}}</a></span>
                 <a href="#">
-                    <sui-icon size="big" name="plus square"/>
+                    <sui-icon size="big" name="plus square outline"/>
                 </a>
             </div>
         </div>
@@ -35,14 +34,27 @@
                     }
                 });
             },
+            goToRightCategory(categoryCode) {
+                this.$router.push('/rightcategory/' + categoryCode).catch(error => {
+                    if (error.name == "NavigationDuplicated") {
+                        this.$store.commit("getError", error);
+                    } else {
+                        throw error;
+                    }
+                });
+            },
         },
         created() {
-            this.$store.commit("getTopCategoryList");
+            this.$store.commit("getLeftCategoryList", "10000");
+            this.$store.commit("getRightCategoryList", "20000");
         },
         computed: {
-            categoryList() {
-                return this.$store.state.categoryStore.topCategoryList;
-            }
+            leftCategoryList() {
+                return this.$store.state.categoryStore.leftCategoryList;
+            },
+            rightCategoryList() {
+                return this.$store.state.categoryStore.rightCategoryList;
+            },
         },
     }
 </script>
