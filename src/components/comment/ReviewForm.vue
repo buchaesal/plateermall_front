@@ -5,7 +5,7 @@
         <ul>
             <li>고객님께서 작성해주신 상품평은 등록 즉시 바로 사이트에 게재되며, 모두 공개를 원칙으로 합니다.</li>
             <li>- 상품평에 적합하지 않은 내용, 미풍양속을 해치는 글, 상품기능 및 효과에 대한 오해의 소지가 있는 내용은 통보 없이 삭제될 수 있으며,</li>
-            <li> L.POINT는 지급되지 않습니다.</li>
+            <li> P.POINT는 지급되지 않습니다.</li>
             <li>- 단순상품문의, 교환/반품 요청, 제품이상 등 불편사항은 1:1 E-mail 상담을 이용해주세요.</li>
         </ul>
         <div id="selected-item">
@@ -41,13 +41,13 @@
                                 <sui-form-fields inline>
                                     <label>배송</label>
                                     <sui-form-field>
-                                        <sui-checkbox label="적당해요" radio value="1" @change="changeValue" v-model="currentReview.deliveryValue" />
+                                        <sui-checkbox radio label="적당해요" value="1" @change="changeValue" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                     <sui-form-field>
-                                    <sui-checkbox label="생각보다 빨라요" radio value="2" @change="changeValue" v-model="currentReview.deliveryValue"/>
+                                    <sui-checkbox radio label="생각보다 빨라요" value="2" @change="changeValue" v-model="currentReview.deliveryValue"/>
                                     </sui-form-field>
                                     <sui-form-field>
-                                        <sui-checkbox label="생각보다 느려요" radio value="3" @change="changeValue" v-model="currentReview.deliveryValue" />
+                                        <sui-checkbox radio label="생각보다 느려요" value="3" @change="changeValue" v-model="currentReview.deliveryValue" />
                                     </sui-form-field>
                                 </sui-form-fields>
                                
@@ -98,9 +98,8 @@
                             <input id="image-input" v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" text="" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%; color: transparent;"/>
                             </div>
 
-                            <p>- 매월 우수상품평 작성자 50명에게 L.POINT 2000점을 적립해 드립니다.</p>
+                            <p>- 매월 우수상품평 작성자 50명에게 P.POINT 2000점을 적립해 드립니다.</p>
                             <p>- 첨부가능 파일형식: JPG, JPEG, GIF, PNG</p>
-                            <p>- 파일명: 영문파일명만 가능</p>
                             <p>- 용량: 10Mb 미만 파일만 업로드 가능</p>
                         </sui-table-cell>
                     </sui-table-row>
@@ -121,11 +120,10 @@
 <script>
     export default {
         props:['orderInfo', 'goodsInfo', 'currentReview'],
-        name: "Sample",
+        name: "ReviewForm",
         data(){
             return{
-                photoList:[],
-                copyReview:{},
+
             }
         },
         computed: {
@@ -185,6 +183,7 @@
                     if(index == 0){
                         if(this.currentReview.myPhoto2 == ''){
                             this.currentReview.myPhoto = '';
+                            
                         }else{
                             this.currentReview.myPhoto = this.currentReview.myPhoto2;                        
                         }
@@ -199,17 +198,16 @@
                         this.currentReview.myPhoto3 = '';
                     }
 
-                        this.changeValue();
-                    }
+                    this.changeValue();
+                }
                 
-                    alert("삭제되었습니다.");
+                alert("삭제되었습니다.");
             }
         },
     }
 </script>
 
 <style scoped>
-
 
     #write-review{
         padding: 2% 2% 3% 2%;
