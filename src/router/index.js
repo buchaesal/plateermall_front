@@ -10,6 +10,7 @@ import Error from "../components/share/page/Error";
 import OrderCompletePage from "../components/order/page/OrderCompletePage";
 import CategoryPage from '../components/category/page/CategoryPage';
 import PageNotFound from "../components/share/page/PageNotFound";
+import OrderPage from "../components/order/page/OrderPage";
 
 Vue.use(VueRouter);
 
@@ -36,7 +37,8 @@ const routes = [
     {path: '*', redirect: '/404'},
 
     {path: '/category/:categoryCode', component: CategoryPage},
-    {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true}
+    {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true},
+    {path: '/order', name:"order", component: OrderPage},
 ]
 
 export default new VueRouter({

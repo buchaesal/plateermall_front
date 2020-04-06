@@ -1,5 +1,4 @@
 import request,{COMMENTS_URL} from './axios';
-//import CommentApiModel from './model/CommentApiModel';
 
 export const requestPhotoComments = function(goodsCode){
     return request.get(COMMENTS_URL + `/getphotolist/${goodsCode}`).then(
@@ -104,8 +103,8 @@ export const addCommentStatus = function(status){
 export const isRecommend = function(orderId, email){
 
     return request.get(COMMENTS_URL + `/isrecommend/${orderId}/${email}`).then(
-        (response)=> {
-            return response.data;
+        ()=> {
+           
         }
     ).catch(function(error){
         console.log(error);

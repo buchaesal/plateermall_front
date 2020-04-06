@@ -27,6 +27,32 @@ import {requestPhotoComments} from '../../api/CommentApi'
 </script>
 
 <style scoped>
-    
+    .photo-review{
+        border-top: 1px solid #ededed;
+        border-bottom: 1px solid #ededed;
+        margin-left: 2%;
+        margin-right: 2%;
+        margin-bottom: 3%;
+        width: 96%;
+        height: 150px;
+        background-color: #fafafa;
+        overflow-x: auto;
+    }
+
+    .review-img{
+        float: left;
+        display: inline-block;
+        padding-top: 2%;
+        padding-right: 2%;
+    }
+
+    h3{
+        padding-top: 2%;
+        padding-left: 2%;
+        text-align: left;
+        float: left;
+        width: 160px;
+        font-size: 18px;
+    }
     
 </style>

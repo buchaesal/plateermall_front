@@ -158,17 +158,23 @@ const actions = {
             email : info.email
         }
 
-        let recommendFlag = await isRecommend(info.orderId, info.email);
+        let order = await getOrder(info.orderId);
 
-        if(recommendFlag == true){
-            await addRecommend(commentRecommend);
-            context.commit('increaseRecommendCount', info.index);
-            alert('추천되었습니다.');
-            
+        if(order.userId == info.email){
+
+            alert('자신의 상품평은 추천할 수 없습니다.');
         }else{
-            alert('이미 추천한 상품평입니다.');
-        }
+            let recommendFlag = await isRecommend(info.orderId, info.email);
 
+            if(recommendFlag == true){
+                await addRecommend(commentRecommend);
+                context.commit('increaseRecommendCount', info.index);
+                alert('추천되었습니다.');
+                
+            }else{
+                alert('이미 추천한 상품평입니다.');
+            }
+        }
     }
 }
 
