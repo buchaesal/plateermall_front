@@ -11,7 +11,7 @@
         components: {},
         data() {
             return {
-                prevScrollpos: window.pageYOffset,
+                prevScrollpos: 0,
             }
         },
         created () {
@@ -24,7 +24,7 @@
             handleScroll () {
                 let header = document.getElementById("header");
                 let currentScrollPos = window.pageYOffset;
-                if (this.prevScrollpos > currentScrollPos) {
+                if (this.prevScrollpos >= currentScrollPos) {
                     header.style.top = "0";
                 } else {
                     header.style.top = "-125px";
