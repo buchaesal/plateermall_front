@@ -1,4 +1,4 @@
-import {requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, increaseRecommend, goodsOptionList, deleteComment, requestUnwrittenOrderId} from '../../src/api/CommentApi';
+import {addRecommend, requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, increaseRecommend, goodsOptionList, deleteComment, requestUnwrittenOrderId, isRecommend} from '../../src/api/CommentApi';
 import {getOrder} from '../../src/api/OrderApi';
 import GoodsApi from '../../src/api/GoodsApi';
 
@@ -98,25 +98,17 @@ const mutations = {
         var goodsApi = new GoodsApi();
 
         for(let index in state.unwritten.orderInfo){
-            console.log(state.unwritten.orderInfo[index].orderDate);
-        }
-
-        for(let index in state.unwritten.orderInfo){
-            console.log(state.unwritten.orderInfo[index].orderDate);
             let year = state.unwritten.orderInfo[index].orderDate.substr(0,4);
             let month = state.unwritten.orderInfo[index].orderDate.substr(5,2);
             let day = state.unwritten.orderInfo[index].orderDate.substr(8,2);
 
             let date = new Date(year, month, day).toISOString().slice(0,10);
 
-            console.log(year + ' ' + month+ ' ' + day);
-            console.log(date);
             state.unwritten.duedate.push(date);
 
             state.unwritten.goodsInfo.push(await goodsApi.getGoods(state.unwritten.orderInfo[index].goodsId));
         }
 
-        console.log(state.unwritten.duedate);
     },
 
     updateComment(state, review){
@@ -155,6 +147,34 @@ const actions = {
         }).catch(function(error){
             console.log(error);
         });
+    },
+
+    async RECOMMEND_COMMENT(context, info){
+
+        info.orderId = state.reviews.commentList[info.index].orderId;
+
+        let commentRecommend = {
+            orderId : info.orderId,
+            email : info.email
+        }
+
+        let order = await getOrder(info.orderId);
+
+        if(order.userId == info.email){
+
+            alert('자신의 상품평은 추천할 수 없습니다.');
+        }else{
+            let recommendFlag = await isRecommend(info.orderId, info.email);
+
+            if(recommendFlag == true){
+                await addRecommend(commentRecommend);
+                context.commit('increaseRecommendCount', info.index);
+                alert('추천되었습니다.');
+                
+            }else{
+                alert('이미 추천한 상품평입니다.');
+            }
+        }
     }
 }
 

@@ -1,5 +1,14 @@
 import request,{COMMENTS_URL} from './axios';
-//import CommentApiModel from './model/CommentApiModel';
+
+export const requestPhotoComments = function(goodsCode){
+    return request.get(COMMENTS_URL + `/getphotolist/${goodsCode}`).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
 
 export const requestComments = function(goodsCode){
 
@@ -85,12 +94,29 @@ export const deleteComment = function(orderId){
 export const addCommentStatus = function(status){
 
     return request.post(COMMENTS_URL + `/addcommentstatus`, status).then(
-        (response)=> {
-            return response.data;
+        
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
+export const isRecommend = function(orderId, email){
+
+    return request.get(COMMENTS_URL + `/isrecommend/${orderId}/${email}`).then(
+        ()=> {
+           
         }
     ).catch(function(error){
         console.log(error);
     });
+}
+
+export const addRecommend = function(recommendInfo){
+    return request.post(COMMENTS_URL + `/addrecommend`, recommendInfo).then(
+        
+    ).catch(function(error){
+        console.log(error);
+    })
 }
 
 class CommentApi{
