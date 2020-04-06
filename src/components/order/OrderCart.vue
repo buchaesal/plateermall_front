@@ -2,15 +2,16 @@
     <div class="prod_cont">
         <sui-item-group divided>
             <sui-item class='order-item' v-for='(cart, index) in orderData.selectedGoods' :key='index'>
-                <sui-item-image size="small" :src='cart.goods.imgUrl'/>
+                <sui-item-image size="small" :src='cart.imgUrl'/>
                     <sui-item-content class='order'>
-                        <sui-item-header>{{cart.goods.seller}}</sui-item-header>
-                        <sui-item-meta>                            <p class="itemName">{{cart.goods.title}}</p>
+                        <sui-item-header>{{cart.seller}}</sui-item-header>
+                        <sui-item-meta>                            
+                        <p class="itemName">{{cart.title}}</p>
                         <p class="option">{{cart.text}} / 수량: {{cart.quantity}}개</p>
                     </sui-item-meta>
                     <br>
                     <sui-item-description>
-                        <span class="price" style="font-size: 18px;">{{cart.goods.benefitPrice}} 원</span>
+                        <span class="price" style="font-size: 18px;">{{cart.benefitPrice}} 원</span>
                     </sui-item-description>
                 </sui-item-content>
             </sui-item>
