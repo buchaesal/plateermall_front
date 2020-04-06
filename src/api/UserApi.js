@@ -41,7 +41,7 @@ export const getCurrentUserInfo = function () {
 }
 
 export const modifyUser = function (user) {
-    request.put(USER_URL + '/updateUserInfo', user)
+    return request.put(USER_URL + '/updateUserInfo', user)
 
 }
 

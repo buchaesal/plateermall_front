@@ -42,7 +42,8 @@
                     </sui-card-content>
                 </sui-card>
             </sui-card-group>
-            <NoItem v-else :message="noItemMessage"/>
+            <sui-loader active centered inline v-else-if="categoryCode != categoryInfo.categoryCode"/>
+            <NoItem v-else-if="categoryGoods.length == 0" :message="noItemMessage"/>
         </div>
     </div>
 </template>

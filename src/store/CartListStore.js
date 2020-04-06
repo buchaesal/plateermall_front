@@ -47,7 +47,13 @@ const actions = {
         cartList.forEach(function(cart) {
             goodsList.forEach(function(goods) {
                 if(cart.goodsCode === goods.goodsCode){
-                    cart.goods = goods;
+                    cart.imgUrl = goods.imgUrl;
+                    cart.seller = goods.seller;
+                    cart.title = goods.title;
+                    cart.originalPrice = goods.originalPrice;
+                    cart.shippingFee = goods.shippingFee;
+                    cart.dcRate = goods.dcRate;
+                    cart.benefitPrice = goods.benefitPrice;
                     resultCart.push(cart);
                 }
             });

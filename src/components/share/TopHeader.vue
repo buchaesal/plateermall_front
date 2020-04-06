@@ -47,6 +47,7 @@
         },
         async created() {
             if(this.isAuthenticated){
+                console.log('로그인이 되어있다네.');
                 this.userInfo = await getCurrentUserInfo();
             }
         }
