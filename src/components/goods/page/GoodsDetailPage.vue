@@ -264,6 +264,7 @@
                                     <div>
                                         <RatingStarPoint/>
                                         <RatingGraph/>
+                                        <PhotoReview/>
                                         <ReviewList/>
                                     </div>
                                 </sui-accordion-content>
@@ -418,6 +419,7 @@
     import SideBanner from "../../share/SideBanner";
     import RatingStarPoint from "../../comment/RatingStarPoint";
     import RatingGraph from "../../comment/RatingGraph";
+    import PhotoReview from "../../comment/PhotoReview";
     import ReviewList from "../../comment/ReviewList";
     import {requestAddCart} from "../../../api/CartListApi";
     import WishListApi from "../../../api/WishListApi";
@@ -432,6 +434,7 @@
             Footer,
             SideBanner,
             ReviewList,
+            PhotoReview,
         },
         data() {
             return {
@@ -607,7 +610,7 @@
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
                     this.$router.push({
-                        name: "ordercomplete", params: {
+                        name: "order", params: {
                             orderData:
                                 {
                                     goodsCode: this.$route.params.goodsCode,
