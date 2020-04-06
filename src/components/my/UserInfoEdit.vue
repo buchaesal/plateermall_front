@@ -105,7 +105,7 @@
         methods: {
             async init() {
                 let result = await getCurrentUserInfo();
-                console.log(result,'userInfo')
+
                 if (result) {
                     result.password = null;
                     result.smsAgree = result.smsAgree + '';
