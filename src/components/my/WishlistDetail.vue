@@ -10,7 +10,16 @@
         </div>
 
         <div v-else>
-            <div>
+            <div class="category-option">
+                <sui-dropdown
+                        placeholder="카테고리 전체"
+                        selection
+                        :options="options"
+                        v-model="selectOption"
+
+                />
+            </div>
+            <div class="wishlist-container">
                 <sui-card-group :items-per-row="4">
                     <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
                               @click="goToGoodsDetail(goodsData.goodsCode)">
@@ -45,6 +54,8 @@
             return {
                 wishListGoodsCodes: [],
                 wishListGoods: [],
+                selectOption: "",
+                options: [],
             }
         },
         computed: {
@@ -82,6 +93,7 @@
             async setWishList() {
                 let wishListApi = new WishListApi();
                 this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes();
+                console.log("wishListGoodsCodes : " + this.wishListGoodsCodes);
                 await this.setGoodsFromGoodsCodes();
                 // this.$store.commit('getWishListFromApi');
             },
@@ -101,6 +113,11 @@
         created: function () {
             this.setWishList();
         },
+        watch: {
+            selectOption() {
+                console.log(this.selectOption);
+            }
+        }
     }
 </script>
 
@@ -128,5 +145,13 @@
 
     .cancel-wish {
         float: right;
+    }
+
+    .category-option {
+        float: right;
+    }
+
+    .wishlist-container {
+        clear: both;
     }
 </style>
