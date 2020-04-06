@@ -199,7 +199,7 @@
                             <div>
                                 <sui-button-group class="two cart-or-now">
                                     <sui-button content="쇼핑백" @click.native="addCart"></sui-button>
-                                    <sui-modal size="tiny" v-model="open">
+                                    <sui-modal size="tiny" v-model="isModalOpen">
                                         <div class="modal-inner">
                                             <p>선택하신 상품이 <b>쇼핑백</b>에 담겼습니다.</p>
                                             <sui-button-group class="modal-inner-button">
@@ -227,7 +227,6 @@
                             <div class="review-summary-box">
                                 <RatingStarPoint class="review-summary"/>
                             </div>
-
                         </div>
                     </div>
                 </section>
@@ -270,7 +269,6 @@
                                 </sui-accordion-content>
                             </sui-accordion>
                         </div>
-
                     </section>
                     <div class="brand-banner">
                         <div class="banner-text">
@@ -450,7 +448,7 @@
                 selectedOptions: [],
                 orderSumQuantity: 0,
                 orderSumPrice: 0,
-                open: false,
+                isModalOpen: false,
             }
         },
         methods: {
@@ -599,7 +597,7 @@
                 this.toggle();
             },
             toggle() {
-                this.open = !this.open;
+                this.isModalOpen = !this.isModalOpen;
             },
             goToCart() {
                 this.$router.push("/cart");
@@ -822,7 +820,6 @@
         clear: both;
         height: 90px;
     }
-
 
     .detail > dt {
         float: left;

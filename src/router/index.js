@@ -38,13 +38,9 @@ const routes = [
     {path: '*', redirect: '/404'},
 
     {path: '/category/:categoryCode', component: CategoryPage},
-<<<<<<< HEAD
     {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true},
     {path: '/order', name:"order", component: OrderPage},
-=======
     {path: '/rightcategory/:categoryCode', component: RightCategoryPage},
-    {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true}
->>>>>>> 626e6d1e3b87729cdcf9133a41b1b31415ab2532
 ]
 
 export default new VueRouter({
