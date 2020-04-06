@@ -10,14 +10,16 @@
         </div>
 
         <div v-else>
-            <div>
+            <div class="category-option">
                 <sui-dropdown
-                    placeholder="Gender"
-                    selection
-                    :options="options"
-                    v-model="current"
-                    class="category-option"
+                        placeholder="카테고리 전체"
+                        selection
+                        :options="options"
+                        v-model="current"
+
                 />
+            </div>
+            <div class="wishlist-container">
                 <sui-card-group :items-per-row="4">
                     <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
                               @click="goToGoodsDetail(goodsData.goodsCode)">
@@ -52,7 +54,7 @@
             return {
                 wishListGoodsCodes: [],
                 wishListGoods: [],
-                current: null,
+                current: "",
                 options: [
                     {
                         text: 'Male',
@@ -119,6 +121,11 @@
         created: function () {
             this.setWishList();
         },
+        watch: {
+            current() {
+                console.log(this.current);
+            }
+        }
     }
 </script>
 
@@ -149,6 +156,10 @@
     }
 
     .category-option {
+        float: right;
+    }
 
+    .wishlist-container {
+        clear: both;
     }
 </style>
