@@ -20,11 +20,10 @@
                                 {{goodsData.dcRate}}<span class="unit">%</span>
                             </p>
                             <p class="price">
-                                <del>
+                                <del v-if="isDiscount(goodsData.dcRate)">
                                     {{(goodsData.originalPrice).toLocaleString()}}
                                 </del>
-                                <span>{{(pricing(goodsData.originalPrice, goodsData.dcRate,
-                            goodsData.shippingFee)).toLocaleString()}}</span><span
+                                <span>{{goodsData.benefitPrice.toLocaleString()}}</span><span
                                     class="unit">원</span>
                             </p>
                             <ul class="utils">
@@ -200,7 +199,7 @@
                             <div>
                                 <sui-button-group class="two cart-or-now">
                                     <sui-button content="쇼핑백" @click.native="addCart"></sui-button>
-                                    <sui-modal size="tiny" v-model="open">
+                                    <sui-modal size="tiny" v-model="isModalOpen">
                                         <div class="modal-inner">
                                             <p>선택하신 상품이 <b>쇼핑백</b>에 담겼습니다.</p>
                                             <sui-button-group class="modal-inner-button">
@@ -228,7 +227,6 @@
                             <div class="review-summary-box">
                                 <RatingStarPoint class="review-summary"/>
                             </div>
-
                         </div>
                     </div>
                 </section>
@@ -271,7 +269,6 @@
                                 </sui-accordion-content>
                             </sui-accordion>
                         </div>
-
                     </section>
                     <div class="brand-banner">
                         <div class="banner-text">
@@ -451,11 +448,7 @@
                 selectedOptions: [],
                 orderSumQuantity: 0,
                 orderSumPrice: 0,
-                originalPrice: 0,
-                discountedPrice: 0,
-                shippingFee: 0,
-                dcRate: 0,
-                open: false,
+                isModalOpen: false,
             }
         },
         methods: {
@@ -470,13 +463,6 @@
                 } else {
                     return false;
                 }
-            },
-            pricing(originalPrice, dcRate, shippingFee) {
-                this.shippingFee = shippingFee;
-                this.dcRate = dcRate;
-                this.originalPrice = originalPrice;
-                this.discountedPrice = originalPrice * (100 - dcRate) / 100;
-                return this.discountedPrice;
             },
             isDiscount(dcRate) {
                 if (dcRate !== "0" && dcRate !== null && dcRate !== 0) {
@@ -501,10 +487,11 @@
                     let data = {
                         text: option,
                         quantity: 1,
-                        price: this.discountedPrice,
-                        originalPrice: this.originalPrice,
-                        dcRate: this.dcRate,
-                        shippingFee: this.shippingFee,
+                        price: this.goodsData.benefitPrice,
+                        originalPrice: this.goodsData.originalPrice,
+                        dcRate: this.goodsData.dcRate,
+                        benefitPrice: this.goodsData.benefitPrice,
+                        shippingFee: this.goodsData.shippingFee,
                     };
 
                     addOptions.push(data);
@@ -555,7 +542,7 @@
             },
             optionPricing(index) {
                 this.selectedOptions[index].price =
-                    this.discountedPrice *
+                    this.goodsData.benefitPrice *
                     this.selectedOptions[index].quantity
             },
             calculateOrderSum() {
@@ -610,7 +597,7 @@
                 this.toggle();
             },
             toggle() {
-                this.open = !this.open;
+                this.isModalOpen = !this.isModalOpen;
             },
             goToCart() {
                 this.$router.push("/cart");
@@ -624,16 +611,11 @@
                             orderData:
                                 {
                                     goodsCode: this.$route.params.goodsCode,
-                                    selectedOptions: this.selectedOptions,
+                                    selectedGoods: this.selectedOptions,
                                 }
                         }
                     });
                 }
-
-                //     requestOrder({
-                //         goodsCode: this.$route.params.goodsCode,
-                //         selectedOptions: this.selectedOptions
-                //     });
             }
         },
         async created() {
@@ -838,7 +820,6 @@
         clear: both;
         height: 90px;
     }
-
 
     .detail > dt {
         float: left;
