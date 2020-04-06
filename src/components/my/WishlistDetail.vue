@@ -11,6 +11,13 @@
 
         <div v-else>
             <div>
+                <sui-dropdown
+                    placeholder="Gender"
+                    selection
+                    :options="options"
+                    v-model="current"
+                    class="category-option"
+                />
                 <sui-card-group :items-per-row="4">
                     <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
                               @click="goToGoodsDetail(goodsData.goodsCode)">
@@ -29,6 +36,7 @@
                         </sui-card-content>
                     </sui-card>
                 </sui-card-group>
+                abc
             </div>
         </div>
     </div>
@@ -45,6 +53,17 @@
             return {
                 wishListGoodsCodes: [],
                 wishListGoods: [],
+                current: null,
+                options: [
+                    {
+                        text: 'Male',
+                        value: 1,
+                    },
+                    {
+                        text: 'Female',
+                        value: 2,
+                    },
+                ],
             }
         },
         computed: {
@@ -128,5 +147,9 @@
 
     .cancel-wish {
         float: right;
+    }
+
+    .category-option {
+
     }
 </style>
