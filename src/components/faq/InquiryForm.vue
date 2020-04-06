@@ -27,7 +27,8 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button class="select-order-goods-button" @click.native="toggle" :disabled="isChecked==true">
+                                        <sui-button class="select-order-goods-button" @click.native="toggle"
+                                                    :disabled="isChecked==true">
                                             주문 상품 선택
                                         </sui-button>
                                         <sui-checkbox label="상품 외 문의" v-model="isChecked"/>
@@ -101,7 +102,7 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
-    import {registrationQuestion} from "../../api/FaqApi";
+    import {registrationQuestion, getRecentQuestion} from "../../api/FaqApi";
     import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
@@ -113,10 +114,11 @@
             return {
                 open: false,
                 userInfo: '',
+                recentPostId: '',
                 questionObject: {
                     territory: '',
-                    state:'',
-                    date: new Date().getFullYear()+' - '+ (new Date().getMonth()+1) + ' - ' + new Date().getDate(),
+                    state: '',
+                    date: new Date().getFullYear() + ' - ' + (new Date().getMonth() + 1) + ' - ' + new Date().getDate(),
                     writer: '',
                     goodsCode: '',
                     title: '',
@@ -139,12 +141,14 @@
                 this.open = !this.open;
             },
             async registration() {
-                if(!(this.questionObject.territory) || !(this.questionObject.title) || !(this.questionObject.description)) {
+                if (!(this.questionObject.territory) || !(this.questionObject.title) || !(this.questionObject.description)) {
                     alert("문의내용을 채워주세요.")
                 } else {
                     await registrationQuestion(this.questionObject);
+                    this.recentPostId = await getRecentQuestion();
+                    alert(this.recentPostId);
                     alert("등록이 완료되었습니다.");
-                    await this.$router.push("/inquiryAnswer");
+                    this.$router.push("/myPageMain");
                 }
             }
         },

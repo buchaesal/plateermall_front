@@ -9,7 +9,7 @@
                 </ul>
             </div>
             <ul class="status" id="div_countDetail">
-                <li>총 문의 건 : <span>{{questionList.length}}</span>건</li>
+                <li>총 문의 건 : <span>{{myQuestionList.length}}</span>건</li>
                 <li>답변완료 : <span>{{answerComplete}}</span>건</li>
                 <li>답변대기 : <span>{{answerStandBy}}</span>건</li>
             </ul>
@@ -22,13 +22,13 @@
                         <sui-table-header-cell>등록일</sui-table-header-cell>
                     </sui-table-row>
                 </sui-table-header>
-                <sui-table-body v-if="questionList.length==0">
+                <sui-table-body v-if="myQuestionList.length==0">
                     <sui-table-row>
                         <sui-table-cell colspan="5" style="text-align:center;">문의 내역이 없습니다.</sui-table-cell>
                     </sui-table-row>
                 </sui-table-body>
                 <sui-table-body v-else>
-                    <sui-table-row v-for="(post, index) in questionList" :key="index" v-show="post.writer===userInfo.name">
+                    <sui-table-row v-for="(post, index) in myQuestionList" :key="index">
                         <sui-table-cell v-if="post.state">답변완료</sui-table-cell>
                         <sui-table-cell v-else>답변대기</sui-table-cell>
 
@@ -46,14 +46,14 @@
 
 <script>
     import FaqHeader from "./FaqHeader";
-    import {getQuestionList} from "../../api/FaqApi";
+    import {getMyQuestionList} from "../../api/FaqApi";
     import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "InquiryAnswer",
         data() {
             return {
-                questionList: [],
+                myQuestionList: [],
                 answer: {},
                 answerComplete: '0',
                 answerStandBy: '0',
@@ -64,14 +64,15 @@
             FaqHeader,
         },
         async created() {
-            this.questionList = await getQuestionList();
             this.userInfo = await getCurrentUserInfo();
+            this.myQuestionList = await getMyQuestionList(this.userInfo.name);
+            console.log(this.myQuestionList);
             this.answerIncrement();
         },
         methods : {
             answerIncrement() {
-                for(let i=0 ; i<this.questionList.length ; i++) {
-                    if (this.questionList[i].state) {
+                for(let i=0 ; i<this.myQuestionList.length ; i++) {
+                    if (this.myQuestionList[i].state) {
                         this.answerComplete++;
                     } else {
                         this.answerStandBy++;
