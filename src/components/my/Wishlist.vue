@@ -9,6 +9,8 @@
 
         <WishlistDetail/>
 
+        <br />
+        <br />
     </div>
 </template>
 

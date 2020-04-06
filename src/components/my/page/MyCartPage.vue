@@ -37,13 +37,13 @@
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:20%;">
-                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
-                                            <sui-image :src="cart.goods.imgUrl"  class="cart-img" />
+                                        <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
+                                            <sui-image :src="cart.imgUrl"  class="cart-img" />
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:40%;">
-                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
-                                            <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
+                                        <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
+                                            <p style="font-family:Georgia, serif;">{{cart.title}}</p>
                                             <p style="font-family:Georgia, serif; color:gray">옵션 : {{cart.text}}</p>
                                         </sui-segment>
                                     </sui-grid-column>
@@ -65,10 +65,10 @@
                                         </sui-segment>
                                         <sui-segment>
                                             <div>
-                                                <span class="goods-original-price">{{cart.goods.originalPrice.toLocaleString()}}원</span>
+                                                <span class="goods-original-price">{{cart.originalPrice.toLocaleString()}}원</span>
                                             </div>
                                             <div>
-                                                <span class="goods-dc-price">{{cart.goods.benefitPrice.toLocaleString()}}원</span>
+                                                <span class="goods-dc-price">{{cart.benefitPrice.toLocaleString()}}원</span>
                                             </div>
                                         </sui-segment>
                                     </sui-grid-column>
@@ -194,14 +194,14 @@
                 let totalShippingFee = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalShippingFee += cart.goods.shippingFee;
+                    totalShippingFee += cart.shippingFee;
                 });
                 return totalShippingFee;
             },
             totalDcRatePrice() {
                 let totalDcRatePrice = 0;
                 this.checkedCartList.map((cart) => {
-                    totalDcRatePrice += (cart.goods.originalPrice - cart.goods.benefitPrice);
+                    totalDcRatePrice += (cart.originalPrice - cart.benefitPrice);
                 });
                 return totalDcRatePrice;
             },
@@ -210,7 +210,7 @@
                 let totalGoodsPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalGoodsPrice += (cart.goods.originalPrice * cart.quantity);
+                    totalGoodsPrice += (cart.originalPrice * cart.quantity);
                 });
                 return totalGoodsPrice;
             },
@@ -218,7 +218,7 @@
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalCartPrice += ((cart.goods.originalPrice * cart.quantity) + cart.goods.shippingFee - (cart.goods.originalPrice - cart.goods.benefitPrice));
+                    totalCartPrice += ((cart.originalPrice * cart.quantity) + cart.shippingFee - (cart.originalPrice - cart.benefitPrice));
                 });
                 return totalCartPrice;
             },
@@ -253,7 +253,7 @@
                 let goodsCodeArr = [];
                 this.checkedCartList.map((cart) => {
                     goodsCodeArr.push({
-                        "goodsCode" : cart.goods.goodsCode
+                        "goodsCode" : cart.goodsCode
                     });
                 });
 
@@ -291,6 +291,7 @@
             await this.$store.dispatch('getLoginUserInfo');
             await this.$store.dispatch('getCartList');
             this.cardInfoList = await requestCardDiscountInfo();
+            console.log(this.$store.state.cartListStore.cartList);
         },
 
         computed: {

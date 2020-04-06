@@ -4,6 +4,6 @@ const setTokenInSessionStorage = (token) => {
 };
 
 const deleteTokenInSessionStorage = () => {
-    sessionStorage.removeItem("access_token");
+    sessionStorage.clear();
 };
 export {deleteTokenInSessionStorage, setTokenInSessionStorage}
