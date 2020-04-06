@@ -147,4 +147,8 @@
         width: 100%;
         font-size: 14px;
     }
+
+    .ui.five.cards {
+        margin-bottom: auto;
+    }
 </style>

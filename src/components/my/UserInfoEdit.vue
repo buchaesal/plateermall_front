@@ -30,14 +30,14 @@
                         <sui-table-row>
                             <sui-table-cell class="form_head">비밀번호</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" v-model="userInfo.password" placeholder="변경할 비밀번호"/>
+                                <sui-input class="edit-data" type="password" v-model="userInfo.password" placeholder="변경할 비밀번호"/>
                                 <p class="edit-table-text">비밀번호 변경시 입력합니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">비밀번호 변경</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" placeholder="비밀번호 확인"/>
+                                <sui-input class="edit-data" type="password" placeholder="비밀번호 확인"/>
                                 <p class="edit-table-text">비밀번호 변경시 위 비밀번호와 동일한지 확인합니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
@@ -105,8 +105,9 @@
         methods: {
             async init() {
                 let result = await getCurrentUserInfo();
+
                 if (result) {
-                    result.password = '';
+                    result.password = null;
                     result.smsAgree = result.smsAgree + '';
                     result.emailAgree = result.emailAgree + '';
                     this.userInfo = result;
@@ -118,6 +119,7 @@
                 if (confirm('수정하시겠습니까?')) {
                     this.userInfo.smsAgree = this.userInfo.smsAgree === 'true';
                     this.userInfo.emailAgree = this.userInfo.emailAgree === 'true';
+                    console.log(this.userInfo);
                     modifyUser(this.userInfo)
                         .then(() => {
                             this.init();

@@ -101,7 +101,7 @@
             this.getCategoryInfo();
             this.getCategoryList();
         },
-        mounted() {
+        updated() {
             if (this.categoryInfo.categoryCode == null) {
                 this.$router.push("/404");
             }

@@ -36,14 +36,14 @@ const actions = {
         try {
             let msg = '';
             const result = await login(payload.user);
+            console.log(result,'login result');
             if (result === 'noExist') {
                 msg = '아이디가 존재하지 않습니다';
             } else if (result === 'incorrect') {
                 msg = '패스워드가 올바르지 않습니다.';
-            } else if (result === 'failed') {
+            } else if (result === 'failed' || !result) {
                 msg = '로그인에 실패했습니다. 아이디와 비밀번호를 다시 확인해주세요.'
             } else {
-                console.log(payload.isSaveId);
                 if(payload.isSaveId){
                     localStorage.setItem('saveId', payload.user.email);
                 }else{

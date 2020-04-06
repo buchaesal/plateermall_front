@@ -148,7 +148,7 @@
                     this.recentPostId = await getRecentQuestion();
                     alert(this.recentPostId);
                     alert("등록이 완료되었습니다.");
-                    this.$router.push("/myPageMain");
+                    await this.$router.push("/myPageMain");
                 }
             }
         },
