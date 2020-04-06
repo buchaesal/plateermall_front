@@ -36,7 +36,6 @@
                         </sui-card-content>
                     </sui-card>
                 </sui-card-group>
-                abc
             </div>
         </div>
     </div>
