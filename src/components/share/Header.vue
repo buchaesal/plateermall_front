@@ -1,8 +1,8 @@
 <template>
-    <div class="header-container">
-        <TopHeader></TopHeader>
-        <MidHeader></MidHeader>
-        <BottomHeader class="bottom-header"></BottomHeader>
+    <div class="header-container" id="header">
+        <TopHeader/>
+        <MidHeader/>
+        <BottomHeader/>
     </div>
 </template>
 
@@ -18,27 +18,25 @@
             TopHeader,
             MidHeader,
             BottomHeader
-        }
+        },
+        methods: {}
     }
 </script>
 
 <style>
+    #header {
+        position: fixed; /* Make it stick/fixed */
+        top: 0; /* Stay on top */
+        width: 100%; /* Full width */
+        transition: top 0.3s; /* Transition effect when sliding down (and up) */
+        z-index: 100;
+    }
 
     .header-container {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        z-index: 100;
         background-color: white;
     }
 
     MidHeader {
-        min-width: 1500px;
-    }
-
-    .bottom-header {
-        background-color: black;
-        height: 60px;
         min-width: 1500px;
     }
 

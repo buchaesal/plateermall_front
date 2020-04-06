@@ -203,6 +203,7 @@
         text-align: center;
         width: 1200px;
         margin: 0 auto;
+        margin-top: 185px;
         padding-top: 80px;
         padding-bottom: 80px;
     }
