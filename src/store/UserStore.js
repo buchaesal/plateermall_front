@@ -36,7 +36,6 @@ const actions = {
         try {
             let msg = '';
             const result = await login(payload.user);
-            console.log(result,'login result');
             if (result === 'noExist') {
                 msg = '아이디가 존재하지 않습니다';
             } else if (result === 'incorrect') {

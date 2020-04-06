@@ -9,8 +9,6 @@ import {
 
 const state = {
     shippingSpotList: [],
-    roadAddress: '',
-    zipcodeAddress: '',
     newShippingSpotForm: {},
     modifyShippingSPotForm: {},
     selectedDefaultId: null,
