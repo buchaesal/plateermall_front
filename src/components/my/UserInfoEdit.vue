@@ -91,6 +91,7 @@
 <script>
     import {getCurrentUserInfo} from '../../api/UserApi';
     import {modifyUser} from "../../api/UserApi";
+    import {setTokenInSessionStorage} from "../../utils/tokenStorage";
 
     export default {
         name: "UserInfoEdit",
@@ -119,9 +120,10 @@
                 if (confirm('수정하시겠습니까?')) {
                     this.userInfo.smsAgree = this.userInfo.smsAgree === 'true';
                     this.userInfo.emailAgree = this.userInfo.emailAgree === 'true';
-                    console.log(this.userInfo);
                     modifyUser(this.userInfo)
-                        .then(() => {
+                        .then((res) => {
+                            setTokenInSessionStorage(res.data);
+                            alert('수정이 완료되었습니다.');
                             this.init();
                         })
                         .catch((err) => console.log(err));

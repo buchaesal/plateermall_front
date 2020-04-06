@@ -190,6 +190,7 @@
                     this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0 ? 1 : 0;
                     this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
                     alert('배송지가 등록되었습니다.');
+                    this.selectedDefault = this.selectedDefaultId;
                     this.openShippingSpotFormFlag = false;
                     this.newShippingSpotModel = new ShippingSpotModel();
                 }
