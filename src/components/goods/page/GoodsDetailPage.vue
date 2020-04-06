@@ -20,7 +20,7 @@
                                 {{goodsData.dcRate}}<span class="unit">%</span>
                             </p>
                             <p class="price">
-                                <del>
+                                <del v-if="isDiscount(goodsData.dcRate)">
                                     {{(goodsData.originalPrice).toLocaleString()}}
                                 </del>
                                 <span>{{goodsData.benefitPrice.toLocaleString()}}</span><span
@@ -608,7 +608,6 @@
                 if (this.selectedOptions.length == 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
-                    console.log(this.selectedOptions)
                     this.$router.push({
                         name: "ordercomplete", params: {
                             orderData:

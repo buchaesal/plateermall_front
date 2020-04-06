@@ -75,6 +75,7 @@
     import OrderModel from "../../my/model/OrderModel";
     import {order} from "../../../api/OrderApi";
     import {addCommentStatus} from "../../../api/CommentApi";
+    import {getCurrentUserInfo} from '../../../api/UserApi'
 
     export default {
         name: "OrderCompletePage",
@@ -91,7 +92,8 @@
                 sumDiscountPrice: 0,
                 sumShippingFee: 0,
                 point: 0,
-                orderData: {}
+                orderData: {},
+                user: {},
             }
         },
         methods: {
@@ -108,8 +110,7 @@
                 }
             },
             pricing(orderData) {
-                for (let i in orderData.selectedGoods) {
-                    let option = orderData.selectedGoods[i];
+                for (let option of orderData.selectedGoods) {
                     this.sumOriginalPrice += option.originalPrice * option.quantity;
                     this.sumDiscountPrice += (option.originalPrice / 100 * option.dcRate);
                     this.sumShippingFee += option.shippingFee;
@@ -119,9 +120,9 @@
                 this.point = Math.ceil((this.sumOriginalPrice - this.sumDiscountPrice) / 1000);
             },
             cartPricing(orderData) {
-                for (let i in orderData) {
-                    let quantity = orderData[i].quantity;
-                    let option = orderData[i].goods;
+                for (let goods of orderData) {
+                    let quantity = goods.quantity;
+                    let option = goods.goods;
                     this.sumOriginalPrice += option.originalPrice * quantity;
                     this.sumDiscountPrice += (option.originalPrice / 100 * option.dcRate);
                     this.sumShippingFee += option.shippingFee;
@@ -138,6 +139,7 @@
             },
 
             async requestOrder() {
+                console.log("주문 요청")
                 let today = new Date();
                 let year = today.getFullYear();
                 let month = today.getMonth() + 1;
@@ -149,34 +151,34 @@
                 today = year + "-" + month + "-" + date;
 
                 if (this.isCartOrder) {
-                    for (let cart of this.checkedCartList) {
+                    for (let cart of this.orderData) {
                         let option = cart.text;
-                        let orderModel = new OrderModel('', this.$store.state.cartListStore.userInfo.email, cart.goodsCode, cart.quantity, (cart.goods.benefitPrice * cart.quantity).toString(), today, null, option);
+                        let orderModel = new OrderModel('', this.user.email, cart.goodsCode, cart.quantity, (cart.goods.benefitPrice * cart.quantity).toString(), today, null, option);
                         this.orderId = await order(orderModel);
 
                         await addCommentStatus({
                             "orderId": this.orderId,
-                            "userId": this.$store.state.cartListStore.userInfo.email,
+                            "userId": this.user.email,
                             "isWritten": "N"
                         });
                     }
                 } else {
                     let goodsCode = this.orderData.goodsCode;
-                    for (let goods of this.orderData) {
-                        let option = goods.text;
-                        let orderModel = new OrderModel('', this.$store.state.cartListStore.userInfo.email, goodsCode, goods.quantity, (goods.benefitPrice * goods.quantity).toString(), today, null, option);
+                    for (let goods of this.orderData.selectedGoods) {
+                        let orderModel = new OrderModel('', this.user.email, goodsCode, goods.quantity, (goods.benefitPrice * goods.quantity).toString(), today, null, goods.text);
                         this.orderId = await order(orderModel);
 
                         await addCommentStatus({
                             "orderId": this.orderId,
-                            "userId": this.$store.state.cartListStore.userInfo.email,
+                            "userId": this.user.email,
                             "isWritten": "N"
                         });
                     }
                 }
             }
         },
-        mounted() {
+        async created() {
+            this.user = await getCurrentUserInfo();
             this.orderData = this.$route.params.orderData;
             if (!this.isEmpty(this.orderData)) {
                 if (this.isEmpty(this.orderData.goodsCode)) {
@@ -188,6 +190,7 @@
                     // 바로 주문
                     this.pricing(this.orderData);
                 }
+                this.requestOrder()
             } else {
                 this.goToOrderDetail();
             }
