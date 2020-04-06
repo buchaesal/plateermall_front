@@ -608,12 +608,13 @@
                 if (this.selectedOptions.length == 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
+                    console.log(this.selectedOptions)
                     this.$router.push({
                         name: "ordercomplete", params: {
                             orderData:
                                 {
                                     goodsCode: this.$route.params.goodsCode,
-                                    selectedOptions: this.selectedOptions,
+                                    selectedGoods: this.selectedOptions,
                                 }
                         }
                     });
