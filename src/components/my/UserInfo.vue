@@ -8,36 +8,36 @@
             </div>
         </div>
         <div class="point_box">
-            <div class="item" id="lpointDivItem" style="display: block;">
-                <p class="icon">
-                    <sui-icon size="big" name="ruble sign"></sui-icon>
-                </p>
-                <a href="#">
-                    <p class="name">P.POINT</p>
-                </a>
-                <p class="point">
-                    <span id="lPoint"><em id="usablePoint">{{user.pPoint.toLocaleString()}}</em>점</span>
-                </p>
-            </div>
+<!--            <div class="item" id="lpointDivItem" style="display: block;">-->
+<!--                <p class="icon">-->
+<!--                    <sui-icon size="big" name="ruble sign"></sui-icon>-->
+<!--                </p>-->
+<!--                <a href="#">-->
+<!--                    <p class="name">P.POINT</p>-->
+<!--                </a>-->
+<!--                <p class="point">-->
+<!--                    <span id="lPoint"><em id="usablePoint">{{user.pPoint.toLocaleString()}}</em>점</span>-->
+<!--                </p>-->
+<!--            </div>-->
 
             <div class="item">
                 <p class="icon">
                     <sui-icon size="big" name="chess queen"></sui-icon>
                 </p>
                 <a href="#">
-                    <p class="name">플래티어몰 포인트</p>
+                    <p class="name">포인트</p>
                 </a>
-                <p class="point"><em id="pointBlnc">{{user.localPoint.toLocaleString()}}</em>점</p>
+                <p class="point"><em id="pointBlnc">{{userInfo.point ? point.toLocaleString() : 0}}</em>점</p>
             </div>
-            <div class="item">
-                <p class="icon">
-                    <sui-icon size="big" name="money bill alternate outline"></sui-icon>
-                </p>
-                <a href="#">
-                    <p class="name">보관금</p>
-                </a>
-                <p class="point"><em id="deposits">{{user.keepMoney.toLocaleString()}}</em>점</p>
-            </div>
+<!--            <div class="item">-->
+<!--                <p class="icon">-->
+<!--                    <sui-icon size="big" name="money bill alternate outline"></sui-icon>-->
+<!--                </p>-->
+<!--                <a href="#">-->
+<!--                    <p class="name">보관금</p>-->
+<!--                </a>-->
+<!--                <p class="point"><em id="deposits">{{user.keepMoney.toLocaleString()}}</em>점</p>-->
+<!--            </div>-->
             <div class="item">
                 <p class="icon">
                     <sui-icon size="big" name="copyright outline"></sui-icon>
@@ -45,7 +45,7 @@
                 <a href="#">
                     <p class="name">쿠폰</p>
                 </a>
-                <p class="point"><em id="couponCnt">{{user.coupon.length}}</em>장</p>
+                <p class="point"><em id="couponCnt">{{userInfo.couponList ? userInfo.couponList.length : 0}}</em>장</p>
             </div>
         </div>
     </div>
@@ -59,12 +59,6 @@
         data() {
             return {
                 userInfo: '',
-                user: {
-                    pPoint: 2022,
-                    localPoint: 101,
-                    keepMoney: 10000,
-                    coupon: ['할인', '50%']
-                }
             }
         },
         async created() {

@@ -26,17 +26,6 @@ const mutations = {
     getShippingSpotListFromApi(state, list) {
         state.shippingSpotList = list;
     },
-    addShippingSpotList(state, shippingSpot) {
-        state.shippingSpotList.push(shippingSpot);
-    },
-    setAddress(state, payload) {
-        state.roadAddress = payload.roadAddress;
-        state.zipcodeAddress = payload.zipcodeAddress;
-    },
-    cleanAddress(state) {
-        state.roadAddress = '';
-        state.zipcodeAddress = '';
-    },
     setDefaultId(state, defaultAddress) {
         state.selectedDefaultId = defaultAddress.id + '';
     }
@@ -53,9 +42,12 @@ const actions = {
                     if (defalutAddress) {
                         context.commit('setDefaultId', defalutAddress);
                     }
-                    context.commit('getShippingSpotListFromApi', addressList);
+                    return addressList;
                 }
-            ).catch(function (error) {
+            )
+            .then((addressList) => {
+                context.commit('getShippingSpotListFromApi', addressList);
+            }).catch(function (error) {
                 console.log(error);
             });
     },
@@ -75,7 +67,7 @@ const actions = {
             });
     },
     async setDefaultShippingSpot(context, id) {
-        let target = id?id:context.state.selectedDefaultId;
+        let target = id ? id : context.state.selectedDefaultId;
 
         await setDefaultAddress(target)
             .then(() => {

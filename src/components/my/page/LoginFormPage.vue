@@ -12,7 +12,7 @@
                 <input placeholder="아이디" size="20" v-model="user.email"/>
             </sui-form-field>
             <sui-form-field>
-                <input type="password" placeholder="비밀번호" v-model="user.password"/>
+                <input type="password" placeholder="비밀번호" v-model="user.password" @keyup.enter="login"/>
             </sui-form-field>
 
 
