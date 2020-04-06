@@ -3,46 +3,28 @@
         <header>
             <h3 class="page_title">위시리스트</h3>
         </header>
-        <sui-menu pointing secondary>
-            <a class="select-tab" is="sui-menu-item" v-for="item in items" :active="isActive(item)" :key="item"
-               :content="item" @click="select(item)"/>
-        </sui-menu>
-        <div v-if="active=='상품'">
-            <WishlistDetail/>
-        </div>
-        <div v-if="active=='브랜드'">
-            <NoItem :message="noItemMessage"/>
-        </div>
 
-        <br><br>
+        <br />
+        <br />
+
+        <WishlistDetail/>
 
     </div>
 </template>
 
 <script>
     import WishlistDetail from './WishlistDetail';
-    import NoItem from "../share/NoItem";
 
     export default {
         name: "Wishlist",
         data() {
             return {
-                noItemMessage: "데이터가 없습니다.",
-                active: '상품',
-                items: ['상품', '브랜드'],
-            };
+
+            }
         },
-        methods: {
-            isActive(name) {
-                return this.active === name;
-            },
-            select(name) {
-                this.active = name;
-            },
-        },
+
         components: {
             WishlistDetail,
-            NoItem
         },
         computed: {}
     }
