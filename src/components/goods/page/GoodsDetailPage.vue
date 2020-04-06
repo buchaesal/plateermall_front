@@ -675,6 +675,7 @@
     .container {
         width: 100%;
         min-height: 600px;
+        margin-top: 185px;
         padding-top: 80px;
     }
 
