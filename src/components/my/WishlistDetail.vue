@@ -15,7 +15,7 @@
                         placeholder="카테고리 전체"
                         selection
                         :options="options"
-                        v-model="current"
+                        v-model="selectOption"
 
                 />
             </div>
@@ -54,17 +54,8 @@
             return {
                 wishListGoodsCodes: [],
                 wishListGoods: [],
-                current: "",
-                options: [
-                    {
-                        text: 'Male',
-                        value: 1,
-                    },
-                    {
-                        text: 'Female',
-                        value: 2,
-                    },
-                ],
+                selectOption: "",
+                options: [],
             }
         },
         computed: {
@@ -102,6 +93,7 @@
             async setWishList() {
                 let wishListApi = new WishListApi();
                 this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes();
+                console.log("wishListGoodsCodes : " + this.wishListGoodsCodes);
                 await this.setGoodsFromGoodsCodes();
                 // this.$store.commit('getWishListFromApi');
             },
@@ -122,8 +114,8 @@
             this.setWishList();
         },
         watch: {
-            current() {
-                console.log(this.current);
+            selectOption() {
+                console.log(this.selectOption);
             }
         }
     }
