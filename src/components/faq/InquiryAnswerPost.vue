@@ -138,6 +138,7 @@
                         this.$router.push("/board");
                     }
                 }
+                this.goToBack();
             },
             async questionUpdate() {
                 this.updateBtnChange();
@@ -154,6 +155,9 @@
                 } else {
                     this.updateBtn = 0;
                 }
+            },
+            goToBack() {
+                this.$router.go(-2);
             },
         },
     }

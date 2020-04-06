@@ -146,9 +146,8 @@
                 } else {
                     await registrationQuestion(this.questionObject);
                     this.recentPostId = await getRecentQuestion();
-                    alert(this.recentPostId);
                     alert("등록이 완료되었습니다.");
-                    this.$router.push("/myPageMain");
+                    this.$router.push("/answer/"+this.recentPostId);
                 }
             }
         },
