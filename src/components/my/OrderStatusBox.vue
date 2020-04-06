@@ -2,35 +2,35 @@
     <div>
         <div class="order-box-div">
             <ul class="total-order-box">
-                <li class="order-box">
+                <li class="order-box" @click="selectStatus('order-complete')">
                     <a href="#" class="order-quantity">{{orderCompleteCount}}</a>
                     <p class="order-state">주문접수</p>
                 </li>
                 <li class="order-box">
                     <sui-icon name="chevron right" class="search_btn" size="big" color="grey"/>
                 </li>
-                <li class="order-box">
+                <li class="order-box" @click="selectStatus('payment-complete')">
                     <a href="#" class="order-quantity">{{paymentCompleteCount}}</a>
                     <p class="order-state">결제완료</p>
                 </li>
                 <li class="order-box">
                     <sui-icon name="chevron right" class="search_btn" size="big" color="grey"/>
                 </li>
-                <li class="order-box">
+                <li class="order-box" @click="selectStatus('shipping-ready')">
                     <a href="#" class="order-quantity">{{shippingReadyCount}}</a>
                     <p class="order-state">배송준비중</p>
                 </li>
                 <li class="order-box">
                     <sui-icon name="chevron right" class="search_btn" size="big" color="grey"/>
                 </li>
-                <li class="order-box">
+                <li class="order-box" @click="selectStatus('shipping')">
                     <a href="#" class="order-quantity">{{shippingCount}}</a>
                     <p class="order-state">배송중</p>
                 </li>
                 <li class="order-box">
                     <sui-icon name="chevron right" class="search_btn" size="big" color="grey"/>
                 </li>
-                <li class="order-box">
+                <li class="order-box" @click="selectStatus('shipping-complete')">
                     <a href="#" class="order-quantity">{{shippingCompleteCount}}</a>
                     <p class="order-state">배송완료</p>
                 </li>
@@ -66,6 +66,9 @@
                 let userData = await getCurrentUserInfo();
                 this.$store.dispatch('updateOrderCount', userData);
             },
+            selectStatus(status) {
+                this.$emit("select-status", status)
+            }
         },
         created() {
             this.setStateCounts();

@@ -3,7 +3,7 @@
         <div class="order_header">
             <FaqHeader :title="'주문배송조회'"></FaqHeader>
         </div>
-        <OrderStatusBox></OrderStatusBox>
+        <OrderStatusBox @select-status="setSpecificStateOrderList"></OrderStatusBox>
         <hr>
 
         <div class="my-order-list">
@@ -45,7 +45,7 @@
     import FaqHeader from "../faq/FaqHeader";
     import OrderStatusBox from "./OrderStatusBox";
     import NoItem from "../share/NoItem";
-    import {getOrderList, changeState} from "../../api/OrderApi";
+    import {getOrderList, changeState, getSpecificStatusOrderList} from "../../api/OrderApi";
     import GoodsApi from "../../api/GoodsApi";
     import {getCurrentUserInfo} from "../../api/UserApi";
 
@@ -88,6 +88,18 @@
             },
             async cancelOrder(index){
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
+                this.cleanData();
+                await this.getOrderList();
+                alert("주문이 취소되었습니다.")
+            },
+            async setSpecificStateOrderList(state){
+                this.cleanData();
+
+                let userData = await getCurrentUserInfo();
+                this.orderList = await getSpecificStatusOrderList("normal", state, userData.email);
+                this.setGoodsList(this.orderList);
+            },
+            cleanData() {
                 this.orderList = [{
                     orderId : '',
                     userId : '',
@@ -101,12 +113,7 @@
                     },
                 }];
                 this.goodsInOrderList = [];
-                await this.getOrderList();
-                alert("주문이 취소되었습니다.")
-            },
-            // async setSpecificStateOrderList(state){
-                //이벤트로 받아서 실행하기
-            // }
+            }
         },
         components: {
             FaqHeader,
