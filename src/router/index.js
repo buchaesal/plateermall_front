@@ -19,19 +19,34 @@ const routes = [
     {path: '/', component: MainPage},
     {path: '/login', component: LoginForm},
     {path: '/signup', component: SignUpPage},
-    {path: '/faq', component: MyPage, props:{selectedComponent : 'FaqContent', userInfo:false}},
-    {path: '/inquiryForm', component: MyPage, props:{selectedComponent:'InquiryForm'},meta: {authRequired: true}},
-    {path: '/inquiryAnswer', component: MyPage, props:{selectedComponent:'InquiryAnswer'},meta: {authRequired: true}},
-    {path: '/myreview', component: MyPage, props:{selectedComponent: 'MyReview'},meta: {authRequired: true}},
+    {path: '/faq', component: MyPage, props: {selectedComponent: 'FaqContent', userInfo: false}},
+    {path: '/inquiryForm', component: MyPage, props: {selectedComponent: 'InquiryForm'}, meta: {authRequired: true}},
+    {
+        path: '/inquiryAnswer',
+        component: MyPage,
+        props: {selectedComponent: 'InquiryAnswer'},
+        meta: {authRequired: true}
+    },
+    {path: '/myreview', component: MyPage, props: {selectedComponent: 'MyReview'}, meta: {authRequired: true}},
     {path: '/goodsDetail/:goodsCode', component: GoodsDetailPage},
-    {path: '/cart', component: MyCart,meta: {authRequired: true}},
-    {path: '/deliveryanduserinfomanagement' ,component: MyPage, props:{selectedComponent: 'DeliveryAndUserInfoManagementTaps'},meta: {authRequired: true}},
-    {path: '/board' ,component: MyPage, props:{selectedComponent: 'Board'},meta: {authRequired: true}},
-    {path: '/wishlist', component: MyPage, props:{selectedComponent: 'Wishlist'},meta: {authRequired: true}},
-    {path: '/orderList', component: MyPage, props:{selectedComponent: 'OrderList'},meta: {authRequired: true}},
-    {path: '/cancelSearch', component: MyPage, props:{selectedComponent: 'CancelSearch'},meta: {authRequired: true}},
-    {path: '/answer/:postId', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'},meta: {authRequired: true}},
-    {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'},meta: {authRequired: true}},
+    {path: '/cart', component: MyCart, meta: {authRequired: true}},
+    {
+        path: '/deliveryanduserinfomanagement',
+        component: MyPage,
+        props: {selectedComponent: 'DeliveryAndUserInfoManagementTaps'},
+        meta: {authRequired: true}
+    },
+    {path: '/board', component: MyPage, props: {selectedComponent: 'Board'}, meta: {authRequired: true}},
+    {path: '/wishlist', component: MyPage, props: {selectedComponent: 'Wishlist'}, meta: {authRequired: true}},
+    {path: '/orderList', component: MyPage, props: {selectedComponent: 'OrderList'}, meta: {authRequired: true}},
+    {path: '/cancelSearch', component: MyPage, props: {selectedComponent: 'CancelSearch'}, meta: {authRequired: true}},
+    {
+        path: '/answer/:postId',
+        component: MyPage,
+        props: {selectedComponent: 'InquiryAnswerPost'},
+        meta: {authRequired: true}
+    },
+    {path: '/myPageMain', component: MyPage, props: {selectedComponent: 'MyPageMain'}, meta: {authRequired: true}},
     {path: '/error', component: Error},
 
     {path: '/404', component: PageNotFound},
@@ -39,13 +54,19 @@ const routes = [
 
     {path: '/category/:categoryCode', component: CategoryPage},
     {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true},
-    {path: '/order', name:"order", component: OrderPage},
+    {path: '/order', name: "order", component: OrderPage},
     {path: '/rightcategory/:categoryCode', component: RightCategoryPage},
+    {
+        path: '/order/orderDetail',
+        component: MyPage,
+        props: {selectedComponent: 'OrderDetail'},
+        meta: {authRequired: true}
+    }
 ]
 
 export default new VueRouter({
     routes,
-    scrollBehavior () {
-        return { x: 0, y: 0 }
+    scrollBehavior() {
+        return {x: 0, y: 0}
     }
 })
