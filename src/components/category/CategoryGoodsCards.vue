@@ -1,56 +1,48 @@
 <template>
-    <div class="goods-area">
-        <div class="goods-content">
-            <h2 class="page-title">{{categoryInfo.name}}</h2>
+    <div class="goods-content">
+        <h2 class="page-title">{{categoryInfo.name}}</h2>
 
-            <div class="goods-sort">
-                <ul class="option-field sort-setting">
-                    <li>
-                        <input type="radio" name="sort" id="sort-result1" value="RANK/DESC,DATE/DESC"
-                               checked="checked"><label
-                            for="sort-result1">추천순</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="sort" id="sort-result2" value="SALESCNT15/DESC"><label
-                            for="sort-result2">판매순</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="sort" id="sort-result3" value="GSRVCNT/DESC"><label
-                            for="sort-result3">상품평 많은순</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="sort" id="sort-result4" value="DATE/DESC"><label
-                            for="sort-result4">최근등록순</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="sort" id="sort-result5" value="BENEFITPRICE/ASC"><label
-                            for="sort-result5">낮은 가격순</label>
-                    </li>
-                    <li>
-                        <input type="radio" name="sort" id="sort-result6" value="BENEFITPRICE/DESC"><label
-                            for="sort-result6">높은 가격순</label>
-                    </li>
-                </ul>
-            </div>
-            <div class="goods-card">
-                <sui-card-group v-if="categoryGoods.length > 0" :items-per-row="items_per_row">
-                    <sui-card class="goods-card" v-for="(goodsData, index) in categoryGoods" :key="index"
-                              @click="goToGoodsDetail(goodsData.goodsCode)">
-                        <sui-image :src="goodsData.imgUrl" width="100%"/>
-                        <sui-card-content>
-                            <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                            <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                            <sui-card-description></sui-card-description>
-                        </sui-card-content>
-                        <sui-card-content extra class="price">
-                            <sui-icon name="won sign icon"/>
-                            <span class="price">{{pricing(goodsData.originalPrice,
-                            goodsData.dcRate).toLocaleString()}}</span>
-                        </sui-card-content>
-                    </sui-card>
-                </sui-card-group>
-                <NoItem v-else :message="noItemMessage"/>
-            </div>
+        <div class="goods-sort">
+            <ul class="option-field sort-setting">
+                <li>
+                    <input type="radio" name="sort" id="sort-result1"
+                           checked="checked" @click="reOrder('goodsCode/DESC')">
+                    <label for="sort-result1">최근등록순</label>
+                </li>
+                <li>
+                    <input type="radio" name="sort" id="sort-result2"
+                           @click="reOrder('saleCnt/DESC')">
+                    <label for="sort-result2">판매순</label>
+                </li>
+                <li>
+                    <input type="radio" name="sort" id="sort-result5"
+                           @click="reOrder('benefitPrice/ASC')">
+                    <label for="sort-result5">낮은 가격순</label>
+                </li>
+                <li>
+                    <input type="radio" name="sort" id="sort-result6"
+                           @click="reOrder('benefitPrice/DESC')">
+                    <label for="sort-result6">높은 가격순</label>
+                </li>
+            </ul>
+        </div>
+        <div class="goods-card">
+            <sui-card-group v-if="categoryGoods.length > 0" :items-per-row="items_per_row">
+                <sui-card class="goods-card" v-for="(goodsData, index) in categoryGoods" :key="index"
+                          @click="goToGoodsDetail(goodsData.goodsCode)">
+                    <sui-image :src="goodsData.imgUrl" width="100%"/>
+                    <sui-card-content>
+                        <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
+                        <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
+                        <sui-card-description></sui-card-description>
+                    </sui-card-content>
+                    <sui-card-content extra class="price">
+                        <sui-icon name="won sign icon"/>
+                        <span class="price">{{goodsData.benefitPrice.toLocaleString()}}</span>
+                    </sui-card-content>
+                </sui-card>
+            </sui-card-group>
+            <NoItem v-else :message="noItemMessage"/>
         </div>
     </div>
 </template>
@@ -62,6 +54,7 @@
         name: "CategoryGoodsCards",
         props: [
             "categoryInfo",
+            "items_per_row",
         ],
         components: {
             NoItem,
@@ -70,7 +63,7 @@
             return {
                 noItemMessage: "현재 등록된 상품이 없습니다.",
                 categoryCode: "",
-                items_per_row: 4,
+                orderSet: "goodsCode/DESC",
             }
         },
         created() {
@@ -80,16 +73,21 @@
         methods: {
             getCategoryCode() {
                 this.categoryCode = this.categoryInfo.categoryCode;
-                console.log("card" + this.categoryCode);
             },
             getCategoryGoods() {
-                this.$store.commit("getCategoryGoodsModelList", this.categoryCode);
-            },
-            pricing(originalPrice, dcRate) {
-                return originalPrice * (100 - dcRate) / 100;
+                this.$store.commit("getCategoryGoodsModelList",
+                    {
+                        categoryCode: this.categoryCode,
+                        orderSet: this.orderSet
+                    }
+                );
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push("/goodsDetail/" + goodsCode);
+            },
+            reOrder(orderSet) {
+                this.orderSet = orderSet;
+                this.getCategoryGoods();
             },
         },
         computed: {
@@ -101,12 +99,6 @@
 </script>
 
 <style scoped>
-    .goods-area {
-        float: left;
-        width: 83.0%;
-        width: calc(100% - 272px);
-        font-size: 14px;
-    }
 
     .page-title {
         padding-bottom: 20px;

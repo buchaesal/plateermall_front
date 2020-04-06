@@ -9,6 +9,7 @@ import MyCart from "../components/my/page/MyCartPage";
 import Error from "../components/share/page/Error";
 import OrderCompletePage from "../components/order/page/OrderCompletePage";
 import CategoryPage from '../components/category/page/CategoryPage';
+import RightCategoryPage from '../components/category/page/RightCategoryPage';
 import PageNotFound from "../components/share/page/PageNotFound";
 import OrderPage from "../components/order/page/OrderPage";
 
@@ -32,13 +33,18 @@ const routes = [
     {path: '/answer/:postId', component: MyPage, props:{selectedComponent:'InquiryAnswerPost'},meta: {authRequired: true}},
     {path: '/myPageMain', component: MyPage, props:{selectedComponent:'MyPageMain'},meta: {authRequired: true}},
     {path: '/error', component: Error},
-    
+
     {path: '/404', component: PageNotFound},
     {path: '*', redirect: '/404'},
 
     {path: '/category/:categoryCode', component: CategoryPage},
+<<<<<<< HEAD
     {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true},
     {path: '/order', name:"order", component: OrderPage},
+=======
+    {path: '/rightcategory/:categoryCode', component: RightCategoryPage},
+    {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true}
+>>>>>>> 626e6d1e3b87729cdcf9133a41b1b31415ab2532
 ]
 
 export default new VueRouter({
