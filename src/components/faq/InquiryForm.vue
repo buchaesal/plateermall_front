@@ -78,17 +78,39 @@
             <sui-modal-content>
                 <sui-modal-description>
                     <ul class="modal-msg">
-                        <li>- 최근 3개월의 주문 내역 입니다. 이전의 상품은 기간별 조회를 통해 가능합니다.</li>
+                        <li>- 현재 주문접수, 결제완료, 배송준비중인 상품만 선택 가능합니다.</li>
                         <li>- 하나의 주문번호만 선택 가능하며, 동일한 주문번호의 상품은 복수 선택 가능합니다.</li>
                     </ul>
-                    <div class="date_box">
-                        <input type="date" class="modal-date-input">
-                        ~
-                        <input type="date" class="modal-date-input">
-                        <sui-button class="date-check-btn" basic secondary>조회</sui-button>
-                    </div>
+
                     <hr>
-                    <p style="text-align: center">주문 내역이 없습니다.</p>
+
+                    <div v-for="(goods, index) in goodsInOrderList" :key="index" v-show="myOrderList.length>0" class="goods-list">
+<!--                        <div class="my-order-list-title">-->
+<!--                            <p class="order-date">{{myOrderList[index].orderState.stateChangeDate}}</p>-->
+<!--                            <a href="#" class="order-detail">자세히보기 ></a>-->
+<!--                        </div>-->
+
+                        <div class="my-order-list-goods">
+                            <sui-checkbox class="goods-checkbox"/>
+                            <span class="goods-img">
+                                <img :src="goods.imgUrl">
+                            </span>
+
+                            <div class="my-order-list-info">
+                                <p>{{goods.title}}</p>
+                            </div>
+                            <span class="my-order-list-price">{{goods.originalPrice}}원</span>
+                            <div class="my-order-list-button">
+                                <p>{{myOrderList[index].sta}}</p>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div v-show="myOrderList.length==0">
+                        <p class="modal-p">주문 내역이 없습니다.</p>
+                    </div>
+
                 </sui-modal-description>
             </sui-modal-content>
             <sui-modal-actions>
@@ -104,6 +126,8 @@
     import FaqHeader from "./FaqHeader";
     import {registrationQuestion, getRecentQuestion} from "../../api/FaqApi";
     import {getCurrentUserInfo} from "../../api/UserApi";
+    import {getSpecificStatusOrderList} from "../../api/OrderApi";
+    import GoodsApi from "../../api/GoodsApi";
 
     export default {
         name: "InquiryForm",
@@ -115,6 +139,10 @@
                 open: false,
                 userInfo: '',
                 recentPostId: '',
+                isChecked: false,
+                goodsApi : new GoodsApi(),
+                goodsInOrderList: [],
+                myOrderList: [],
                 questionObject: {
                     territory: '',
                     state: '',
@@ -126,7 +154,6 @@
                     smsAlarm: '',
                     emailAlarm: '',
                 },
-                isChecked: false,
                 options: [
                     {text: '주문내역확인', value: '주문내역확인',},
                     {text: '배송확인', value: '배송확인',},
@@ -149,11 +176,18 @@
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/answer/"+this.recentPostId);
                 }
-            }
+            },
+            async setGoodsList(myOrderList){
+                for(let order in myOrderList){
+                    this.goodsInOrderList.push(await this.goodsApi.getGoods(myOrderList[order].goodsId));
+                }
+            },
         },
         async created() {
             this.userInfo = await getCurrentUserInfo();
             this.questionObject.writer = this.userInfo.name;
+            this.myOrderList = await getSpecificStatusOrderList('normal', 'order-complete', this.userInfo.email);
+            this.setGoodsList(this.myOrderList);
         },
     }
 </script>
@@ -227,6 +261,80 @@
 
     hr {
         margin: 30px;
+    }
+
+    .modal-p {
+        text-align: center;
+    }
+
+    .order_header {
+        border-top: 3px solid #000;
+        border-bottom: 1px solid rgba(179, 179, 179, 0.58);
+    }
+
+
+    .my-order-list-title {
+        background-color: GhostWhite;
+        display: inline-block;
+        padding: 8px 30px;
+        width: 100%;
+    }
+
+    .order-date {
+        display: inline-block;
+        float: left;
+        margin-top: 9px;
+        color: black;
+    }
+
+    .order-detail {
+        float: right;
+        margin-top: 9px;
+        color: black;
+    }
+
+    .my-order-list-goods {
+        margin: 8px 0;
+        background-color: white;
+        font-size: 0.9rem;
+    }
+
+    .goods-checkbox {
+        float: left;
+        vertical-align: middle;
+        margin: 60px 30px 0 30px;
+    }
+
+    .goods-img {
+        width: 50px;
+        height: auto;
+        vertical-align: middle;
+    }
+
+    .goods-img img {
+        width: 100px;
+        height: auto;
+    }
+
+    .my-order-list-info {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 40px;
+    }
+
+    .my-order-list-price {
+        margin: 0 50px;
+    }
+
+    .my-order-list-button {
+        display: inline-block;
+        margin-left: 10px;
+        text-align: center;
+        vertical-align: middle
+    }
+
+    .btn1 {
+        display: block;
     }
 
 </style>
