@@ -25,8 +25,6 @@ class GoodsApi {
     }
 
     getCategoryGoodsList(categoryCode, orderSet) {
-
-        console.log("api " + categoryCode + ", " + orderSet)
         let categoryGoodsSetApiModel = new CategoryGoodsSetApiModel(categoryCode, orderSet);
         return request.get(GOODS_URL + `/categorygoodslist`, {params: categoryGoodsSetApiModel}).then(
             (response) => {

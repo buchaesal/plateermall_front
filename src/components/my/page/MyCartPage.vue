@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="goods-price-info">
-                            <sui-button secondary @click="buyCartList">구매하기</sui-button>
+                            <sui-button secondary @click="orderCartList">구매하기</sui-button>
                         </div>
                         <div class="goods-price-info">
                             <h3>카드 청구할인 정보</h3>
@@ -162,9 +162,6 @@
 <script>
     import Header from '../../share/Header';
     import Footer from '../../share/Footer.vue';
-    import {order} from "../../../api/OrderApi";
-    import OrderModel from "../model/OrderModel";
-    import {addCommentStatus} from "../../../api/CommentApi";
     import {requestCardDiscountInfo} from "../../../api/CartListApi";
 
     export default {
@@ -274,26 +271,18 @@
                 }
             },
 
-            async buyCartList() {
-                let today = new Date();
-                let year = today.getFullYear();
-                let month = today.getMonth()+1;
-                let date = today.getDate();
-
-                month = month < 10 ? '0' + month : month;
-                date = date < 10 ? '0' + date : date;
-
-                today = year + "-" + month + "-" + date;
-
-                for (let cart of this.checkedCartList) {
-                    let option = cart.text;
-                    let orderModel = new OrderModel('', this.$store.state.cartListStore.userInfo.email, cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
-                    let orderId = await order(orderModel);
-
-                    await addCommentStatus({
-                        "orderId": orderId,
-                        "userId": this.$store.state.cartListStore.userInfo.email,
-                        "isWritten": "N"
+            orderCartList() {
+                if (this.checkedCartList.length == 0) {
+                    alert("구매하실 상품을 먼저 선택해주세요.");
+                } else {
+                    this.$router.push({
+                        name: "ordercomplete", params: {
+                            orderData:
+                                {
+                                    goodsCode: this.$route.params.goodsCode,
+                                    selectedGoods: this.checkedCartList,
+                                }
+                        }
                     });
                 }
             },

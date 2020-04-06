@@ -13,7 +13,7 @@
                 </sui-card-content>
                 <sui-card-content>
                     <sui-header size="tiny">
-                        <p class="order-number"><span class="tit">주문번호 : </span><span class="num">{{Date.now()}}</span>
+                        <p class="order-number"><span class="tit">주문번호 : </span><span class="num">{{orderId}}</span>
                         </p>
                     </sui-header>
                     <div class="summary">
@@ -72,6 +72,9 @@
 <script>
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
+    import OrderModel from "../../my/model/OrderModel";
+    import {order} from "../../../api/OrderApi";
+    import {addCommentStatus} from "../../../api/CommentApi";
 
     export default {
         name: "OrderCompletePage",
@@ -81,6 +84,8 @@
         },
         data() {
             return {
+                orderId: "",
+                isCartOrder: false,
                 sumOrderPrice: 0,
                 sumOriginalPrice: 0,
                 sumDiscountPrice: 0,
@@ -103,9 +108,21 @@
                 }
             },
             pricing(orderData) {
-                for (let i in orderData.selectedOptions) {
-                    let option = orderData.selectedOptions[i];
-                    this.sumOriginalPrice += option.price;
+                for (let i in orderData.selectedGoods) {
+                    let option = orderData.selectedGoods[i];
+                    this.sumOriginalPrice += option.originalPrice * option.quantity;
+                    this.sumDiscountPrice += (option.originalPrice / 100 * option.dcRate);
+                    this.sumShippingFee += option.shippingFee;
+                }
+
+                this.sumOrderPrice = this.sumOriginalPrice + this.sumShippingFee - this.sumDiscountPrice;
+                this.point = Math.ceil((this.sumOriginalPrice - this.sumDiscountPrice) / 1000);
+            },
+            cartPricing(orderData) {
+                for (let i in orderData) {
+                    let quantity = orderData[i].quantity;
+                    let option = orderData[i].goods;
+                    this.sumOriginalPrice += option.originalPrice * quantity;
                     this.sumDiscountPrice += (option.originalPrice / 100 * option.dcRate);
                     this.sumShippingFee += option.shippingFee;
                 }
@@ -119,11 +136,58 @@
             goToHome() {
                 this.$router.push("/");
             },
+
+            async requestOrder() {
+                let today = new Date();
+                let year = today.getFullYear();
+                let month = today.getMonth() + 1;
+                let date = today.getDate();
+
+                month = month < 10 ? '0' + month : month;
+                date = date < 10 ? '0' + date : date;
+
+                today = year + "-" + month + "-" + date;
+
+                if (this.isCartOrder) {
+                    for (let cart of this.checkedCartList) {
+                        let option = cart.text;
+                        let orderModel = new OrderModel('', this.$store.state.cartListStore.userInfo.email, cart.goodsCode, cart.quantity, (cart.goods.benefitPrice * cart.quantity).toString(), today, null, option);
+                        this.orderId = await order(orderModel);
+
+                        await addCommentStatus({
+                            "orderId": this.orderId,
+                            "userId": this.$store.state.cartListStore.userInfo.email,
+                            "isWritten": "N"
+                        });
+                    }
+                } else {
+                    let goodsCode = this.orderData.goodsCode;
+                    for (let goods of this.orderData) {
+                        let option = goods.text;
+                        let orderModel = new OrderModel('', this.$store.state.cartListStore.userInfo.email, goodsCode, goods.quantity, (goods.benefitPrice * goods.quantity).toString(), today, null, option);
+                        this.orderId = await order(orderModel);
+
+                        await addCommentStatus({
+                            "orderId": this.orderId,
+                            "userId": this.$store.state.cartListStore.userInfo.email,
+                            "isWritten": "N"
+                        });
+                    }
+                }
+            }
         },
         mounted() {
             this.orderData = this.$route.params.orderData;
             if (!this.isEmpty(this.orderData)) {
-                this.pricing(this.orderData);
+                if (this.isEmpty(this.orderData.goodsCode)) {
+                    // 카트 주문
+                    this.isCartOrder = true;
+                    this.orderData = this.orderData.selectedGoods;
+                    this.cartPricing(this.orderData);
+                } else {
+                    // 바로 주문
+                    this.pricing(this.orderData);
+                }
             } else {
                 this.goToOrderDetail();
             }
