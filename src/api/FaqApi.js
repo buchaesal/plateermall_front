@@ -70,6 +70,16 @@ export const getMyQuestionList = function (userName) {
     });
 }
 
+export const getRecentQuestion = function () {
+    return request.get(FAQ_URL + `/question/recent`).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function (err) {
+        console.log(err);
+    });
+}
+
 // export const searchQuestion = function (searchQuestionObject) {
 //     return request.post(FAQ_URL+`/question/search/list`, searchQuestionObject).then(
 //         (response) => {

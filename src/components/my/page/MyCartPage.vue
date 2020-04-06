@@ -37,13 +37,13 @@
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:20%;">
-                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
-                                            <sui-image :src="cart.goods.imgUrl"  class="cart-img" />
+                                        <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
+                                            <sui-image :src="cart.imgUrl"  class="cart-img" />
                                         </sui-segment>
                                     </sui-grid-column>
                                     <sui-grid-column style="width:40%;">
-                                        <sui-segment @click="goToGoodsDetail(cart.goods.goodsCode)">
-                                            <p style="font-family:Georgia, serif;">{{cart.goods.title}}</p>
+                                        <sui-segment @click="goToGoodsDetail(cart.goodsCode)">
+                                            <p style="font-family:Georgia, serif;">{{cart.title}}</p>
                                             <p style="font-family:Georgia, serif; color:gray">옵션 : {{cart.text}}</p>
                                         </sui-segment>
                                     </sui-grid-column>
@@ -65,10 +65,10 @@
                                         </sui-segment>
                                         <sui-segment>
                                             <div>
-                                                <span class="goods-original-price">{{cart.goods.originalPrice.toLocaleString()}}원</span>
+                                                <span class="goods-original-price">{{cart.originalPrice.toLocaleString()}}원</span>
                                             </div>
                                             <div>
-                                                <span class="goods-dc-price">{{pricing(cart.goods.originalPrice, cart.goods.dcRate).toLocaleString()}}원</span>
+                                                <span class="goods-dc-price">{{cart.benefitPrice.toLocaleString()}}원</span>
                                             </div>
                                         </sui-segment>
                                     </sui-grid-column>
@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="goods-price-info">
-                            <sui-button secondary @click="buyCartList">구매하기</sui-button>
+                            <sui-button secondary @click="orderCartList">구매하기</sui-button>
                         </div>
                         <div class="goods-price-info">
                             <h3>카드 청구할인 정보</h3>
@@ -162,9 +162,6 @@
 <script>
     import Header from '../../share/Header';
     import Footer from '../../share/Footer.vue';
-    import {order} from "../../../api/OrderApi";
-    import OrderModel from "../model/OrderModel";
-    import {addCommentStatus} from "../../../api/CommentApi";
     import {requestCardDiscountInfo} from "../../../api/CartListApi";
 
     export default {
@@ -181,11 +178,6 @@
             Footer,
         },
         methods: {
-            pricing(originalPrice, dcRate) {
-                let price = originalPrice * (100 - dcRate) / 100;
-                return price;
-            },
-
             checkWholeItem() {
                 if(!this.isTotalChecked) {
                     this.checkedCartList = this.$store.state.cartListStore.cartList;
@@ -202,14 +194,14 @@
                 let totalShippingFee = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalShippingFee += cart.goods.shippingFee;
+                    totalShippingFee += cart.shippingFee;
                 });
                 return totalShippingFee;
             },
             totalDcRatePrice() {
                 let totalDcRatePrice = 0;
                 this.checkedCartList.map((cart) => {
-                    totalDcRatePrice += (cart.goods.originalPrice - this.pricing(cart.goods.originalPrice, cart.goods.dcRate));
+                    totalDcRatePrice += (cart.originalPrice - cart.benefitPrice);
                 });
                 return totalDcRatePrice;
             },
@@ -218,7 +210,7 @@
                 let totalGoodsPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalGoodsPrice += (cart.goods.originalPrice * cart.quantity);
+                    totalGoodsPrice += (cart.originalPrice * cart.quantity);
                 });
                 return totalGoodsPrice;
             },
@@ -226,7 +218,7 @@
                 let totalCartPrice = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalCartPrice += ((cart.goods.originalPrice * cart.quantity) + cart.goods.shippingFee - (cart.goods.originalPrice - this.pricing(cart.goods.originalPrice, cart.goods.dcRate)));
+                    totalCartPrice += ((cart.originalPrice * cart.quantity) + cart.shippingFee - (cart.originalPrice - cart.benefitPrice));
                 });
                 return totalCartPrice;
             },
@@ -261,7 +253,7 @@
                 let goodsCodeArr = [];
                 this.checkedCartList.map((cart) => {
                     goodsCodeArr.push({
-                        "goodsCode" : cart.goods.goodsCode
+                        "goodsCode" : cart.goodsCode
                     });
                 });
 
@@ -279,26 +271,18 @@
                 }
             },
 
-            async buyCartList() {
-                let today = new Date();
-                let year = today.getFullYear();
-                let month = today.getMonth()+1;
-                let date = today.getDate();
-
-                month = month < 10 ? '0' + month : month;
-                date = date < 10 ? '0' + date : date;
-
-                today = year + "-" + month + "-" + date;
-
-                for (let cart of this.checkedCartList) {
-                    let option = cart.text;
-                    let orderModel = new OrderModel('', this.$store.state.cartListStore.userInfo.email, cart.goodsCode, cart.quantity, cart.goods.originalPrice.toString(), today, null, option);
-                    let orderId = await order(orderModel);
-
-                    await addCommentStatus({
-                        "orderId": orderId,
-                        "userId": this.$store.state.cartListStore.userInfo.email,
-                        "isWritten": "N"
+            orderCartList() {
+                if (this.checkedCartList.length == 0) {
+                    alert("구매하실 상품을 먼저 선택해주세요.");
+                } else {
+                    this.$router.push({
+                        name: "ordercomplete", params: {
+                            orderData:
+                                {
+                                    goodsCode: this.$route.params.goodsCode,
+                                    selectedGoods: this.checkedCartList,
+                                }
+                        }
                     });
                 }
             },
@@ -307,6 +291,7 @@
             await this.$store.dispatch('getLoginUserInfo');
             await this.$store.dispatch('getCartList');
             this.cardInfoList = await requestCardDiscountInfo();
+            console.log(this.$store.state.cartListStore.cartList);
         },
 
         computed: {

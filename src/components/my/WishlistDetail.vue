@@ -10,7 +10,16 @@
         </div>
 
         <div v-else>
-            <div>
+            <div class="category-option">
+                <sui-dropdown
+                        placeholder="카테고리 전체"
+                        selection
+                        :options="options"
+                        v-model="selectOption"
+
+                />
+            </div>
+            <div class="wishlist-container">
                 <sui-card-group :items-per-row="4">
                     <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
                               @click="goToGoodsDetail(goodsData.goodsCode)">
@@ -20,8 +29,7 @@
                             <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
                             <sui-card-description class="price">
                                 <div class="price-area">
-                                    {{pricing(goodsData.originalPrice,
-                                    goodsData.dcRate)}}<span class="unit">원</span>
+                                    {{goodsData.benefitPrice.toLocaleString()}}<span class="unit">원</span>
                                 </div>
                                 <div class="cancel-wish" @click.stop="cancelWish(goodsData.goodsCode)">
                                     <i class="close icon"></i>
@@ -46,6 +54,8 @@
             return {
                 wishListGoodsCodes: [],
                 wishListGoods: [],
+                selectOption: "",
+                options: [],
             }
         },
         computed: {
@@ -76,12 +86,6 @@
                 for (let index in this.wishListGoodsCodes) {
                     this.wishListGoods.push(await goodsApi.getGoods(this.wishListGoodsCodes[index]));
                 }
-            }
-            ,
-            pricing(originalPrice, dcRate) {
-                var price = originalPrice * (100 - dcRate) / 100;
-                price = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-                return price;
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);
@@ -89,6 +93,7 @@
             async setWishList() {
                 let wishListApi = new WishListApi();
                 this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes();
+                console.log("wishListGoodsCodes : " + this.wishListGoodsCodes);
                 await this.setGoodsFromGoodsCodes();
                 // this.$store.commit('getWishListFromApi');
             },
@@ -100,7 +105,7 @@
                         this.wishListGoods = [];
                         this.setWishList();
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.log(error);
                     });
             }
@@ -108,6 +113,11 @@
         created: function () {
             this.setWishList();
         },
+        watch: {
+            selectOption() {
+                console.log(this.selectOption);
+            }
+        }
     }
 </script>
 
@@ -135,5 +145,13 @@
 
     .cancel-wish {
         float: right;
+    }
+
+    .category-option {
+        float: right;
+    }
+
+    .wishlist-container {
+        clear: both;
     }
 </style>
