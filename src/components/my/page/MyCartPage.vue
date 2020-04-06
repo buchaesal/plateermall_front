@@ -276,7 +276,7 @@
                     alert("구매하실 상품을 먼저 선택해주세요.");
                 } else {
                     this.$router.push({
-                        name: "ordercomplete", params: {
+                        name: "order", params: {
                             orderData:
                                 {
                                     goodsCode: this.$route.params.goodsCode,

@@ -495,6 +495,10 @@
                         dcRate: this.goodsData.dcRate,
                         benefitPrice: this.goodsData.benefitPrice,
                         shippingFee: this.goodsData.shippingFee,
+                        goodsCode: this.goodsCode,
+                        imgUrl: this.goodsData.imgUrl,
+                        title: this.goodsData.title,
+                        
                     };
 
                     addOptions.push(data);
