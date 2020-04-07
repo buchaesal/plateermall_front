@@ -135,15 +135,15 @@
                     if (confirm("해당 문의를 삭제하시겠습니까?")) {
                         await questionDelete(postId);
                         alert("삭제되었습니다.")
-                        this.$router.push("/inquiryAnswer");
+                        this.$router.push("/board");
                     }
                 }
+                this.goToBack();
             },
             async questionUpdate() {
                 this.updateBtnChange();
-                await questionUpdate(this.updateQuestionObject);
+                questionUpdate(this.updateQuestionObject);
                 alert("문의가 수정되었습니다.");
-                await this.$router.push("/inquiryAnswer");
             },
             updateBtnChange() {
                 if (this.questionDetail.writer != this.userInfo.name) {
@@ -155,6 +155,9 @@
                 } else {
                     this.updateBtn = 0;
                 }
+            },
+            goToBack() {
+                this.$router.go(-2);
             },
         },
     }

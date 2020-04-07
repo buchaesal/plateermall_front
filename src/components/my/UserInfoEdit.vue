@@ -30,14 +30,14 @@
                         <sui-table-row>
                             <sui-table-cell class="form_head">비밀번호</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" v-model="userInfo.password" placeholder="변경할 비밀번호"/>
+                                <sui-input class="edit-data" type="password" v-model="userInfo.password" placeholder="변경할 비밀번호"/>
                                 <p class="edit-table-text">비밀번호 변경시 입력합니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
                         <sui-table-row>
                             <sui-table-cell class="form_head">비밀번호 변경</sui-table-cell>
                             <sui-table-cell class="data">
-                                <sui-input class="edit-data" placeholder="비밀번호 확인"/>
+                                <sui-input class="edit-data" type="password" placeholder="비밀번호 확인"/>
                                 <p class="edit-table-text">비밀번호 변경시 위 비밀번호와 동일한지 확인합니다.</p>
                             </sui-table-cell>
                         </sui-table-row>
@@ -91,6 +91,7 @@
 <script>
     import {getCurrentUserInfo} from '../../api/UserApi';
     import {modifyUser} from "../../api/UserApi";
+    import {setTokenInSessionStorage} from "../../utils/tokenStorage";
 
     export default {
         name: "UserInfoEdit",
@@ -105,8 +106,9 @@
         methods: {
             async init() {
                 let result = await getCurrentUserInfo();
+
                 if (result) {
-                    result.password = '';
+                    result.password = null;
                     result.smsAgree = result.smsAgree + '';
                     result.emailAgree = result.emailAgree + '';
                     this.userInfo = result;
@@ -119,7 +121,9 @@
                     this.userInfo.smsAgree = this.userInfo.smsAgree === 'true';
                     this.userInfo.emailAgree = this.userInfo.emailAgree === 'true';
                     modifyUser(this.userInfo)
-                        .then(() => {
+                        .then((res) => {
+                            setTokenInSessionStorage(res.data);
+                            alert('수정이 완료되었습니다.');
                             this.init();
                         })
                         .catch((err) => console.log(err));

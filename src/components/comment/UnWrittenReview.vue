@@ -22,12 +22,13 @@
                         <sui-item-description>
                             <span class='purchase-date'>구매일자: {{getInfoList.orderInfo[index].orderDate}}</span>
                             <span class='due-date'>작성기한: {{getInfoList.duedate[index]}}</span>
-                            <sui-button v-if='getInfoList.duedate[index]>today' @click='openReviewModal(getInfoList.orderInfo[index])' size="tiny" floated="right" basic content="상품평 작성" style="margin-right: 2%;"/>
+                            <sui-button v-if='getInfoList.duedate[index]>today' @click='openReviewModal(getInfoList.orderInfo[index], unwritten)' size="tiny" floated="right" basic content="상품평 작성" style="margin-right: 2%;"/>
                             <sui-button v-else size="tiny" floated="right" disabled basic content="기한 만료" style="margin-right: 2%;"/>
+                        
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :orderInfo='getInfoList.orderInfo[index]' :goodsInfo='unwritten' :currentReview='currentReview'/>
+                                <ReviewForm :orderInfo='order' :goodsInfo='goods' :currentReview='currentReview'/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
@@ -72,19 +73,16 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
                     reviewContent:'',
                     writtenDate:'',
                 },
-                unwrittenCount:0,
-                review:{},
-                dueDate:[],
+                order:{},
+                goods:{},
                 today:'',
-                orderIdList:[],
-                unwrittenOrderList:[],
-                goodsList:[],
                 user:{},
             }
         },
         methods:{
-            openReviewModal(selectedReview){
-
+            openReviewModal(selectedReview, goods){
+                this.goods = goods;
+                this.order = selectedReview;
                 this.open = true;
 
                 this.currentReview.orderId = selectedReview.orderId;

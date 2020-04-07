@@ -101,7 +101,7 @@
             this.getCategoryInfo();
             this.getCategoryList();
         },
-        mounted() {
+        updated() {
             if (this.categoryInfo.categoryCode == null) {
                 this.$router.push("/404");
             }
@@ -132,6 +132,7 @@
         width: 100%;
         min-height: 600px;
         padding-top: 80px;
+        margin-top: 185px;
         margin-bottom: 80px;
         overflow: hidden;
     }

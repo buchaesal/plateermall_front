@@ -20,7 +20,7 @@
                                 {{goodsData.dcRate}}<span class="unit">%</span>
                             </p>
                             <p class="price">
-                                <del>
+                                <del v-if="isDiscount(goodsData.dcRate)">
                                     {{(goodsData.originalPrice).toLocaleString()}}
                                 </del>
                                 <span>{{goodsData.benefitPrice.toLocaleString()}}</span><span
@@ -199,7 +199,7 @@
                             <div>
                                 <sui-button-group class="two cart-or-now">
                                     <sui-button content="쇼핑백" @click.native="addCart"></sui-button>
-                                    <sui-modal size="tiny" v-model="open">
+                                    <sui-modal size="tiny" v-model="isModalOpen">
                                         <div class="modal-inner">
                                             <p>선택하신 상품이 <b>쇼핑백</b>에 담겼습니다.</p>
                                             <sui-button-group class="modal-inner-button">
@@ -227,7 +227,6 @@
                             <div class="review-summary-box">
                                 <RatingStarPoint class="review-summary"/>
                             </div>
-
                         </div>
                     </div>
                 </section>
@@ -265,12 +264,12 @@
                                     <div>
                                         <RatingStarPoint/>
                                         <RatingGraph/>
+                                        <PhotoReview/>
                                         <ReviewList/>
                                     </div>
                                 </sui-accordion-content>
                             </sui-accordion>
                         </div>
-
                     </section>
                     <div class="brand-banner">
                         <div class="banner-text">
@@ -420,6 +419,7 @@
     import SideBanner from "../../share/SideBanner";
     import RatingStarPoint from "../../comment/RatingStarPoint";
     import RatingGraph from "../../comment/RatingGraph";
+    import PhotoReview from "../../comment/PhotoReview";
     import ReviewList from "../../comment/ReviewList";
     import {requestAddCart} from "../../../api/CartListApi";
     import WishListApi from "../../../api/WishListApi";
@@ -434,6 +434,7 @@
             Footer,
             SideBanner,
             ReviewList,
+            PhotoReview,
         },
         data() {
             return {
@@ -450,7 +451,7 @@
                 selectedOptions: [],
                 orderSumQuantity: 0,
                 orderSumPrice: 0,
-                open: false,
+                isModalOpen: false,
             }
         },
         methods: {
@@ -494,6 +495,10 @@
                         dcRate: this.goodsData.dcRate,
                         benefitPrice: this.goodsData.benefitPrice,
                         shippingFee: this.goodsData.shippingFee,
+                        goodsCode: this.goodsCode,
+                        imgUrl: this.goodsData.imgUrl,
+                        title: this.goodsData.title,
+                        
                     };
 
                     addOptions.push(data);
@@ -599,7 +604,7 @@
                 this.toggle();
             },
             toggle() {
-                this.open = !this.open;
+                this.isModalOpen = !this.isModalOpen;
             },
             goToCart() {
                 this.$router.push("/cart");
@@ -608,9 +613,8 @@
                 if (this.selectedOptions.length == 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
-                    console.log(this.selectedOptions)
                     this.$router.push({
-                        name: "ordercomplete", params: {
+                        name: "order", params: {
                             orderData:
                                 {
                                     goodsCode: this.$route.params.goodsCode,
@@ -675,6 +679,7 @@
     .container {
         width: 100%;
         min-height: 600px;
+        margin-top: 185px;
         padding-top: 80px;
     }
 
@@ -823,7 +828,6 @@
         clear: both;
         height: 90px;
     }
-
 
     .detail > dt {
         float: left;

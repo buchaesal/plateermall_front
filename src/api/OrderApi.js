@@ -64,3 +64,9 @@ export const getStateCount = function (state, userid) {
         .then(response => response.data)
         .catch((err) => console.log(err));
 }
+
+export const getSpecificStatusOrderList = function (state, specificState, userid) {
+    return request.get(ORDER_URL + `/specificstatelist/${state}/${specificState}/${userid}`)
+        .then(response => response.data)
+        .catch(err => console.log(err))
+}

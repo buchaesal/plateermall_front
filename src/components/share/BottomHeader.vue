@@ -60,6 +60,15 @@
 </script>
 
 <style scoped>
+    .menu_bar {
+        position: relative;
+        line-height: 58px;
+        z-index: 100;
+        height: 60px;
+        min-width: 1500px;
+        background: black;
+        color: #FFF;
+    }
 
     .inner_bar {
         margin: 20px 7%;
@@ -68,7 +77,7 @@
     .left_bar {
         display: inline-block;
         float: left;
-        margin-top: 20px;
+        margin-top: 1px;
     }
 
     .left_bar a {
@@ -79,7 +88,7 @@
     .right_bar {
         display: inline-block;
         float: right;
-        margin-top: 17px;
+        margin-top: 1px;
     }
 
     .right_bar a {

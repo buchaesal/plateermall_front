@@ -33,6 +33,7 @@
     import CancelSearch from "../CancelSearch";
     import InquiryAnswerPost from "../../faq/InquiryAnswerPost";
     import MyPageMain from "./MyPageMain";
+    import OrderDetail from "../OrderDetail";
 
     export default {
         name: "Main",
@@ -59,7 +60,8 @@
             OrderList,
             CancelSearch,
             InquiryAnswerPost,
-            MyPageMain
+            MyPageMain,
+            OrderDetail
         }
     }
 </script>
@@ -67,6 +69,7 @@
 <style scoped>
     #main-page-container {
         height: 300%;
+        margin-top: 185px;
     }
 
     [class^="fix_inner"] {
@@ -76,7 +79,7 @@
 
     #container {
         width: 100%;
-        min-height: 1500px;
+        min-height: 1600px;
         padding-top: 80px;
     }
 

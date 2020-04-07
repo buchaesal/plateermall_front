@@ -44,18 +44,22 @@ instance.interceptors.request.use(
  */
 // instance.interceptors.response.use(
 //     response => {
-//         console.log('Interceptors Response is ', response);
+//         if(response.config.headers.Authorization){
+//             console.log(response.config.headers.Authorization,'api에서 response에 토큰을 담아서 넘겨줬다.')
+//             sessionStorage.clear();
+//             sessionStorage.setItem("access_token", 'Bearer ' + response.config.headers.Authorization);
+//         }
 //
 //         return response;
 //     },
-//     function (error) {
-//         console.log('Interceptors Response Error is ', error);
-//         // alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
-//         // store.commit('LOGOUT');
-//         // router.push('/');
-//
-//         return Promise.reject(error);
-//     }
+//     // function (error) {
+//     //     console.log('Interceptors Response Error is ', error);
+//     //     alert('로그인 유지가 만료되었습니다. 로그아웃됩니다.');
+//     //     store.commit('LOGOUT');
+//     //     router.push('/');
+//     //
+//     //     return Promise.reject(error);
+//     // }
 // );
 
 export default instance;

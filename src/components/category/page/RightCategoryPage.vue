@@ -3,9 +3,9 @@
         <Header></Header>
         <div class="container">
             <div class="fix-inner">
-                <sui-loader active centered inline v-if="categoryCode != categoryInfo.categoryCode"/>
-                <div class="goods-area" v-else>
-                    <CategoryGoodsCards :categoryInfo="categoryInfo" :items_per_row="5" />
+                <div class="goods-area">
+                    <sui-loader active centered inline v-if="categoryCode != categoryInfo.categoryCode"/>
+                    <CategoryGoodsCards :categoryInfo="categoryInfo" :items_per_row="5" v-else/>
                 </div>
             </div>
         </div>
@@ -86,6 +86,7 @@
         width: 100%;
         min-height: 600px;
         padding-top: 80px;
+        margin-top: 185px;
         margin-bottom: 80px;
         overflow: hidden;
     }
@@ -144,6 +145,11 @@
 
     .goods-area {
         float: left;
+        width: 100%;
         font-size: 14px;
+    }
+
+    .ui.five.cards {
+        margin-bottom: auto;
     }
 </style>
