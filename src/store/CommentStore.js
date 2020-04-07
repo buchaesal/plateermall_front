@@ -23,7 +23,6 @@ const state = {
     isModalOpen: false,
     writtenReview:{}, //바뀐 리뷰
 
-    fileList:[],
 }
 
 const getters = {

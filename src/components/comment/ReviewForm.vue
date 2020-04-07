@@ -95,9 +95,9 @@
                             <img class="image" @change="changeValue" @click="cancelUpload(2)" v-if="currentReview.myPhoto3 != ''" :src='currentReview.myPhoto3' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             <img class="image" @change="changeValue" v-if="currentReview.myPhoto3 == ''" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             
-                            <input id="image-input" v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" text="" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%; color: transparent;"/>
+                            <input id="image-input" v-on:change='fileSelect(currentReview)' name="files" ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" text="" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%; color: transparent;"/>
                             </div>
-
+                            <button @click="send">보내기</button>
                             <p>- 매월 우수상품평 작성자 50명에게 P.POINT 2000점을 적립해 드립니다.</p>
                             <p>- 첨부가능 파일형식: JPG, JPEG, GIF, PNG</p>
                             <p>- 용량: 10Mb 미만 파일만 업로드 가능</p>
@@ -118,6 +118,8 @@
 </template>
 
 <script>
+import {loadFile} from "../../api/CommentApi.js";
+
     export default {
         props:['orderInfo', 'goodsInfo', 'currentReview'],
         name: "ReviewForm",
@@ -132,6 +134,10 @@
             },
         },
         methods: {
+            async send(){
+                await loadFile(this.fileList);
+            },
+
             handleRate(evt, props) {
                 this.currentReview.starPoint = props.rating;
                 this.currentReview.payload = props;
