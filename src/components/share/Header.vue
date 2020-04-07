@@ -13,7 +13,7 @@
     import BottomHeader from "./BottomHeader";
 
     export default {
-        name: "Header.vue",
+        name: "Header",
         components: {
             TopHeader,
             MidHeader,

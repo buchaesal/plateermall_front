@@ -1,17 +1,18 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import MainPage from "../components/share/page/MainPage";
+import MainPage from '../components/share/page/MainPage';
 import LoginForm from '../components/my/page/LoginFormPage';
 import SignUpPage from '../components/my/page/SignUpPage' ;
 import MyPage from '../components/my/page/MyPageIndex';
 import GoodsDetailPage from '../components/goods/page/GoodsDetailPage';
-import MyCart from "../components/my/page/MyCartPage";
-import Error from "../components/share/page/Error";
-import OrderCompletePage from "../components/order/page/OrderCompletePage";
+import MyCart from '../components/my/page/MyCartPage';
+import Error from '../components/share/page/Error';
+import OrderCompletePage from '../components/order/page/OrderCompletePage';
 import CategoryPage from '../components/category/page/CategoryPage';
 import RightCategoryPage from '../components/category/page/RightCategoryPage';
-import PageNotFound from "../components/share/page/PageNotFound";
-import OrderPage from "../components/order/page/OrderPage";
+import PageNotFound from '../components/share/page/PageNotFound';
+import OrderPage from '../components/order/page/OrderPage';
+import SearchResultPage from '../components/search/page/SearchResultPage'
 
 Vue.use(VueRouter);
 
@@ -48,14 +49,13 @@ const routes = [
     },
     {path: '/myPageMain', component: MyPage, props: {selectedComponent: 'MyPageMain'}, meta: {authRequired: true}},
     {path: '/error', component: Error},
-
+    {path: '/category/:categoryCode', component: CategoryPage},
+    {path: '/order/ordercomplete', name: 'ordercomplete', component: OrderCompletePage, props: true},
+    {path: '/order', name:'order', component: OrderPage},
+    {path: '/rightcategory/:categoryCode', component: RightCategoryPage},
+    {path: '/search/searchResult', name: 'searchResult', component: SearchResultPage },
     {path: '/404', component: PageNotFound},
     {path: '*', redirect: '/404'},
-
-    {path: '/category/:categoryCode', component: CategoryPage},
-    {path: '/order/ordercomplete', name: "ordercomplete", component: OrderCompletePage, props: true},
-    {path: '/order', name: "order", component: OrderPage},
-    {path: '/rightcategory/:categoryCode', component: RightCategoryPage},
     {
         path: '/order/orderDetail',
         component: MyPage,

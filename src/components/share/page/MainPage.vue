@@ -19,7 +19,7 @@
     // import VuetifySlide from "../VuetifySlide";
 
     export default {
-        name: "MainPage.vue",
+        name: "MainPage",
         data(){
           return{
             user: {}

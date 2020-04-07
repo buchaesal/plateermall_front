@@ -18,7 +18,7 @@
 
 <script>
     export default {
-        name: "MiniSlide.vue"
+        name: "MiniSlide"
     }
 </script>
 

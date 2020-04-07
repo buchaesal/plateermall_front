@@ -51,7 +51,12 @@
                 </div>
                 <div class="goods-area">
                     <sui-loader active centered inline v-if="categoryCode != categoryInfo.categoryCode"/>
-                    <CategoryGoodsCards :categoryInfo="categoryInfo" :items_per_row="4" v-else/>
+                    <div v-else-if="categoryGoods">
+                        <h2 class="page-title">{{categoryInfo.name}}</h2>
+                        <CategoryGoodsCards :goodsList="categoryGoods" :items_per_row="4"
+                                            :noItemMessage="'현재 등록된 상품이 없습니다.'"
+                                            v-on:reSort="reSort"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,6 +85,8 @@
                 categoryCode: "",
                 isActive: true,
                 priceOption: "",
+                sort: "goodsCode/DESC",
+
             }
         },
         methods: {
@@ -90,18 +97,33 @@
                 this.categoryCode = categoryCode;
             },
             getCategoryInfo() {
+                console.log("getCategoryInfo")
                 this.$store.commit("getCategory", this.categoryCode);
             },
             getCategoryList() {
                 this.$store.commit("getCategoryList", this.categoryCode);
+            },
+            getCategoryGoods() {
+                console.log("getCategoryGoods")
+                this.$store.commit("getCategoryGoodsModelList",
+                    {
+                        categoryCode: this.categoryCode,
+                        sort: this.sort
+                    }
+                );
+            },
+            reSort(sort) {
+                this.sort = sort;
+                this.getCategoryGoods();
             },
         },
         created() {
             this.getCategoryCode();
             this.getCategoryInfo();
             this.getCategoryList();
+            this.getCategoryGoods();
         },
-        updated() {
+        beforeUpdate() {
             if (this.categoryInfo.categoryCode == null) {
                 this.$router.push("/404");
             }
@@ -115,11 +137,14 @@
             },
             errorState() {
                 return this.$store.state.categoryStore.errorInfo;
+            },
+            categoryGoods() {
+                return this.$store.state.goodsStore.categoryGoodsModels;
             }
         },
         watch: {
             "$route": ["getCategoryCode", "getCategoryList"],
-            "categoryCode": "getCategoryInfo",
+            "categoryCode": ["getCategoryInfo", "getCategoryGoods"],
             errorState() {
                 this.getCategoryCode();
             }
@@ -194,5 +219,10 @@
         width: 83.0%;
         width: calc(100% - 272px);
         font-size: 14px;
+    }
+
+    .page-title {
+        padding-bottom: 20px;
+        font-size: 32px;
     }
 </style>

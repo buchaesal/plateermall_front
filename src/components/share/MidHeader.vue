@@ -4,8 +4,9 @@
 
         <div class="util">
             <div class="search_area">
-                <input type="text" placeholder="  아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
-                <sui-icon name="search" class="search_btn" size="large"/>
+                <input type="text" placeholder="아디다스키즈 봄 컬렉션" value autocomplete="off" size="40"
+                       v-model="searchKeyword" @keyup.enter="goToResult">
+                <sui-icon name="search" class="search_btn" size="large" @click="goToResult"/>
             </div>
         </div>
 
@@ -25,12 +26,22 @@
 
 <script>
     export default {
-        name: "MidHeader.vue",
+        name: "MidHeader",
+        data() {
+            return {
+                searchKeyword: "",
+            }
+        },
         methods: {
             goToHome() {
                 this.$router.push('/');
             },
-        }
+            goToResult() {
+                // this.$router.push('/search/searchResult/' + this.searchKeyword);
+                this.$router.replace({ name: "searchResult", query: {query: this.searchKeyword} })
+                // this.$router.replace({ path: "/search/searchResult", query: {query: this.searchKeyword} })
+            },
+        },
     }
 </script>
 
@@ -96,6 +107,10 @@
         background: transparent;
         border: 0;
         border-bottom: 2px solid #000;
+    }
+
+    input:focus {
+        outline: none;
     }
 
     .my_info {

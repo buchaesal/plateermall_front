@@ -22,7 +22,7 @@
     import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
-        name: "TopHeader.vue",
+        name: "TopHeader",
         data() {
             return {
                 userInfo: '',

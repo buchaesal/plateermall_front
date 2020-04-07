@@ -1,28 +1,30 @@
 class GoodsModel {
+    goodsCode = "";
     imgUrl = "";
     modelNo = "";
-    goodsCode = "";
     seller = "";
     copy = "";
     title = "";
-    originalPrice = "";
-    dcRate = "";
-    saleCnt = "";
+    originalPrice = 0;
+    benefitPrice = 0;
+    dcRate = 0;
+    saleCnt = 0;
     category = "";
-    shippingDays = "";
-    shippingFee = "";
+    shippingDays = 0;
+    shippingFee = 0;
     cardPromotions = "";
     infoTable = "";
     notice = "";
 
-    constructor(imgUrl, goodsCode, seller, copy, title, originalPrice, dcRate, saleCnt, options, cardPromotions,
-                category, modelNo, shippingDays, shippingFee, infoTable, notice) {
+    constructor(goodsCode, imgUrl, seller, copy, title, originalPrice, benefitPrice, dcRate, saleCnt, options,
+                cardPromotions, category, modelNo, shippingDays, shippingFee, infoTable, notice) {
         this.imgUrl = imgUrl,
             this.goodsCode = goodsCode,
             this.seller = seller,
             this.copy = copy,
             this.title = title,
             this.originalPrice = originalPrice,
+            this.benefitPrice = benefitPrice,
             this.dcRate = dcRate,
             this.saleCnt = saleCnt,
             this.options = options,
