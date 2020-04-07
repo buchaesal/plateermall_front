@@ -20,7 +20,7 @@
 
 <script>
     export default {
-        name: "BottomHeader.vue",
+        name: "BottomHeader",
         methods: {
             goToHome() {
                 this.$router.push('/');

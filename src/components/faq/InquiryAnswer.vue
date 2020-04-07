@@ -66,7 +66,7 @@
         async created() {
             this.userInfo = await getCurrentUserInfo();
             this.myQuestionList = await getMyQuestionList(this.userInfo.name);
-            console.log(this.myQuestionList);
+            // console.log(this.myQuestionList);
             this.answerIncrement();
         },
         methods : {

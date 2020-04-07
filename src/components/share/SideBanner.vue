@@ -62,7 +62,7 @@
     // import SideBannerGoodsModel from "./model/SideBannerGoodsModel";
 
     export default {
-        name: "SideBanner.vue",
+        name: "SideBanner",
         data() {
             return {
                 isVisible: false,

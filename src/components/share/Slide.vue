@@ -23,7 +23,7 @@
 
 <script>
     export default {
-        name: "Slide.vue"
+        name: "Slide"
     }
 </script>
 
