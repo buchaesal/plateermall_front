@@ -122,9 +122,6 @@
             },
             selectedDefaultId: function () {
                 return this.$store.state.shippingSpotListStore.selectedDefaultId;
-            },
-            defaultAddress: function () {
-                return this.$store.state.shippingSpotListStore.defaultAddress;
             }
         },
         methods: {
