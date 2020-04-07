@@ -10,14 +10,8 @@
         </div>
 
         <div v-else>
-            <div class="category-option">
-                <sui-dropdown
-                        placeholder="카테고리 전체"
-                        selection
-                        :options="options"
-                        v-model="selectOption"
-
-                />
+            <div class="search-wishlist">
+                <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
             </div>
             <div class="wishlist-container">
                 <sui-card-group :items-per-row="4">
@@ -54,27 +48,10 @@
             return {
                 wishListGoodsCodes: [],
                 wishListGoods: [],
-                selectOption: "",
-                options: [],
+                searchTxt: "",
             }
         },
         computed: {
-            // wishListGoodsCodes: function () {
-            //     console.log("wishListGoodsCode")
-            //     return this.$store.state.wishListStore.wishListGoodsCodes;
-            // },
-            // wishListGoods: function () {
-            //     console.log("wishListGoods")
-            //     let wishListGoodsCodes = this.wishListGoodsCodes;
-            //     let wishListGoods = [];
-            //     wishListGoodsCodes.forEach(goodsCode => {
-            //         let goodsApi = new GoodsApi();
-            //         // this.$store.commit('getGoodsModel', goodsCode);
-            //         // wishListGoods = goodsApi.getGoods(goodsCode)
-            //         wishListGoods.push(goodsApi.getGoods(goodsCode));
-            //     });
-            //     return wishListGoods;
-            // },
             wishProductCount: function () {
                 return this.wishListGoodsCodes.length;
             },
@@ -83,19 +60,26 @@
             async setGoodsFromGoodsCodes() {
                 let goodsApi = new GoodsApi();
 
+                let tempWishListGoods = [];
+
                 for (let index in this.wishListGoodsCodes) {
-                    this.wishListGoods.push(await goodsApi.getGoods(this.wishListGoodsCodes[index]));
+                    tempWishListGoods.push(await goodsApi.getGoods(this.wishListGoodsCodes[index]));
                 }
+
+                if (this.searchTxt !== "") {
+                    tempWishListGoods = tempWishListGoods.filter((goods) => goods.title.includes(this.searchTxt));
+                }
+
+                this.wishListGoods = tempWishListGoods;
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);
             },
             async setWishList() {
                 let wishListApi = new WishListApi();
-                this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes();
-                console.log("wishListGoodsCodes : " + this.wishListGoodsCodes);
+                this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes(this.$store.state.cartListStore.userInfo.email);
+
                 await this.setGoodsFromGoodsCodes();
-                // this.$store.commit('getWishListFromApi');
             },
             cancelWish(goodsCode) {
                 let wishListApi = new WishListApi();
@@ -108,16 +92,16 @@
                     .catch(function (error) {
                         console.log(error);
                     });
+            },
+            searchWish() {
+                this.wishListGoods = [];
+                this.setWishList();
             }
         },
-        created: function () {
+        async created() {
+            await this.$store.dispatch('getLoginUserInfo');
             this.setWishList();
         },
-        watch: {
-            selectOption() {
-                console.log(this.selectOption);
-            }
-        }
     }
 </script>
 
@@ -147,7 +131,7 @@
         float: right;
     }
 
-    .category-option {
+    .search-wishlist {
         float: right;
     }
 

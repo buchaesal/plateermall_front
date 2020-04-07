@@ -1,7 +1,7 @@
-import WishListApi from "../api/WishListApi"
+import {getCurrentUserInfo} from "../api/UserApi";
 
 const state = {
-    wishListGoodsCodes: [],
+    userInfo: {}
 }
 
 const getters = {
@@ -9,14 +9,17 @@ const getters = {
 }
 
 const mutations = {
-    getWishListFromApi(state){
-        let wishListApi = new WishListApi();
-        state.wishListGoodsCodes = wishListApi.getWishListGoodsCodes();
+    getLoginUserInfo(state, userInfo) {
+        state.userInfo = userInfo;
     }
 }
 
 const actions = {
+    async getLoginUserInfo(context) {
+        let userInfo = await getCurrentUserInfo();
 
+        context.commit('getLoginUserInfo', userInfo);
+    }
 }
 
 export default {

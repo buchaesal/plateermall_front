@@ -253,7 +253,8 @@
                 let goodsCodeArr = [];
                 this.checkedCartList.map((cart) => {
                     goodsCodeArr.push({
-                        "goodsCode" : cart.goodsCode
+                        "goodsCode" : cart.goodsCode,
+                        "userId" : this.$store.state.cartListStore.userInfo.email
                     });
                 });
 
@@ -291,7 +292,6 @@
             await this.$store.dispatch('getLoginUserInfo');
             await this.$store.dispatch('getCartList');
             this.cardInfoList = await requestCardDiscountInfo();
-            console.log(this.$store.state.cartListStore.cartList);
         },
 
         computed: {
