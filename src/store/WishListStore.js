@@ -17,7 +17,6 @@ const mutations = {
 const actions = {
     async getLoginUserInfo(context) {
         let userInfo = await getCurrentUserInfo();
-
         context.commit('getLoginUserInfo', userInfo);
     }
 }
