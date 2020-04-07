@@ -23,7 +23,7 @@
     import MiniSlide from "./MiniSlide";
 
     export default {
-        name: "Contents.vue",
+        name: "Contents",
         components: {
             GoodsListCol3,
             GoodsListCol4,
