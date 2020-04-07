@@ -424,6 +424,7 @@
     import {requestAddCart} from "../../../api/CartListApi";
     import WishListApi from "../../../api/WishListApi";
     import {getCurrentUserInfo} from "../../../api/UserApi";
+    import CartListModel from "../../my/model/CartListModel";
 
     export default {
         name: "GoodsDetail",
@@ -596,11 +597,12 @@
                 this.tooltip2Display = false;
             },
             addCart() {
-                requestAddCart({
-                    userId: (this.userInfo).email,
-                    goodsCode: this.$route.params.goodsCode,
-                    selectedOptions: this.selectedOptions
-                });
+                // requestAddCart({
+                //     userId: (this.userInfo).email,
+                //     goodsCode: this.$route.params.goodsCode,
+                //     selectedOptions: this.selectedOptions
+                // });
+                requestAddCart(new CartListModel((this.userInfo).email, this.$route.params.goodsCode, this.selectedOptions));
                 this.toggle();
             },
             toggle() {

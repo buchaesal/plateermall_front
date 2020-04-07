@@ -2,7 +2,7 @@
     <div id="main-page-container">
         <Header></Header>
         <sui-container>
-            <div style="margin-top:30px; margin-bottom:30px;">
+            <div style="margin-bottom:30px;">
                 <h1>쇼핑백</h1>
             </div>
 
@@ -384,5 +384,9 @@
 
     .ui.container {
         overflow: hidden;
+    }
+
+    #main-page-container {
+        margin-top: 250px;
     }
 </style>
