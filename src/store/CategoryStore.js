@@ -9,6 +9,7 @@ const state = {
         "name": null,
         "categoryCode": null,
         "parentsCode": null,
+        "commint": null,
         "goodsList": null
     },
     errorInfo: {},
