@@ -27,11 +27,20 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button class="select-order-goods-button" @click.native="toggle"
-                                                    :disabled="isChecked==true">
+                                        <sui-button class="select-order-goods-button" @click.native="toggle" :disabled="isChecked">
                                             주문 상품 선택
                                         </sui-button>
-                                        <sui-checkbox label="상품 외 문의" v-model="isChecked"/>
+                                        <sui-checkbox label="상품 외 문의" v-model="isChecked" class="form-checkbox"/>
+
+<!--                                        수정 필요-->
+                                        <span v-if="!isChecked">
+<!--                                            <span class="goods-img">-->
+<!--                                                <img :src="myOrderGoods.imgUrl">-->
+                                                {{myOrderGoods.title}}
+<!--                                            </span>-->
+                                        </span>
+                                        <div v-else></div>
+
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
@@ -78,31 +87,29 @@
             <sui-modal-content>
                 <sui-modal-description>
                     <ul class="modal-msg">
-                        <li>- 현재 주문접수, 결제완료, 배송준비중인 상품만 선택 가능합니다.</li>
-                        <li>- 하나의 주문번호만 선택 가능하며, 동일한 주문번호의 상품은 복수 선택 가능합니다.</li>
+                        <li> 현재 현재 접속중인 계정의 결제완료 이전 상품만 문의가 가능합니다. </li>
+                        <li> 상품에 대한 자세한 문의는 각 상품 페이지를 이용해주세요.</li>
+                        <li> 하나의 상품에 대한 문의만 가능하며, 2개이상 상품에 대한 문의는 불가능합니다.</li>
                     </ul>
 
                     <hr>
 
                     <div v-for="(goods, index) in goodsInOrderList" :key="index" v-show="myOrderList.length>0" class="goods-list">
-<!--                        <div class="my-order-list-title">-->
-<!--                            <p class="order-date">{{myOrderList[index].orderState.stateChangeDate}}</p>-->
-<!--                            <a href="#" class="order-detail">자세히보기 ></a>-->
-<!--                        </div>-->
 
                         <div class="my-order-list-goods">
-                            <sui-checkbox class="goods-checkbox"/>
+<!--                            <sui-checkbox class="goods-checkbox" radio/>-->
                             <span class="goods-img">
-                                <img :src="goods.imgUrl"> 
+                                <img :src="goods.imgUrl">
                             </span>
 
                             <div class="my-order-list-info">
                                 <p>{{goods.title}}</p>
                             </div>
                             <span class="my-order-list-price">{{goods.originalPrice}}원</span>
-                            <div class="my-order-list-button">
-                                <p>{{myOrderList[index].sta}}</p>
-                            </div>
+                            <span class="my-order-list-date">{{myOrderList[index].orderDate}}</span>
+                            <span class="my-order-list-radio">
+                                <sui-checkbox radio name="my-order-list-radio" :value="myOrderList[index]" v-model="myOrderQuestion"/>
+                            </span>
                         </div>
                         <hr>
                     </div>
@@ -114,7 +121,7 @@
                 </sui-modal-description>
             </sui-modal-content>
             <sui-modal-actions>
-                <sui-button secondary>등록</sui-button>
+                <sui-button secondary @click="registerMyOrderQuestion">등록</sui-button>
                 <sui-button basic secondary @click.native="toggle">취소</sui-button>
             </sui-modal-actions>
         </sui-modal>
@@ -140,6 +147,9 @@
                 userInfo: '',
                 recentPostId: '',
                 isChecked: false,
+                myOrderGoods: '',
+                myOrderQuestion: '',
+                test: {},
                 goodsApi : new GoodsApi(),
                 goodsInOrderList: [],
                 myOrderList: [],
@@ -164,6 +174,12 @@
             }
         },
         methods: {
+            async registerMyOrderQuestion(){
+                this.open = !this.open;
+                this.myOrderGoods = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
+                // this.test = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
+                // console.log(this.test);
+            },
             toggle() {
                 this.open = !this.open;
             },
@@ -205,7 +221,7 @@
         padding-left: 0;
     }
 
-    ul {
+    .bull_list-dash {
         list-style: none;
     }
 
@@ -223,17 +239,8 @@
         padding: 11px 20px !important;
     }
 
-    .ui.checkbox {
-        margin-left: 10px;
-        margin-top: 8px;
-    }
-
     #buttons {
         text-align: center;
-    }
-
-    .date_box {
-        margin-bottom: 20px;
     }
 
     .select-order-goods-button {
@@ -244,19 +251,8 @@
         padding: 30px 40px !important;
     }
 
-    .modal-msg {
-    }
-
-    .date_box {
-        padding: 20px 40px;
-    }
-
-    .modal-date-input {
-        height: 35px;
-        border-radius: 3px;
-        border: solid 1px black;
-        margin: 0 15px;
-        padding: 0 15px;
+    .modal-msg li{
+        margin-bottom: 10px;
     }
 
     hr {
@@ -267,43 +263,17 @@
         text-align: center;
     }
 
-    .order_header {
-        border-top: 3px solid #000;
-        border-bottom: 1px solid rgba(179, 179, 179, 0.58);
-    }
-
-
-    .my-order-list-title {
-        background-color: GhostWhite;
-        display: inline-block;
-        padding: 8px 30px;
-        width: 100%;
-    }
-
-    .order-date {
-        display: inline-block;
-        float: left;
-        margin-top: 9px;
-        color: black;
-    }
-
-    .order-detail {
-        float: right;
-        margin-top: 9px;
-        color: black;
-    }
-
     .my-order-list-goods {
         margin: 8px 0;
         background-color: white;
         font-size: 0.9rem;
     }
 
-    .goods-checkbox {
-        float: left;
-        vertical-align: middle;
-        margin: 60px 30px 0 30px;
-    }
+    /*.goods-checkbox {*/
+    /*    float: left;*/
+    /*    vertical-align: middle;*/
+    /*    margin: 60px 30px 0 30px;*/
+    /*}*/
 
     .goods-img {
         width: 50px;
@@ -322,19 +292,16 @@
         margin-left: 40px;
     }
 
-    .my-order-list-price {
+    .my-order-list-price, .my-order-list-date {
         margin: 0 50px;
     }
 
-    .my-order-list-button {
-        display: inline-block;
-        margin-left: 10px;
+    .goods-list {
         text-align: center;
-        vertical-align: middle
     }
 
-    .btn1 {
-        display: block;
+    .form-checkbox {
+        margin-right: 30px;
     }
 
 </style>
