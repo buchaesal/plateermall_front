@@ -1,5 +1,19 @@
 import request,{COMMENTS_URL} from './axios';
 
+export const loadFile = function(fileList){
+    return request.post(COMMENTS_URL + `/uploadfile`, fileList, {
+        headers:{
+            'Content-Type' : 'multipart/form-data'
+        }
+    }).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
 export const requestPhotoComments = function(goodsCode){
     return request.get(COMMENTS_URL + `/getphotolist/${goodsCode}`).then(
         (response) => {

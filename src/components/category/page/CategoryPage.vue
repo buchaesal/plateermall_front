@@ -97,14 +97,12 @@
                 this.categoryCode = categoryCode;
             },
             getCategoryInfo() {
-                console.log("getCategoryInfo")
                 this.$store.commit("getCategory", this.categoryCode);
             },
             getCategoryList() {
                 this.$store.commit("getCategoryList", this.categoryCode);
             },
             getCategoryGoods() {
-                console.log("getCategoryGoods")
                 this.$store.commit("getCategoryGoodsModelList",
                     {
                         categoryCode: this.categoryCode,
