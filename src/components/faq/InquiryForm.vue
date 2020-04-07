@@ -93,7 +93,7 @@
                         <div class="my-order-list-goods">
                             <sui-checkbox class="goods-checkbox"/>
                             <span class="goods-img">
-                                <img :src="goods.imgUrl">
+                                <img :src="goods.imgUrl"> 
                             </span>
 
                             <div class="my-order-list-info">
