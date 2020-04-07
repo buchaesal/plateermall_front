@@ -1,4 +1,4 @@
-class WishlistModel {
+class WishListModel {
     goodsCode = "";
     userId = "";
 
@@ -8,4 +8,4 @@ class WishlistModel {
     }
 }
 
-export default WishlistModel;
+export default WishListModel;

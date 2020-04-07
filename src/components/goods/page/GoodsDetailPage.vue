@@ -425,7 +425,7 @@
     import WishListApi from "../../../api/WishListApi";
     import {getCurrentUserInfo} from "../../../api/UserApi";
     import CartListModel from "../../my/model/CartListModel";
-    import WishlistModel from "../../my/model/WishlistModel";
+    import WishListModel from "../../my/model/WishListModel";
 
     export default {
         name: "GoodsDetail",
@@ -579,7 +579,7 @@
                     //     "goodsCode": this.$route.params.goodsCode
                     // });
 
-                    wishListApi.addGoodsWish(new WishlistModel(this.$route.params.goodsCode, (this.userInfo).email));
+                    wishListApi.addGoodsWish(new WishListModel(this.$route.params.goodsCode, (this.userInfo).email));
 
                     alert("위시리스트에 담겼습니다.")
                 } else {
