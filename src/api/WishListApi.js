@@ -21,8 +21,8 @@ class WishListApi {
             });
     }
 
-    getWishListGoodsCodes(userId, searchTxt) {
-        return request.get(WISHLIST_URL + `/${userId}` + `/${searchTxt}`).then(
+    getWishListGoodsCodes(userId) {
+        return request.get(WISHLIST_URL + `/${userId}`).then(
             (response) => {
                 return response.data;
             }
