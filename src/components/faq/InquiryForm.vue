@@ -27,11 +27,20 @@
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button class="select-order-goods-button" @click.native="toggle"
-                                                    :disabled="isChecked==true">
+                                        <sui-button class="select-order-goods-button" @click.native="toggle" :disabled="isChecked">
                                             주문 상품 선택
                                         </sui-button>
-                                        <sui-checkbox label="상품 외 문의" v-model="isChecked"/>
+                                        <sui-checkbox label="상품 외 문의" v-model="isChecked" class="form-checkbox"/>
+
+<!--                                        수정 필요-->
+                                        <span v-if="!isChecked">
+<!--                                            <span class="goods-img">-->
+<!--                                                <img :src="myOrderGoods.imgUrl">-->
+                                                {{myOrderGoods.title}}
+<!--                                            </span>-->
+                                        </span>
+                                        <div v-else></div>
+
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
@@ -78,21 +87,41 @@
             <sui-modal-content>
                 <sui-modal-description>
                     <ul class="modal-msg">
-                        <li>- 최근 3개월의 주문 내역 입니다. 이전의 상품은 기간별 조회를 통해 가능합니다.</li>
-                        <li>- 하나의 주문번호만 선택 가능하며, 동일한 주문번호의 상품은 복수 선택 가능합니다.</li>
+                        <li> 현재 현재 접속중인 계정의 결제완료 이전 상품만 문의가 가능합니다. </li>
+                        <li> 상품에 대한 자세한 문의는 각 상품 페이지를 이용해주세요.</li>
+                        <li> 하나의 상품에 대한 문의만 가능하며, 2개이상 상품에 대한 문의는 불가능합니다.</li>
                     </ul>
-                    <div class="date_box">
-                        <input type="date" class="modal-date-input">
-                        ~
-                        <input type="date" class="modal-date-input">
-                        <sui-button class="date-check-btn" basic secondary>조회</sui-button>
-                    </div>
+
                     <hr>
-                    <p style="text-align: center">주문 내역이 없습니다.</p>
+
+                    <div v-for="(goods, index) in goodsInOrderList" :key="index" v-show="myOrderList.length>0" class="goods-list">
+
+                        <div class="my-order-list-goods">
+<!--                            <sui-checkbox class="goods-checkbox" radio/>-->
+                            <span class="goods-img">
+                                <img :src="goods.imgUrl">
+                            </span>
+
+                            <div class="my-order-list-info">
+                                <p>{{goods.title}}</p>
+                            </div>
+                            <span class="my-order-list-price">{{goods.originalPrice}}원</span>
+                            <span class="my-order-list-date">{{myOrderList[index].orderDate}}</span>
+                            <span class="my-order-list-radio">
+                                <sui-checkbox radio name="my-order-list-radio" :value="myOrderList[index]" v-model="myOrderQuestion"/>
+                            </span>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div v-show="myOrderList.length==0">
+                        <p class="modal-p">주문 내역이 없습니다.</p>
+                    </div>
+
                 </sui-modal-description>
             </sui-modal-content>
             <sui-modal-actions>
-                <sui-button secondary>등록</sui-button>
+                <sui-button secondary @click="registerMyOrderQuestion">등록</sui-button>
                 <sui-button basic secondary @click.native="toggle">취소</sui-button>
             </sui-modal-actions>
         </sui-modal>
@@ -104,6 +133,8 @@
     import FaqHeader from "./FaqHeader";
     import {registrationQuestion, getRecentQuestion} from "../../api/FaqApi";
     import {getCurrentUserInfo} from "../../api/UserApi";
+    import {getSpecificStatusOrderList} from "../../api/OrderApi";
+    import GoodsApi from "../../api/GoodsApi";
 
     export default {
         name: "InquiryForm",
@@ -115,6 +146,13 @@
                 open: false,
                 userInfo: '',
                 recentPostId: '',
+                isChecked: false,
+                myOrderGoods: '',
+                myOrderQuestion: '',
+                test: {},
+                goodsApi : new GoodsApi(),
+                goodsInOrderList: [],
+                myOrderList: [],
                 questionObject: {
                     territory: '',
                     state: '',
@@ -126,7 +164,6 @@
                     smsAlarm: '',
                     emailAlarm: '',
                 },
-                isChecked: false,
                 options: [
                     {text: '주문내역확인', value: '주문내역확인',},
                     {text: '배송확인', value: '배송확인',},
@@ -137,6 +174,12 @@
             }
         },
         methods: {
+            async registerMyOrderQuestion(){
+                this.open = !this.open;
+                this.myOrderGoods = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
+                // this.test = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
+                // console.log(this.test);
+            },
             toggle() {
                 this.open = !this.open;
             },
@@ -146,15 +189,21 @@
                 } else {
                     await registrationQuestion(this.questionObject);
                     this.recentPostId = await getRecentQuestion();
-                    alert(this.recentPostId);
                     alert("등록이 완료되었습니다.");
-                    await this.$router.push("/myPageMain");
+                    this.$router.push("/answer/"+this.recentPostId);
                 }
-            }
+            },
+            async setGoodsList(myOrderList){
+                for(let order in myOrderList){
+                    this.goodsInOrderList.push(await this.goodsApi.getGoods(myOrderList[order].goodsId));
+                }
+            },
         },
         async created() {
             this.userInfo = await getCurrentUserInfo();
             this.questionObject.writer = this.userInfo.name;
+            this.myOrderList = await getSpecificStatusOrderList('normal', 'order-complete', this.userInfo.email);
+            this.setGoodsList(this.myOrderList);
         },
     }
 </script>
@@ -172,7 +221,7 @@
         padding-left: 0;
     }
 
-    ul {
+    .bull_list-dash {
         list-style: none;
     }
 
@@ -190,17 +239,8 @@
         padding: 11px 20px !important;
     }
 
-    .ui.checkbox {
-        margin-left: 10px;
-        margin-top: 8px;
-    }
-
     #buttons {
         text-align: center;
-    }
-
-    .date_box {
-        margin-bottom: 20px;
     }
 
     .select-order-goods-button {
@@ -211,23 +251,57 @@
         padding: 30px 40px !important;
     }
 
-    .modal-msg {
-    }
-
-    .date_box {
-        padding: 20px 40px;
-    }
-
-    .modal-date-input {
-        height: 35px;
-        border-radius: 3px;
-        border: solid 1px black;
-        margin: 0 15px;
-        padding: 0 15px;
+    .modal-msg li{
+        margin-bottom: 10px;
     }
 
     hr {
         margin: 30px;
+    }
+
+    .modal-p {
+        text-align: center;
+    }
+
+    .my-order-list-goods {
+        margin: 8px 0;
+        background-color: white;
+        font-size: 0.9rem;
+    }
+
+    /*.goods-checkbox {*/
+    /*    float: left;*/
+    /*    vertical-align: middle;*/
+    /*    margin: 60px 30px 0 30px;*/
+    /*}*/
+
+    .goods-img {
+        width: 50px;
+        height: auto;
+        vertical-align: middle;
+    }
+
+    .goods-img img {
+        width: 100px;
+        height: auto;
+    }
+
+    .my-order-list-info {
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 40px;
+    }
+
+    .my-order-list-price, .my-order-list-date {
+        margin: 0 50px;
+    }
+
+    .goods-list {
+        text-align: center;
+    }
+
+    .form-checkbox {
+        margin-right: 30px;
     }
 
 </style>

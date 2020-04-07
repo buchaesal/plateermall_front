@@ -4,8 +4,8 @@
             <div class="inquiry_header">
                 <FaqHeader :title="'1:1 답변확인'"></FaqHeader>
                 <ul class="bull_list-dash">
+                    <li>- 본인이 등록한 문의에 대한 페이지입니다.</li>
                     <li>- 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
-                    <li>- 문의 상태가 ‘처리중’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
                 </ul>
             </div>
             <ul class="status" id="div_countDetail">
