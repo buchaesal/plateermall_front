@@ -123,7 +123,7 @@
         name: "ReviewForm",
         data(){
             return{
-
+                fileList:[],
             }
         },
         computed: {
@@ -144,6 +144,10 @@
                 if (this.$refs.commentimage.files && this.$refs.commentimage.files[0]) {
                     let reader = new FileReader();
                     
+                    for(let index in this.$refs.commentimage.files){
+                        this.fileList.push(this.$refs.commentimage.files[index]);
+                    }
+
                     reader.onload = function(event){
                         review.myPhoto = event.target.result;
                     }
@@ -152,27 +156,27 @@
                     reader.readAsDataURL(this.$refs.commentimage.files[0]);
                 }
 
-                if(this.$refs.commentimage.files && this.$refs.commentimage.files[1]){
-                    let reader = new FileReader();
+                // if(this.$refs.commentimage.files && this.$refs.commentimage.files[1]){
+                //     let reader = new FileReader();
 
-                    reader.onload = function(event){
-                        review.myPhoto2 = event.target.result;
-                    }
+                //     reader.onload = function(event){
+                //         review.myPhoto2 = event.target.result;
+                //     }
                     
-                    this.changeValue();
-                    reader.readAsDataURL(this.$refs.commentimage.files[1]);
-                }
+                //     this.changeValue();
+                //     reader.readAsDataURL(this.$refs.commentimage.files[1]);
+                // }
 
-                if(this.$refs.commentimage.files && this.$refs.commentimage.files[2]){
-                    let reader = new FileReader();
+                // if(this.$refs.commentimage.files && this.$refs.commentimage.files[2]){
+                //     let reader = new FileReader();
                     
-                    reader.onload = function(event){
-                        review.myPhoto3 = event.target.result;
-                    }
+                //     reader.onload = function(event){
+                //         review.myPhoto3 = event.target.result;
+                //     }
                     
-                    this.changeValue();
-                    reader.readAsDataURL(this.$refs.commentimage.files[2]);
-                }
+                //     this.changeValue();
+                //     reader.readAsDataURL(this.$refs.commentimage.files[2]);
+                // }
             },
             cancelUpload(index){
                 if(confirm("사진을 삭제하시겠습니까?")) {
