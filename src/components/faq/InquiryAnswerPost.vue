@@ -32,6 +32,12 @@
                                     <sui-input v-else class="edit-data" v-model="updateQuestionObject.title" :placeholder="questionDetail.title"/>
                                 </sui-table-cell>
                             </sui-table-row>
+                            <sui-table-row v-show="questionDetail.goodsTitle!=''">
+                                <sui-table-cell class="form_head">문의 상품</sui-table-cell>
+                                <sui-table-cell>
+                                    {{questionDetail.goodsTitle}}
+                                </sui-table-cell>
+                            </sui-table-row>
                             <sui-table-row>
                                 <sui-table-cell class="form_head">내용</sui-table-cell>
                                 <sui-table-cell class="answer-content">
@@ -138,6 +144,7 @@
                         this.$router.push("/board");
                     }
                 }
+                this.goToBack();
             },
             async questionUpdate() {
                 this.updateBtnChange();
@@ -152,8 +159,13 @@
                 } else if (this.updateBtn == 0) {
                     this.updateBtn = 1;
                 } else {
+                    if(this.questionDetail.goodsTitle!='')
+                        alert("문의에 등록된 문의 상품은 수정할 수 없습니다.");
                     this.updateBtn = 0;
                 }
+            },
+            goToBack() {
+                this.$router.go(-2);
             },
         },
     }

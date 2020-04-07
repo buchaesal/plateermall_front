@@ -253,7 +253,8 @@
                 let goodsCodeArr = [];
                 this.checkedCartList.map((cart) => {
                     goodsCodeArr.push({
-                        "goodsCode" : cart.goodsCode
+                        "goodsCode" : cart.goodsCode,
+                        "userId" : this.$store.state.cartListStore.userInfo.email
                     });
                 });
 
@@ -276,7 +277,7 @@
                     alert("구매하실 상품을 먼저 선택해주세요.");
                 } else {
                     this.$router.push({
-                        name: "ordercomplete", params: {
+                        name: "order", params: {
                             orderData:
                                 {
                                     goodsCode: this.$route.params.goodsCode,
@@ -291,7 +292,6 @@
             await this.$store.dispatch('getLoginUserInfo');
             await this.$store.dispatch('getCartList');
             this.cardInfoList = await requestCardDiscountInfo();
-            console.log(this.$store.state.cartListStore.cartList);
         },
 
         computed: {

@@ -130,9 +130,6 @@
             formattedPayload() {
                 return JSON.stringify(this.currentReview.payload, null, 2);
             },
-            isModalOpen(){
-                return this.$store.state.commentStore.isModalOpen;
-            },
         },
         methods: {
             handleRate(evt, props) {
