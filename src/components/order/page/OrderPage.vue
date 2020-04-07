@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" style="margin-top: 185px;">
     <Header/>
     <div class="order-page">
         <div class="title">
@@ -35,11 +35,24 @@
             <h3>배송정보</h3>
             <OrderDelivery/>        
         </div>
+
+        <div class="sub-title">
+            <h3>할인/포인트</h3>
+            <OrderPoint/>
+        </div>
+
+        <div class="sub-title">
+            <h3>결제수단</h3>
+            <OrderPayment/>
+        </div>
+
+        <div class="sub-title">
+            <h3>주문동의</h3>
+            <sui-checkbox label="주문, 결제 서비스에 동의합니다." />
+        </div>
     </div>
+
         <OrderInfo/>
-
-        
-
         <Footer/>
     </div>
     
@@ -52,6 +65,8 @@
     import OrderInfo from "../OrderInfo";
     import OrderUser from "../OrderUser";
     import OrderDelivery from "../OrderDelivery";
+    import OrderPoint from "../OrderPoint";
+    import OrderPayment from "../OrderPayment";
 
     export default {
         name: "OrderPage",
@@ -62,6 +77,8 @@
             OrderInfo,
             OrderUser,
             OrderDelivery,
+            OrderPoint,
+            OrderPayment,
         },
         data() {
             return {
@@ -78,8 +95,6 @@
         },
         async created(){
             this.orderData = this.$route.params.orderData;
-
-            console.log(this.orderData);
         },
 
     }
