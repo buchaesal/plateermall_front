@@ -33,12 +33,12 @@
                                         <sui-checkbox label="상품 외 문의" v-model="isChecked" class="form-checkbox"/>
 
 <!--                                        수정 필요-->
-                                        <span v-if="!isChecked">
+                                        <div class="select-my-order" v-if="!isChecked">
 <!--                                            <span class="goods-img">-->
 <!--                                                <img :src="myOrderGoods.imgUrl">-->
                                                 {{myOrderGoods.title}}
 <!--                                            </span>-->
-                                        </span>
+                                        </div>
                                         <div v-else></div>
 
                                     </sui-table-cell>
@@ -93,7 +93,7 @@
                     </ul>
 
                     <hr>
-
+                    <div class="goods-div">
                     <div v-for="(goods, index) in goodsInOrderList" :key="index" v-show="myOrderList.length>0" class="goods-list">
 
                         <div class="my-order-list-goods">
@@ -112,6 +112,7 @@
                             </span>
                         </div>
                         <hr>
+                    </div>
                     </div>
 
                     <div v-show="myOrderList.length==0">
@@ -158,7 +159,7 @@
                     state: '',
                     date: new Date().getFullYear() + ' - ' + (new Date().getMonth() + 1) + ' - ' + new Date().getDate(),
                     writer: '',
-                    goodsCode: '',
+                    goodsTitle: '',
                     title: '',
                     description: '',
                     smsAlarm: '',
@@ -177,8 +178,7 @@
             async registerMyOrderQuestion(){
                 this.open = !this.open;
                 this.myOrderGoods = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
-                // this.test = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
-                // console.log(this.test);
+                this.questionObject.goodsTitle = this.myOrderGoods.title;
             },
             toggle() {
                 this.open = !this.open;
@@ -188,6 +188,7 @@
                     alert("문의내용을 채워주세요.")
                 } else {
                     await registrationQuestion(this.questionObject);
+                    // console.log(this.questionObject);
                     this.recentPostId = await getRecentQuestion();
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/answer/"+this.recentPostId);
@@ -296,12 +297,17 @@
         margin: 0 50px;
     }
 
+    .goods-div {
+        max-height: 500px;
+        overflow: auto;
+    }
+
     .goods-list {
         text-align: center;
     }
 
-    .form-checkbox {
-        margin-right: 30px;
+    .select-my-order {
+        margin-top: 10px;
     }
 
 </style>
