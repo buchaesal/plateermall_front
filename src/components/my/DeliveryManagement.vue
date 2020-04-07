@@ -159,6 +159,26 @@
                 await this.$store.dispatch('ADDRESS_LIST');
             },
             registerNewShippingSpot() {
+                if(!this.newShippingSpotModel.receiver){
+                    alert('받으시는 분을 입력해주세요.');
+                    return;
+                }
+
+                if(!this.newShippingSpotModel.spotAlias){
+                    alert('배송지명을 입력해주세요.');
+                    return;
+                }
+
+                if(!this.newShippingSpotModel.phoneNumber && !this.newShippingSpotModel.contactNumber){
+                    alert('연락처는 최소 1개 이상 입력해주세요.');
+                    return;
+                }
+
+                if(!this.newShippingSpotModel.roadAddress){
+                    alert('주소를 입력해주세요.');
+                    return;
+                }
+
                 if (confirm('저장 하시겠습니까?')) {
                     this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0 ? 1 : 0;
                     this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
@@ -169,6 +189,26 @@
                 }
             },
             modifyAddress() {
+                if(!this.modifyShippingSpotModel.receiver){
+                    alert('받으시는 분을 입력해주세요.');
+                    return;
+                }
+
+                if(!this.modifyShippingSpotModel.spotAlias){
+                    alert('배송지명을 입력해주세요.');
+                    return;
+                }
+
+                if(!this.modifyShippingSpotModel.phoneNumber && !this.modifyShippingSpotModel.contactNumber){
+                    alert('연락처는 최소 1개 이상 입력해주세요.');
+                    return;
+                }
+
+                if(!this.modifyShippingSpotModel.roadAddress){
+                    alert('주소를 입력해주세요.');
+                    return;
+                }
+
                 if (confirm('수정하시겠습니까?')) {
                     this.$store.dispatch('MODIFY_ADDRESS', this.modifyShippingSpotModel);
                     alert('배송지가 수정되었습니다.');
