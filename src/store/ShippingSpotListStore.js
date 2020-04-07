@@ -12,15 +12,12 @@ const state = {
     newShippingSpotForm: {},
     modifyShippingSPotForm: {},
     selectedDefaultId: null,
-    defaultAddress: {},
+    defaultAddress: {}
 }
 
 const getters = {}
 
 const mutations = {
-    updateShippingSpotList(state, list) {
-        state.shippingSpotList = list;
-    },
     getShippingSpotListFromApi(state, list) {
         state.shippingSpotList = list;
     },
