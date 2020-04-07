@@ -34,10 +34,7 @@
 
 <!--                                        수정 필요-->
                                         <div class="select-my-order" v-if="!isChecked">
-<!--                                            <span class="goods-img">-->
-<!--                                                <img :src="myOrderGoods.imgUrl">-->
                                                 {{myOrderGoods.title}}
-<!--                                            </span>-->
                                         </div>
                                         <div v-else></div>
 
@@ -160,6 +157,7 @@
                     date: new Date().getFullYear() + ' - ' + (new Date().getMonth() + 1) + ' - ' + new Date().getDate(),
                     writer: '',
                     goodsTitle: '',
+                    orderId:'',
                     title: '',
                     description: '',
                     smsAlarm: '',
@@ -178,6 +176,7 @@
             async registerMyOrderQuestion(){
                 this.open = !this.open;
                 this.myOrderGoods = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
+                this.questionObject.orderId = this.myOrderQuestion.goodsId;
                 this.questionObject.goodsTitle = this.myOrderGoods.title;
             },
             toggle() {
@@ -192,6 +191,7 @@
                     this.recentPostId = await getRecentQuestion();
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/answer/"+this.recentPostId);
+                    console.log(this.questionObject);
                 }
             },
             async setGoodsList(myOrderList){

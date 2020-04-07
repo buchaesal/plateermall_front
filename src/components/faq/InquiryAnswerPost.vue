@@ -38,6 +38,12 @@
                                     {{questionDetail.goodsTitle}}
                                 </sui-table-cell>
                             </sui-table-row>
+                            <sui-table-row v-show="questionDetail.goodsTitle!=''">
+                                <sui-table-cell class="form_head">문의 상품 주문번호</sui-table-cell>
+                                <sui-table-cell>
+                                    {{questionDetail.orderId}}
+                                </sui-table-cell>
+                            </sui-table-row>
                             <sui-table-row>
                                 <sui-table-cell class="form_head">내용</sui-table-cell>
                                 <sui-table-cell class="answer-content">
@@ -160,7 +166,7 @@
                     this.updateBtn = 1;
                 } else {
                     if(this.questionDetail.goodsTitle!='')
-                        alert("문의에 등록된 문의 상품은 수정할 수 없습니다.");
+                        alert("문의에 등록된 주문상품정보는 수정할 수 없습니다.");
                     this.updateBtn = 0;
                 }
             },
