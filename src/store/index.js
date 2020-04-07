@@ -8,6 +8,7 @@ import WishListStore from "./WishListStore";
 import UserStore from "./UserStore";
 import CategoryStore from "./CategoryStore";
 import OrderStateStore from "./OrderStateStore";
+import OrderDetailStore from "./OrderDetailStore";
 
 import Vuex from 'vuex';
 import Vue from 'vue';
@@ -30,5 +31,6 @@ export default new Vuex.Store({
         userStore: UserStore,
         categoryStore: CategoryStore,
         orderStateStore: OrderStateStore,
+        orderDetailStore: OrderDetailStore,
     }
 })

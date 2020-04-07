@@ -27,7 +27,7 @@
                 <a href="#">
                     <p class="name">포인트</p>
                 </a>
-                <p class="point"><em id="pointBlnc">{{userInfo.point ? point.toLocaleString() : 0}}</em>점</p>
+                <p class="point"><em id="pointBlnc">{{userInfo.point ? userInfo.point.toLocaleString() : 0}}</em>점</p>
             </div>
 <!--            <div class="item">-->
 <!--                <p class="icon">-->
@@ -53,15 +53,17 @@
 
 <script>
     import {getCurrentUserInfo} from "../../api/UserApi";
+    import UserModel from "./model/UserModel";
 
     export default {
         name: "UserInfo",
         data() {
             return {
-                userInfo: '',
+                userInfo: {}
             }
         },
         async created() {
+            this.userInfo = new UserModel();
             this.userInfo = await getCurrentUserInfo();
         }
     }
