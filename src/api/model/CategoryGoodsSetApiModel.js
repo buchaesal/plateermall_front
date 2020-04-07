@@ -1,10 +1,10 @@
 class CategoryGoodsSetApiModel {
     categoryCode = "";
-    orderSet = "";
+    sort = "";
 
-    constructor(categoryCode, orderSet) {
+    constructor(categoryCode, sort) {
         this.categoryCode = categoryCode;
-        this.orderSet = orderSet;
+        this.sort = sort;
     }
 }
 
