@@ -110,15 +110,8 @@
         data() {
             return {
                 newShippingSpotModel: new ShippingSpotModel(),
-                createNewShippingSpot: false,
                 openShippingSpotFormFlag: false,
-                openModifyShippingSpotFormFlag: false,
-                defaultShippingSpot: {},
-                otherShippingSpots: [],
                 isModifyForm: false,
-                defaultShippingSpotCopy: {},
-                shippingSpotSize: -1,
-                checkedRadio: 'defaultShippingSpot',
                 selectedDefault: 0,
                 modifyShippingSpotModel: {}
             }
@@ -129,9 +122,6 @@
             },
             selectedDefaultId: function () {
                 return this.$store.state.shippingSpotListStore.selectedDefaultId;
-            },
-            defaultAddress: function () {
-                return this.$store.state.shippingSpotListStore.defaultAddress;
             }
         },
         methods: {
@@ -158,32 +148,15 @@
                     return;
                 }
 
-                if (this.selectedDefaultId === this.defaultAddress.id) {
-                    alert("기본 배송지입니다.");
+                if (this.selectedDefault === this.selectedDefaultId) {
+                    alert("이미 기본 배송지입니다.");
                     return;
                 }
                 await this.$store.dispatch('setDefaultShippingSpot', this.selectedDefault);
                 alert('기본 배송지로 설정하였습니다.')
             },
-            updateShippingSpotList(defaultShippingSpot, otherShippingSpots) {
-                otherShippingSpots.push(defaultShippingSpot);
-                this.$store.commit('updateShippingSpotList', otherShippingSpots);
-                this.filterDefaultAndOtherSpots();
-            },
             async getShippingSpotListFromApi() {
                 await this.$store.dispatch('ADDRESS_LIST');
-            },
-            filterDefaultAndOtherSpots() {
-                console.log('filterDefault')
-                this.shippingSpotSize = this.shippingSpots.length;
-                this.otherShippingSpots = [];
-                this.shippingSpots.filter((shippingSpot) => {
-                    if (shippingSpot.isDefault) {
-                        this.defaultShippingSpot = shippingSpot;
-                    } else {
-                        this.otherShippingSpots.push(shippingSpot);
-                    }
-                });
             },
             registerNewShippingSpot() {
                 if (confirm('저장 하시겠습니까?')) {
