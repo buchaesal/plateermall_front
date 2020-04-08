@@ -17,7 +17,7 @@
                 <sui-card-group :items-per-row="4">
                     <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
                               @click="goToGoodsDetail(goodsData.goodsCode)">
-                        <sui-image :src="goodsData.imgUrl" width="100%"/>
+                        <sui-image :src=" goodsData.imgUrl" width="100%"/>
                         <sui-card-content>
                             <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
                             <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
@@ -71,7 +71,6 @@
                 }
 
                 this.wishListGoods = tempWishListGoods;
-                console.log("wishListGoods : " + this.wishListGoods);
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);
