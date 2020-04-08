@@ -1,11 +1,7 @@
 import request,{COMMENTS_URL} from './axios';
 
 export const loadFile = function(fileList){
-    return request.post(COMMENTS_URL + `/uploadfile`, fileList, {
-        headers:{
-            'Content-Type' : 'multipart/form-data'
-        }
-    }).then(
+    return request.post(COMMENTS_URL + `/uploadfile`, fileList).then(
         (response) => {
             return response.data;
         }
