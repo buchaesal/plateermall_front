@@ -24,7 +24,7 @@
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
     import SideBanner from "../../share/SideBanner";
-    import GoodsListCards from "../../goods/GoodsListCards";
+    import GoodsListCards from "../../share/GoodsListCards";
 
     export default {
         name: "RightCategoryPage",

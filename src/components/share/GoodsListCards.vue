@@ -47,7 +47,7 @@
 </template>
 
 <script>
-    import NoItem from "../share/NoItem";
+    import NoItem from "./NoItem";
 
     export default {
         name: "GoodsListCards",
