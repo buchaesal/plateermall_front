@@ -12,13 +12,14 @@
 
         <div class="my_info">
             <router-link to="/myPageMain">
-                <sui-icon name="user" size="large"/>
+                <sui-icon name="user" size="big"/>
             </router-link>
             <router-link to="/wishlist">
-                <sui-icon name="heart" size="large"/>
+                <sui-icon name="heart" size="big"/>
             </router-link>
             <router-link to="/cart">
-                <sui-icon name="shopping bag" size="large"/>
+                <sui-icon name="shopping bag" size="big"/>
+                <sui-label circular color="blue">{{this.$store.state.cartListStore.cartList.length}}</sui-label>
             </router-link>
         </div>
     </div>
@@ -65,7 +66,6 @@
         color: black;
         text-decoration: none;
     }
-
 
     .search_btn {
         margin-top: 0;
@@ -126,5 +126,12 @@
     i {
         margin-right: 20px;
         margin-top: 30px;
+    }
+
+    .label {
+        font-size: x-small;
+        position: absolute;
+        top: 25px;
+        right: 50px;
     }
 </style>
