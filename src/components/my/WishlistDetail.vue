@@ -71,7 +71,6 @@
                 }
 
                 this.wishListGoods = tempWishListGoods;
-                console.log("wishListGoods : " + this.wishListGoods);
             },
             goToGoodsDetail(goodsCode) {
                 this.$router.push('/goodsDetail/' + goodsCode);
