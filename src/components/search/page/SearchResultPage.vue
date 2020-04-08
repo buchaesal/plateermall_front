@@ -9,7 +9,7 @@
                 </div>
                 <Navigation :categoryList="categoryList" :isActive="isActive" v-on:changeCategory="changeCategory"/>
                 <div class="goods-area">
-                    <sui-loader active centered inline v-if="searchResultGoods[0].GoodsModel != undefined"/>
+                    <sui-loader active centered inline v-if="searchResultGoods[0].GoodsModel !== undefined"/>
                     <GoodsListCards v-else
                                     :goodsList="searchResultGoods" :items_per_row="4"
                                     :noItemMessage="noItemMessage"
@@ -46,7 +46,7 @@
                 isActive: false,
                 sort: "goodsCode/DESC",
                 resultCount: 0,
-                noItemMessage: "검색 결과가 없습니다."
+                noItemMessage: "검색 결과가 없습니다.",
             }
         },
         methods: {
@@ -61,7 +61,7 @@
                         categoryCode: this.categoryCode,
                     }
                 );
-            },
+                },
             //getCategoryList() {},
             changeCategory(categoryCode) {
                 this.categoryCode = categoryCode;

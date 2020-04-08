@@ -25,8 +25,8 @@
             </ul>
         </div>
         <div class="goods-card">
-            <sui-loader active centered inline v-if="goodsList[0].GoodsModel != undefined"/>
-            <NoItem v-else-if="goodsList.length == 0" :message="noItemMessage"/>
+            <sui-loader active centered inline v-if="goodsList[0].GoodsModel !== undefined"/>
+            <NoItem v-else-if="goodsList.length === 0" :message="noItemMessage"/>
             <sui-card-group v-else :items-per-row="items_per_row">
                 <sui-card class="goods-card" v-for="(goodsData, index) in goodsList" :key="index"
                           @click="goToGoodsDetail(goodsData.goodsCode)">
