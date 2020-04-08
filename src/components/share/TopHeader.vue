@@ -10,9 +10,6 @@
             <a v-if="isAuthenticated" @click="logout" href="#">로그아웃</a>
             <router-link v-else to="/signup" href="#">회원가입</router-link>
             <router-link to="/faq">고객센터</router-link>
-            <a href="#">스마트픽</a>
-            <a href="#">이벤트</a>
-            <a href="#">출석체크</a>
         </div>
     </div>
 </template>
