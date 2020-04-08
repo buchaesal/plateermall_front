@@ -74,7 +74,11 @@
                 maxPrice: "",
             }
         },
-        methods: {},
+        methods: {
+            changeCategory(categoryCode) {
+                this.$emit("changeCategory", categoryCode);
+            },
+        },
         created() {
         },
         computed: {},

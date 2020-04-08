@@ -7,7 +7,7 @@
                     <h3 class="title">“{{query}}” 검색결과 <em
                             id="titleCount">{{searchResultGoods.length.toLocaleString()}}</em></h3>
                 </div>
-                <Navigation :categoryList="categoryList" :isActive="isActive"/>
+                <Navigation :categoryList="categoryList" :isActive="isActive" v-on:changeCategory="changeCategory"/>
                 <div class="goods-area">
                     <sui-loader active centered inline v-if="searchResultGoods[0].GoodsModel != undefined"/>
                     <GoodsListCards v-else
@@ -68,7 +68,7 @@
             },
             reSort(sort) {
                 this.sort = sort;
-                this.getCategoryGoods();
+                this.getSearchResult();
             },
         },
         created() {
@@ -76,26 +76,17 @@
             this.getSearchResult();
         },
         computed: {
-            //     categoryInfo() {
-            //         return this.$store.state.categoryStore.categoryInfo;
-            //     },
             categoryList() {
                 return this.$store.state.categoryStore.categoryList;
             },
             searchResultGoods() {
                 return this.$store.state.goodsStore.searchResultGoodsModels;
             },
-            errorState() {
-                return this.$store.state.categoryStore.errorInfo;
-            }
         },
         watch: {
             "query": "getQuery",
             "$route": ["searchResultGoods", "getCategoryList"],
             "categoryCode": ["getCategoryInfo", "getCategoryGoods"],
-            errorState() {
-                this.getCategoryCode();
-            }
         },
     }
 </script>

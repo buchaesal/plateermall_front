@@ -3,9 +3,9 @@
         <div>
             <div class="inquiry_header">
                 <FaqHeader :title="'1:1 답변확인'"></FaqHeader>
-                <ul class="bull_list-dash">
-                    <li>- 본인이 등록한 문의에 대한 페이지입니다.</li>
-                    <li>- 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
+                <ul class="modal-msg">
+                    <li> 본인이 등록한 문의에 대한 페이지입니다.</li>
+                    <li> 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
                 </ul>
             </div>
             <ul class="status" id="div_countDetail">
@@ -96,14 +96,6 @@
         padding-left: 0;
     }
 
-    ul {
-        list-style: none;
-    }
-
-    .form_head {
-        width: 25%;
-    }
-
     tr {
         height: 60px;
         text-align: center;
@@ -127,7 +119,7 @@
         position: relative;
     }
 
-    .ui.table {
-        margin: 0
+    .modal-msg li{
+        margin-bottom: 10px;
     }
 </style>

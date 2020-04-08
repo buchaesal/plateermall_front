@@ -148,13 +148,13 @@
                         await questionDelete(postId);
                         alert("삭제되었습니다.")
                         this.$router.push("/board");
+                        this.goToBack();
                     }
                 }
-                this.goToBack();
             },
             async questionUpdate() {
                 this.updateBtnChange();
-                questionUpdate(this.updateQuestionObject);
+                await questionUpdate(this.updateQuestionObject);
                 alert("문의가 수정되었습니다.");
             },
             updateBtnChange() {
