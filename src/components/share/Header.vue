@@ -1,7 +1,7 @@
 <template>
     <div class="header-container" id="header">
         <TopHeader/>
-        <MidHeader :searchKeyword="query"/>
+        <MidHeader/>
         <BottomHeader/>
     </div>
 </template>
@@ -14,17 +14,11 @@
 
     export default {
         name: "Header",
-        props: [
-            "searchKeyword",
-        ],
         components: {
             TopHeader,
             MidHeader,
             BottomHeader
         },
-        updated() {
-            console.log("header: " + this.searchKeyword)
-        }
     }
 </script>
 

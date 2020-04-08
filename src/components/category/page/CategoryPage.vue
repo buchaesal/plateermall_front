@@ -87,7 +87,6 @@
                 priceOption: "",
                 sort: "goodsCode/DESC",
                 noItemMessage: "현재 등록된 상품이 없습니다.",
-
             }
         },
         methods: {
@@ -98,14 +97,12 @@
                 this.categoryCode = categoryCode;
             },
             getCategoryInfo() {
-                console.log("getCategoryInfo")
                 this.$store.commit("getCategory", this.categoryCode);
             },
             getCategoryList() {
                 this.$store.commit("getCategoryList", this.categoryCode);
             },
             getCategoryGoods() {
-                console.log("getCategoryGoods")
                 this.$store.commit("getCategoryGoodsModelList",
                     {
                         categoryCode: this.categoryCode,

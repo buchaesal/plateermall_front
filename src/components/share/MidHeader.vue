@@ -27,12 +27,10 @@
 <script>
     export default {
         name: "MidHeader",
-        props: [
-            "searchKeyword",
-        ],
         data() {
             return {
                 placeholder: "나이키 봄 컬렉션",
+                searchKeyword: "",
             }
         },
         methods: {
@@ -42,9 +40,12 @@
             goToResult() {
                 this.$router.replace({name: "searchResult", query: {query: this.searchKeyword}})
             },
+            getQuery() {
+                this.searchKeyword = this.$route.query.query;
+            },
         },
-        updated() {
-            console.log("midheader: " + this.searchKeyword)
+        created() {
+            this.getQuery();
         }
     }
 </script>

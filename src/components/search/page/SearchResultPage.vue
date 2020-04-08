@@ -4,7 +4,8 @@
         <div class="container">
             <div class="fix-inner">
                 <div class="search-top">
-                    <h3 class="title">“{{query}}” 검색결과 <em id="titleCount">{{searchResultGoods.length.toLocaleString()}}</em></h3>
+                    <h3 class="title">“{{query}}” 검색결과 <em
+                            id="titleCount">{{searchResultGoods.length.toLocaleString()}}</em></h3>
                 </div>
                 <div class="category-nav">
                     <sui-accordion exclusive>
@@ -54,12 +55,11 @@
                     </sui-accordion>
                 </div>
                 <div class="goods-area">
-<!--                    <sui-loader active centered inline v-if="searchResultGoods[0].goodsCode == ''"/>-->
-<!--                    <div v-else-if="searchResultGoods">-->
-                        <GoodsListCards :goodsList="searchResultGoods" :items_per_row="4"
-                                        :noItemMessage="noItemMessage"
-                                        v-on:reSort="reSort"/>
-<!--                    </div>-->
+                    <sui-loader active centered inline v-if="searchResultGoods[0].GoodsModel != undefined"/>
+                    <GoodsListCards v-else
+                                    :goodsList="searchResultGoods" :items_per_row="4"
+                                    :noItemMessage="noItemMessage"
+                                    v-on:reSort="reSort"/>
                 </div>
             </div>
         </div>
@@ -136,7 +136,7 @@
         },
         watch: {
             "query": "getQuery",
-            "$route": ["getCategoryCode", "getCategoryList"],
+            "$route": ["searchResultGoods", "getCategoryList"],
             "categoryCode": ["getCategoryInfo", "getCategoryGoods"],
             errorState() {
                 this.getCategoryCode();
