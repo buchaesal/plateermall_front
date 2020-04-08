@@ -68,7 +68,7 @@
             },
             reSort(sort) {
                 this.sort = sort;
-                this.getCategoryGoods();
+                this.getSearchResult();
             },
         },
         created() {
@@ -76,26 +76,17 @@
             this.getSearchResult();
         },
         computed: {
-            //     categoryInfo() {
-            //         return this.$store.state.categoryStore.categoryInfo;
-            //     },
             categoryList() {
                 return this.$store.state.categoryStore.categoryList;
             },
             searchResultGoods() {
                 return this.$store.state.goodsStore.searchResultGoodsModels;
             },
-            errorState() {
-                return this.$store.state.categoryStore.errorInfo;
-            }
         },
         watch: {
             "query": "getQuery",
             "$route": ["searchResultGoods", "getCategoryList"],
             "categoryCode": ["getCategoryInfo", "getCategoryGoods"],
-            errorState() {
-                this.getCategoryCode();
-            }
         },
     }
 </script>
