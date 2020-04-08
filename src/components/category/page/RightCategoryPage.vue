@@ -39,6 +39,8 @@
                 categoryCode: "",
                 isActive: true,
                 priceOption: "",
+                sort: "goodsCode/DESC",
+                noItemMessage: "현재 등록된 상품이 없습니다.",
             }
         },
         methods: {
@@ -54,11 +56,24 @@
             getCategoryList() {
                 this.$store.commit("getCategoryList", this.categoryCode);
             },
+            getCategoryGoods() {
+                this.$store.commit("getCategoryGoodsModelList",
+                    {
+                        categoryCode: this.categoryCode,
+                        sort: this.sort
+                    }
+                );
+            },
+            reSort(sort) {
+                this.sort = sort;
+                this.getCategoryGoods();
+            },
         },
         created() {
             this.getCategoryCode();
             this.getCategoryInfo();
             this.getCategoryList();
+            this.getCategoryGoods();
         },
         beforeUpdate() {
             if (this.categoryInfo.categoryCode == null) {
@@ -74,11 +89,14 @@
             },
             errorState() {
                 return this.$store.state.categoryStore.errorInfo;
+            },
+            categoryGoods() {
+                return this.$store.state.goodsStore.categoryGoodsModels;
             }
         },
         watch: {
             "$route": ["getCategoryCode", "getCategoryList"],
-            "categoryCode": "getCategoryInfo",
+            "categoryCode": ["getCategoryInfo", "getCategoryGoods"],
             errorState() {
                 this.getCategoryCode();
             }
