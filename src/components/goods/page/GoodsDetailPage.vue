@@ -500,7 +500,7 @@
                         goodsCode: this.goodsCode,
                         imgUrl: this.goodsData.imgUrl,
                         title: this.goodsData.title,
-                        
+
                     };
 
                     addOptions.push(data);
@@ -575,12 +575,9 @@
 
                 if (this.isLike) {
                     // wishListApi.addGoodsWish({
-                    //     "userId": (this.userInfo).email,
                     //     "goodsCode": this.$route.params.goodsCode
                     // });
-
                     wishListApi.addGoodsWish(new WishListModel(this.$route.params.goodsCode, (this.userInfo).email));
-
                     alert("위시리스트에 담겼습니다.")
                 } else {
                     wishListApi.deleteGoodsWish({
@@ -601,13 +598,17 @@
                 this.tooltip2Display = false;
             },
             addCart() {
-                // requestAddCart({
-                //     userId: (this.userInfo).email,
-                //     goodsCode: this.$route.params.goodsCode,
-                //     selectedOptions: this.selectedOptions
-                // });
-                requestAddCart(new CartListModel((this.userInfo).email, this.$route.params.goodsCode, this.selectedOptions));
-                this.toggle();
+                if (this.selectedOptions.length == 0) {
+                    alert("옵션을 먼저 선택해주세요.");
+                } else {
+                    // requestAddCart({
+                    //     userId: (this.userInfo).email,
+                    //     goodsCode: this.$route.params.goodsCode,
+                    //     selectedOptions: this.selectedOptions
+                    // });
+                    requestAddCart(new CartListModel((this.userInfo).email, this.$route.params.goodsCode, this.selectedOptions));
+                    this.toggle();
+                }
             },
             toggle() {
                 this.isModalOpen = !this.isModalOpen;

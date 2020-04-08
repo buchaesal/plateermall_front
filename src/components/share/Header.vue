@@ -19,7 +19,6 @@
             MidHeader,
             BottomHeader
         },
-        methods: {}
     }
 </script>
 

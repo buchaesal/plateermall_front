@@ -44,15 +44,14 @@
 <style scoped>
     .order-info{
         padding: 1%;
-        margin-left: 67%;
-        margin-right: 10%;
+        margin-right: 3%;
         margin-top: 6.5%;
+        float: right;
         width: 30%;
         border-top: 3px solid;
         border-left: 1px solid #D9D9D9;
         border-right: 1px solid #D9D9D9;
         border-bottom: 3px solid;
-        position: fixed;
     }
 
     .info{

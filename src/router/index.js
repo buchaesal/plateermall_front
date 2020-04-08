@@ -12,7 +12,7 @@ import CategoryPage from '../components/category/page/CategoryPage';
 import RightCategoryPage from '../components/category/page/RightCategoryPage';
 import PageNotFound from '../components/share/page/PageNotFound';
 import OrderPage from '../components/order/page/OrderPage';
-// import SearchResultPage from '../components/search/page/SearchResultPage'
+import SearchResultPage from '../components/search/page/SearchResultPage'
 
 Vue.use(VueRouter);
 
@@ -53,7 +53,7 @@ const routes = [
     {path: '/order/ordercomplete', name: 'ordercomplete', component: OrderCompletePage, props: true},
     {path: '/order', name: 'order', component: OrderPage},
     {path: '/rightcategory/:categoryCode', component: RightCategoryPage},
-    // {path: '/search/searchResult', name: 'searchResult', component: SearchResultPage},
+    {path: '/search/searchResult', name: 'searchResult', component: SearchResultPage},
     {path: '/404', component: PageNotFound},
     {path: '*', redirect: '/404'},
     {

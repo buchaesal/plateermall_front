@@ -23,16 +23,20 @@
                     </span>
 
                         <div class="my-order-list-info">
-                            <p>{{goods.seller}}</p>
-                            <p>{{goods.title}}</p>
+                            <p class="font-emphasis" style="margin-bottom: 0;">{{goods.seller}}</p>
+                            <p class="font-emphasis">{{goods.title}}</p>
                             <p>{{orderList[index].goodsCount}}</p>
                             <p>{{orderList[index].orderState.orderState}}</p>
                         </div>
-                        <span class="my-order-list-price">{{orderList[index].orderPrice}}원</span>
+
                         <div class="my-order-list-button">
                             <button class="btn1" @click="changeDeliveryAddress">배송지변경</button>
                             <button @click="cancelOrder(index)">주문취소</button>
                         </div>
+                        <span class="my-order-list-price font-emphasis">{{Number(orderList[index].orderPrice).toLocaleString()}}원</span>
+
+
+
                     </div>
                     <hr>
                 </div>
@@ -55,62 +59,61 @@
             return {
                 noItemMessage: "데이터가 없습니다.",
                 checkedIndexList: [],
-                goodsApi : new GoodsApi(),
+                goodsApi: new GoodsApi(),
                 orderList: [{
-                    orderId : '',
-                    userId : '',
-                    goodsId : '',
+                    orderId: '',
+                    userId: '',
+                    goodsId: '',
                     goodsCount: -1,
-                    orderPrice : '',
-                    orderState : {
-                        orderId : '',
-                        stateChangeDate : '',
-                        orderState : '',
+                    orderPrice: '',
+                    orderState: {
+                        orderId: '',
+                        stateChangeDate: '',
+                        orderState: '',
                     },
                 }],
                 goodsInOrderList: [],
             }
         },
         methods: {
-            changeDeliveryAddress(){
+            changeDeliveryAddress() {
                 this.$router.push('/deliveryanduserinfomanagement');
             },
-            async getOrderList(){
+            async getOrderList() {
                 let userData = await getCurrentUserInfo();
                 this.$store.dispatch('updateOrderCount', userData);
                 this.orderList = await getOrderList(userData.email);
                 this.setGoodsList(this.orderList);
             },
-            async setGoodsList(orderList){
-                for(let order in orderList){
+            async setGoodsList(orderList) {
+                for (let order in orderList) {
                     this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
             },
-            async cancelOrder(index){
+            async cancelOrder(index) {
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
                 this.cleanData();
                 await this.getOrderList();
                 alert("주문이 취소되었습니다.")
             },
-            async setSpecificStateOrderList(state){
+            async setSpecificStateOrderList(state) {
                 this.cleanData();
 
                 let userData = await getCurrentUserInfo();
                 this.orderList = await getSpecificStatusOrderList("normal", state, userData.email);
                 this.setGoodsList(this.orderList);
-                
             },
             cleanData() {
                 this.orderList = [{
-                    orderId : '',
-                    userId : '',
-                    goodsId : '',
+                    orderId: '',
+                    userId: '',
+                    goodsId: '',
                     goodsCount: -1,
-                    orderPrice : '',
-                    orderState : {
-                        orderId : '',
-                        stateChangeDate : '',
-                        orderState : '',
+                    orderPrice: '',
+                    orderState: {
+                        orderId: '',
+                        stateChangeDate: '',
+                        orderState: '',
                     },
                 }];
                 this.goodsInOrderList = [];
@@ -121,13 +124,18 @@
             OrderStatusBox,
             NoItem
         },
-        created: function() {
+        created: function () {
             this.getOrderList();
         }
     }
 </script>
 
 <style scoped>
+    .font-emphasis {
+        font-size: 17px;
+        font-weight: bold;
+    }
+
     .order_header {
         border-top: 3px solid #000;
         border-bottom: 1px solid rgba(179, 179, 179, 0.58);
@@ -181,14 +189,18 @@
     }
 
     .my-order-list-price {
-        margin: 0 50px;
+        margin-left: 120px;
+        float: right;
+        margin-top: 57px;
+        margin-right: 30px;
     }
 
     .my-order-list-button {
         display: inline-block;
-        margin-left: 10px;
         text-align: center;
-        vertical-align: middle
+        vertical-align: middle;
+        margin: 20px 35px;
+        float: right;
     }
 
     .btn1 {

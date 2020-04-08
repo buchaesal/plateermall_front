@@ -53,17 +53,15 @@
 
 <script>
     import {getCurrentUserInfo} from "../../api/UserApi";
-    import UserModel from "./model/UserModel";
 
     export default {
         name: "UserInfo",
         data() {
             return {
-                userInfo: {}
+                userInfo: '',
             }
         },
         async created() {
-            this.userInfo = new UserModel();
             this.userInfo = await getCurrentUserInfo();
         }
     }

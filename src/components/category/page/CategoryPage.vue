@@ -3,59 +3,15 @@
         <Header></Header>
         <div class="container">
             <div class="fix-inner">
-                <div class="category-nav">
-                    <sui-accordion exclusive>
-                        <sui-accordion-title class="nav-title" active>
-                            <div class="title-text">카테고리</div>
-                            <div class="title-icon">
-                                <sui-icon name="dropdown"/>
-                            </div>
-                        </sui-accordion-title>
-                        <sui-accordion-content active>
-                            <div class="nav-content">
-                                <ul>
-                                    <li class="sub-category" v-for="(categoryData, index) in categoryList" :key="index"
-                                        @click="changeCategory(categoryData.categoryCode)">{{categoryData.name}}
-                                    </li>
-                                </ul>
-                            </div>
-                        </sui-accordion-content>
-                        <sui-accordion-title>
-                            <div class="nav-title">
-                                <div class="title-text">가격대</div>
-                                <div class="title-icon">
-                                    <sui-icon name="dropdown"/>
-                                </div>
-                            </div>
-                        </sui-accordion-title>
-                        <sui-accordion-content>
-                            <div class="nav-content">
-                                <sui-form>
-                                    <sui-form-field>
-                                        <sui-checkbox radio label="전체" value="1" v-model="priceOption"/>
-                                    </sui-form-field>
-                                    <sui-form-field>
-                                        <sui-checkbox radio label="5만원 이하" value="2" v-model="priceOption"/>
-                                    </sui-form-field>
-                                    <sui-form-field>
-                                        <sui-checkbox radio label="5만원 ~ 10만원" value="3" v-model="priceOption"/>
-                                    </sui-form-field>
-                                    <sui-form-field>
-                                        <sui-checkbox radio label="10만원 ~ 30만원" value="4" v-model="priceOption"/>
-                                    </sui-form-field>
-                                    <sui-button secondary type="submit">검색</sui-button>
-                                </sui-form>
-                            </div>
-                        </sui-accordion-content>
-                    </sui-accordion>
-                </div>
+
+                <Navigation :categoryList="categoryList" :isActive="isActive" v-on:changeCategory="changeCategory"/>
                 <div class="goods-area">
                     <sui-loader active centered inline v-if="categoryCode != categoryInfo.categoryCode"/>
                     <div v-else-if="categoryGoods">
                         <h2 class="page-title">{{categoryInfo.name}}</h2>
-                        <CategoryGoodsCards :goodsList="categoryGoods" :items_per_row="4"
-                                            :noItemMessage="'현재 등록된 상품이 없습니다.'"
-                                            v-on:reSort="reSort"/>
+                        <GoodsListCards :goodsList="categoryGoods" :items_per_row="4"
+                                        :noItemMessage="noItemMessage"
+                                        v-on:reSort="reSort"/>
                     </div>
                 </div>
             </div>
@@ -70,15 +26,17 @@
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
     import SideBanner from "../../share/SideBanner";
-    import CategoryGoodsCards from "../CategoryGoodsCards";
+    import GoodsListCards from "../../share/GoodsListCards";
+    import Navigation from "../../share/Navigation";
 
     export default {
         name: "CategoryPage",
         components: {
-            CategoryGoodsCards,
+            GoodsListCards,
             Header,
             Footer,
             SideBanner,
+            Navigation,
         },
         data() {
             return {
@@ -86,7 +44,7 @@
                 isActive: true,
                 priceOption: "",
                 sort: "goodsCode/DESC",
-
+                noItemMessage: "현재 등록된 상품이 없습니다.",
             }
         },
         methods: {

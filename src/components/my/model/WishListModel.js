@@ -7,5 +7,4 @@ class WishListModel {
         this.userId = userId;
     }
 }
-
 export default WishListModel;
