@@ -81,7 +81,7 @@
             <tr style="height: 120px;">
                 <td class="gray_row"><p>포인트 <span class="num_area">100000점</span></p></td>
                 <td class="gray_row"><p>포인트 <span class="num_area">최대 200점</span></p>
-                    <p style="float: right; margin-right: 15px;">(상품평 작성 시 적립)</p></td>
+                <p style="float: right; margin-right: 15px;">(상품평 작성 시 적립)</p></td>
             </tr>
         </table>
         <div style="text-align: center">
@@ -98,8 +98,8 @@
         components: {
             FaqHeader
         },
-        methods: {
-            goOrderPage() {
+        methods:{
+            goOrderPage(){
                 this.$router.push('/orderList');
             }
         }
@@ -107,12 +107,11 @@
 </script>
 
 <style scoped>
-    .num_area {
+    .num_area{
         float: right;
         margin-right: 15px;
         font-weight: bold;
     }
-
     .first_line {
         height: 60px;
         font-weight: bold;

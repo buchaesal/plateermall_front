@@ -29,6 +29,7 @@ class GoodsApi {
         let categoryGoodsSetApiModel = new CategoryGoodsSetApiModel(categoryCode, sort);
         return request.get(GOODS_URL + `/categorygoodslist`, {params: categoryGoodsSetApiModel}).then(
             (response) => {
+                console.log(response.data);
                 return response.data;
             }
         ).catch(function (error) {
