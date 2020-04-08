@@ -45,8 +45,10 @@
         async created() {
             if(this.isAuthenticated){
                 this.userInfo = await getCurrentUserInfo();
+                await this.$store.dispatch('getLoginUserInfo');
+                await this.$store.dispatch('getCartList');
             }
-        }
+        },
     }
 </script>
 
