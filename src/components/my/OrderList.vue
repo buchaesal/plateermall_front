@@ -28,12 +28,13 @@
                             <p>{{orderList[index].goodsCount}}</p>
                             <p>{{orderList[index].orderState.orderState}}</p>
                         </div>
-                        <span class="my-order-list-price font-emphasis">{{orderList[index].orderPrice}}원</span>
 
                         <div class="my-order-list-button">
                             <button class="btn1" @click="changeDeliveryAddress">배송지변경</button>
                             <button @click="cancelOrder(index)">주문취소</button>
                         </div>
+                        <span class="my-order-list-price font-emphasis">{{orderList[index].orderPrice.toLocaleString()}}원</span>
+
 
 
                     </div>
@@ -189,6 +190,9 @@
 
     .my-order-list-price {
         margin-left: 120px;
+        float: right;
+        margin-top: 57px;
+        margin-right: 30px;
     }
 
     .my-order-list-button {
