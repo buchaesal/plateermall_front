@@ -1,10 +1,10 @@
 <template>
     <div id="main-page-container">
-        <Header></Header>
+        <Header :searchKeyword="query"></Header>
         <div class="container">
             <div class="fix-inner">
                 <div class="search-top">
-                    <h3 class="title">“{{query}}” 검색결과 <em id="titleCount">{{resultCount}}</em></h3>
+                    <h3 class="title">“{{query}}” 검색결과 <em id="titleCount">{{searchResultGoods.length.toLocaleString()}}</em></h3>
                 </div>
                 <div class="category-nav">
                     <sui-accordion exclusive>
@@ -54,8 +54,12 @@
                     </sui-accordion>
                 </div>
                 <div class="goods-area">
-                    <sui-loader active centered inline v-if="query == null"/>
-                    <SearchGoodsCards :items_per_row="4" v-else/>
+<!--                    <sui-loader active centered inline v-if="searchResultGoods[0].goodsCode == ''"/>-->
+<!--                    <div v-else-if="searchResultGoods">-->
+                        <GoodsListCards :goodsList="searchResultGoods" :items_per_row="4"
+                                        :noItemMessage="noItemMessage"
+                                        v-on:reSort="reSort"/>
+<!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -70,22 +74,24 @@
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
     import SideBanner from "../../share/SideBanner";
-    import SearchGoodsCards from "../SearchGoodsCards";
+    import GoodsListCards from "../../goods/GoodsListCards";
 
     export default {
         name: "SearchResultPage",
         components: {
-            SearchGoodsCards,
+            GoodsListCards,
             Header,
             Footer,
             SideBanner,
         },
         data() {
             return {
+                query: "",
                 isActive: true,
                 priceOption: "",
+                sort: "goodsCode/DESC",
                 resultCount: 0,
-                query: "",
+                noItemMessage: "검색 결과가 없습니다."
             }
         },
         methods: {
@@ -101,9 +107,18 @@
                     }
                 );
             },
+            //getCategoryList() {},
+            changeCategory(categoryCode) {
+                this.categoryCode = categoryCode;
+            },
+            reSort(sort) {
+                this.sort = sort;
+                this.getCategoryGoods();
+            },
         },
         created() {
             this.getQuery();
+            this.getSearchResult();
         },
         computed: {
             //     categoryInfo() {
@@ -112,12 +127,17 @@
             categoryList() {
                 return this.$store.state.categoryStore.categoryList;
             },
+            searchResultGoods() {
+                return this.$store.state.goodsStore.searchResultGoodsModels;
+            },
             errorState() {
                 return this.$store.state.categoryStore.errorInfo;
             }
         },
         watch: {
+            "query": "getQuery",
             "$route": ["getCategoryCode", "getCategoryList"],
+            "categoryCode": ["getCategoryInfo", "getCategoryGoods"],
             errorState() {
                 this.getCategoryCode();
             }

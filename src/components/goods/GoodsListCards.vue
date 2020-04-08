@@ -25,8 +25,10 @@
             </ul>
         </div>
         <div class="goods-card">
-            <sui-card-group v-if="searchResultGoods.length > 0" :items-per-row="items_per_row">
-                <sui-card class="goods-card" v-for="(goodsData, index) in searchResultGoods" :key="index"
+            <sui-loader active centered inline v-if="goodsList[0].title = ''"/>
+            <NoItem v-else-if="goodsList.length == 0" :message="noItemMessage"/>
+            <sui-card-group v-else-if="goodsList.length != 0" :items-per-row="items_per_row">
+                <sui-card class="goods-card" v-for="(goodsData, index) in goodsList" :key="index"
                           @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
@@ -40,8 +42,6 @@
                     </sui-card-content>
                 </sui-card>
             </sui-card-group>
-            <sui-loader active centered inline v-else-if="searchResultGoods[0].goodsCode = ''"/>
-            <NoItem v-else-if="searchResultGoods.length == 0" :message="noItemMessage"/>
         </div>
     </div>
 </template>
@@ -50,41 +50,27 @@
     import NoItem from "../share/NoItem";
 
     export default {
-        name: "SearchGoodsCards",
+        name: "GoodsListCards",
         props: [
+            "goodsList",
             "items_per_row",
+            "noItemMessage"
         ],
         components: {
             NoItem,
-        },
-        data() {
-            return {
-                noItemMessage: "검색 결과가 없습니다.",
-                sort: "goodsCode/DESC",
-            }
-        },
-        created() {
-            this.getSearchResult();
         },
         methods: {
             goToGoodsDetail(goodsCode) {
                 this.$router.push("/goodsDetail/" + goodsCode);
             },
             reSort(sort) {
-                this.sort = sort;
-                this.getSearchResult();
+                this.$emit("reSort", sort);
             },
-        },
-        computed: {
-            searchResultGoods() {
-                return this.$store.state.goodsStore.searchResultGoodsModels;
-            }
         },
     }
 </script>
 
 <style scoped>
-
     ul {
         list-style: none;
         margin: 0;
@@ -154,7 +140,7 @@
         position: relative;
     }
 
-    .ui.four.cards {
+    .cards {
         margin-bottom: auto;
     }
 

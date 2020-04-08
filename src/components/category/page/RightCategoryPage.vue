@@ -5,7 +5,12 @@
             <div class="fix-inner">
                 <div class="goods-area">
                     <sui-loader active centered inline v-if="categoryCode != categoryInfo.categoryCode"/>
-                    <CategoryGoodsCards :categoryInfo="categoryInfo" :items_per_row="5" v-else/>
+                    <div v-else-if="categoryGoods">
+                        <h2 class="page-title">{{categoryInfo.name}}</h2>
+                        <GoodsListCards :goodsList="categoryGoods" :items_per_row="5"
+                                            :noItemMessage="'현재 등록된 상품이 없습니다.'"
+                                            v-on:reSort="reSort"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -19,12 +24,12 @@
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
     import SideBanner from "../../share/SideBanner";
-    import CategoryGoodsCards from "../CategoryGoodsCards";
+    import GoodsListCards from "../../goods/GoodsListCards";
 
     export default {
         name: "RightCategoryPage",
         components: {
-            CategoryGoodsCards,
+            GoodsListCards,
             Header,
             Footer,
             SideBanner,

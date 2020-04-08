@@ -53,8 +53,8 @@
                     <sui-loader active centered inline v-if="categoryCode != categoryInfo.categoryCode"/>
                     <div v-else-if="categoryGoods">
                         <h2 class="page-title">{{categoryInfo.name}}</h2>
-                        <CategoryGoodsCards :goodsList="categoryGoods" :items_per_row="4"
-                                            :noItemMessage="'현재 등록된 상품이 없습니다.'"
+                        <GoodsListCards :goodsList="categoryGoods" :items_per_row="4"
+                                            :noItemMessage="noItemMessage"
                                             v-on:reSort="reSort"/>
                     </div>
                 </div>
@@ -70,12 +70,12 @@
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
     import SideBanner from "../../share/SideBanner";
-    import CategoryGoodsCards from "../CategoryGoodsCards";
+    import GoodsListCards from "../../goods/GoodsListCards";
 
     export default {
         name: "CategoryPage",
         components: {
-            CategoryGoodsCards,
+            GoodsListCards,
             Header,
             Footer,
             SideBanner,
@@ -86,6 +86,7 @@
                 isActive: true,
                 priceOption: "",
                 sort: "goodsCode/DESC",
+                noItemMessage: "현재 등록된 상품이 없습니다.",
 
             }
         },
