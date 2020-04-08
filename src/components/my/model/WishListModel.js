@@ -1,11 +1,8 @@
 class WishListModel {
-    goodsCode = "";
-    userId = "";
+    wishList = [];
 
-    constructor(goodsCode, userId){
-        this.goodsCode = goodsCode;
-        this.userId = userId;
+    constructor(){
+        
     }
 }
-
 export default WishListModel;

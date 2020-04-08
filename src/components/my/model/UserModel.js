@@ -1,22 +1,18 @@
 class UserModel {
     email = '';
     password = '';
-    name = '';
-    phoneNumber = '';
-    smsAgree = false;
-    emailAgree = false;
-    point = 0;
-    coupons = [];
+    username = '';
+    phone = '';
+    acceptEmail = '';
+    acceptSms = '';
 
-    constructor(email, password, name, phoneNumber, smsAgree, emailAgree, point, coupons){
+    constructor(email, password, username, phone){
         this.email = email;
         this.password = password;
-        this.name = name;
-        this.phoneNumber = phoneNumber;
-        this.smsAgree = smsAgree;
-        this.emailAgree = emailAgree;
-        this.point = point;
-        this.coupons = coupons;
+        this.username = username;
+        this.phone = phone;
+        this.acceptEmail = 'N';
+        this.acceptSms = 'N';
     }
 }
 export default UserModel;
