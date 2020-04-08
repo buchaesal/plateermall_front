@@ -440,7 +440,7 @@
         },
         data() {
             return {
-                userInfo: "",
+                userInfo: {},
                 goodsCode: "",
                 option: "",
                 current: "",
@@ -569,6 +569,11 @@
                 this.shareDisplay = false;
             },
             likeBtnClick() {
+                if(!this.isAuthenticated){
+                    alert('로그인해주세요.');
+                    return;
+                }
+
                 this.isLike = !this.isLike;
 
                 let wishListApi = new WishListApi();
@@ -598,7 +603,7 @@
                 this.tooltip2Display = false;
             },
             addCart() {
-                if (this.selectedOptions.length == 0) {
+                if (this.selectedOptions.length === 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
                     // requestAddCart({
@@ -617,7 +622,7 @@
                 this.$router.push("/cart");
             },
             directOrder() {
-                if (this.selectedOptions.length == 0) {
+                if (this.selectedOptions.length === 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
                     this.$router.push({
@@ -633,7 +638,9 @@
             }
         },
         async created() {
-            this.userInfo = await getCurrentUserInfo();
+            if(this.isAuthenticated){
+                this.userInfo = await getCurrentUserInfo();
+            }
             this.goodsCode = this.$route.params.goodsCode;
             this.$store.commit("getGoodsModel", this.goodsCode);
             this.$store.commit("loadCommentByGoodsCode", this.goodsCode);
@@ -643,6 +650,9 @@
             goodsData() {
                 return this.$store.state.goodsStore.goodsModel;
             },
+            isAuthenticated(){
+                return this.$store.getters.isAuthenticated;
+            }
         },
         watch: {
             option() {
