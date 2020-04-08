@@ -33,7 +33,7 @@
                             <button class="btn1" @click="changeDeliveryAddress">배송지변경</button>
                             <button @click="cancelOrder(index)">주문취소</button>
                         </div>
-                        <span class="my-order-list-price font-emphasis">{{orderList[index].orderPrice.toLocaleString()}}원</span>
+                        <span class="my-order-list-price font-emphasis">{{Number(orderList[index].orderPrice).toLocaleString()}}원</span>
 
 
 
