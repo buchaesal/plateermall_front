@@ -101,10 +101,6 @@
                 let userData = await getCurrentUserInfo();
                 this.orderList = await getSpecificStatusOrderList("normal", state, userData.email);
                 this.setGoodsList(this.orderList);
-<<<<<<< HEAD
-
-=======
->>>>>>> 1252bc236bd91e724259319e5ab9e9b3916cc882
             },
             cleanData() {
                 this.orderList = [{
