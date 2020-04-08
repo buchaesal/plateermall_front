@@ -7,7 +7,7 @@
                     <h3 class="title">“{{query}}” 검색결과 <em
                             id="titleCount">{{searchResultGoods.length.toLocaleString()}}</em></h3>
                 </div>
-                <Navigation :categoryList="categoryList" :isActive="isActive"/>
+                <Navigation :categoryList="categoryList" :isActive="isActive" v-on:changeCategory="changeCategory"/>
                 <div class="goods-area">
                     <sui-loader active centered inline v-if="searchResultGoods[0].GoodsModel != undefined"/>
                     <GoodsListCards v-else
