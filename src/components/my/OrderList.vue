@@ -98,7 +98,6 @@
                 let userData = await getCurrentUserInfo();
                 this.orderList = await getSpecificStatusOrderList("normal", state, userData.email);
                 this.setGoodsList(this.orderList);
-                
             },
             cleanData() {
                 this.orderList = [{
