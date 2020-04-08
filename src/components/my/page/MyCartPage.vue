@@ -13,11 +13,18 @@
                     <sui-menu-item>해외직구</sui-menu-item>
                 </sui-menu>
             </div>
-            <div class="goods-main-container">
+            <div class="empty-cart" v-if="cartListCount === 0">
+                <i class="huge exclamation icon"></i>
+                <br/>
+                <br/>
+                <p>장바구니에 담은 상품이 없습니다.</p>
+
+            </div>
+            <div class="goods-main-container" v-else>
                 <div class="goods-list-container">
                     <div class="goods-options">
                         <div style="display:inline-block;">
-                            <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송"  />
+                            <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송" v-model="isTotalChecked"  />
                         </div>
                         <div style="display:inline-block; float:right;">
                             <a @click="checkedDeleteCartList" href="javascript:void(0)" style="margin-right:10px;">선택삭제</a>
@@ -153,6 +160,9 @@
                 {{checkedCartList}}
                 <hr/>
             </div>
+            <div>
+                {{isTotalChecked}}
+            </div>
         </div>
         -->
         <Footer></Footer>
@@ -179,12 +189,10 @@
         },
         methods: {
             checkWholeItem() {
-                if(!this.isTotalChecked) {
+                if(this.isTotalChecked) {
                     this.checkedCartList = this.$store.state.cartListStore.cartList;
-                    this.isTotalChecked = true;
                 } else {
                     this.checkedCartList = [];
-                    this.isTotalChecked = false;
                 }
             },
             totalCartCount() {
@@ -246,6 +254,7 @@
                 if (result) {
                     await this.$store.dispatch('checkedDeleteCartList', this.checkedCartList);
                     this.checkedCartList = [];
+                    this.isTotalChecked = false;
                 }
             },
 
@@ -298,6 +307,9 @@
             getCartList() {
                   return this.$store.state.cartListStore.cartList;
             },
+            cartListCount() {
+                return this.$store.state.cartListStore.cartList.length;
+            }
         },
     }
 </script>
@@ -388,5 +400,15 @@
 
     #main-page-container {
         margin-top: 250px;
+    }
+
+    .empty-cart {
+        margin-top: 10%;
+        margin-bottom: 20%;
+        text-align: center;
+    }
+
+    .empty-cart > p {
+        font-size: 15px;
     }
 </style>
