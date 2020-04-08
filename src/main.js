@@ -4,7 +4,11 @@ import SemanticUI from 'semantic-ui-vue';
 import router from './router';
 import store from './store';
 import VueDaumPostCode from 'vue-daum-postcode';
+import BootstrapVue from 'bootstrap-vue'
+// import 'bootstrap/dist/css/bootstrap.min.css'
+// import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+Vue.use(BootstrapVue);
 Vue.use(SemanticUI);
 Vue.use(VueDaumPostCode);
 Vue.config.productionTip = false;

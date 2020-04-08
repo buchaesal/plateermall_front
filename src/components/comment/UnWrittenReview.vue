@@ -96,9 +96,9 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
 
                     alert("작성되었습니다.");
                     
-                    this.$store.dispatch('ADD_COMMENT', this.user.email);
+                    this.$store.dispatch('ADD_COMMENT', this.user);
 
-                    this.open = false;
+                    this.cancelAddComment();
                    
                 }
             },
