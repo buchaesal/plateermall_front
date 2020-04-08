@@ -41,6 +41,12 @@
                             <sui-form-field>
                                 <sui-checkbox radio label="10만원 ~ 30만원" value="4" v-model="priceOption"/>
                             </sui-form-field>
+                            <sui-form-field>
+                                <input placeholder="최저가" maxlength="8"/>
+                            </sui-form-field>
+                            <sui-form-field>
+                                <input placeholder="최고가" maxlength="8"/>
+                            </sui-form-field>
                             <sui-button secondary type="submit">검색</sui-button>
                         </sui-form>
                     </div>
@@ -64,6 +70,8 @@
         data() {
             return {
                 priceOption: "",
+                minPrice: "",
+                maxPrice: "",
             }
         },
         methods: {},
