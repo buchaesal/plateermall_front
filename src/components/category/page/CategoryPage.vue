@@ -4,14 +4,14 @@
         <div class="container">
             <div class="fix-inner">
 
-                <Navigation :categoryList="categoryList" :isActive="isActive"/>
+                <Navigation :categoryList="categoryList" :isActive="isActive" v-on:changeCategory="changeCategory"/>
                 <div class="goods-area">
-                    <sui-loader active centered inline v-if="categoryCode != categoryInfo.categoryCode"/>
+                    <sui-loader active centered inline v-if="categoryCode !== categoryInfo.categoryCode"/>
                     <div v-else-if="categoryGoods">
                         <h2 class="page-title">{{categoryInfo.name}}</h2>
                         <GoodsListCards :goodsList="categoryGoods" :items_per_row="4"
-                                            :noItemMessage="noItemMessage"
-                                            v-on:reSort="reSort"/>
+                                        :noItemMessage="noItemMessage"
+                                        v-on:reSort="reSort"/>
                     </div>
                 </div>
             </div>

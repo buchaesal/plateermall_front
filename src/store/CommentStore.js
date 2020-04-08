@@ -1,7 +1,7 @@
-import {addRecommend, requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, increaseRecommend, goodsOptionList, deleteComment, requestUnwrittenOrderId, isRecommend} from '../../src/api/CommentApi';
+import {loadFile, addRecommend, requestComments, requestMyComments, requestAddComment, requestWrittenComment, requestModifyComment, increaseRecommend, goodsOptionList, deleteComment, requestUnwrittenOrderId, isRecommend} from '../../src/api/CommentApi';
 import {getOrder} from '../../src/api/OrderApi';
 import GoodsApi from '../../src/api/GoodsApi';
-
+import {modifyUser} from '../../src/api/UserApi';
 
 const state = {
     reviews:{},
@@ -22,7 +22,7 @@ const state = {
     },
     isModalOpen: false,
     writtenReview:{}, //바뀐 리뷰
-
+    fileList:null,
 }
 
 const getters = {
@@ -31,6 +31,10 @@ const getters = {
 
 //state를 바꿀 때
 const mutations = {
+
+    async loadFileData(state, fileList){
+        state.fileList = fileList;
+    },
 
     async loadCommentByGoodsCode(state, goodsCode){
 
@@ -120,24 +124,55 @@ const mutations = {
 //비동기 통신
 const actions = {
 
-    async ADD_COMMENT(context, userId){
+    //상품평 등록
+    async ADD_COMMENT(context, user){
+
+        if(state.fileList != null){
+            let fileName = await loadFile(state.fileList);
+
+            state.writtenReview.myPhoto = fileName[0];
+            if(fileName[1] != null) state.writtenReview.myPhoto2 = fileName[1];
+            if(fileName[2] != null) state.writtenReview.myPhoto3 = fileName[2];
+
+            user.point += 200;
+            user.password = null;
+            await modifyUser(user);
+        }else{
+            
+            user.point += 100;
+            user.password = null;
+            await modifyUser(user);
+        }
 
         await requestAddComment(state.writtenReview).then(() => {
            
-            context.commit('loadUnwrittenList', userId);
+            context.commit('loadUnwrittenList', user.email);
         }
         ).catch(function (error) {
             console.log(error);
         });
+
+        state.fileList = null;
     },
 
     async UPDATE_COMMENT(context, userId){
+
+        if(state.fileList != null){
+            let fileName = await loadFile(state.fileList);
+
+            state.writtenReview.myPhoto = fileName[0];
+            if(fileName[1] != null) state.writtenReview.myPhoto2 = fileName[1];
+            if(fileName[2] != null) state.writtenReview.myPhoto3 = fileName[2];
+        }
+
         await requestModifyComment(state.writtenReview).then(() => {
 
             context.commit('loadMyCommentsByUserId', userId);
         }).catch(function(error){
             console.log(error);
         });
+
+        state.fileList = null;
     },
 
     async DELETE_COMMENT(context, info){

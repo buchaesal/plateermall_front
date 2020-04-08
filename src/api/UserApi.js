@@ -29,12 +29,12 @@ export const signUp = function (user) {
 export const getCurrentUserInfo = function () {
     return request.get(USER_URL + '/getCurrentUserInfo')
         .then((response) => {
-             if (response.data) {
+            if (response.data) {
                 return response.data;
             } else {
                 alert('로그인이 만료되었습니다. 로그아웃 됩니다.');
                 store.commit('LOGOUT');
-             }
+            }
         })
         .catch((error) => console.log(error));
 
