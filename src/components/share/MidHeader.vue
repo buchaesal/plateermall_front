@@ -4,7 +4,7 @@
 
         <div class="util">
             <div class="search_area">
-                <input type="text" placeholder="아디다스키즈 봄 컬렉션" value autocomplete="off" size="40"
+                <input type="text" :placeholder="placeholder" value autocomplete="off" size="40"
                        v-model="searchKeyword" @keyup.enter="goToResult">
                 <sui-icon name="search" class="search_btn" size="large" @click="goToResult"/>
             </div>
@@ -27,9 +27,12 @@
 <script>
     export default {
         name: "MidHeader",
+        props: [
+            "searchKeyword",
+        ],
         data() {
             return {
-                searchKeyword: "",
+                placeholder: "나이키 봄 컬렉션",
             }
         },
         methods: {
@@ -37,11 +40,12 @@
                 this.$router.push('/');
             },
             goToResult() {
-                // this.$router.push('/search/searchResult/' + this.searchKeyword);
-                this.$router.replace({ name: "searchResult", query: {query: this.searchKeyword} })
-                // this.$router.replace({ path: "/search/searchResult", query: {query: this.searchKeyword} })
+                this.$router.replace({name: "searchResult", query: {query: this.searchKeyword}})
             },
         },
+        updated() {
+            console.log("midheader: " + this.searchKeyword)
+        }
     }
 </script>
 
