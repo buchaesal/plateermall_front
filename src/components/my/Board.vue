@@ -3,9 +3,9 @@
         <div>
             <div class="inquiry_header">
                 <FaqHeader :title="'질문/답변 게시판'"></FaqHeader>
-                <ul class="bull_list-dash">
-                    <li>- 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
-                    <li>- 문의 상태가 ‘처리중’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
+                <ul class="modal-msg">
+                    <li> 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
+                    <li> 문의 상태가 ‘답변대기’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
                 </ul>
             </div>
             <ul class="status" id="div_countDetail">
@@ -57,10 +57,10 @@
                               placeholder="카테고리 선택"
                               selection
                               :options="options"
-                              v-model="searchQuestionObject.searchDropdown"
+                              v-model="searchQuestionObject.searchType"
                 />
-                <sui-input class="search-input" v-model="searchQuestionObject.searchQuestionText"/>
-                <sui-button secondary class="search-btn" @click="searchQuestion"><a href="#">검색</a></sui-button>
+                <sui-input class="search-input" v-model="searchQuestionObject.keyword"/>
+                <sui-button secondary class="search-btn" @click="searchQuestionList"><a href="#">검색</a></sui-button>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
 <script>
 
     import FaqHeader from "../faq/FaqHeader";
-    import {getQuestionList} from "../../api/FaqApi";
+    import {getQuestionList, searchQuestion} from "../../api/FaqApi";
 
     export default {
         name: "Board",
@@ -82,15 +82,16 @@
                 searchList: [],
                 answerComplete: '0',
                 answerStandBy: '0',
-                searchQuestionObject: [
-                    {searchDropdown: ''},
-                    {searchQuestionText: ''}
-                ],
+                searchQuestionObject: {
+                    searchType: '',
+                    keyword: ''
+                },
                 options: [
                     {text: '제목', value: '제목',},
                     {text: '내용', value: '내용',},
                     {text: '작성자', value: '작성자',},
                     {text: '제목+내용', value: '제목+내용',},
+                    {text: '전체조건', value: '전체조건',},
                 ],
             }
         },
@@ -99,43 +100,8 @@
             this.answerCount();
         },
         methods: {
-            searchQuestion() {
-                this.searchList = [];
-                if (!this.searchQuestionObject.searchDropdown) {
-                    alert("검색할 카테고리를 선택해주세요.");
-                }
-                else if(!this.searchQuestionObject.searchQuestionText) {
-                    alert("검색할 내용을 입력해주세요.");
-                } else {
-                    for (let i = 0; i < this.questionList.length; i++) {
-                        switch (this.searchQuestionObject.searchDropdown) {
-                            case "제목":
-                                if (this.questionList[i].title.includes(this.searchQuestionObject.searchQuestionText)) {
-                                    this.searchList.push(this.questionList[i]);
-                                }
-                                break;
-                            case "내용":
-                                if (this.questionList[i].description.includes(this.searchQuestionObject.searchQuestionText)) {
-                                    this.searchList.push(this.questionList[i]);
-                                }
-                                break;
-                            case "작성자":
-                                if (this.questionList[i].writer.includes(this.searchQuestionObject.searchQuestionText)) {
-                                    this.searchList.push(this.questionList[i]);
-                                }
-                                break;
-                            case "제목+내용":
-                                if (this.questionList[i].title.includes(this.searchQuestionObject.searchQuestionText) ||
-                                    this.questionList[i].description.includes(this.searchQuestionObject.searchQuestionText)) {
-                                    this.searchList.push(this.questionList[i]);
-                                }
-                                break;
-                        }
-                    }
-                    if (this.searchList.length == 0) {
-                        alert("해당 게시글을 찾을 수 없습니다.");
-                    }
-                }
+            async searchQuestionList() {
+                this.searchList = await searchQuestion(this.searchQuestionObject);
             },
             answerCount() {
                 for (let i = 0; i < this.questionList.length; i++) {
@@ -166,10 +132,6 @@
         font-size: 14px;
         line-height: 20px;
         padding-left: 0;
-    }
-
-    ul {
-        list-style: none;
     }
 
     tr {
@@ -210,5 +172,13 @@
     .search-btn a {
         text-decoration: none;
         color: white;
+    }
+
+    .modal-msg li{
+        margin-bottom: 10px;
+    }
+
+    .search-dropdown {
+        vertical-align: middle;
     }
 </style>
