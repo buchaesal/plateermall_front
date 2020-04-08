@@ -38,7 +38,11 @@
                 this.$router.push('/');
             },
             goToResult() {
-                this.$router.replace({name: "searchResult", query: {query: this.searchKeyword}})
+                if(!this.searchKeyword){
+                    alert('검색어를 입력해주세요.');
+                    return;
+                }
+                this.$router.push({name: "searchResult", query: {query: this.searchKeyword}})
             },
             getQuery() {
                 this.searchKeyword = this.$route.query.query;
