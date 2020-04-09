@@ -68,7 +68,9 @@
                 );
             },
             changeCategory(categoryCode) {
-                this.categoryCode = categoryCode;
+                if (categoryCode != "") {
+                    this.categoryCode = categoryCode;
+                }
             },
             changePriceRange(minPrice, maxPrice) {
                 this.minPrice = minPrice;
