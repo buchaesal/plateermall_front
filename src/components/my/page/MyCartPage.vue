@@ -171,7 +171,6 @@
     import Header from '../../share/Header';
     import Footer from '../../share/Footer.vue';
     import {requestCardDiscountInfo} from "../../../api/CartListApi";
-    import {getCurrentUserInfo} from "../../../api/UserApi";
 
     export default {
         name: "MyCart",
@@ -180,7 +179,6 @@
                 isTotalChecked:false,
                 checkedCartList:[],
                 cardInfoList:[],
-                userInfo: {},
             }
         },
         components: {
@@ -263,7 +261,7 @@
                 this.checkedCartList.map((cart) => {
                     goodsCodeArr.push({
                         "goodsCode" : cart.goodsCode,
-                        "userId" : this.userInfo.email
+                        "userId" : this.$store.state.cartListStore.userInfo.email
                     });
                 });
 
@@ -298,8 +296,8 @@
             },
         },
         async created() {
-            this.userInfo = await getCurrentUserInfo();
-            await this.$store.dispatch('getCartList', this.userInfo.email);
+            await this.$store.dispatch('getLoginUserInfo');
+            await this.$store.dispatch('getCartList');
             this.cardInfoList = await requestCardDiscountInfo();
         },
 

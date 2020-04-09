@@ -2,10 +2,12 @@ import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, reques
 import GoodsApi from '../api/GoodsApi'
 //import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
+import {getCurrentUserInfo} from "../api/UserApi";
 
 const state = {
     //cartList: [{"test": "1"}],
     cartList: [],
+    userInfo: {}
 }
 
 const getters = {
@@ -16,11 +18,14 @@ const mutations = {
     getCartList(state, resultCart) {
         state.cartList = resultCart;
     },
+    getLoginUserInfo(state, userInfo) {
+        state.userInfo = userInfo;
+    }
 }
 
 const actions = {
-    async getCartList(context, userId) {
-        const cartList = await requestCartList(userId);
+    async getCartList(context) {
+        const cartList = await requestCartList(state.userInfo.email);
 
         if (cartList.length === 0) {
             state.cartList = [];
@@ -96,6 +101,11 @@ const actions = {
             });
     },
 
+    async getLoginUserInfo(context) {
+        let userInfo = await getCurrentUserInfo();
+
+        context.commit('getLoginUserInfo', userInfo);
+    }
 }
 
 export default {
