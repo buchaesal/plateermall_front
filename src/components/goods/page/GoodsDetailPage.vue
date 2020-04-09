@@ -500,7 +500,7 @@
                         goodsCode: this.goodsCode,
                         imgUrl: this.goodsData.imgUrl,
                         title: this.goodsData.title,
-
+                        cardPromotions: this.goodsData.cardPromotions,
                     };
 
                     addOptions.push(data);
@@ -606,11 +606,6 @@
                 if (this.selectedOptions.length === 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
-                    // requestAddCart({
-                    //     userId: (this.userInfo).email,
-                    //     goodsCode: this.$route.params.goodsCode,
-                    //     selectedOptions: this.selectedOptions
-                    // });
                     requestAddCart(new CartListModel((this.userInfo).email, this.$route.params.goodsCode, this.selectedOptions));
                     this.toggle();
                 }
