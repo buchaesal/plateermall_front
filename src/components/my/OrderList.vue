@@ -98,7 +98,6 @@
             },
             async setSpecificStateOrderList(state) {
                 this.cleanData();
-
                 let userData = await getCurrentUserInfo();
                 this.orderList = await getSpecificStatusOrderList("normal", state, userData.email);
                 this.setGoodsList(this.orderList);
