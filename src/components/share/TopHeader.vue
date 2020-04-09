@@ -1,9 +1,9 @@
 <template>
     <div class="top_header">
-<!--        <div class="left_bar">-->
-<!--            <a href="#">앱다운로드</a>-->
-<!--            <a href="#">바로방문 ON</a>-->
-<!--        </div>-->
+        <!--        <div class="left_bar">-->
+        <!--            <a href="#">앱다운로드</a>-->
+        <!--            <a href="#">바로방문 ON</a>-->
+        <!--        </div>-->
         <div class="right_bar">
             <a v-if="!isAuthenticated" @click="goToLoginForm" href="#">로그인</a>
             <a v-if="isAuthenticated" @click="goToMyPage" href="#">{{userInfo.name}} 님 반갑습니다.</a>
@@ -16,37 +16,22 @@
 
 <script>
 
-    import {getCurrentUserInfo} from "../../api/UserApi";
-
     export default {
         name: "TopHeader",
-        data() {
-            return {
-                userInfo: '',
-            }
-        },
-        computed: {
-            isAuthenticated(){
-                return this.$store.getters.isAuthenticated;
-            },
-        },
+        props: [
+            "isAuthenticated",
+            "userInfo",
+        ],
         methods: {
             goToLoginForm() {
                 this.$router.push('/login');
             },
-            logout(){
+            logout() {
                 this.$store.commit('LOGOUT');
                 alert('로그아웃 되었습니다.');
             },
             goToMyPage() {
                 this.$router.push('/myPageMain');
-            }
-        },
-        async created() {
-            if(this.isAuthenticated){
-                this.userInfo = await getCurrentUserInfo();
-                await this.$store.dispatch('getLoginUserInfo');
-                await this.$store.dispatch('getCartList');
             }
         },
     }
@@ -56,6 +41,7 @@
     .top_header {
         height: 50px;
     }
+
     /*.left_bar {*/
     /*    display: inline-block;*/
     /*    float: left;*/

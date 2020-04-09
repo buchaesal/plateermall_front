@@ -43,7 +43,7 @@
     import WishListApi from "../../api/WishListApi";
 
     export default {
-        name: "Sample",
+        name: "WishlistDetail",
         data() {
             return {
                 wishListGoodsCodes: [],

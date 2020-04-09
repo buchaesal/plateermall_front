@@ -16,22 +16,28 @@
             </router-link>
             <router-link to="/wishlist">
                 <sui-icon name="heart" size="big"/>
+                <sui-label v-if="isAuthenticated" circular color="blue">{{this.$store.state.wishListStore.wishList.length}}</sui-label>
             </router-link>
             <router-link to="/cart">
                 <sui-icon name="shopping bag" size="big"/>
-                <sui-label circular color="blue">{{this.$store.state.cartListStore.cartList.length}}</sui-label>
+                <sui-label v-if="isAuthenticated" circular color="blue">{{this.$store.state.cartListStore.cartList.length}}</sui-label>
             </router-link>
         </div>
     </div>
 </template>
 
 <script>
+
     export default {
         name: "MidHeader",
+        props: [
+            "isAuthenticated",
+        ],
         data() {
             return {
                 placeholder: "나이키 봄 컬렉션",
                 searchKeyword: "",
+                wishListCount: 0,
             }
         },
         methods: {
@@ -134,8 +140,8 @@
 
     .label {
         font-size: x-small;
-        position: absolute;
-        top: 25px;
-        right: 50px;
+        position: relative;
+        top: 5px;
+        right: 35px;
     }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="header-container" id="header">
-        <TopHeader/>
-        <MidHeader/>
+        <TopHeader :userInfo="userInfo" :isAuthenticated="isAuthenticated"/>
+        <MidHeader :userInfo="userInfo" :isAuthenticated="isAuthenticated"/>
         <BottomHeader/>
     </div>
 </template>
@@ -11,6 +11,7 @@
     import TopHeader from './TopHeader';
     import MidHeader from "./MidHeader";
     import BottomHeader from "./BottomHeader";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "Header",
@@ -18,6 +19,23 @@
             TopHeader,
             MidHeader,
             BottomHeader
+        },
+        data() {
+            return {
+                userInfo: {},
+            }
+        },
+        computed: {
+            isAuthenticated() {
+                return this.$store.getters.isAuthenticated;
+            },
+        },
+        async created() {
+            if (this.isAuthenticated) {
+                this.userInfo = await getCurrentUserInfo();
+                await this.$store.dispatch('getWishList', this.userInfo.email);
+                await this.$store.dispatch('getCartList', this.userInfo.email);
+            }
         },
     }
 </script>
