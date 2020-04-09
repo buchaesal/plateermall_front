@@ -30,19 +30,20 @@
                     <div class="nav-content">
                         <sui-form>
                             <sui-form-field>
-                                <sui-checkbox radio label="전체" value="1" v-model="priceOption" @click="radioChange"/>
+                                <sui-checkbox radio label="전체" value="1" v-model="priceOption"
+                                              @change="radioChange"/>
                             </sui-form-field>
                             <sui-form-field>
                                 <sui-checkbox radio label="5만원 이하" value="2" v-model="priceOption"
-                                              @click="radioChange"/>
+                                              @change="radioChange"/>
                             </sui-form-field>
                             <sui-form-field>
                                 <sui-checkbox radio label="5만원 ~ 10만원" value="3" v-model="priceOption"
-                                              @click="radioChange"/>
+                                              @change="radioChange"/>
                             </sui-form-field>
                             <sui-form-field>
                                 <sui-checkbox radio label="10만원 ~ 30만원" value="4" v-model="priceOption"
-                                              @click="radioChange"/>
+                                              @change="radioChange"/>
                             </sui-form-field>
                             <sui-form-field>
                                 <sui-checkbox radio label="직접 입력" value="5" v-model="priceOption"/>

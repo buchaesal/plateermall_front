@@ -9,9 +9,9 @@
                             v-on:changePriceRange="changePriceRange"/>
                 <div class="goods-area">
                     <sui-loader active centered inline v-if="categoryCode !== categoryInfo.categoryCode"/>
-                    <div v-else-if="categoryGoods">
+                    <div v-else-if="goodsList">
                         <h2 class="page-title">{{categoryInfo.name}}</h2>
-                        <GoodsListCards :goodsList="categoryGoods" :items_per_row="4"
+                        <GoodsListCards :goodsList="goodsList" :items_per_row="4"
                                         :noItemMessage="noItemMessage"
                                         v-on:reSort="reSort"/>
                     </div>
@@ -49,6 +49,7 @@
                 maxPrice: "",
                 isActive: true,
                 priceOption: "",
+                query: "",
                 noItemMessage: "현재 등록된 상품이 없습니다.",
             }
         },
@@ -62,8 +63,8 @@
             getCategoryList() {
                 this.$store.commit("getCategoryList", this.categoryCode);
             },
-            getCategoryGoods() {
-                this.$store.commit("getCategoryGoodsModelList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice)
+            getGoodsList() {
+                this.$store.commit("getPageGoodsModelList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice)
                 );
             },
             changeCategory(categoryCode) {
@@ -72,18 +73,18 @@
             changePriceRange(minPrice, maxPrice) {
                 this.minPrice = minPrice;
                 this.maxPrice = maxPrice;
-                this.getCategoryGoods();
+                this.getGoodsList();
             },
             reSort(sort) {
                 this.sort = sort;
-                this.getCategoryGoods();
+                this.getGoodsList();
             },
         },
         created() {
             this.getCategoryCode();
             this.getCategoryInfo();
             this.getCategoryList();
-            this.getCategoryGoods();
+            this.getGoodsList();
         },
         beforeUpdate() {
             if (this.categoryInfo.categoryCode == null) {
@@ -100,17 +101,17 @@
             errorState() {
                 return this.$store.state.categoryStore.errorInfo;
             },
-            categoryGoods() {
-                return this.$store.state.goodsStore.categoryGoodsModels;
+            goodsList() {
+                return this.$store.state.goodsStore.pageGoodsModels;
             }
         },
         watch: {
             "$route": ["getCategoryCode", "getCategoryList"],
-            "categoryCode": ["getCategoryInfo", "getCategoryGoods"],
+            "categoryCode": ["getCategoryInfo", "getGoodsList"],
             errorState() {
                 this.getCategoryCode();
             },
-            "categoryGoods": [],
+            "goodsList": [],
         },
     }
 </script>

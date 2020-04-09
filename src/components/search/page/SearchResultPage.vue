@@ -5,15 +5,14 @@
             <div class="fix-inner">
                 <div class="search-top">
                     <h3 class="title">“{{query}}” 검색결과 <em
-                            id="titleCount">{{searchResultGoods.length.toLocaleString()}}</em></h3>
+                            id="titleCount">{{goodsList.length.toLocaleString()}}</em></h3>
                 </div>
                 <Navigation :categoryList="categoryList" :isActive="isActive"
                             v-on:changeCategory="changeCategory"
                             v-on:changePriceRange="changePriceRange"/>
                 <div class="goods-area">
-                    <sui-loader active centered inline v-if="searchResultGoods[0].GoodsModel !== undefined"/>
-                    <GoodsListCards v-else
-                                    :goodsList="searchResultGoods" :items_per_row="4"
+                    <GoodsListCards
+                                    :goodsList="goodsList" :items_per_row="4"
                                     :noItemMessage="noItemMessage"
                                     v-on:reSort="reSort"/>
                 </div>
@@ -59,8 +58,8 @@
             getQuery() {
                 this.query = this.$route.query.query;
             },
-            getSearchResult() {
-                this.$store.commit("getSearchResultList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice));
+            getGoodsList() {
+                this.$store.commit("getPageGoodsModelList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice));
             },
             //getCategoryList() {},
             changeCategory(categoryCode) {
@@ -69,23 +68,23 @@
             changePriceRange(minPrice, maxPrice) {
                 this.minPrice = minPrice;
                 this.maxPrice = maxPrice;
-                this.getCategoryGoods();
+                this.getGoodsList();
             },
             reSort(sort) {
                 this.sort = sort;
-                this.getSearchResult();
+                this.getGoodsList();
             },
         },
         created() {
             this.getQuery();
-            this.getSearchResult();
+            this.getGoodsList();
         },
         computed: {
             categoryList() {
                 return this.$store.state.categoryStore.categoryList;
             },
-            searchResultGoods() {
-                return this.$store.state.goodsStore.searchResultGoodsModels;
+            goodsList() {
+                return this.$store.state.goodsStore.pageGoodsModels;
             },
         },
         watch: {

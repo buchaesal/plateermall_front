@@ -24,10 +24,10 @@
                 </li>
             </ul>
         </div>
-        <div class="goods-card">    
-            <!--<sui-loader active centered inline v-if="goodsList[0].test === 1" />-->
+        <div class="goods-card">
             <NoItem v-if="goodsList.length === 0" :message="noItemMessage"/>
-            <sui-card-group v-else :items-per-row="items_per_row">
+            <sui-loader active centered inline v-else-if="goodsList[0].goodsCode === undefined" />
+            <sui-card-group v-else-if="goodsList.length > 0" :items-per-row="items_per_row">
                 <sui-card class="goods-card" v-for="(goodsData, index) in goodsList" :key="index"
                           @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl" width="100%"/>
