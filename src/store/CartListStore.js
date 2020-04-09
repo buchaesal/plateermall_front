@@ -1,11 +1,9 @@
 import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, requestChangeQuantity} from '../api/CartListApi'
 import GoodsApi from '../api/GoodsApi'
-//import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
 import {getCurrentUserInfo} from "../api/UserApi";
 
 const state = {
-    //cartList: [{"test": "1"}],
     cartList: [],
     userInfo: {}
 }
