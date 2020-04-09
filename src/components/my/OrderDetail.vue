@@ -5,24 +5,24 @@
                 <FaqHeader :title="'주문배송상세'"></FaqHeader>
             </div>
             <div class="order-detail-header">
-                <p>주문번호 1111 (주문일: 2020.03.11, 주문자: 이선경)</p>
+                <p>주문번호 {{orderDetail.orderId}} (주문일: {{orderDetail.orderDate}}, 주문자: {{currentUser.name}})</p>
             </div>
             <div class="my-order-list">
                 <div>
                     <div class="goods-list">
                         <div class="my-order-list-goods">
                     <span class="goods-img">
-                        <img src="https://image.msscdn.net/images/goods_img/20180703/810033/810033_1_500.jpg">
+                        <img :src="goods.imgUrl">
                     </span>
                             <div class="my-order-list-info">
-                                <p class="font-emphasis" style="margin-bottom: 0">나이키</p>
-                                <p class="font-emphasis">W에어맥스 97 트리플 화이트 921733</p>
-                                <p>사이즈선택 235</p>
-                                <p>수량 1개</p>
-                                <p>배송완료</p>
+                                <p class="font-emphasis" style="margin-bottom: 0">{{goods.seller}}</p>
+                                <p class="font-emphasis">{{goods.title}}</p>
+                                <p>옵션 {{orderDetail.selectedOptions}}</p>
+                                <p>수량 {{orderDetail.goodsCount}}개</p>
+                                <p>{{orderDetail.orderState.orderState}}</p>
                             </div>
                             <div style="float: right;">
-                                <span class="my-order-list-price font-emphasis">10000원</span>
+                                <span class="my-order-list-price font-emphasis">{{Number(orderDetail.orderPaymentInfo.orderOriginalPrice.goodsPrice).toLocaleString()}}원</span>
                                 <div class="my-order-list-button">
                                     <button class="btn1">반품접수</button>
                                     <button class="btn1">교환접수</button>
@@ -35,20 +35,21 @@
             </div>
         </div>
         <div class="delivery_cost">
-            <p>배송비 0원</p>
+            <p>배송비 {{orderDetail.orderPaymentInfo.orderOriginalPrice.shippingPrice}}원</p>
         </div>
         <div class="delivery_info">
             <div class="tb_container">
                 <table class="info_tb">
                     <tr>
                         <td class="tb_title">배송지</td>
-                        <td><p style="font-weight: bold">이선경</p>
-                            <p>22158 인천 미추홀구 한나루로 518번길</p>
-                            <p>01012341234</p></td>
+                        <td><p style="font-weight: bold">{{orderDetail.orderDeliveryInfo.receiverName}}</p>
+                            <p>{{orderDetail.orderDeliveryInfo.roadAddress}}</p>
+                            <p>({{orderDetail.orderDeliveryInfo.zipcodeAddress + '' + orderDetail.orderDeliveryInfo.remainAddress}})</p>
+                            <p>{{orderDetail.orderDeliveryInfo.contactNumber+'/'+orderDetail.orderDeliveryInfo.phoneNumber}}</p></td>
                     </tr>
                     <tr>
                         <td class="tb_title">배송메시지</td>
-                        <td>선택안함</td>
+                        <td>{{orderDetail.orderDeliveryInfo.message}}</td>
                     </tr>
                 </table>
             </div>
@@ -92,16 +93,33 @@
 
 <script>
     import FaqHeader from "../faq/FaqHeader";
+    import {getFullOrder} from "../../api/OrderApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
+    import GoodsApi from "../../api/GoodsApi";
 
     export default {
         name: "OrderDetail",
         components: {
             FaqHeader
         },
+        data(){
+            return{
+                orderDetail: {},
+                currentUser: {},
+                goods: {}
+            }
+        },
         methods:{
             goOrderPage(){
                 this.$router.push('/orderList');
             }
+        },
+        async created() {
+            this.orderDetail = await getFullOrder(this.$route.params.orderId);
+            this.currentUser = await getCurrentUserInfo();
+            this.goods = await new GoodsApi().getGoods(this.orderDetail.goodsId);
+            console.log(this.orderDetail, 'orderDetail');
+            console.log(this.goods, 'goods');
         }
     }
 </script>

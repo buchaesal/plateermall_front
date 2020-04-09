@@ -48,7 +48,7 @@ export const getOrder = function (orderId) {
 
 export const getFullOrder = function (orderId) {
     return request.get(ORDER_URL + `/full/${orderId}`)
-        .then(response => response.data)
+        .then(response => {return response.data})
         .catch(err => console.log(err))
 }
 

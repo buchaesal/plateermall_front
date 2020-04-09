@@ -57,7 +57,7 @@ const routes = [
     {path: '/404', component: PageNotFound},
     {path: '*', redirect: '/404'},
     {
-        path: '/order/orderDetail',
+        path: '/order/orderDetail/:orderId',
         component: MyPage,
         props: {selectedComponent: 'OrderDetail'},
         meta: {authRequired: true}
