@@ -19,7 +19,7 @@
                                 <p class="font-emphasis">{{goods.title}}</p>
                                 <p>옵션 {{orderDetail.selectedOptions}}</p>
                                 <p>수량 {{orderDetail.goodsCount}}개</p>
-                                <p>{{orderDetail.orderState.orderState}}</p>
+                                <p>{{orderState}}</p>
                             </div>
                             <div style="float: right;">
                                 <span class="my-order-list-price font-emphasis">{{Number(orderDetail.orderPaymentInfo.orderOriginalPrice.goodsPrice).toLocaleString()}}원</span>
@@ -107,7 +107,8 @@
             return{
                 orderDetail: new OrderModel(),
                 currentUser: {},
-                goods: {}
+                goods: {},
+                orderState: ''
             }
         },
         methods:{
@@ -117,6 +118,7 @@
         },
         async created() {
             this.orderDetail = await getFullOrder(this.$route.params.orderId);
+            this.orderState = this.orderDetail.orderState.orderState;
             this.currentUser = await getCurrentUserInfo();
             this.goods = await new GoodsApi().getGoods(this.orderDetail.goodsId);
             console.log(this.orderDetail, 'orderDetail');

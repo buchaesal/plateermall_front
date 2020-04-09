@@ -7,7 +7,9 @@ class OrderModel {
 	orderDate = '';
 	selectedOptions = '';
 	
-    orderState = {};
+    orderState = {
+        orderState: ''
+    };
     orderDeliveryInfo = {
         orderId : '',
         roadAddress : '',
