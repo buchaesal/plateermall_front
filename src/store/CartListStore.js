@@ -4,6 +4,7 @@ import GoodsApi from '../api/GoodsApi'
 import WishListApi from "../api/WishListApi";
 
 const state = {
+    //cartList: [{"test": "1"}],
     cartList: [],
 }
 
@@ -48,6 +49,7 @@ const actions = {
                     cart.shippingFee = goods.shippingFee;
                     cart.dcRate = goods.dcRate;
                     cart.benefitPrice = goods.benefitPrice;
+                    cart.cardPromotions = goods.cardPromotions;
                     resultCart.push(cart);
                 }
             });

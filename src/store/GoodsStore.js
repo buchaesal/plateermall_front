@@ -31,7 +31,10 @@ const mutations = {
         state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
     },
     async getCategoryGoodsModelList(state, categoryGoodsSet) {
+        state.categoryGoodsModels = [];
+        console.log("previous : " + state.categoryGoodsModels);
         state.categoryGoodsModels = await goodsApi.getCategoryGoodsList(categoryGoodsSet.categoryCode, categoryGoodsSet.sort);
+        console.log("next : " + state.categoryGoodsModels);
     },
     async getSearchResultList(state, query) {
         state.searchResultGoodsModels = [{GoodsModel}];
