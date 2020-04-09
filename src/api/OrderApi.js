@@ -46,6 +46,12 @@ export const getOrder = function (orderId) {
         .catch((err) => console.log(err));
 }
 
+export const getFullOrder = function (orderId) {
+    return request.get(ORDER_URL + `/full/${orderId}`)
+        .then(response => response.data)
+        .catch(err => console.log(err))
+}
+
 export const order = function (order) {
     return request.post(ORDER_URL + `/order`, order)
         .then((response) => {return response.data})
