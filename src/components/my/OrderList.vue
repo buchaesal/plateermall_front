@@ -13,7 +13,7 @@
                 <div v-for="(goods, index) in goodsInOrderList" v-bind:key="index" class="goods-list">
                     <div class="my-order-list-title">
                         <p class="order-date">{{orderList[index].orderState.stateChangeDate}}</p>
-                        <router-link href="#" to="/order/orderDetail" class="order-detail">자세히보기 ></router-link>
+                        <router-link href="#" :to="`/order/orderDetail/${orderList[index].orderId}`" class="order-detail">자세히보기 ></router-link>
                     </div>
 
                     <div class="my-order-list-goods">
