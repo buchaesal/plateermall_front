@@ -96,6 +96,7 @@
     import {getFullOrder} from "../../api/OrderApi";
     import {getCurrentUserInfo} from "../../api/UserApi";
     import GoodsApi from "../../api/GoodsApi";
+    import OrderModel from "./model/OrderModel";
 
     export default {
         name: "OrderDetail",
@@ -104,7 +105,7 @@
         },
         data(){
             return{
-                orderDetail: {},
+                orderDetail: new OrderModel(),
                 currentUser: {},
                 goods: {}
             }
