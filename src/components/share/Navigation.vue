@@ -62,7 +62,7 @@
                 </sui-accordion-content>
             </sui-accordion>
         </div>
-        <sui-button basic color="black" content="초기화" icon="redo" class="reset"/>
+        <sui-button basic color="black" content="초기화" icon="redo" class="reset" @click="reset"/>
 
     </div>
 </template>
@@ -78,7 +78,7 @@
         ],
         data() {
             return {
-                priceOption: "",
+                priceOption: "1",
                 minPrice: "",
                 maxPrice: "",
                 selfMinPrice: "",
@@ -88,6 +88,9 @@
         methods: {
             changeCategory(categoryCode) {
                 this.$emit("changeCategory", categoryCode);
+            },
+            changePriceRange() {
+                this.$emit("changePriceRange", this.minPrice, this.maxPrice);
             },
             radioChange() {
                 switch (this.priceOption) {
@@ -108,7 +111,7 @@
                         this.maxPrice = "300000";
                         break;
                 }
-                this.$emit("changePriceRange", this.minPrice, this.maxPrice);
+                this.changePriceRange();
             },
             setSelfPriceRange() {
                 if (this.selfMinPrice == "") {
@@ -118,8 +121,17 @@
                 } else {
                     this.minPrice = this.selfMinPrice;
                     this.maxPrice = this.selfMaxPrice;
-                    this.$emit("changePriceRange", this.minPrice, this.maxPrice);
+                    this.changePriceRange();
                 }
+            },
+            reset() {
+                this.priceOption = "1";
+                this.minPrice = "";
+                this.maxPrice = "";
+                this.selfMinPrice = "";
+                this.selfMaxPrice = "";
+                this.changePriceRange();
+                this.changeCategory("");
             },
         },
     }

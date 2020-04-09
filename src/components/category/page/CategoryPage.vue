@@ -3,14 +3,16 @@
         <Header></Header>
         <div class="container">
             <div class="fix-inner">
-
                 <Navigation :categoryList="categoryList" :isActive="isActive"
                             v-on:changeCategory="changeCategory"
                             v-on:changePriceRange="changePriceRange"/>
+
                 <div class="goods-area">
                     <sui-loader active centered inline v-if="categoryCode !== categoryInfo.categoryCode"/>
+
                     <div v-else-if="goodsList">
                         <h2 class="page-title">{{categoryInfo.name}}</h2>
+
                         <GoodsListCards :goodsList="goodsList" :items_per_row="4"
                                         :noItemMessage="noItemMessage"
                                         v-on:reSort="reSort"/>
@@ -68,7 +70,9 @@
                 );
             },
             changeCategory(categoryCode) {
-                this.categoryCode = categoryCode;
+                if (categoryCode != "") {
+                    this.categoryCode = categoryCode;
+                }
             },
             changePriceRange(minPrice, maxPrice) {
                 this.minPrice = minPrice;
