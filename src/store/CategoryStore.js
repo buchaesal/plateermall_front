@@ -3,7 +3,7 @@ import CategoryApi from "../api/CategoryApi";
 const state = {
     leftCategoryList: [],
     rightCategoryList: [],
-    categoryList: [],
+    categoryList: [{}],
     categoryInfo: {
         "uuid": null,
         "name": null,
@@ -30,6 +30,7 @@ const mutations = {
         state.rightCategoryList = await categoryApi.getCategoryList(categoryCode);
     },
     async getCategoryList(state, categoryCode) {
+        state.categoryList = [{}];
         state.categoryList = await categoryApi.getCategoryList(categoryCode);
     },
 

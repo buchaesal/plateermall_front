@@ -17,14 +17,13 @@
                     </div>
 
                     <div class="my-order-list-goods">
-                        <sui-checkbox class="goods-checkbox"/>
                         <span class="goods-img">
                         <img :src="goods.imgUrl">
                     </span>
 
                         <div class="my-order-list-info">
                             <p class="font-emphasis" style="margin-bottom: 0;">{{goods.seller}}</p>
-                            <p class="font-emphasis">{{goods.title}}</p>
+                            <p class="font-emphasis" @click="goGoodsDetailPage(goods.goodsCode)" style="cursor: pointer">{{goods.title}}</p>
                             <p>{{orderList[index].goodsCount}}</p>
                             <p>{{orderList[index].orderState.orderState}}</p>
                         </div>
@@ -41,6 +40,10 @@
                     <hr>
                 </div>
             </div>
+        </div>
+
+        <div style="text-align: center" v-if="flag">
+            <sui-button fluid @click="moreLoad">더보기</sui-button>
         </div>
     </div>
 </template>
@@ -72,10 +75,21 @@
                         orderState: '',
                     },
                 }],
+                fullList:[],
                 goodsInOrderList: [],
+                endIndex: 4,
+                flag: true
             }
         },
         methods: {
+            moreLoad(){
+                this.endIndex += 4;
+                if(this.endIndex>this.fullList.length){
+                    this.endIndex = this.fullList.length;
+                    this.flag=false;
+                }
+                this.goodsInOrderList = this.fullList.slice(0,this.endIndex);
+            },
             changeDeliveryAddress() {
                 this.$router.push('/deliveryanduserinfomanagement');
             },
@@ -87,8 +101,13 @@
             },
             async setGoodsList(orderList) {
                 for (let order in orderList) {
-                    this.goodsInOrderList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
+                    this.fullList.push(await this.goodsApi.getGoods(orderList[order].goodsId));
                 }
+                if(this.endIndex>this.fullList.length){
+                    this.endIndex = this.fullList.length;
+                    this.flag=false;
+                }
+                this.goodsInOrderList = this.fullList.slice(0, this.endIndex);
             },
             async cancelOrder(index) {
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
@@ -116,6 +135,9 @@
                     },
                 }];
                 this.goodsInOrderList = [];
+            },
+            goGoodsDetailPage(code) {
+                this.$router.push(`/goodsDetail/${code}`);
             }
         },
         components: {
@@ -167,18 +189,14 @@
         font-size: 0.8rem;
     }
 
-    .goods-checkbox {
-        float: left;
-        margin: 60px 30px 0 30px;
-    }
-
     .goods-img {
         vertical-align: middle;
     }
 
     .goods-img img {
         width: 150px;
-        height: auto
+        height: auto;
+        margin-left: 25px;
     }
 
     .my-order-list-info {

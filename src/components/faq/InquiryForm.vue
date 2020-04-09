@@ -191,7 +191,6 @@
                     this.recentPostId = await getRecentQuestion();
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/answer/"+this.recentPostId);
-                    console.log(this.questionObject);
                 }
             },
             async setGoodsList(myOrderList){

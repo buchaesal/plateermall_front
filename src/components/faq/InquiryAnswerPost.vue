@@ -8,6 +8,12 @@
             </ul>
         </div>
 
+        <hr class="divider">
+
+        <div class="answer_header">
+            <FaqHeader :title="'등록된 문의'"></FaqHeader>
+        </div>
+
         <div id="table_form">
             <sui-form>
                 <sui-form-field>
@@ -59,11 +65,11 @@
                 <sui-button basic secondary v-if="updateBtn" @click="updateBtnChange">수정</sui-button>
                 <sui-button basic secondary  v-if="updateBtn" @click="questionDelete">삭제</sui-button>
                 <sui-button basic secondary v-if="!updateBtn" @click="questionUpdate">수정완료</sui-button>
-                <sui-button basic secondary v-if="!updateBtn" @click="updateBtnChange">수정취소</sui-button>
+                <sui-button basic secondary v-if="!updateBtn" @click="questionUpdateCancel">수정취소</sui-button>
             </div>
         </div>
 
-        <div id="answer_header">
+        <div class="answer_header">
             <FaqHeader :title="'등록된 답변'"></FaqHeader>
         </div>
 
@@ -157,6 +163,19 @@
                 await questionUpdate(this.updateQuestionObject);
                 alert("문의가 수정되었습니다.");
             },
+            async questionUpdateCancel() {
+                //NavigationDuplicated발생 -> 구글링해서 .catch ~~를 달아주니 오류는 해결
+                //아마 현재 페이지에서 또 현재페이지로 router를 날려서 그런것으로 추정
+                this.$router.push("/answer/" + this.questionDetail.postId).catch(err => {
+                    if (err.name != "NavigationDuplicated") {
+                        throw err;
+                    }
+                });
+
+                // this.questionDetail = await getQuestion(this.questionDetail.postId);
+
+                this.updateBtn = 1;
+            },
             updateBtnChange() {
                 if (this.questionDetail.writer != this.userInfo.name) {
                     alert("수정 권한이 없습니다.");
@@ -165,8 +184,6 @@
                 } else if (this.updateBtn == 0) {
                     this.updateBtn = 1;
                 } else {
-                    if(this.questionDetail.goodsTitle!='')
-                        alert("문의에 등록된 주문상품정보는 수정할 수 없습니다.");
                     this.updateBtn = 0;
                 }
             },
@@ -179,6 +196,10 @@
 
 <style scoped>
 
+    #table_form {
+        margin-top: 40px;
+    }
+
     .bull_list-dash, #table_form {
         margin-bottom: 40px;
     }
@@ -188,7 +209,7 @@
         border-top: 3px solid #000;
     }
 
-    #answer_header {
+    .answer_header {
         border-bottom: 2px solid #000;
     }
 
@@ -221,5 +242,9 @@
     .btn-box {
         text-align: right;
         margin: 15px 0;
+    }
+
+    .divider {
+        margin: 40px 0;
     }
 </style>

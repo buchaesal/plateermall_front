@@ -7,14 +7,16 @@
                     <h3 class="title">“{{query}}” 검색결과 <em
                             id="titleCount">{{goodsList.length.toLocaleString()}}</em></h3>
                 </div>
+
                 <Navigation :categoryList="categoryList" :isActive="isActive"
                             v-on:changeCategory="changeCategory"
                             v-on:changePriceRange="changePriceRange"/>
+
                 <div class="goods-area">
                     <GoodsListCards
-                                    :goodsList="goodsList" :items_per_row="4"
-                                    :noItemMessage="noItemMessage"
-                                    v-on:reSort="reSort"/>
+                            :goodsList="goodsList" :items_per_row="4"
+                            :noItemMessage="noItemMessage"
+                            v-on:reSort="reSort"/>
                 </div>
             </div>
         </div>
@@ -44,6 +46,7 @@
         },
         data() {
             return {
+                categoryList: [],
                 categoryCode: "",
                 sort: "goodsCode/DESC",
                 minPrice: "",
@@ -61,7 +64,21 @@
             getGoodsList() {
                 this.$store.commit("getPageGoodsModelList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice));
             },
-            //getCategoryList() {},
+            getCategoryList() {
+                for (let goods of this.goodsList) {
+                    for (let category of goods.categories) {
+                        let data = {
+                            "name": category.name,
+                            "categoryCode": category.categoryCode,
+                        }
+                        if (this.categoryList.filter(category => category.categoryCode === data.categoryCode).length === 0
+                        ) {
+                            this.categoryList.push(data);
+                        }
+
+                    }
+                }
+            },
             changeCategory(categoryCode) {
                 this.categoryCode = categoryCode;
             },
@@ -79,18 +96,19 @@
             this.getQuery();
             this.getGoodsList();
         },
+        beforeUpdate() {
+            console.log(this.goodsList)
+            this.getCategoryList();
+        },
         computed: {
-            categoryList() {
-                return this.$store.state.categoryStore.categoryList;
-            },
             goodsList() {
                 return this.$store.state.goodsStore.pageGoodsModels;
             },
         },
         watch: {
             "query": "getQuery",
-            "$route": ["searchResultGoods", "getCategoryList"],
-            "categoryCode": ["searchResultGoods"],
+            "$route": ["getGoodsList", "getCategoryList"],
+            "categoryCode": ["getGoodsList"],
         },
     }
 </script>

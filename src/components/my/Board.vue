@@ -8,6 +8,9 @@
                     <li> 문의 상태가 ‘답변대기’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
                 </ul>
             </div>
+
+            <hr class="divider">
+
             <ul class="status" id="div_countDetail">
                 <li>총 문의 건 : <span>{{questionList.length}}</span>건</li>
                 <li>답변완료 : <span>{{answerComplete}}</span>건</li>
@@ -74,6 +77,8 @@
             async searchQuestionList() {
                 if(!this.searchQuestionObject.searchType) {
                     alert("검색할 카테고리를 선택해주세요");
+                } else if(this.searchQuestionObject.searchType=='전체조건' && !this.searchQuestionObject.keyword) {
+                    this.searchList = await getQuestionList();
                 } else if(!this.searchQuestionObject.keyword) {
                     alert("검색할 내용을 입력해주세요");
                 } else {
@@ -149,5 +154,9 @@
         height: 36px;
         vertical-align: middle;
         max-height: 200px;
+    }
+
+    .divider {
+        margin: 40px 0;
     }
 </style>
