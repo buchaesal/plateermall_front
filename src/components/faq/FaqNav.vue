@@ -14,7 +14,7 @@
                     <router-link to="/orderList"><span>주문배송조회</span></router-link>
                 </li>
                 <li class="inquiry_area">
-                    <router-link to="/cancelSearch"><span>취소/교환/반품</span></router-link>
+                    <router-link to="/cancelSearch/취소"><span>취소/교환/반품</span></router-link>
                 </li>
                 <li class="inquiry_area">
                     <router-link to="/wishlist"><span>위시리스트</span></router-link>
