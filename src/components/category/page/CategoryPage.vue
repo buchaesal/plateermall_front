@@ -4,7 +4,9 @@
         <div class="container">
             <div class="fix-inner">
 
-                <Navigation :categoryList="categoryList" :isActive="isActive" v-on:changeCategory="changeCategory"/>
+                <Navigation :categoryList="categoryList" :isActive="isActive"
+                            v-on:changeCategory="changeCategory"
+                            v-on:changePriceRange="changePriceRange"/>
                 <div class="goods-area">
                     <sui-loader active centered inline v-if="categoryCode !== categoryInfo.categoryCode"/>
                     <div v-else-if="categoryGoods">
@@ -28,6 +30,7 @@
     import SideBanner from "../../share/SideBanner";
     import GoodsListCards from "../../share/GoodsListCards";
     import Navigation from "../../share/Navigation";
+    import QueryModel from "../../share/model/QueryModel";
 
     export default {
         name: "CategoryPage",
@@ -41,18 +44,17 @@
         data() {
             return {
                 categoryCode: "",
+                sort: "goodsCode/DESC",
+                minPrice: "",
+                maxPrice: "",
                 isActive: true,
                 priceOption: "",
-                sort: "goodsCode/DESC",
                 noItemMessage: "현재 등록된 상품이 없습니다.",
             }
         },
         methods: {
             getCategoryCode() {
                 this.categoryCode = this.$route.params.categoryCode;
-            },
-            changeCategory(categoryCode) {
-                this.categoryCode = categoryCode;
             },
             getCategoryInfo() {
                 this.$store.commit("getCategory", this.categoryCode);
@@ -61,12 +63,16 @@
                 this.$store.commit("getCategoryList", this.categoryCode);
             },
             getCategoryGoods() {
-                this.$store.commit("getCategoryGoodsModelList",
-                    {
-                        categoryCode: this.categoryCode,
-                        sort: this.sort
-                    }
+                this.$store.commit("getCategoryGoodsModelList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice)
                 );
+            },
+            changeCategory(categoryCode) {
+                this.categoryCode = categoryCode;
+            },
+            changePriceRange(minPrice, maxPrice) {
+                this.minPrice = minPrice;
+                this.maxPrice = maxPrice;
+                this.getCategoryGoods();
             },
             reSort(sort) {
                 this.sort = sort;
@@ -103,7 +109,8 @@
             "categoryCode": ["getCategoryInfo", "getCategoryGoods"],
             errorState() {
                 this.getCategoryCode();
-            }
+            },
+            "categoryGoods": [],
         },
     }
 </script>
