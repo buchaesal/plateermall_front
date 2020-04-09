@@ -6,7 +6,7 @@ const state = {
     goodsModelsCol4: [],
     goodsModelsCol5: [],
     goodsModel: {GoodsModel},
-    categoryGoodsModels: [{GoodsModel}],
+    categoryGoodsModels: [],
     searchResultGoodsModels: [{GoodsModel}],
     goodsCount: 0
 }
@@ -31,7 +31,6 @@ const mutations = {
         state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
     },
     async getCategoryGoodsModelList(state, categoryGoodsSet) {
-        state.categoryGoodsModels = [{GoodsModel}];
         state.categoryGoodsModels = await goodsApi.getCategoryGoodsList(categoryGoodsSet.categoryCode, categoryGoodsSet.sort);
     },
     async getSearchResultList(state, query) {
