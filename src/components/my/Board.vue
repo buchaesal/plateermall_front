@@ -14,7 +14,9 @@
                 <li>답변대기 : <span>{{answerStandBy}}</span>건</li>
             </ul>
 
-        <PaginatedList :list-array="questionList"></PaginatedList>
+<!--        <PaginatedList :list-array="questionList"></PaginatedList>-->
+        <PaginatedList v-if="!flag" :list-array="questionList"></PaginatedList>
+        <PaginatedList v-else :list-array="searchList"></PaginatedList>
 
         </div>
 
@@ -36,7 +38,7 @@
 
     import FaqHeader from "../faq/FaqHeader";
     import PaginatedList from "./PaginatedList";
-    import {getQuestionList,searchQuestion} from "../../api/FaqApi";
+    import {getQuestionList, searchQuestion} from "../../api/FaqApi";
 
     export default {
         name: "Board",
@@ -48,12 +50,13 @@
             return {
                 questionList: [],
                 searchList: [],
+                flag: false,
                 answerComplete: '0',
                 answerStandBy: '0',
-                searchQuestionObject: [
-                    {searchType: ''},
-                    {keyword: ''}
-                ],
+                searchQuestionObject: {
+                    searchType: '',
+                    keyword: ''
+                },
                 options: [
                     {text: '제목', value: '제목',},
                     {text: '내용', value: '내용',},
@@ -69,7 +72,17 @@
         },
         methods: {
             async searchQuestionList() {
-                this.searchList = await searchQuestion(this.searchQuestionObject);
+                if(!this.searchQuestionObject.searchType) {
+                    alert("검색할 카테고리를 선택해주세요");
+                } else if(!this.searchQuestionObject.keyword) {
+                    alert("검색할 내용을 입력해주세요");
+                } else {
+                    this.searchList = await searchQuestion(this.searchQuestionObject);
+                    this.searchQuestionObject.searchType = '';
+                    this.searchQuestionObject.keyword = '';
+
+                    this.flag = true;
+                }
             },
             answerCount() {
                 for (let i = 0; i < this.questionList.length; i++) {
