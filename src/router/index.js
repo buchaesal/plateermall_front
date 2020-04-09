@@ -40,7 +40,7 @@ const routes = [
     {path: '/board', component: MyPage, props: {selectedComponent: 'Board'}, meta: {authRequired: true}},
     {path: '/wishlist', component: MyPage, props: {selectedComponent: 'Wishlist'}, meta: {authRequired: true}},
     {path: '/orderList', component: MyPage, props: {selectedComponent: 'OrderList'}, meta: {authRequired: true}},
-    {path: '/cancelSearch', component: MyPage, props: {selectedComponent: 'CancelSearch'}, meta: {authRequired: true}},
+    {path: '/cancelSearch/:active', component: MyPage, props: {selectedComponent: 'CancelSearch'}, meta: {authRequired: true}},
     {
         path: '/answer/:postId',
         component: MyPage,
