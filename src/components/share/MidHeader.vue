@@ -17,11 +17,15 @@
             </router-link>
             <router-link to="/wishlist" class="header-icon">
                 <sui-icon name="heart" size="big"/>
-                <sui-label v-if="isAuthenticated" circular color="blue">{{this.$store.state.wishListStore.wishList.length}}</sui-label>
+                <sui-label v-if="isAuthenticated" circular color="blue">
+                    {{this.$store.state.wishListStore.wishList.length}}
+                </sui-label>
             </router-link>
             <router-link to="/cart" class="header-icon">
                 <sui-icon name="shopping bag" size="big"/>
-                <sui-label v-if="isAuthenticated" circular color="blue">{{this.$store.state.cartListStore.cartList.length}}</sui-label>
+                <sui-label v-if="isAuthenticated" circular color="blue">
+                    {{this.$store.state.cartListStore.cartList.length}}
+                </sui-label>
             </router-link>
         </div>
     </div>
@@ -36,7 +40,7 @@
         ],
         data() {
             return {
-                placeholder: "나이키 봄 컬렉션",
+                placeholder: "나이키",
                 searchKeyword: "",
                 wishListCount: 0,
             }
@@ -46,9 +50,8 @@
                 this.$router.push('/');
             },
             goToResult() {
-                if(!this.searchKeyword){
-                    alert('검색어를 입력해주세요.');
-                    return;
+                if (!this.searchKeyword) {
+                    this.searchKeyword = this.placeholder;
                 }
                 this.$router.push({name: "searchResult", query: {query: this.searchKeyword}})
             },
