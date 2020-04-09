@@ -1,7 +1,6 @@
 import request, {GOODS_URL} from './axios';
 import GoodsSetApiModel from './model/GoodsSetApiModel';
 import CategoryGoodsSetApiModel from './model/CategoryGoodsSetApiModel';
-import SearchResultGoodsSetApiModel from './model/SearchResultGoodsSetApiModel';
 
 class GoodsApi {
     getGoods(goodsCode) {
@@ -36,9 +35,8 @@ class GoodsApi {
         });
     }
 
-    getSearchResultGoodsList(query, sort, categoryCode) {
-        let searchResultGoodsSetApiModel = new SearchResultGoodsSetApiModel(query, sort, categoryCode);
-        return request.get(GOODS_URL + `/searchresultlist`, {params: searchResultGoodsSetApiModel}).then(
+    getSearchResultGoodsList(query) {
+        return request.post(GOODS_URL + `/searchresultlist`, query).then(
             (response) => {
                 return response.data;
             }

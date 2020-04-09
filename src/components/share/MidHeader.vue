@@ -11,14 +11,15 @@
         </div>
 
         <div class="my_info">
-            <router-link to="/myPageMain">
+            <router-link to="/myPageMain" class="header-icon">
                 <sui-icon name="user" size="big"/>
+                <sui-label class="empty-label" v-if="isAuthenticated" circular color="blue"></sui-label>
             </router-link>
-            <router-link to="/wishlist">
+            <router-link to="/wishlist" class="header-icon">
                 <sui-icon name="heart" size="big"/>
                 <sui-label v-if="isAuthenticated" circular color="blue">{{this.$store.state.wishListStore.wishList.length}}</sui-label>
             </router-link>
-            <router-link to="/cart">
+            <router-link to="/cart" class="header-icon">
                 <sui-icon name="shopping bag" size="big"/>
                 <sui-label v-if="isAuthenticated" circular color="blue">{{this.$store.state.cartListStore.cartList.length}}</sui-label>
             </router-link>
@@ -133,15 +134,29 @@
         height: 50px;
     }
 
+    a {
+        display: inline-block;
+        width: 58px;
+    }
+
     i {
-        margin-right: 20px;
         margin-top: 30px;
+    }
+
+    .empty-label {
+        width: 20px;
+        height: 20px;
+        opacity: 0;
     }
 
     .label {
         font-size: x-small;
         position: relative;
         top: 5px;
-        right: 35px;
+        right: 15px;
+    }
+
+    header-icon {
+        width: 60px;
     }
 </style>
