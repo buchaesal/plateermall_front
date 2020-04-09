@@ -38,7 +38,6 @@
             return {
                 placeholder: "나이키 봄 컬렉션",
                 searchKeyword: "",
-                wishListCount: 0,
             }
         },
         methods: {
