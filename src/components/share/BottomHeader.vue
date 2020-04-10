@@ -12,7 +12,7 @@
                       :key="index"><a @click="goToRightCategory(category.categoryCode)">{{category.name}}</a></span>
                 <a href="#">
                     <router-link to="/aboutus">
-                      <sui-icon size="big" name="plus square outline"/>
+                      <sui-icon size="big" name="users"/>
                     </router-link>
                 </a>
             </div>
