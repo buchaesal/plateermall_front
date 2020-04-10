@@ -112,22 +112,19 @@
             async cancelOrder(index) {
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
                 this.cleanData();
-                this.flag=true;
-                this.endIndex = 4;
-                this.fullList = [];
                 await this.getOrderList();
                 alert("주문이 취소되었습니다.")
             },
             async setSpecificStateOrderList(state) {
                 this.cleanData();
-                this.flag=true;
-                this.endIndex = 4;
                 let userData = await getCurrentUserInfo();
                 this.orderList = await getSpecificStatusOrderList("normal", state, userData.email);
-                this.fullList = [];
                 this.setGoodsList(this.orderList);
             },
             cleanData() {
+                this.flag=true;
+                this.endIndex = 4;
+                this.fullList = [];
                 this.orderList = [{
                     orderId: '',
                     userId: '',
