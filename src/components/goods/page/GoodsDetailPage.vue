@@ -33,21 +33,15 @@
                                     </button>
                                     <ul class="share-list" v-if="shareDisplay">
                                         <li>
-                                            <button class="circular ui icon basic button facebook"><i
-                                                    class="facebook icon"></i>
-                                            </button>
+                                            <sui-button basic circular facebook icon="facebook"/>
                                             <br><span class="share-text">페이스북</span>
                                         </li>
                                         <li>
-                                            <button class="circular ui icon basic button twitter"><i
-                                                    class="twitter icon"></i>
-                                            </button>
+                                            <sui-button basic circular twitter icon="twitter"/>
                                             <br><span class="share-text">트위터</span>
                                         </li>
                                         <li>
-                                            <button class="circular ui icon basic button kakaotalk"><i
-                                                    class="comment icon"></i>
-                                            </button>
+                                            <sui-button basic circular kakaotalk icon="comment"/>
                                             <br><span class="share-text">카카오톡</span>
                                         </li>
                                         <li>
@@ -58,11 +52,9 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li>
-                                    <button class="circular ui icon basic button btn-like" @click="likeBtnClick">
-                                        <i class="heart icon red" v-if="isLike"></i>
-                                        <i class="heart outline icon" v-else></i>
-                                    </button>
+                                <li @click="likeBtnClick">
+                                    <sui-button basic circular icon="heart red" v-if="isLike"/>
+                                    <sui-button basic circular icon="heart outline" v-else/>
                                 </li>
                             </ul>
                         </div>
@@ -573,21 +565,18 @@
                     alert('로그인해주세요.');
                     return;
                 }
+                else {
+                    let wishListApi = new WishListApi();
 
-                this.isLike = !this.isLike;
-
-                let wishListApi = new WishListApi();
-
-                if (this.isLike) {
-                    // wishListApi.addGoodsWish({
-                    //     "goodsCode": this.$route.params.goodsCode
-                    // });
-                    wishListApi.addGoodsWish(new WishListModel(this.$route.params.goodsCode, (this.userInfo).email));
-                    alert("위시리스트에 담겼습니다.")
-                } else {
-                    wishListApi.deleteGoodsWish({
-                        "goodsCode": this.$route.params.goodsCode
-                    });
+                    if (!this.isLike) {
+                        this.isLike = true;
+                        wishListApi.addGoodsWish(new WishListModel(this.$route.params.goodsCode, (this.userInfo).email));
+                        alert("위시리스트에 담겼습니다.")
+                    } else {
+                        this.isLike = false;
+                        wishListApi.deleteGoodsWish(this.$route.params.goodsCode);
+                        alert("위시리스트에서 삭제했습니다.")
+                    }
                 }
             },
             onTooltip1() {
@@ -630,7 +619,16 @@
                         }
                     });
                 }
-            }
+            },
+            async getWish() {
+                let wishListApi = new WishListApi();
+                await wishListApi.getWishListGoodsCodes(this.userInfo.email);
+
+                let isExist = (this.wishList.indexOf(this.goodsCode) !== -1);
+                if (isExist) {
+                    this.isLike = true;
+                }
+            },
         },
         async created() {
             if (this.isAuthenticated) {
@@ -640,12 +638,7 @@
             this.$store.commit("getGoodsModel", this.goodsCode);
             this.$store.commit("loadCommentByGoodsCode", this.goodsCode);
             this.$store.commit("addSawList", this.goodsCode);
-
-            let wishList = this.$store.state.wishListStore.wishList;
-            let isExist = (wishList.indexOf(this.goodsCode) !== -1);
-            if (isExist) {
-                this.isLike = true;
-            }
+            await this.getWish();
         },
         computed: {
             goodsData() {
@@ -653,7 +646,10 @@
             },
             isAuthenticated() {
                 return this.$store.getters.isAuthenticated;
-            }
+            },
+            wishList() {
+                return this.$store.state.wishListStore.wishList;
+            },
         },
         watch: {
             option() {
