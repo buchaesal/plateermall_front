@@ -2,7 +2,7 @@
     <div>
         <ReviewOption/>
 
-        <div v-if='getRequestComments.length != 0' class='review-list'>
+        <div v-if='getRequestCount != 0' class='review-list'>
             <sui-item-group divided>
                 <sui-item v-for='(review, index) in getRequestComments' :key='index'>
                     <sui-item-content>
@@ -56,6 +56,7 @@ import ReviewOption from './ReviewOption.vue'
                     orderId:'',
                     email:'',
                     index:0,
+                    reviewCount:0,
                 },
                 goodsCode:'',
             }
@@ -66,7 +67,10 @@ import ReviewOption from './ReviewOption.vue'
         computed: {
             getRequestComments(){
                 return this.$store.state.commentStore.reviews.commentList;
-            },     
+            },    
+            getRequestCount(){
+                return this.$store.state.commentStore.reviewCount;
+            } 
         },
         methods:{
             async recommendComment(index){
@@ -81,6 +85,9 @@ import ReviewOption from './ReviewOption.vue'
                 }
             },
         },
+        created(){
+            //this.reviewCount = this.$store.state.commentStore.reviews.commentList.length;
+        }
     }
 </script>
 

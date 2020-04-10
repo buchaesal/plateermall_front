@@ -4,16 +4,18 @@
             <h3>결제정보</h3>        
         </div>
 
+        <div class="info" style="border-bottom: 1px solid #D9D9D9;">
+            <p style="float: left; margin-left: 5%;">상품금액</p><p style="font-size: 20px; margin-left: 70%;">{{getAllPrice.originalPrice.toLocaleString()}} 원</p>
+            <p style="float: left; margin-left: 5%;">배송비</p><p style="font-size: 20px; margin-left: 70%;">+ {{getAllPrice.shippingPrice.toLocaleString()}} 원</p>
+            <p style="float: left; margin-left: 5%; margin-bottom: 3%;">할인금액</p><p style="font-size: 20px; margin-left: 70%;">- {{getDiscountPrice.toLocaleString()}} 원</p>
+        </div>
         <div class="info">
-            <p>상품금액</p>
-            <p>배송비</p>
-            <p style="border-bottom: 1px solid #D9D9D9; margin-bottom: 3%;">할인금액</p>
-            <p style="padding-top: 5%;">총 결제금액</p>
-            <p style="font-size: 12px; float: right; color: blue;">적립 예정 포인트</p>
+            <p style="float: left; margin-left: 5%; font-size: 15px;">총 결제금액</p><p style="font-size: 20px; margin-left: 70%;">{{getAllPrice.paymentPrice.toLocaleString()}} 원</p>
+            <p style="font-size: 12px; color: blue; float: right;">적립 예정 포인트: {{getAllPrice.savePoint.toLocaleString()}} 점</p>
         </div>
 
         <div class="button">
-            <sui-button secondary size="big">주문하기</sui-button>
+            <sui-button @click="requestOrder" secondary size="big">주문하기</sui-button>
         </div>
     </div>
 </template>
@@ -24,7 +26,7 @@
     export default {
         name: "OrderInfo",
         components: {
-           
+
         },
         data() {
             return {
@@ -32,10 +34,28 @@
             }
         },
         methods: {
-            
+            requestOrder(){
+                if(this.getCheckedValue == false){
+                    alert("주문 동의를 확인해주세요.");
+                }else{
+                    alert("주문넣자!");
+                    this.$store.dispatch('ADD_ORDER');
+                }
+            }
         },
         async created(){
             
+        },
+        computed: {
+            getAllPrice(){
+                return this.$store.state.orderDetailStore.priceInfo;
+            },
+            getDiscountPrice(){
+                return this.$store.state.orderDetailStore.priceInfo.discountPrice;
+            },
+            getCheckedValue(){
+                return this.$store.state.orderDetailStore.isChecked;
+            }
         },
 
     }
@@ -57,10 +77,6 @@
 
     .info{
         padding: 7% 0% 1% 0%;
-    }
-
-    .info p{
-        padding-bottom: 5%;
     }
 
     h3{

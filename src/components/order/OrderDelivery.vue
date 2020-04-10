@@ -1,42 +1,52 @@
 <template>
     <div class="delivery-info">
         <span style="margin-right: 13%; float: left;" >배송지</span>
-        <div class="default">
-            {{defaultAddress.roadAddress}}
-            {{defaultAddress.zipcodeAddress}}
-            {{defaultAddress.remainAddress}}        
+       
+        <div class="default" style="margin-left: 18%;">
+            {{getDefaultAddress.receiver}}
+            ({{getDefaultAddress.spotAlias}})<br>
+            {{getDefaultAddress.roadAddress}}
+            {{getDefaultAddress.zipcodeAddress}}
+            {{getDefaultAddress.remainAddress}}<br>
+            {{getDefaultAddress.phoneNumber}}       
             <br>
-            <sui-button @click="changeAddress" size="tiny" style="margin-left: 18%; margin-top: 3%;" content="변경" />
-            <sui-button @click="registerAddress" size="tiny" content="신규배송지 등록" />
+            <sui-button @click="openModal(1)" size="tiny"  content="변경" style="margin-top: 3%;"/>
+            <sui-button @click="openModal(2)" size="tiny" content="신규배송지 등록" />
         </div>
 
         <!--배송지 변경 모달-->
         <sui-modal v-model="changeModalOpen">
             <sui-modal-header>배송지 변경</sui-modal-header>
-            <sui-modal-content scrolling image>
-                <sui-modal-description>
-                    <sui-item-group divided>
-                    <sui-item class='address-item' style="border-bottom: 1px solid #D9D9D9;" v-for='(address, index) in addressInfo.data' :key='index'>
-                    <sui-checkbox v-model="addressIndex" radio style="margin-right: 2%;"/>
-                    <sui-item-content class='address'>
-                        <sui-item-header>{{address.receiver}} ({{address.spotAlias}})<span v-show="address.isDefault==1" style="font-size:12px;">  기본배송지</span></sui-item-header>
-                        <sui-item-meta>
-                            {{address.roadAddress}}
-                            {{address.zipcodeAddress}}
-                            {{address.remainAddress}}
-                            <br>
-                            {{address.phoneNumber}}
-                            <br><br>    
-                        </sui-item-meta>
-                    </sui-item-content>
-                    </sui-item>
-                </sui-item-group>
-                </sui-modal-description>
-            </sui-modal-content>
+                <sui-modal-content scrolling image>
+                    <sui-modal-description>
+                        <sui-item-group divided>
+                            <sui-form>
+                                <sui-form-fields grouped>
+                                    <sui-form-field v-for='(address, index) in addressInfo.data' :key='index'>
+                                    <sui-checkbox radio :value="''+index" v-model="addressIndex" />
+                                    <sui-item class='address-item' style="border-bottom: 1px solid #D9D9D9;" >
+                                        <sui-item-content class='address'>
+                                            <sui-item-header>{{address.receiver}} ({{address.spotAlias}})<span v-show="address.isDefault==1" style="font-size:12px;">  기본배송지</span></sui-item-header>
+                                            <sui-item-meta>
+                                                {{address.roadAddress}}
+                                                {{address.zipcodeAddress}}
+                                                {{address.remainAddress}}
+                                                <br>
+                                                {{address.phoneNumber}}
+                                                <br><br>    
+                                            </sui-item-meta>
+                                        </sui-item-content>
+                                    </sui-item>
+                                    </sui-form-field>
+                                </sui-form-fields>
+                            </sui-form>
+                        </sui-item-group>
+                    </sui-modal-description>
+                </sui-modal-content>
 
             <sui-modal-actions>
-                <sui-button @click.native="cancelChangeAddress(1)">취소</sui-button>
-                <sui-button @click="changeAddress">배송지 변경</sui-button>
+                <sui-button @click="cancelChangeAddress(1)">취소</sui-button>
+                <sui-button @click="changeAddress(addressInfo.data[addressIndex])">배송지 변경</sui-button>
             </sui-modal-actions>
         </sui-modal>
 
@@ -44,12 +54,12 @@
             <sui-modal-header>신규 배송지 등록</sui-modal-header>
             <sui-modal-content scrolling image>
                 <sui-modal-description>
-                    <ShippingSpotForm :targetShippingSpot='newShippingSpotModel'/>
+                    <ShippingSpotForm :targetShippingSpot='newAddress'/>
                 </sui-modal-description>
             </sui-modal-content>
 
             <sui-modal-actions>
-                <sui-button @click.native="cancelChangeAddress(2)">취소</sui-button>
+                <sui-button @click="cancelChangeAddress(2)">취소</sui-button>
                 <sui-button @click="registerAddress">배송지 변경</sui-button>
             </sui-modal-actions>
         </sui-modal>
@@ -73,8 +83,9 @@ import ShippingSpotModel from "../../components/my/model/ShippingSpotModel";
         },
         data() {
             return {
-                newShippingSpotModel: new ShippingSpotModel(),
-                addressIndex:"0",
+                newAddress: new ShippingSpotModel(),
+                addressIndex: '',
+                copyIndex:"0",
                 changeModalOpen: false,
                 registerModalOpen: false,
                 addressInfo:[],
@@ -101,13 +112,33 @@ import ShippingSpotModel from "../../components/my/model/ShippingSpotModel";
             }
         },
         methods: {
-            changeAddress(){
+            openModal(modalIndex){
+                if(modalIndex == 1) this.changeModalOpen = !this.changeModalOpen;
+                else this.registerModalOpen = !this.registerModalOpen;
+            },
+
+            //기존배송지에서 변경
+            changeAddress(address){
+                this.copyIndex = this.addressIndex;
+                this.defaultAddress = address;
+                this.$store.commit('loadDefaultAddress', address);
                 this.changeModalOpen = !this.changeModalOpen;
             },
+            
+            //신규배송지
             registerAddress(){
+                
+                this.defaultAddress = this.newAddress;
+                this.$store.commit('loadDefaultAddress', this.newAddress);
                 this.registerModalOpen = !this.registerModalOpen;
             },
+            
+            //변경 취소
             cancelChangeAddress(modalIndex){
+
+                this.addressIndex = this.copyIndex;
+                this.$store.commit('loadDefaultAddress', this.defaultAddress);
+                
                 if(modalIndex==1){
                     this.changeModalOpen = !this.changeModalOpen;
                 }else{
@@ -126,8 +157,22 @@ import ShippingSpotModel from "../../components/my/model/ShippingSpotModel";
                 }
             }
 
+            this.$store.commit('loadDefaultAddress', this.defaultAddress);
+            this.addressIndex = "0";
         },
+        computed:{
+            
+            getDefaultAddress(){
 
+                return this.$store.state.orderDetailStore.defaultAddress;
+            }
+        },
+        watch:{
+            currentMessage:function(){
+
+                this.$store.commit('loadDeliveryMessage', this.currentMessage);
+            }
+        }
     }
 </script>
 

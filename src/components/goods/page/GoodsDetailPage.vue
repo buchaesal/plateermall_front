@@ -569,7 +569,7 @@
                 this.shareDisplay = false;
             },
             likeBtnClick() {
-                if(!this.isAuthenticated){
+                if (!this.isAuthenticated) {
                     alert('로그인해주세요.');
                     return;
                 }
@@ -633,19 +633,25 @@
             }
         },
         async created() {
-            if(this.isAuthenticated){
+            if (this.isAuthenticated) {
                 this.userInfo = await getCurrentUserInfo();
             }
             this.goodsCode = this.$route.params.goodsCode;
             this.$store.commit("getGoodsModel", this.goodsCode);
             this.$store.commit("loadCommentByGoodsCode", this.goodsCode);
             this.$store.commit("addSawList", this.goodsCode);
+
+            let wishList = this.$store.state.wishListStore.wishList;
+            let isExist = (wishList.indexOf(this.goodsCode) !== -1);
+            if (isExist) {
+                this.isLike = true;
+            }
         },
         computed: {
             goodsData() {
                 return this.$store.state.goodsStore.goodsModel;
             },
-            isAuthenticated(){
+            isAuthenticated() {
                 return this.$store.getters.isAuthenticated;
             }
         },

@@ -60,6 +60,7 @@
         },
         created() {
             this.getQuery();
+            this.$store.dispatch('getLoginUserInfo');
         }
     }
 </script>

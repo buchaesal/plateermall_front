@@ -51,7 +51,6 @@
                 maxPrice: "",
                 isActive: true,
                 priceOption: "",
-                query: "",
                 noItemMessage: "현재 등록된 상품이 없습니다.",
             }
         },
@@ -66,7 +65,7 @@
                 this.$store.commit("getCategoryList", this.categoryCode);
             },
             getGoodsList() {
-                this.$store.commit("getPageGoodsModelList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice)
+                this.$store.commit("getPageGoodsModelList", new QueryModel("", this.sort, this.categoryCode, this.minPrice, this.maxPrice)
                 );
             },
             changeCategory(categoryCode) {
@@ -133,43 +132,6 @@
     .fix-inner {
         min-width: 1240px;
         margin: 0 20px;
-    }
-
-    .category-nav {
-        margin-bottom: 24px;
-        margin-right: 62px;
-        border-top: 3px solid #000;
-        border-bottom: 3px solid #000;
-        float: left;
-        width: 210px;
-    }
-
-    .ui.accordion .title {
-        margin: 0;
-        padding: 0;
-        height: 56px;
-        line-height: 56px;
-    }
-
-    .nav-title {
-        border-top: 1px solid #ededed;
-        border-top-width: 1px;
-        border-top-style: solid;
-        border-top-color: rgb(237, 237, 237);
-    }
-
-    .title-text {
-        float: left;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .title-icon {
-        float: right;
-    }
-
-    .nav-content {
-        padding-bottom: 15px;
     }
 
     ul {
