@@ -25,6 +25,7 @@
         methods: {
             goToLoginForm() {
                 this.$router.push('/login');
+                this.$store.commit('CHANGE_PAGE_PATH');
             },
             logout() {
                 this.$store.commit('LOGOUT');
