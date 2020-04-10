@@ -2,17 +2,10 @@
     <div id="main-page-container">
         <Header></Header>
         <sui-container>
-            <div style="margin-bottom:30px;">
+            <div>
                 <h1>쇼핑백</h1>
             </div>
 
-            <div>
-                <sui-menu :widths="3">
-                    <sui-menu-item active>일반배송</sui-menu-item>
-                    <sui-menu-item>스마트픽</sui-menu-item>
-                    <sui-menu-item>해외직구</sui-menu-item>
-                </sui-menu>
-            </div>
             <div class="empty-cart" v-if="cartListCount === 0">
                 <i class="huge exclamation icon"></i>
                 <br/>
