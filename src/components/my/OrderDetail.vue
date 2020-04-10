@@ -71,14 +71,17 @@
                 <td class="gray_row"><p>상품금액 <span class="num_area">{{Number(orderDetail.orderPaymentInfo.orderOriginalPrice.goodsPrice).toLocaleString()}}원</span>
                 </p>
                     <p>배송비 <span class="num_area">{{Number(orderDetail.orderPaymentInfo.orderOriginalPrice.shippingPrice).toLocaleString()}}원</span>
-                    </p></td>
-                <td class="gray_row"><p>카드 할인 <span class="num_area">{{Number(orderDetail.orderPaymentInfo.orderDiscountPriceList[0].discountPrice).toLocaleString()}}원</span>
-                </p>
-                    <p>포인트 할인 <span class="num_area">{{Number(orderDetail.orderPaymentInfo.orderDiscountPriceList[1].discountPrice).toLocaleString()}}원</span>
-                    </p></td>
+                    </p>
+                </td>
+
+                <td class="gray_row">
+                    <p v-for="(dcPrice, index) in orderDetail.orderPaymentInfo.orderDiscountPriceList" :key="index">{{dcPrice.discountName}} <span class="num_area">{{Number(dcPrice.discountPrice).toLocaleString()}}원</span></p>
+                </td>
+
                 <td class="gray_row"><p>신용카드 <span class="num_area">{{Number(orderDetail.orderPaymentInfo.paymentPrice).toLocaleString()}}원</span>
                 </p>
-                    <p>({{orderDetail.orderPaymentInfo.orderCardPayment.cardName}})</p></td>
+                    <p>({{orderDetail.orderPaymentInfo.orderCardPayment.cardName}})</p>
+                </td>
             </tr>
         </table>
         <div class="order_header" style="margin-top: 80px;">
