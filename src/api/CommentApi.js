@@ -78,7 +78,7 @@ export const increaseRecommend = function(comment){
     
     return request.put(COMMENTS_URL + '/recommendation', comment).then(
         (response) => {
-            console.log(response);
+            return response.data
         }
     ).catch(function(error){
         console.log(error);
@@ -113,8 +113,8 @@ export const addCommentStatus = function(status){
 export const isRecommend = function(orderId, email){
 
     return request.get(COMMENTS_URL + `/isrecommend/${orderId}/${email}`).then(
-        ()=> {
-           
+        (response) => {
+            return response.data;
         }
     ).catch(function(error){
         console.log(error);
@@ -130,7 +130,7 @@ export const addRecommend = function(recommendInfo){
 }
 
 export const deleteCommentStatus = function(orderId){
-    return request.delete(COMMENTS_URL + `deletecommentstatus/${orderId}`).then(
+    return request.delete(COMMENTS_URL + `/deletecommentstatus/${orderId}`).then(
        
     ).catch(function(error){
         console.log(error);

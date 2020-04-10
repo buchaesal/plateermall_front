@@ -22,7 +22,6 @@
                         <br>
                         <p>{{review.userId}} | {{review.writtenDate}}</p>
 
-                        <span class='recommend-review'><sui-button size="tiny" floated="right" basic content="신고 하기"/></span>
                         <span class='report-review'><sui-button @click="recommendComment(index)" size="tiny"  icon="thumbs up outline" floated="right" basic>추천하기{{review.recommendCount}}</sui-button></span>
                     </sui-item-meta>
                 <sui-item-description>
