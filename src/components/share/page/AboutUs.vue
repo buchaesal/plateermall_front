@@ -55,7 +55,7 @@
                     imgUrl: require('../../../assets/ducain.png'),
                     name: 'Ducain',
                     joinDate: 'Joined in ????.??.??',
-                    description: 'WishList, Shopping Cart',
+                    description: 'Special Thanks to',
                 },
                 list: [
 
@@ -69,31 +69,31 @@
                         imgUrl: require('../../../assets/lsk.png'),
                         name: 'sun kyung. Lee',
                         joinDate: 'Joined in 2020.01.22',
-                        description: 'WishList, Shopping Cart',
+                        description: 'Goods, Category',
                     },
                     {
                         imgUrl: require('../../../assets/cdb.png'),
                         name: 'dan bi. Choi',
                         joinDate: 'Joined in 2020.01.22',
-                        description: 'WishList, Shopping Cart',
+                        description: 'Auth, User',
                     },
                     {
                         imgUrl: require('../../../assets/jms.png'),
                         name: 'myung sub. Jang',
                         joinDate: 'Joined in 2020.01.22',
-                        description: 'WishList, Shopping Cart',
+                        description: 'Order',
                     },
                     {
                         imgUrl: require('../../../assets/nyj.png'),
                         name: 'yoon joo. Na',
                         joinDate: 'Joined in 2020.01.22',
-                        description: 'WishList, Shopping Cart',
+                        description: 'Comment',
                     },
                     {
                         imgUrl: require('../../../assets/jek.png'),
                         name: 'eun koo. Jeon',
                         joinDate: 'Joined in 2020.01.22',
-                        description: 'WishList, Shopping Cart',
+                        description: 'Board',
                     }
                 ]
             }
