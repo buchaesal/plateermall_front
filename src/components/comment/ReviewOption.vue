@@ -55,8 +55,6 @@ import GoodsApi from '../../api/GoodsApi';
                 ],
             }
         },
-        components:{
-        },
         async created(){
             this.goodsCode = this.$route.params.goodsCode;
 

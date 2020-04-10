@@ -75,11 +75,7 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
                 return this.$store.state.commentStore.written.writtenCount;
             },
         },
-        methods: {
-            
-        },
         components:{
-
             ReviewDetail,
         },
     }
