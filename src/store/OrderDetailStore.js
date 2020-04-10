@@ -19,7 +19,7 @@ const state = {
     discountInfo:[],
     cardInfo:{
         cardName: '',
-        installment:'',
+        installments:'',
     },
 }
 
