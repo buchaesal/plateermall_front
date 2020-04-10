@@ -31,6 +31,7 @@
             return {
                 section_title: "For You",
                 items_per_row: 5,
+                categoryCode: "10004",
             }
         },
         methods: {
@@ -44,7 +45,7 @@
         created() {
             this.$store.commit("getGoodsModelListCol5",
                 {
-                    categoryCode: "10052",
+                    categoryCode: this.categoryCode,
                     quantity: this.items_per_row
                 });
         },

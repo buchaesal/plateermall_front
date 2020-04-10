@@ -32,6 +32,7 @@
             return {
                 section_title: "FLEX-Tem",
                 items_per_row: 3,
+                categoryCode: "10001",
             }
         },
         methods: {
@@ -42,7 +43,7 @@
         created() {
             this.$store.commit("getGoodsModelListCol3",
                 {
-                    categoryCode: "10001",
+                    categoryCode: this.categoryCode,
                     quantity: this.items_per_row * 2
                 });
         },
