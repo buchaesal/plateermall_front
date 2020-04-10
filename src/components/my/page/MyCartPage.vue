@@ -2,17 +2,10 @@
     <div id="main-page-container">
         <Header></Header>
         <sui-container>
-            <div style="margin-bottom:30px;">
+            <div>
                 <h1>쇼핑백</h1>
             </div>
 
-            <div>
-                <sui-menu :widths="3">
-                    <sui-menu-item active>일반배송</sui-menu-item>
-                    <sui-menu-item>스마트픽</sui-menu-item>
-                    <sui-menu-item>해외직구</sui-menu-item>
-                </sui-menu>
-            </div>
             <div class="empty-cart" v-if="cartListCount === 0">
                 <i class="huge exclamation icon"></i>
                 <br/>
@@ -31,8 +24,11 @@
                         </div>
                     </div>
                     <div v-for="(cart, index) in getCartList" v-bind:key="index" class="goods-list">
-                        <div style="background-color:#ededed; height:50px;">
+                        <div v-if="cart.shippingFee === 0" style="background-color:#ededed; height:50px;">
                             <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
+                        </div>
+                        <div v-else style="background-color:#ededed; height:50px;">
+                            <p style="text-align:right; line-height:50px; margin-right:10px; color:red">택배비 : {{cart.shippingFee.toLocaleString()}}원</p>
                         </div>
                         <div>
                             <sui-grid :columns="5">
