@@ -11,7 +11,9 @@
                 <span class="item" v-for="(category, index) in rightCategoryList"
                       :key="index"><a @click="goToRightCategory(category.categoryCode)">{{category.name}}</a></span>
                 <a href="#">
-                    <sui-icon size="big" name="plus square outline"/>
+                    <router-link to="/aboutus">
+                      <sui-icon size="big" name="plus square outline"/>
+                    </router-link>
                 </a>
             </div>
         </div>

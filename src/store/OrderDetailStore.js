@@ -1,6 +1,7 @@
 import OrderModel from "../components/my/model/OrderModel";
-import {getCurrentUserInfo} from '../../src/api/UserApi.js';
+import {getCurrentUserInfo, modifyUser} from '../../src/api/UserApi.js';
 import {order} from '../../src/api/OrderApi.js';
+import {addCommentStatus} from '../../src/api/CommentApi.js';
 
 const state = {
     
@@ -21,6 +22,7 @@ const state = {
         cardName: '',
         installments:'',
     },
+    orderId:'',
 }
 
 const getters = {}
@@ -44,7 +46,7 @@ const mutations = {
             state.discountInfo.push({
                 orderId: '', 
                 discountName: info.discountName, 
-                discountPrice: info.price/(state.goodsInfo.length),
+                discountPrice: Math.round(info.price/(state.goodsInfo.length)),
             });
         }
 
@@ -66,7 +68,6 @@ const mutations = {
 
     loadGoodsInfo(state, goodsInfo){
         state.goodsInfo = goodsInfo;
-        console.log(state.goodsInfo);
     },
 
     loadDeliveryMessage(state, message){
@@ -78,18 +79,21 @@ const mutations = {
     },
 
     async addOrder(state, orderModel){
-        console.log(orderModel);
-        await order(orderModel);
+        state.orderId = await order(orderModel);
+
+        await addCommentStatus({
+            "orderId": state.orderId,
+            "userId": orderModel.userId,
+            "isWritten": "N"
+        });
     }
 }
 
 const actions = {
     async ADD_ORDER(context){
-        console.log("add order");
-        
-        //let orderCount = state.goodsInfo.length;
 
-        console.log(context.state.goodsInfo,'goodsInfo');
+        context.state.orderIdList=[];
+
         for(let index in context.state.goodsInfo){
             let orderModel = new OrderModel();
             let user = await getCurrentUserInfo();
@@ -132,11 +136,25 @@ const actions = {
 
             orderModel.orderPointInfo = {
                 orderId : '',
-                orderComplete : context.state.priceInfo.savePoint/2,
+                orderComplete : Math.round(context.state.priceInfo.savePoint/2),
                 writeComment : 200,
-            },    
+            };
+
+            let usedPoint = 0;
+
+            for(let index in context.state.discountInfo){
+                if(context.state.discountInfo[index].discountName == '카드할인'){
+                    usedPoint += context.state.discountInfo[index].discountPrice;
+                }
+            }
 
             context.commit('addOrder', orderModel);
+
+            user.password = null;
+            user.point -= usedPoint;
+            user.point += Math.round(context.state.priceInfo.savePoint/2);
+            
+            await modifyUser(user);
         }
 
     }
