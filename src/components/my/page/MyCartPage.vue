@@ -18,7 +18,6 @@
                 <br/>
                 <br/>
                 <p>장바구니에 담은 상품이 없습니다.</p>
-
             </div>
             <div class="goods-main-container" v-else>
                 <div class="goods-list-container">
@@ -143,28 +142,6 @@
                 </div>
             </div>
         </sui-container>
-        <!--
-        <div>
-            <div>
-                <hr/>
-                state에 cartList 값
-                <br />
-                {{getCartList}}
-                <hr/>
-            </div>
-
-            <div>
-                <hr/>
-                data에 checkedCartList 값
-                <br />
-                {{checkedCartList}}
-                <hr/>
-            </div>
-            <div>
-                {{isTotalChecked}}
-            </div>
-        </div>
-        -->
         <Footer></Footer>
     </div>
 </template>
@@ -173,7 +150,6 @@
     import Header from '../../share/Header';
     import Footer from '../../share/Footer.vue';
     import {requestCardDiscountInfo} from "../../../api/CartListApi";
-    import {getCurrentUserInfo} from "../../../api/UserApi";
 
     export default {
         name: "MyCart",
@@ -182,7 +158,6 @@
                 isTotalChecked:false,
                 checkedCartList:[],
                 cardInfoList:[],
-                userInfo: {},
             }
         },
         components: {
@@ -265,7 +240,7 @@
                 this.checkedCartList.map((cart) => {
                     goodsCodeArr.push({
                         "goodsCode" : cart.goodsCode,
-                        "userId" : this.userInfo.email
+                        "userId" : this.$store.state.cartListStore.userInfo.email
                     });
                 });
 
@@ -300,8 +275,8 @@
             },
         },
         async created() {
-            this.userInfo = await getCurrentUserInfo();
-            await this.$store.dispatch('getCartList', this.userInfo.email);
+            await this.$store.dispatch('getLoginUserInfo');
+            await this.$store.dispatch('getCartList');
             this.cardInfoList = await requestCardDiscountInfo();
         },
 

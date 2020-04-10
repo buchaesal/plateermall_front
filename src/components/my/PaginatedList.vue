@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <sui-table single-line>
 
             <sui-table-header>
@@ -12,7 +13,7 @@
                 </sui-table-row>
             </sui-table-header>
 
-            <sui-table-body v-if="paginatedData.length===0">-->
+            <sui-table-body v-if="paginatedData.length===0">
                 <sui-table-row>
                     <sui-table-cell colspan="5" style="text-align:center;">문의 내역이 없습니다.</sui-table-cell>
                 </sui-table-row>
@@ -56,7 +57,7 @@
             pageSize: {
                 type: Number,
                 required: false,
-                default: 15
+                default: 12
             }
         },
         methods: {

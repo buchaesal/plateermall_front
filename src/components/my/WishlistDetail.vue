@@ -41,6 +41,7 @@
 
     import GoodsApi from "../../api/GoodsApi";
     import WishListApi from "../../api/WishListApi";
+    import {getCurrentUserInfo} from "../../api/UserApi";
 
     export default {
         name: "WishlistDetail",
@@ -49,6 +50,7 @@
                 wishListGoodsCodes: [],
                 wishListGoods: [],
                 searchTxt: "",
+                userInfo: {},
             }
         },
         computed: {
@@ -77,7 +79,7 @@
             },
             async setWishList() {
                 let wishListApi = new WishListApi();
-                this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes(this.$store.state.cartListStore.userInfo.email);
+                this.wishListGoodsCodes = await wishListApi.getWishListGoodsCodes(this.userInfo.email);
 
                 await this.setGoodsFromGoodsCodes();
             },
@@ -99,7 +101,7 @@
             }
         },
         async created() {
-            await this.$store.dispatch('getLoginUserInfo');
+            this.userInfo = await getCurrentUserInfo();
             this.setWishList();
         },
     }
