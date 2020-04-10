@@ -18,7 +18,7 @@ Vue.use(VueRouter);
 
 const routes = [
     {path: '/', component: MainPage},
-    {path: '/login', component: LoginForm},
+    {path: '/login', component: LoginForm, meta:{isLoginPage:true}},
     {path: '/signup', component: SignUpPage},
     {path: '/faq', component: MyPage, props: {selectedComponent: 'FaqContent', userInfo: false}},
     {path: '/inquiryForm', component: MyPage, props: {selectedComponent: 'InquiryForm'}, meta: {authRequired: true}},
