@@ -38,8 +38,19 @@
                 if(this.getCheckedValue == false){
                     alert("주문 동의를 확인해주세요.");
                 }else{
-                    alert("주문넣자!");
                     this.$store.dispatch('ADD_ORDER');
+                    this.$router.push({
+                        name: "ordercomplete", params: {
+                            orderData:
+                                {
+                                    sumOrderPrice: this.getAllPrice.paymentPrice.toLocaleString(),
+                                    sumOriginalPrice: this.getAllPrice.originalPrice.toLocaleString(),
+                                    sumShippingFee: this.getAllPrice.shippingPrice.toLocaleString(),
+                                    sumDiscountPrice: this.getDiscountPrice.toLocaleString(),
+                                    point: this.getAllPrice.savePoint.toLocaleString(),
+                                }
+                        }
+                    });
                 }
             }
         },
@@ -55,7 +66,8 @@
             },
             getCheckedValue(){
                 return this.$store.state.orderDetailStore.isChecked;
-            }
+            },
+
         },
 
     }
