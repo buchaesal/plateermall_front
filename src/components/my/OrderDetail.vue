@@ -75,7 +75,7 @@
                 </td>
 
                 <td class="gray_row">
-                    <p v-for="dcPrice in orderDetail.orderPaymentInfo.orderDiscountPriceList" :key="dcPrice.orderId">{{dcPrice.discountName}} <span class="num_area">{{Number(dcPrice.discountPrice).toLocaleString()}}원</span></p>
+                    <p v-for="(dcPrice, index) in orderDetail.orderPaymentInfo.orderDiscountPriceList" :key="index">{{dcPrice.discountName}} <span class="num_area">{{Number(dcPrice.discountPrice).toLocaleString()}}원</span></p>
                 </td>
 
                 <td class="gray_row"><p>신용카드 <span class="num_area">{{Number(orderDetail.orderPaymentInfo.paymentPrice).toLocaleString()}}원</span>
