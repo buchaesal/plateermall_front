@@ -112,6 +112,9 @@
             async cancelOrder(index) {
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
                 this.cleanData();
+                this.flag=true;
+                this.endIndex = 4;
+                this.fullList = [];
                 await this.getOrderList();
                 alert("주문이 취소되었습니다.")
             },
