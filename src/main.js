@@ -15,13 +15,22 @@ router.beforeEach(function (to, from, next) {
     })) {
         if (!store.getters.isAuthenticated) {
             // 이동할 페이지에 인증 정보가 필요하면 경고 창을 띄우고 페이지 전환은 하지 않음
+            store.commit('SET_TARGET_PAGE',to.path);
             router.push('/login');
         }else {
             next(); // 페이지 전환
         }
     }else{
+        if(to.matched.some(function (routeInfo) {
+            return routeInfo.meta.isLoginPage;
+        })){
+            store.commit('SET_PREV_PAGE', from.path);
+        }
         next(); // 페이지 전환
     }
+
+
+
 });
 
 new Vue({
