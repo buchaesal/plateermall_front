@@ -4,7 +4,8 @@ import GoodsApi from '../../src/api/GoodsApi';
 import {modifyUser} from '../../src/api/UserApi';
 
 const state = {
-    reviews:{},
+    reviews:[],
+    reviewCount:0,
     reviewSummary:{},
     written:{
         reviewList:[],
@@ -38,9 +39,10 @@ const mutations = {
 
     async loadCommentByGoodsCode(state, goodsCode){
 
-        let reviewInfo = await requestComments(goodsCode);
-        state.reviews = reviewInfo;
-        state.reviewSummary = reviewInfo.sumEvaluation;
+        state.reviews = await requestComments(goodsCode);
+        
+        state.reviewCount = state.reviews.commentList.length;
+        state.reviewSummary = state.reviews.sumEvaluation;
     },
 
     async loadCommentByFilter(state, options){

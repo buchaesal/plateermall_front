@@ -4,10 +4,11 @@ import CommentStore from './CommentStore';
 import RecentSawListStore from "./RecentSawListStore";
 import ShippingSpotListStore from './ShippingSpotListStore';
 import PurchaseHistoryStore from './PurchaseHistoryStore';
+import WishListStore from "./WishListStore";
 import UserStore from "./UserStore";
 import CategoryStore from "./CategoryStore";
 import OrderStateStore from "./OrderStateStore";
-import WishListStore from "./WishListStore";
+import OrderDetailStore from "./OrderDetailStore";
 
 import Vuex from 'vuex';
 import Vue from 'vue';
@@ -26,9 +27,10 @@ export default new Vuex.Store({
         recentSawListStore: RecentSawListStore,
         shippingSpotListStore: ShippingSpotListStore,
         purchaseHistoryStore: PurchaseHistoryStore,
+        wishListStore: WishListStore,
         userStore: UserStore,
         categoryStore: CategoryStore,
         orderStateStore: OrderStateStore,
-        wishListStore: WishListStore,
+        orderDetailStore: OrderDetailStore,
     }
 })

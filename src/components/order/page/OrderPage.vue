@@ -48,7 +48,7 @@
 
         <div class="sub-title">
             <h3>주문동의</h3>
-            <sui-checkbox label="주문, 결제 서비스에 동의합니다." />
+            <sui-checkbox v-model="isChecked" label="주문, 결제 서비스에 동의합니다." />
         </div>
     </div>
 
@@ -85,6 +85,7 @@
                 goods:[],
                 orderData:{},
                 showFlag: false,
+                isChecked:false,
             }
         },
         methods: {
@@ -96,7 +97,11 @@
         async created(){
             this.orderData = this.$route.params.orderData;
         },
-
+        watch:{
+            isChecked:function(){
+                this.$store.commit('changeCheckedValue', this.isChecked);
+            }
+        }
     }
 </script>
 

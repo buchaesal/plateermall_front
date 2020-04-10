@@ -35,7 +35,7 @@ class OrderModel {
             discountName : '',
             discountPrice : '',
         }],
-        orderCardPaymentInfo : {
+        orderCardPayment : {
             orderId : '',
             cardName : '',
             installments : '', //일시불이면 0으로 하셈
@@ -44,7 +44,7 @@ class OrderModel {
     orderPointInfo = {
         orderId : '',
         orderComplete : '', //주문 완료되면 적립되는 포인트
-        writeComplete : '', //상품평 작성되면 적립되는 포인트 
+        writeComment : '', //상품평 작성되면 적립되는 포인트 
     };
     
 

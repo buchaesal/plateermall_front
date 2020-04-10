@@ -11,7 +11,8 @@
                     </sui-item-meta>
                     <br>
                     <sui-item-description>
-                        <span class="price" style="font-size: 18px;">{{cart.benefitPrice}} 원</span>
+                        <span class="original-price">{{cart.originalPrice.toLocaleString()}}원</span>
+                        <span class="price" style="font-size: 18px;">{{cart.benefitPrice.toLocaleString()}} 원</span>
                     </sui-item-description>
                 </sui-item-content>
             </sui-item>
@@ -29,12 +30,47 @@
         data() {
             return {
                 orderData:{},
+                priceInfo:{
+                    allPrice:0,
+                    shippingPrice:0,
+                    discountPrice:0,
+                    
+                },
             }
         },
         methods: {
         },
         async created(){
             this.orderData = this.$route.params.orderData;
+
+            let shippingMap = new Map();
+            let goodsInfo = [];
+
+            for(let index in this.orderData.selectedGoods){
+                this.priceInfo.allPrice += this.orderData.selectedGoods[index].originalPrice*this.orderData.selectedGoods[index].quantity;
+                this.priceInfo.discountPrice += (this.orderData.selectedGoods[index].originalPrice - this.orderData.selectedGoods[index].benefitPrice)*this.orderData.selectedGoods[index].quantity;
+                shippingMap.set(this.orderData.selectedGoods[index].goodsCode, this.orderData.selectedGoods[index].shippingFee);
+            
+                goodsInfo.push({
+                    goodsId: this.orderData.selectedGoods[index].goodsCode,
+                    selectedOptions: this.orderData.selectedGoods[index].text,
+                    goodsCount: this.orderData.selectedGoods[index].quantity,
+                    orderPrice: this.orderData.selectedGoods[index].benefitPrice,
+                    originalPrice: this.orderData.selectedGoods[index].originalPrice,
+                    shippingFee: this.orderData.selectedGoods[index].shippingFee,
+                })
+            }
+
+            for(let [key, value] of shippingMap){
+                
+                this.priceInfo.shippingPrice += value;
+                shippingMap.delete(key);
+            }
+
+            this.$store.commit('loadOriginalPrice', this.priceInfo);
+            this.$store.commit('loadGoodsInfo', goodsInfo);
+            
+
         },
 
     }
@@ -61,5 +97,12 @@
 
     .prod_cont{
         padding: 2% 5% 2% 5%;
+    }
+
+    .original-price{
+        text-decoration: line-through;
+        font-size:15px;
+        color:gray;
+        margin-right: 2%;
     }
 </style>
