@@ -1,34 +1,34 @@
 <template>
     <div class="goods-content">
-        <h2 class="page-title">{{categoryInfo.name}}</h2>
-
         <div class="goods-sort">
             <ul class="option-field sort-setting">
                 <li>
                     <input type="radio" name="sort" id="sort-result1"
-                           checked="checked" @click="reOrder('goodsCode/DESC')">
+                           checked="checked" @click="reSort('goodsCode/DESC')">
                     <label for="sort-result1">최근등록순</label>
                 </li>
                 <li>
                     <input type="radio" name="sort" id="sort-result2"
-                           @click="reOrder('saleCnt/DESC')">
+                           @click="reSort('saleCnt/DESC')">
                     <label for="sort-result2">판매순</label>
                 </li>
                 <li>
                     <input type="radio" name="sort" id="sort-result5"
-                           @click="reOrder('benefitPrice/ASC')">
+                           @click="reSort('benefitPrice/ASC')">
                     <label for="sort-result5">낮은 가격순</label>
                 </li>
                 <li>
                     <input type="radio" name="sort" id="sort-result6"
-                           @click="reOrder('benefitPrice/DESC')">
+                           @click="reSort('benefitPrice/DESC')">
                     <label for="sort-result6">높은 가격순</label>
                 </li>
             </ul>
         </div>
         <div class="goods-card">
-            <sui-card-group v-if="categoryGoods.length > 0" :items-per-row="items_per_row">
-                <sui-card class="goods-card" v-for="(goodsData, index) in categoryGoods" :key="index"
+            <NoItem v-if="goodsList.length === 0" :message="noItemMessage"/>
+            <sui-loader active centered inline v-else-if="goodsList[0].goodsCode === undefined"/>
+            <sui-card-group v-else-if="goodsList.length > 0" :items-per-row="items_per_row">
+                <sui-card class="goods-card" v-for="(goodsData, index) in goodsList" :key="index"
                           @click="goToGoodsDetail(goodsData.goodsCode)">
                     <sui-image :src="goodsData.imgUrl" width="100%"/>
                     <sui-card-content>
@@ -42,70 +42,35 @@
                     </sui-card-content>
                 </sui-card>
             </sui-card-group>
-            <sui-loader active centered inline v-else-if="categoryCode != categoryInfo.categoryCode"/>
-            <NoItem v-else-if="categoryGoods.length == 0" :message="noItemMessage"/>
         </div>
     </div>
 </template>
 
 <script>
-    import NoItem from "../share/NoItem";
+    import NoItem from "./NoItem";
 
     export default {
-        name: "CategoryGoodsCards",
+        name: "GoodsListCards",
         props: [
-            "categoryInfo",
+            "goodsList",
             "items_per_row",
+            "noItemMessage"
         ],
         components: {
             NoItem,
         },
-        data() {
-            return {
-                noItemMessage: "현재 등록된 상품이 없습니다.",
-                categoryCode: "",
-                orderSet: "goodsCode/DESC",
-            }
-        },
-        created() {
-            this.getCategoryCode();
-            this.getCategoryGoods();
-        },
         methods: {
-            getCategoryCode() {
-                this.categoryCode = this.categoryInfo.categoryCode;
-            },
-            getCategoryGoods() {
-                this.$store.commit("getCategoryGoodsModelList",
-                    {
-                        categoryCode: this.categoryCode,
-                        orderSet: this.orderSet
-                    }
-                );
-            },
             goToGoodsDetail(goodsCode) {
                 this.$router.push("/goodsDetail/" + goodsCode);
             },
-            reOrder(orderSet) {
-                this.orderSet = orderSet;
-                this.getCategoryGoods();
+            reSort(sort) {
+                this.$emit("reSort", sort);
             },
-        },
-        computed: {
-            categoryGoods() {
-                return this.$store.state.goodsStore.categoryGoodsModels;
-            }
         },
     }
 </script>
 
 <style scoped>
-
-    .page-title {
-        padding-bottom: 20px;
-        font-size: 32px;
-    }
-
     ul {
         list-style: none;
         margin: 0;
@@ -175,7 +140,7 @@
         position: relative;
     }
 
-    .ui.four.cards {
+    .cards {
         margin-bottom: auto;
     }
 

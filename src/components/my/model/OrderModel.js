@@ -7,7 +7,46 @@ class OrderModel {
 	orderDate = '';
 	selectedOptions = '';
 	
-	orderState = {};
+    orderState = {
+        orderState: ''
+    };
+    orderDeliveryInfo = {
+        orderId : '',
+        roadAddress : '',
+        zipcodeAddress : '',
+        remainAddress : '',
+        receiverName : '',
+        message : '',
+        contactNumber : '',
+        phoneNumber : '',
+    };
+    orderPaymentInfo = {
+        originalPrice : 0,
+        discountPrice : 0,
+        paymentPrice : 0,
+        orderOriginalPrice : {
+            orderId : '',
+            goodsPrice : '',
+            shippingPrice : '',
+        },
+        //list임
+        orderDiscountPriceList : [{
+            orderId : '',
+            discountName : '',
+            discountPrice : '',
+        }],
+        orderCardPayment : {
+            orderId : '',
+            cardName : '',
+            installments : '', //일시불이면 0으로 하셈
+        },
+    };
+    orderPointInfo = {
+        orderId : '',
+        orderComplete : '', //주문 완료되면 적립되는 포인트
+        writeComment : '', //상품평 작성되면 적립되는 포인트 
+    };
+    
 
     constructor(orderId, userId, goodsId, goodsCount, orderPrice, orderDate, orderState, selectedOptions){
         this.orderId = orderId; // ''

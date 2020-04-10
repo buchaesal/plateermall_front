@@ -23,7 +23,7 @@
 
 <script>
     export default {
-        name: "Slide.vue"
+        name: "Slide"
     }
 </script>
 
@@ -38,7 +38,7 @@
         width: 100%;
         height: 640px;
         overflow: hidden;
-        margin-top: 125px;
+        margin-top: 185px;
         margin-bottom: 4%;
     }
 

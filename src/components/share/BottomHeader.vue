@@ -11,7 +11,9 @@
                 <span class="item" v-for="(category, index) in rightCategoryList"
                       :key="index"><a @click="goToRightCategory(category.categoryCode)">{{category.name}}</a></span>
                 <a href="#">
-                    <sui-icon size="big" name="plus square outline"/>
+                    <router-link to="/aboutus">
+                      <sui-icon size="big" name="users"/>
+                    </router-link>
                 </a>
             </div>
         </div>
@@ -20,7 +22,7 @@
 
 <script>
     export default {
-        name: "BottomHeader.vue",
+        name: "BottomHeader",
         methods: {
             goToHome() {
                 this.$router.push('/');
@@ -60,15 +62,24 @@
 </script>
 
 <style scoped>
+    .menu_bar {
+        position: relative;
+        line-height: 58px;
+        z-index: 100;
+        height: 60px;
+        min-width: 1500px;
+        background: black;
+        color: #FFF;
+    }
 
     .inner_bar {
-        margin: 20px 7%;
+        margin: 20px 2%;
     }
 
     .left_bar {
         display: inline-block;
         float: left;
-        margin-top: 20px;
+        margin-top: 1px;
     }
 
     .left_bar a {
@@ -79,7 +90,7 @@
     .right_bar {
         display: inline-block;
         float: right;
-        margin-top: 17px;
+        margin-top: 1px;
     }
 
     .right_bar a {

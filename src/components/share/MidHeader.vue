@@ -4,26 +4,63 @@
 
         <div class="util">
             <div class="search_area">
-                <input type="text" placeholder="  아디다스키즈 봄 컬렉션" value autocomplete="off" size="40">
-                <sui-icon name="search" class="search_btn" size="large"/>
+                <input type="text" :placeholder="placeholder" value autocomplete="off" size="40"
+                       v-model="searchKeyword" @keyup.enter="goToResult">
+                <sui-icon name="search" class="search_btn" size="large" @click="goToResult"/>
             </div>
         </div>
 
         <div class="my_info">
-            <router-link to="/myPageMain"><sui-icon name="user" size="large"/></router-link>
-            <router-link to="/wishlist"><sui-icon name="heart" size="large"/></router-link>
-            <router-link to="/cart"><sui-icon name="shopping bag" size="large"/></router-link>
+            <router-link to="/myPageMain" class="header-icon">
+                <sui-icon name="user" size="big"/>
+                <sui-label class="empty-label" v-if="isAuthenticated" circular color="blue"></sui-label>
+            </router-link>
+            <router-link to="/wishlist" class="header-icon">
+                <sui-icon name="heart" size="big"/>
+                <sui-label v-if="isAuthenticated" circular color="blue">
+                    {{this.$store.state.wishListStore.wishList.length}}
+                </sui-label>
+            </router-link>
+            <router-link to="/cart" class="header-icon">
+                <sui-icon name="shopping bag" size="big"/>
+                <sui-label v-if="isAuthenticated" circular color="blue">
+                    {{this.$store.state.cartListStore.cartList.length}}
+                </sui-label>
+            </router-link>
         </div>
     </div>
 </template>
 
 <script>
+
     export default {
-        name: "MidHeader.vue",
+        name: "MidHeader",
+        props: [
+            "isAuthenticated",
+        ],
+        data() {
+            return {
+                placeholder: "나이키",
+                searchKeyword: "",
+            }
+        },
         methods: {
-            goToHome(){
-              this.$router.push('/');
+            goToHome() {
+                this.$router.push('/');
             },
+            goToResult() {
+                if (!this.searchKeyword) {
+                    this.searchKeyword = this.placeholder;
+                }
+                this.$router.push({name: "searchResult", query: {query: this.searchKeyword}})
+            },
+            getQuery() {
+                this.searchKeyword = this.$route.query.query;
+            },
+        },
+        created() {
+            this.getQuery();
+            this.$store.dispatch('getLoginUserInfo');
         }
     }
 </script>
@@ -43,7 +80,6 @@
         color: black;
         text-decoration: none;
     }
-
 
     .search_btn {
         margin-top: 0;
@@ -92,13 +128,38 @@
         border-bottom: 2px solid #000;
     }
 
+    input:focus {
+        outline: none;
+    }
+
     .my_info {
         float: right;
         height: 50px;
     }
 
+    a {
+        display: inline-block;
+        width: 58px;
+    }
+
     i {
-        margin-right: 20px;
         margin-top: 30px;
+    }
+
+    .empty-label {
+        width: 20px;
+        height: 20px;
+        opacity: 0;
+    }
+
+    .label {
+        font-size: x-small;
+        position: relative;
+        top: 5px;
+        right: 15px;
+    }
+
+    header-icon {
+        width: 60px;
     }
 </style>

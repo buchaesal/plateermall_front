@@ -2,7 +2,7 @@
     <div>
         <ReviewOption/>
 
-        <div v-if='getRequestComments.length != 0' class='review-list'>
+        <div v-if='getRequestCount != 0' class='review-list'>
             <sui-item-group divided>
                 <sui-item v-for='(review, index) in getRequestComments' :key='index'>
                     <sui-item-content>
@@ -22,7 +22,6 @@
                         <br>
                         <p>{{review.userId}} | {{review.writtenDate}}</p>
 
-                        <span class='recommend-review'><sui-button size="tiny" floated="right" basic content="신고 하기"/></span>
                         <span class='report-review'><sui-button @click="recommendComment(index)" size="tiny"  icon="thumbs up outline" floated="right" basic>추천하기{{review.recommendCount}}</sui-button></span>
                     </sui-item-meta>
                 <sui-item-description>
@@ -56,6 +55,7 @@ import ReviewOption from './ReviewOption.vue'
                     orderId:'',
                     email:'',
                     index:0,
+                    reviewCount:0,
                 },
                 goodsCode:'',
             }
@@ -66,7 +66,10 @@ import ReviewOption from './ReviewOption.vue'
         computed: {
             getRequestComments(){
                 return this.$store.state.commentStore.reviews.commentList;
-            },     
+            },    
+            getRequestCount(){
+                return this.$store.state.commentStore.reviewCount;
+            } 
         },
         methods:{
             async recommendComment(index){

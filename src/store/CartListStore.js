@@ -1,6 +1,5 @@
 import {requestCartList, requestDeleteCart, requestCheckedDeleteCartList, requestChangeQuantity} from '../api/CartListApi'
 import GoodsApi from '../api/GoodsApi'
-//import CartListModel from "../components/my/model/CartListModel";
 import WishListApi from "../api/WishListApi";
 import {getCurrentUserInfo} from "../api/UserApi";
 
@@ -17,7 +16,6 @@ const mutations = {
     getCartList(state, resultCart) {
         state.cartList = resultCart;
     },
-
     getLoginUserInfo(state, userInfo) {
         state.userInfo = userInfo;
     }
@@ -54,6 +52,7 @@ const actions = {
                     cart.shippingFee = goods.shippingFee;
                     cart.dcRate = goods.dcRate;
                     cart.benefitPrice = goods.benefitPrice;
+                    cart.cardPromotions = goods.cardPromotions;
                     resultCart.push(cart);
                 }
             });

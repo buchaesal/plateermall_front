@@ -1,12 +1,12 @@
 import GoodsApi from "../api/GoodsApi";
-// import GoodsModel from "../components/goods/model/GoodsModel";
+import GoodsModel from "../components/goods/model/GoodsModel";
 
 const state = {
     goodsModelsCol3: [],
     goodsModelsCol4: [],
     goodsModelsCol5: [],
-    goodsModel: {},
-    categoryGoodsModels: [],
+    goodsModel: {GoodsModel},
+    pageGoodsModels: [{}],
     goodsCount: 0
 }
 
@@ -14,6 +14,7 @@ let goodsApi = new GoodsApi();
 
 const mutations = {
     async getGoodsModel(state, goodsCode) {
+        state.categoryGoodsModels = {GoodsModel};
         state.goodsModel = await goodsApi.getGoods(goodsCode);
     },
     async getGoodsModelListCol3(state, goodsSet) {
@@ -28,8 +29,9 @@ const mutations = {
     async getCartGoodsModelList(state, goodsCodeList) {
         state.goodsModels = await goodsApi.getCartGoodsList(goodsCodeList);
     },
-    async getCategoryGoodsModelList(state, categoryGoodsSet) {
-        state.categoryGoodsModels = await goodsApi.getCategoryGoodsList(categoryGoodsSet.categoryCode, categoryGoodsSet.orderSet);
+    async getPageGoodsModelList(state, query) {
+        state.pageGoodsModels = [{}];
+        state.pageGoodsModels = await goodsApi.getPageGoodsList(query);
     },
 }
 

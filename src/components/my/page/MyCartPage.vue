@@ -2,22 +2,21 @@
     <div id="main-page-container">
         <Header></Header>
         <sui-container>
-            <div style="margin-top:30px; margin-bottom:30px;">
+            <div>
                 <h1>쇼핑백</h1>
             </div>
 
-            <div>
-                <sui-menu :widths="3">
-                    <sui-menu-item active>일반배송</sui-menu-item>
-                    <sui-menu-item>스마트픽</sui-menu-item>
-                    <sui-menu-item>해외직구</sui-menu-item>
-                </sui-menu>
+            <div class="empty-cart" v-if="cartListCount === 0">
+                <i class="huge exclamation icon"></i>
+                <br/>
+                <br/>
+                <p>장바구니에 담은 상품이 없습니다.</p>
             </div>
-            <div class="goods-main-container">
+            <div class="goods-main-container" v-else>
                 <div class="goods-list-container">
                     <div class="goods-options">
                         <div style="display:inline-block;">
-                            <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송"  />
+                            <sui-checkbox @change="checkWholeItem" class="goods-checkbox" label="택배배송" v-model="isTotalChecked"  />
                         </div>
                         <div style="display:inline-block; float:right;">
                             <a @click="checkedDeleteCartList" href="javascript:void(0)" style="margin-right:10px;">선택삭제</a>
@@ -25,8 +24,11 @@
                         </div>
                     </div>
                     <div v-for="(cart, index) in getCartList" v-bind:key="index" class="goods-list">
-                        <div style="background-color:#ededed; height:50px;">
+                        <div v-if="cart.shippingFee === 0" style="background-color:#ededed; height:50px;">
                             <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
+                        </div>
+                        <div v-else style="background-color:#ededed; height:50px;">
+                            <p style="text-align:right; line-height:50px; margin-right:10px; color:red">택배비 : {{cart.shippingFee.toLocaleString()}}원</p>
                         </div>
                         <div>
                             <sui-grid :columns="5">
@@ -136,25 +138,6 @@
                 </div>
             </div>
         </sui-container>
-        <!--
-        <div>
-            <div>
-                <hr/>
-                state에 cartList 값
-                <br />
-                {{getCartList}}
-                <hr/>
-            </div>
-
-            <div>
-                <hr/>
-                data에 checkedCartList 값
-                <br />
-                {{checkedCartList}}
-                <hr/>
-            </div>
-        </div>
-        -->
         <Footer></Footer>
     </div>
 </template>
@@ -179,12 +162,10 @@
         },
         methods: {
             checkWholeItem() {
-                if(!this.isTotalChecked) {
+                if(this.isTotalChecked) {
                     this.checkedCartList = this.$store.state.cartListStore.cartList;
-                    this.isTotalChecked = true;
                 } else {
                     this.checkedCartList = [];
-                    this.isTotalChecked = false;
                 }
             },
             totalCartCount() {
@@ -246,6 +227,7 @@
                 if (result) {
                     await this.$store.dispatch('checkedDeleteCartList', this.checkedCartList);
                     this.checkedCartList = [];
+                    this.isTotalChecked = false;
                 }
             },
 
@@ -253,7 +235,8 @@
                 let goodsCodeArr = [];
                 this.checkedCartList.map((cart) => {
                     goodsCodeArr.push({
-                        "goodsCode" : cart.goodsCode
+                        "goodsCode" : cart.goodsCode,
+                        "userId" : this.$store.state.cartListStore.userInfo.email
                     });
                 });
 
@@ -276,7 +259,7 @@
                     alert("구매하실 상품을 먼저 선택해주세요.");
                 } else {
                     this.$router.push({
-                        name: "ordercomplete", params: {
+                        name: "order", params: {
                             orderData:
                                 {
                                     goodsCode: this.$route.params.goodsCode,
@@ -291,13 +274,15 @@
             await this.$store.dispatch('getLoginUserInfo');
             await this.$store.dispatch('getCartList');
             this.cardInfoList = await requestCardDiscountInfo();
-            console.log(this.$store.state.cartListStore.cartList);
         },
 
         computed: {
             getCartList() {
                   return this.$store.state.cartListStore.cartList;
             },
+            cartListCount() {
+                return this.$store.state.cartListStore.cartList.length;
+            }
         },
     }
 </script>
@@ -384,5 +369,19 @@
 
     .ui.container {
         overflow: hidden;
+    }
+
+    #main-page-container {
+        margin-top: 250px;
+    }
+
+    .empty-cart {
+        margin-top: 10%;
+        margin-bottom: 20%;
+        text-align: center;
+    }
+
+    .empty-cart > p {
+        font-size: 15px;
     }
 </style>

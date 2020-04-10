@@ -1,5 +1,15 @@
 import request,{COMMENTS_URL} from './axios';
 
+export const loadFile = function(fileList){
+    return request.post(COMMENTS_URL + `/uploadfile`, fileList).then(
+        (response) => {
+            return response.data;
+        }
+    ).catch(function(error){
+        console.log(error);
+    });
+}
+
 export const requestPhotoComments = function(goodsCode){
     return request.get(COMMENTS_URL + `/getphotolist/${goodsCode}`).then(
         (response) => {
@@ -68,7 +78,7 @@ export const increaseRecommend = function(comment){
     
     return request.put(COMMENTS_URL + '/recommendation', comment).then(
         (response) => {
-            console.log(response);
+            return response.data
         }
     ).catch(function(error){
         console.log(error);
@@ -103,8 +113,8 @@ export const addCommentStatus = function(status){
 export const isRecommend = function(orderId, email){
 
     return request.get(COMMENTS_URL + `/isrecommend/${orderId}/${email}`).then(
-        ()=> {
-           
+        (response) => {
+            return response.data;
         }
     ).catch(function(error){
         console.log(error);
@@ -116,7 +126,15 @@ export const addRecommend = function(recommendInfo){
         
     ).catch(function(error){
         console.log(error);
-    })
+    });
+}
+
+export const deleteCommentStatus = function(orderId){
+    return request.delete(COMMENTS_URL + `/deletecommentstatus/${orderId}`).then(
+       
+    ).catch(function(error){
+        console.log(error);
+    });
 }
 
 class CommentApi{

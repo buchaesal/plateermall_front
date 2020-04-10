@@ -95,9 +95,8 @@
                             <img class="image" @change="changeValue" @click="cancelUpload(2)" v-if="currentReview.myPhoto3 != ''" :src='currentReview.myPhoto3' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             <img class="image" @change="changeValue" v-if="currentReview.myPhoto3 == ''" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             
-                            <input id="image-input" v-on:change='fileSelect(currentReview)' ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" text="" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%; color: transparent;"/>
+                            <input id="image-input" v-on:change='fileSelect(currentReview)' name="files" ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%;"/>
                             </div>
-
                             <p>- 매월 우수상품평 작성자 50명에게 P.POINT 2000점을 적립해 드립니다.</p>
                             <p>- 첨부가능 파일형식: JPG, JPEG, GIF, PNG</p>
                             <p>- 용량: 10Mb 미만 파일만 업로드 가능</p>
@@ -123,15 +122,12 @@
         name: "ReviewForm",
         data(){
             return{
-
+                
             }
         },
         computed: {
             formattedPayload() {
                 return JSON.stringify(this.currentReview.payload, null, 2);
-            },
-            isModalOpen(){
-                return this.$store.state.commentStore.isModalOpen;
             },
         },
         methods: {
@@ -144,39 +140,48 @@
             },
             fileSelect(review){
 
+                let fileList = new FormData();
+                
+                //file 업로드 formdata 생성    
+                for(let index in this.$refs.commentimage.files){
+                    
+                    fileList.append("files", this.$refs.commentimage.files[index]);
+                }
+
+                //업로드된 파일 state에 올리기
+                this.$store.commit('loadFileData', fileList);
+
+                //front에 이미지 보여주기
                 if (this.$refs.commentimage.files && this.$refs.commentimage.files[0]) {
                     let reader = new FileReader();
-                    
+
                     reader.onload = function(event){
                         review.myPhoto = event.target.result;
                     }
-                    
-                    this.changeValue();
                     reader.readAsDataURL(this.$refs.commentimage.files[0]);
                 }
-
-                if(this.$refs.commentimage.files && this.$refs.commentimage.files[1]){
+                    
+                if (this.$refs.commentimage.files && this.$refs.commentimage.files[1]) {
                     let reader = new FileReader();
 
                     reader.onload = function(event){
                         review.myPhoto2 = event.target.result;
                     }
-                    
-                    this.changeValue();
                     reader.readAsDataURL(this.$refs.commentimage.files[1]);
                 }
 
-                if(this.$refs.commentimage.files && this.$refs.commentimage.files[2]){
+                if (this.$refs.commentimage.files && this.$refs.commentimage.files[2]) {
                     let reader = new FileReader();
-                    
+
                     reader.onload = function(event){
                         review.myPhoto3 = event.target.result;
                     }
-                    
-                    this.changeValue();
                     reader.readAsDataURL(this.$refs.commentimage.files[2]);
                 }
-            },
+                    this.changeValue();
+                    
+                },
+            
             cancelUpload(index){
                 if(confirm("사진을 삭제하시겠습니까?")) {
                     

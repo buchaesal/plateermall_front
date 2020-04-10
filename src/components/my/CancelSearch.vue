@@ -40,6 +40,9 @@ import ReturnGoods from './ReturnGoods'
             this.active = name;
             },
         },
+        created() {
+            this.active = this.$route.params.active;
+        },
         components:{
             CancelGoods,
             ExchangeGoods,

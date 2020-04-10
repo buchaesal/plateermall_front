@@ -3,9 +3,20 @@
         <Header></Header>
         <div class="container">
             <div class="fix-inner">
+                <div class="banner">
+                    {{categoryInfo.comment}}
+                </div>
+
                 <div class="goods-area">
-                    <sui-loader active centered inline v-if="categoryCode != categoryInfo.categoryCode"/>
-                    <CategoryGoodsCards :categoryInfo="categoryInfo" :items_per_row="5" v-else/>
+                    <sui-loader active centered inline v-if="categoryCode !== categoryInfo.categoryCode"/>
+
+                    <div v-else-if="goodsList">
+                        <h2 class="page-title">{{categoryInfo.name}}</h2>
+
+                        <GoodsListCards :goodsList="goodsList" :items_per_row="5"
+                                        :noItemMessage="noItemMessage"
+                                        v-on:reSort="reSort"/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -19,12 +30,13 @@
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
     import SideBanner from "../../share/SideBanner";
-    import CategoryGoodsCards from "../CategoryGoodsCards";
+    import GoodsListCards from "../../share/GoodsListCards";
+    import QueryModel from "../../share/model/QueryModel";
 
     export default {
         name: "RightCategoryPage",
         components: {
-            CategoryGoodsCards,
+            GoodsListCards,
             Header,
             Footer,
             SideBanner,
@@ -32,16 +44,13 @@
         data() {
             return {
                 categoryCode: "",
-                isActive: true,
-                priceOption: "",
+                sort: "goodsCode/DESC",
+                noItemMessage: "현재 등록된 상품이 없습니다.",
             }
         },
         methods: {
             getCategoryCode() {
                 this.categoryCode = this.$route.params.categoryCode;
-            },
-            changeCategory(categoryCode) {
-                this.categoryCode = categoryCode;
             },
             getCategoryInfo() {
                 this.$store.commit("getCategory", this.categoryCode);
@@ -49,11 +58,23 @@
             getCategoryList() {
                 this.$store.commit("getCategoryList", this.categoryCode);
             },
+            getGoodsList() {
+                this.$store.commit("getPageGoodsModelList", new QueryModel("", this.sort, this.categoryCode, "", "")
+                );
+            },
+            changeCategory(categoryCode) {
+                this.categoryCode = categoryCode;
+            },
+            reSort(sort) {
+                this.sort = sort;
+                this.getGoodsList();
+            },
         },
         created() {
             this.getCategoryCode();
             this.getCategoryInfo();
             this.getCategoryList();
+            this.getGoodsList();
         },
         beforeUpdate() {
             if (this.categoryInfo.categoryCode == null) {
@@ -69,14 +90,18 @@
             },
             errorState() {
                 return this.$store.state.categoryStore.errorInfo;
+            },
+            goodsList() {
+                return this.$store.state.goodsStore.pageGoodsModels;
             }
         },
         watch: {
             "$route": ["getCategoryCode", "getCategoryList"],
-            "categoryCode": "getCategoryInfo",
+            "categoryCode": ["getCategoryInfo", "getGoodsList"],
             errorState() {
                 this.getCategoryCode();
-            }
+            },
+            "goodsList": [],
         },
     }
 </script>
@@ -86,6 +111,7 @@
         width: 100%;
         min-height: 600px;
         padding-top: 80px;
+        margin-top: 185px;
         margin-bottom: 80px;
         overflow: hidden;
     }
@@ -95,41 +121,17 @@
         margin: 0 20px;
     }
 
-    .category-nav {
-        margin-bottom: 24px;
-        margin-right: 62px;
-        border-top: 3px solid #000;
-        border-bottom: 3px solid #000;
-        float: left;
-        width: 210px;
-    }
-
-    .ui.accordion .title {
-        margin: 0;
-        padding: 0;
-        height: 56px;
-        line-height: 56px;
-    }
-
-    .nav-title {
-        border-top: 1px solid #ededed;
-        border-top-width: 1px;
-        border-top-style: solid;
-        border-top-color: rgb(237, 237, 237);
-    }
-
-    .title-text {
-        float: left;
-        font-size: 14px;
-        font-weight: 700;
-    }
-
-    .title-icon {
-        float: right;
-    }
-
-    .nav-content {
-        padding-bottom: 15px;
+    .banner {
+        overflow: hidden;
+        position: relative;
+        width: 100%;
+        height: 150px;
+        line-height: 150px;
+        font-size: 30px;
+        background-color: black;
+        color: white;
+        text-align: center;
+        margin-bottom: 80px;
     }
 
     ul {
@@ -146,9 +148,5 @@
         float: left;
         width: 100%;
         font-size: 14px;
-    }
-
-    .ui.five.cards {
-        margin-bottom: auto;
     }
 </style>

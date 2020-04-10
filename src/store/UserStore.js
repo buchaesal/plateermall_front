@@ -4,6 +4,8 @@ import router from "../router/index";
 
 const state = {
     accessToken: sessionStorage.getItem('access_token'),
+    targetPagePath: '/',
+    prevPagePath:'/'
 };
 
 const getters = {
@@ -20,11 +22,20 @@ function resetToken(state) {
 const mutations = {
     LOGIN(state) {
         state.accessToken = sessionStorage.getItem('access_token');
-        router.push('/');
+        router.push(state.targetPagePath);
     },
     LOGOUT(state) {
         resetToken(state);
         router.push('/');
+    },
+    SET_TARGET_PAGE(state, data){
+        state.targetPagePath = data;
+    },
+    SET_PREV_PAGE(state, data){
+        state.prevPagePath = data;
+    },
+    CHANGE_PAGE_PATH(state){
+        state.targetPagePath = state.prevPagePath;
     }
 };
 

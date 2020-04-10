@@ -22,12 +22,13 @@
                         <sui-item-description>
                             <span class='purchase-date'>구매일자: {{getInfoList.orderInfo[index].orderDate}}</span>
                             <span class='due-date'>작성기한: {{getInfoList.duedate[index]}}</span>
-                            <sui-button v-if='getInfoList.duedate[index]>today' @click='openReviewModal(getInfoList.orderInfo[index])' size="tiny" floated="right" basic content="상품평 작성" style="margin-right: 2%;"/>
+                            <sui-button v-if='getInfoList.duedate[index]>today' @click='openReviewModal(getInfoList.orderInfo[index], unwritten)' size="tiny" floated="right" basic content="상품평 작성" style="margin-right: 2%;"/>
                             <sui-button v-else size="tiny" floated="right" disabled basic content="기한 만료" style="margin-right: 2%;"/>
+                        
                         <!--모달모달-->
                         <sui-modal v-model="open">
                             <sui-modal-content scrolling image>
-                                <ReviewForm :orderInfo='getInfoList.orderInfo[index]' :goodsInfo='unwritten' :currentReview='currentReview'/>
+                                <ReviewForm :orderInfo='order' :goodsInfo='goods' :currentReview='currentReview'/>
                             </sui-modal-content>
 
                             <sui-modal-actions>
@@ -41,7 +42,6 @@
                     </sui-item>
                 </sui-item-group>
 
-
             </div>
         </div>
     </div>
@@ -49,42 +49,25 @@
 
 <script>
 import ReviewForm from './ReviewForm.vue';
-import {getCurrentUserInfo} from '../../api/UserApi.js'
+import {getCurrentUserInfo} from '../../api/UserApi.js';
+import subCommentModel from './model/SubCommentModel.js';
+
     export default {
         name: "UnwrittenReview",
         data(){
             return{
                 open: false,
-                currentReview :{
-                    orderId:'',
-                    goodsCode:'',
-                    userId:'',
-                    selectedOptions:'',
-                    myPhoto:'',
-                    myPhoto2:'',
-                    myPhoto3:'',
-                    quantity:0,
-                    recommendCount:0,
-                    deliveryValue:0,
-                    designValue:0,
-                    sizeValue:0,
-                    starPoint:0,
-                    reviewContent:'',
-                    writtenDate:'',
-                },
-                unwrittenCount:0,
-                review:{},
-                dueDate:[],
+                currentReview :new subCommentModel(),
+                order:{},
+                goods:{},
                 today:'',
-                orderIdList:[],
-                unwrittenOrderList:[],
-                goodsList:[],
                 user:{},
             }
         },
         methods:{
-            openReviewModal(selectedReview){
-
+            openReviewModal(selectedReview, goods){
+                this.goods = goods;
+                this.order = selectedReview;
                 this.open = true;
 
                 this.currentReview.orderId = selectedReview.orderId;
@@ -98,31 +81,15 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
 
                     alert("작성되었습니다.");
                     
-                    this.$store.dispatch('ADD_COMMENT', this.user.email);
+                    this.$store.dispatch('ADD_COMMENT', this.user);
 
-                    this.open = false;
+                    this.cancelAddComment();
                    
                 }
             },
             cancelAddComment(){
                 this.open = false;
-                this.currentReview ={
-                    orderId:'',
-                    goodsCode:'',
-                    userId:'',
-                    selectedOptions:'',
-                    myPhoto:'',
-                    myPhoto2:'',
-                    myPhoto3:'',
-                    quantity:0,
-                    recommendCount:0,
-                    deliveryValue:0,
-                    designValue:0,
-                    sizeValue:0,
-                    starPoint:0,
-                    reviewContent:'',
-                    writtenDate:'',
-                };
+                this.currentReview =new subCommentModel();
             },
         },
         components:{

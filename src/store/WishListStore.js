@@ -1,7 +1,7 @@
-import WishListApi from "../api/WishListApi"
+import WishListApi from "../api/WishListApi";
 
 const state = {
-    wishListGoodsCodes: [],
+    wishList: [],
 }
 
 const getters = {
@@ -9,14 +9,18 @@ const getters = {
 }
 
 const mutations = {
-    getWishListFromApi(state){
-        let wishListApi = new WishListApi();
-        state.wishListGoodsCodes = wishListApi.getWishListGoodsCodes();
+    getWishList(state, wishList) {
+        state.wishList = wishList;
     }
 }
 
 const actions = {
+    async getWishList(context, userId) {
+        let wishListApi = new WishListApi();
+        let wishList = await wishListApi.getWishListGoodsCodes(userId);
 
+        context.commit('getWishList', wishList);
+    },
 }
 
 export default {
