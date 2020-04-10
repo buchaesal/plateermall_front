@@ -13,6 +13,7 @@ import RightCategoryPage from '../components/category/page/RightCategoryPage';
 import PageNotFound from '../components/share/page/PageNotFound';
 import OrderPage from '../components/order/page/OrderPage';
 import SearchResultPage from '../components/search/page/SearchResultPage'
+import AboutUs from "../components/share/page/AboutUs";
 
 Vue.use(VueRouter);
 
@@ -61,7 +62,8 @@ const routes = [
         component: MyPage,
         props: {selectedComponent: 'OrderDetail'},
         meta: {authRequired: true}
-    }
+    },
+    {path: '/aboutus', component: AboutUs},
 ]
 
 export default new VueRouter({
