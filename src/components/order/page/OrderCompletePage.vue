@@ -2,7 +2,8 @@
     <div id="main-page-container">
         <Header></Header>
         <div class="fix-inner order-complete">
-            <sui-card>
+        <sui-loader active centered inline v-if="orderData == {}"/>
+            <sui-card v-else>
                 <sui-card-content>
                     <sui-card-header>
                         <div class="header">
@@ -13,7 +14,7 @@
                 </sui-card-content>
                 <sui-card-content>
                     <sui-header size="tiny">
-                        <p class="order-number"><span class="tit">주문번호 : </span><span class="num">{{orderId}}</span>
+                        <p class="order-number"><span class="tit">주문번호 : </span><span class="num">{{getOrderId}}</span>
                         </p>
                     </sui-header>
                     <div class="summary">
@@ -28,28 +29,28 @@
                             <div class="total-wrap">
                                 <p class="total">
                                     <span class="total-txt">결제금액</span>
-                                    <span class="price"><strong>{{sumOrderPrice.toLocaleString()}}</strong><em>원</em></span>
+                                    <span class="price"><strong>{{orderData.sumOrderPrice}}</strong><em>원</em></span>
                                 </p>
                                 <!-- 결제수단 -->
-                                <p class="pay-option">무통장입금(국민은행)</p>
+                                <p class="pay-option">{{getCardInfo.installments}}({{getCardInfo.cardName}})</p>
                             </div>
                         </div>
                         <ul class="price-detail">
                             <li>
                                 <span class="item">상품금액</span>
-                                <span class="price">{{sumOriginalPrice.toLocaleString()}} 원</span>
+                                <span class="price">{{orderData.sumOriginalPrice}} 원</span>
                             </li>
                             <li>
                                 <span class="item">배송비</span>
-                                <span class="price">+ {{sumShippingFee.toLocaleString()}} 원</span>
+                                <span class="price">+ {{orderData.sumShippingFee}} 원</span>
                             </li>
                             <li>
                                 <span class="item">할인금액</span>
-                                <span class="price">- {{sumDiscountPrice.toLocaleString()}} 원</span>
+                                <span class="price">- {{orderData.sumDiscountPrice}} 원</span>
                             </li>
                         </ul>
                         <div class="saving-point">
-                            <span>적립 예정 포인트 {{point.toLocaleString()}}점</span>
+                            <span>적립 예정 포인트 {{orderData.point}}점</span>
                             <ul class="bull-list-dash">
                                 <li>적립 예정 포인트는 상품 발송 2일 후 자동 지급됩니다.</li>
                                 <li>실제 적립된 금액은 예상 금액과 다를 수 있습니다.</li>
@@ -72,9 +73,6 @@
 <script>
     import Header from "../../share/Header";
     import Footer from "../../share/Footer";
-    import OrderModel from "../../my/model/OrderModel";
-    import {order} from "../../../api/OrderApi";
-    import {addCommentStatus} from "../../../api/CommentApi";
     import {getCurrentUserInfo} from '../../../api/UserApi'
 
     export default {
@@ -85,13 +83,6 @@
         },
         data() {
             return {
-                orderId: "",
-                isCartOrder: false,
-                sumOrderPrice: 0,
-                sumOriginalPrice: 0,
-                sumDiscountPrice: 0,
-                sumShippingFee: 0,
-                point: 0,
                 orderData: {},
                 user: {},
             }
@@ -102,97 +93,37 @@
                     obj === null ||
                     obj === undefined ||
                     obj === "" ||
-                    obj.length < 1
+                    obj.length < 1 ||
+                    obj === {}
                 ) {
                     return true;
                 } else {
                     return false;
                 }
             },
-            pricing(orderData) {
-                for (let option of orderData.selectedGoods) {
-                    this.sumOriginalPrice += option.originalPrice * option.quantity;
-                    this.sumDiscountPrice += (option.originalPrice / 100 * option.dcRate);
-                    this.sumShippingFee += option.shippingFee;
-                }
-
-                this.sumOrderPrice = this.sumOriginalPrice + this.sumShippingFee - this.sumDiscountPrice;
-                this.point = Math.ceil((this.sumOriginalPrice - this.sumDiscountPrice) / 1000);
-            },
-            cartPricing(orderData) {
-                for (let goods of orderData) {
-                    let quantity = goods.quantity;
-                    let option = goods.goods;
-                    this.sumOriginalPrice += option.originalPrice * quantity;
-                    this.sumDiscountPrice += (option.originalPrice / 100 * option.dcRate);
-                    this.sumShippingFee += option.shippingFee;
-                }
-
-                this.sumOrderPrice = this.sumOriginalPrice + this.sumShippingFee - this.sumDiscountPrice;
-                this.point = Math.ceil((this.sumOriginalPrice - this.sumDiscountPrice) / 1000);
-            },
+            
             goToOrderDetail() {
                 this.$router.push("/orderList");
             },
             goToHome() {
                 this.$router.push("/");
             },
-
-            async requestOrder() {
-                console.log("주문 요청")
-                let today = new Date();
-                let year = today.getFullYear();
-                let month = today.getMonth() + 1;
-                let date = today.getDate();
-
-                month = month < 10 ? '0' + month : month;
-                date = date < 10 ? '0' + date : date;
-
-                today = year + "-" + month + "-" + date;
-
-                if (this.isCartOrder) {
-                    for (let cart of this.orderData) {
-                        let option = cart.text;
-                        let orderModel = new OrderModel('', this.user.email, cart.goodsCode, cart.quantity, (cart.goods.benefitPrice * cart.quantity).toString(), today, null, option);
-                        this.orderId = await order(orderModel);
-
-                        await addCommentStatus({
-                            "orderId": this.orderId,
-                            "userId": this.user.email,
-                            "isWritten": "N"
-                        });
-                    }
-                } else {
-                    let goodsCode = this.orderData.goodsCode;
-                    for (let goods of this.orderData.selectedGoods) {
-                        let orderModel = new OrderModel('', this.user.email, goodsCode, goods.quantity, (goods.benefitPrice * goods.quantity).toString(), today, null, goods.text);
-                        this.orderId = await order(orderModel);
-
-                        await addCommentStatus({
-                            "orderId": this.orderId,
-                            "userId": this.user.email,
-                            "isWritten": "N"
-                        });
-                    }
-                }
-            }
         },
         async created() {
             this.user = await getCurrentUserInfo();
             this.orderData = this.$route.params.orderData;
-            if (!this.isEmpty(this.orderData)) {
-                if (this.isEmpty(this.orderData.goodsCode)) {
-                    // 카트 주문
-                    this.isCartOrder = true;
-                    this.orderData = this.orderData.selectedGoods;
-                    this.cartPricing(this.orderData);
-                } else {
-                    // 바로 주문
-                    this.pricing(this.orderData);
-                }
-                this.requestOrder()
-            } else {
+
+            if (this.isEmpty(this.orderData)) {
                 this.goToOrderDetail();
+            }
+
+        },
+        computed:{
+            getOrderId(){
+                return this.$store.state.orderDetailStore.orderId;
+            },
+            getCardInfo(){
+                return this.$store.state.orderDetailStore.cardInfo;
             }
         }
     }

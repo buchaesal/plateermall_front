@@ -126,7 +126,15 @@ export const addRecommend = function(recommendInfo){
         
     ).catch(function(error){
         console.log(error);
-    })
+    });
+}
+
+export const deleteCommentStatus = function(orderId){
+    return request.delete(COMMENTS_URL + `deletecommentstatus/${orderId}`).then(
+       
+    ).catch(function(error){
+        console.log(error);
+    });
 }
 
 class CommentApi{

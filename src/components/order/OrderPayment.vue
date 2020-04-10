@@ -63,9 +63,7 @@
             }
         },
         async created(){
-            
             this.orderData = this.$route.params.orderData;
-            console.log(this.orderData);
         },
         watch:{
             currentCard:function(){
