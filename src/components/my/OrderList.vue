@@ -55,6 +55,7 @@
     import {getOrderList, changeState, getSpecificStatusOrderList} from "../../api/OrderApi";
     import GoodsApi from "../../api/GoodsApi";
     import {getCurrentUserInfo} from "../../api/UserApi";
+    import {deleteCommentStatus} from "../../api/CommentApi";
 
     export default {
         name: "OrderList",
@@ -111,6 +112,7 @@
             },
             async cancelOrder(index) {
                 await changeState('normal', 'cancel', this.orderList[index].orderId);
+                await deleteCommentStatus(this.orderList[index].orderId);
                 this.cleanData();
                 await this.getOrderList();
                 alert("주문이 취소되었습니다.")
