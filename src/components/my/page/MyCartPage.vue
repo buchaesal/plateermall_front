@@ -31,8 +31,11 @@
                         </div>
                     </div>
                     <div v-for="(cart, index) in getCartList" v-bind:key="index" class="goods-list">
-                        <div style="background-color:#ededed; height:50px;">
+                        <div v-if="cart.shippingFee === 0" style="background-color:#ededed; height:50px;">
                             <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
+                        </div>
+                        <div v-else style="background-color:#ededed; height:50px;">
+                            <p style="text-align:right; line-height:50px; margin-right:10px; color:red">택배비 : {{cart.shippingFee.toLocaleString()}}원</p>
                         </div>
                         <div>
                             <sui-grid :columns="5">
