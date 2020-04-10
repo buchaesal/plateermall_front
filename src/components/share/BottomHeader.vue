@@ -73,7 +73,7 @@
     }
 
     .inner_bar {
-        margin: 20px 7%;
+        margin: 20px 2%;
     }
 
     .left_bar {

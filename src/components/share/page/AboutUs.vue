@@ -4,7 +4,9 @@
 
         <div class="aboutus-content">
             <sui-card class="card-content-ducain">
-                <sui-image :src="ducain.imgUrl" class="card-img"/>
+                <div class="img-box">
+                    <sui-image :src="ducain.imgUrl" class="card-img"/>
+                </div>
                 <sui-card-content>
                     <sui-card-header>{{ducain.name}}</sui-card-header>
                     <sui-card-meta>{{ducain.joinDate}}</sui-card-meta>
@@ -14,7 +16,9 @@
             <div class="content-card">
                 <sui-card-group :items-per-row="3">
                     <sui-card class="card-content" v-for="(newbie, index) in list" :key="index">
-                        <sui-image :src="newbie.imgUrl" class="card-img"/>
+                        <div class="img-box">
+                            <sui-image :src="newbie.imgUrl" class="card-img"/>
+                        </div>
                         <sui-card-content>
                             <sui-card-header>{{newbie.name}}</sui-card-header>
                             <sui-card-meta>{{newbie.joinDate}}</sui-card-meta>
@@ -115,7 +119,7 @@
         display: inline;
     }
 
-    .card-content{
+    .card-content {
         display: inline-block;
         margin-bottom: 50px !important;
     }
@@ -124,8 +128,15 @@
         margin: 0 auto 50px auto !important;
     }
 
+    .img-box {
+        width: auto;
+        height: 300px;
+        overflow: hidden;
+    }
+
     .card-img {
-        width: 100%;
-        height: auto;
+        width: auto;
+        height: 100%;
+        margin: 0px auto;
     }
 </style>
