@@ -42,7 +42,6 @@
                     </sui-item>
                 </sui-item-group>
 
-
             </div>
         </div>
     </div>
@@ -50,29 +49,15 @@
 
 <script>
 import ReviewForm from './ReviewForm.vue';
-import {getCurrentUserInfo} from '../../api/UserApi.js'
+import {getCurrentUserInfo} from '../../api/UserApi.js';
+import subCommentModel from './model/SubCommentModel.js';
+
     export default {
         name: "UnwrittenReview",
         data(){
             return{
                 open: false,
-                currentReview :{
-                    orderId:'',
-                    goodsCode:'',
-                    userId:'',
-                    selectedOptions:'',
-                    myPhoto:'',
-                    myPhoto2:'',
-                    myPhoto3:'',
-                    quantity:0,
-                    recommendCount:0,
-                    deliveryValue:0,
-                    designValue:0,
-                    sizeValue:0,
-                    starPoint:0,
-                    reviewContent:'',
-                    writtenDate:'',
-                },
+                currentReview :new subCommentModel(),
                 order:{},
                 goods:{},
                 today:'',
@@ -104,23 +89,7 @@ import {getCurrentUserInfo} from '../../api/UserApi.js'
             },
             cancelAddComment(){
                 this.open = false;
-                this.currentReview ={
-                    orderId:'',
-                    goodsCode:'',
-                    userId:'',
-                    selectedOptions:'',
-                    myPhoto:'',
-                    myPhoto2:'',
-                    myPhoto3:'',
-                    quantity:0,
-                    recommendCount:0,
-                    deliveryValue:0,
-                    designValue:0,
-                    sizeValue:0,
-                    starPoint:0,
-                    reviewContent:'',
-                    writtenDate:'',
-                };
+                this.currentReview =new subCommentModel();
             },
         },
         components:{

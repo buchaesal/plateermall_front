@@ -84,9 +84,6 @@ import ReviewOption from './ReviewOption.vue'
                 }
             },
         },
-        created(){
-            //this.reviewCount = this.$store.state.commentStore.reviews.commentList.length;
-        }
     }
 </script>
 

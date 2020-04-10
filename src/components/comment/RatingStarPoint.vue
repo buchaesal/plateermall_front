@@ -26,9 +26,6 @@
             return{
             }
         },
-        created(){
-
-        },
         computed: {
             getRequestComments(){
                 return this.$store.state.commentStore.reviews;

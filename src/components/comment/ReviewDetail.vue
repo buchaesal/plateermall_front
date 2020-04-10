@@ -23,12 +23,12 @@
                     <sui-modal v-model="open">
                         <sui-modal-content scrolling image>
                             <ReviewForm :orderInfo='orderInfo' :goodsInfo='goodsInfo' :currentReview='copyReview'/>
-                                </sui-modal-content>
+                        </sui-modal-content>
 
-                                <sui-modal-actions>
-                                    <sui-button basic @click="cancelAddComment()">취소</sui-button>
-                                    <sui-button @click='setReview()' color="black">작성완료</sui-button>
-                                </sui-modal-actions>
+                        <sui-modal-actions>
+                            <sui-button basic @click="cancelAddComment()">취소</sui-button>
+                            <sui-button @click='setReview()' color="black">작성완료</sui-button>
+                        </sui-modal-actions>
                     </sui-modal>
                 </sui-item-content>
             </sui-item>
@@ -83,8 +83,6 @@ import ReviewForm from './ReviewForm.vue';
                 await this.$store.commit('updateComment', this.review);
                 this.open = false;
             },
-        },
-        created(){
         },
         components:{
             ReviewForm,
