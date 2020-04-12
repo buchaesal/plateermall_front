@@ -28,7 +28,7 @@
                             <p style="text-align:right; line-height:50px; margin-right:10px;">무료배송</p>
                         </div>
                         <div v-else style="background-color:#ededed; height:50px;">
-                            <p style="text-align:right; line-height:50px; margin-right:10px; color:red">택배비 : {{cart.shippingFee.toLocaleString()}}원</p>
+                            <p style="text-align:right; line-height:50px; margin-right:10px; color:red"></p>
                         </div>
                         <div>
                             <sui-grid :columns="5">
@@ -172,11 +172,18 @@
                 return this.checkedCartList.length;
             },
             totalShippingFee() {
+                let shippingFeeMap = new Map();
                 let totalShippingFee = 0;
 
                 this.checkedCartList.map((cart) => {
-                    totalShippingFee += cart.shippingFee;
+                    shippingFeeMap.set(cart.goodsCode, cart.shippingFee);
                 });
+
+                for(let [key, value] of shippingFeeMap){
+                    totalShippingFee += value;
+                    shippingFeeMap.delete(key);
+                }
+
                 return totalShippingFee;
             },
             totalDcRatePrice() {
