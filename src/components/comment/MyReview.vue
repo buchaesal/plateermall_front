@@ -6,10 +6,10 @@
             <sui-menu pointing secondary>
                 <a @click="selectItem(item)" class='review-menu' is="sui-menu-item" v-for="(item, index) in items" :key="index" :active="isActive(item)" :content="item"/>
             </sui-menu>
-            <div v-if="active=='상품평 작성'">
+            <div v-show="active=='상품평 작성'">
                 <UnWrittenReview/>
             </div>
-            <div v-if="active!='상품평 작성'">
+            <div v-show="active!='상품평 작성'">
                 <MyReviewList/>
             </div>
             <br>
