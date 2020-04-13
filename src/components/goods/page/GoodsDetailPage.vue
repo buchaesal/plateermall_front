@@ -173,21 +173,21 @@
                                     <span id="orderDcSumPrcTxt">{{(orderSumPrice).toLocaleString()}}</span> <span
                                             class="unit">원</span></p>
                             </div>
-                            <div>
-                                <sui-button-group class="two shipping-option">
-                                    <sui-button toggle
-                                                content="택배"
-                                                basic="basic"
-                                                :color="radioButtonsColor[0]"
-                                                :active="radioButtons[0]"
-                                                @click="shippingRadio(0)"></sui-button>
-                                    <sui-button toggle basic
-                                                content="방문 수령"
-                                                :color="radioButtonsColor[1]"
-                                                :active="radioButtons[1]"
-                                                @click="shippingRadio(1)"></sui-button>
-                                </sui-button-group>
-                            </div>
+<!--                            <div>-->
+<!--                                <sui-button-group class="two shipping-option">-->
+<!--                                    <sui-button toggle-->
+<!--                                                content="택배"-->
+<!--                                                basic="basic"-->
+<!--                                                :color="radioButtonsColor[0]"-->
+<!--                                                :active="radioButtons[0]"-->
+<!--                                                @click="shippingRadio(0)"></sui-button>-->
+<!--                                    <sui-button toggle basic-->
+<!--                                                content="방문 수령"-->
+<!--                                                :color="radioButtonsColor[1]"-->
+<!--                                                :active="radioButtons[1]"-->
+<!--                                                @click="shippingRadio(1)"></sui-button>-->
+<!--                                </sui-button-group>-->
+<!--                            </div>-->
                             <div>
                                 <sui-button-group class="two cart-or-now">
                                     <sui-button content="쇼핑백" @click.native="addCart"></sui-button>
