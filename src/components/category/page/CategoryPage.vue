@@ -89,7 +89,7 @@
             this.getCategoryList();
             this.getGoodsList();
         },
-        beforeUpdate() {
+        updated() {
             if (this.categoryInfo.categoryCode == null) {
                 this.$router.push("/404");
             }

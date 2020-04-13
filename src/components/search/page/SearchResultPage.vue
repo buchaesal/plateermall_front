@@ -16,7 +16,7 @@
                     <GoodsListCards
                             :goodsList="goodsList" :items_per_row="4"
                             :noItemMessage="noItemMessage"
-                            v-on:getCategoryList="getCategoryList"
+                            v-on:goodsListUpdate="getCategoryList"
                             v-on:reSort="reSort"/>
                 </div>
             </div>
@@ -66,17 +66,18 @@
                 this.$store.commit("getPageGoodsModelList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice));
             },
             getCategoryList() {
+                console.log("getcategorylist")
                 for (let goods of this.goodsList) {
                     for (let category of goods.categories) {
                         let data = {
                             "name": category.name,
                             "categoryCode": category.categoryCode,
                         }
+
                         if (this.categoryList.filter(category => category.categoryCode === data.categoryCode).length === 0
                         ) {
                             this.categoryList.push(data);
                         }
-
                     }
                 }
 

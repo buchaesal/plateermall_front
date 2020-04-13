@@ -66,12 +66,12 @@
             reSort(sort) {
                 this.$emit("reSort", sort);
             },
-            getCategoryList() {
-                this.$emit("getCategoryList");
+            goodsListUpdate() {
+                this.$emit("goodsListUpdate");
             },
         },
         updated() {
-            this.getCategoryList();
+            this.goodsListUpdate();
         }
     }
 </script>
