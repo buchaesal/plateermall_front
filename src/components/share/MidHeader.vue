@@ -60,7 +60,9 @@
         },
         created() {
             this.getQuery();
-            this.$store.dispatch('getLoginUserInfo');
+            if (this.isAuthenticated) {
+                this.$store.dispatch('getLoginUserInfo');
+            }
         }
     }
 </script>
