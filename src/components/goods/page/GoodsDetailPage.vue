@@ -640,6 +640,11 @@
             this.$store.commit("addSawList", this.goodsCode);
             await this.getWish();
         },
+        updated() {
+            if (this.goodsData.goodsCode == undefined) {
+                this.$router.push("/404");
+            }
+        },
         computed: {
             goodsData() {
                 return this.$store.state.goodsStore.goodsModel;
