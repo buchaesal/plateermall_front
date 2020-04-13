@@ -10,6 +10,7 @@
 
             <sui-card class="card-content-ducain">
                 <div class="img-box">
+                    <div class="blur" v-bind:style="{backgroundImage: 'url(' + ducain.imgUrl + ')'}"></div>
                     <sui-image :src="ducain.imgUrl" class="card-img"/>
                 </div>
                 <sui-card-content>
@@ -22,9 +23,8 @@
                 <sui-card-group :items-per-row="3">
                     <sui-card class="card-content" v-for="(newbie, index) in newbieList" :key="index">
                         <div class="img-box">
-                            <div class="blur" v-bind:style="{backgroundImage: 'url(' + newbie.imgUrl + ')'}">
-                            </div>
-                            <sui-image :src="newbie.imgUrl" class="card-img" />
+                            <div class="blur" v-bind:style="{backgroundImage: 'url(' + newbie.imgUrl + ')'}"></div>
+                            <sui-image :src="newbie.imgUrl" class="card-img"/>
                         </div>
                         <sui-card-content>
                             <sui-card-header>{{newbie.name}}</sui-card-header>
