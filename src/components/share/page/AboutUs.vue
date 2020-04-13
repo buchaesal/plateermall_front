@@ -22,7 +22,9 @@
                 <sui-card-group :items-per-row="3">
                     <sui-card class="card-content" v-for="(newbie, index) in newbieList" :key="index">
                         <div class="img-box">
-                            <sui-image :src="newbie.imgUrl" class="card-img"/>
+                            <div class="blur" v-bind:style="{backgroundImage: 'url(' + newbie.imgUrl + ')'}">
+                            </div>
+                            <sui-image :src="newbie.imgUrl" class="card-img" />
                         </div>
                         <sui-card-content>
                             <sui-card-header>{{newbie.name}}</sui-card-header>
@@ -139,10 +141,25 @@
         overflow: hidden;
     }
 
+    .blur {
+        width: auto;
+        height: 300px;
+        background-size: cover;
+        -webkit-filter: blur(5px);
+        -moz-filter: blur(5px);
+        -o-filter: blur(5px);
+        -ms-filter: blur(5px);
+        filter: blur(5px);
+        transform: scale(1.02);
+    }
+
     .card-img {
         width: auto;
-        height: 100%;
-        margin: 0px auto;
+        height: 300px;
+        position: relative;
+        top: -300px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .section_title {
