@@ -66,6 +66,7 @@ import subCommentModel from './model/SubCommentModel.js';
         },
         methods:{
             openReviewModal(selectedReview, goods){
+
                 this.goods = goods;
                 this.order = selectedReview;
                 this.open = true;
@@ -75,6 +76,7 @@ import subCommentModel from './model/SubCommentModel.js';
                 this.currentReview.userId = selectedReview.userId;
                 this.currentReview.quantity = selectedReview.goodsCount;
                 this.currentReview.selectedOptions = selectedReview.selectedOptions;
+                this.currentReview.writtenDate = this.today;
             },
             setReview(){
                 if(confirm("상품평을 작성하시겠습니까?")) {
