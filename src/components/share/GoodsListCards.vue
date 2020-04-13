@@ -66,7 +66,13 @@
             reSort(sort) {
                 this.$emit("reSort", sort);
             },
+            getCategoryList() {
+                this.$emit("getCategoryList");
+            },
         },
+        updated() {
+            this.getCategoryList();
+        }
     }
 </script>
 

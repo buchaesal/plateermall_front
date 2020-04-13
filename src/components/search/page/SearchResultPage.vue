@@ -16,6 +16,7 @@
                     <GoodsListCards
                             :goodsList="goodsList" :items_per_row="4"
                             :noItemMessage="noItemMessage"
+                            v-on:getCategoryList="getCategoryList"
                             v-on:reSort="reSort"/>
                 </div>
             </div>
@@ -78,6 +79,10 @@
 
                     }
                 }
+
+                this.categoryList.sort(function (a, b) {
+                    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+                });
             },
             changeCategory(categoryCode) {
                 this.categoryCode = categoryCode;
@@ -95,10 +100,6 @@
         created() {
             this.getQuery();
             this.getGoodsList();
-        },
-        beforeUpdate() {
-            console.log(this.goodsList)
-            this.getCategoryList();
         },
         computed: {
             goodsList() {
