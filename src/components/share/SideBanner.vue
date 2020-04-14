@@ -47,7 +47,7 @@
                             <a href="#" @click="goToDetail(good.goodsCode)">
                                 <p class="banner-item-title">{{good.title}}</p>
                                 <p class="banner-item-contents">{{good.copy}}</p>
-                                <p class="banner-item-price">{{good.originalPrice}}<span class="price">원</span></p>
+                                <p class="banner-item-price">{{good.benefitPrice.toLocaleString()}}<span class="price">원</span></p>
                             </a>
                         </div>
                     </div>

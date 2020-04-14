@@ -591,7 +591,10 @@
                 this.tooltip2Display = false;
             },
             addCart() {
-                if (this.selectedOptions.length === 0) {
+                if (this.isEmpty(this.userInfo.email)) {
+                    alert("로그인을 해주세요.");
+                }
+                else if (this.selectedOptions.length === 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
                     requestAddCart(new CartListModel((this.userInfo).email, this.$route.params.goodsCode, this.selectedOptions));
