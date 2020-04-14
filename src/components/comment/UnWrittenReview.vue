@@ -6,8 +6,10 @@
             <p id='unwritten-count'>미작성 상품평 <strong>{{getCount}}</strong>건</p>
         </div>
         <div class='unwritten-list'>
-            <p id='no-unwritten' v-if='getCount == 0'>작성하실 상품평이 없습니다.</p>
-            <sui-loader active centered inline v-else-if="getCount == ''"/>
+            <!--<p id='no-unwritten' v-if='getCount == 0'>작성하실 상품평이 없습니다.</p>-->
+
+            <sui-loader active centered inline v-if='(getInfoList.goodsInfo).length==0'/>
+
             <div v-else>
                 <sui-item-group divided>
                     <sui-item class='unwritten-item' v-for='(unwritten, index) in getInfoList.goodsInfo' :key='index'>
@@ -66,6 +68,7 @@ import subCommentModel from './model/SubCommentModel.js';
         },
         methods:{
             openReviewModal(selectedReview, goods){
+
                 this.goods = goods;
                 this.order = selectedReview;
                 this.open = true;
@@ -75,6 +78,7 @@ import subCommentModel from './model/SubCommentModel.js';
                 this.currentReview.userId = selectedReview.userId;
                 this.currentReview.quantity = selectedReview.goodsCount;
                 this.currentReview.selectedOptions = selectedReview.selectedOptions;
+                this.currentReview.writtenDate = this.today;
             },
             setReview(){
                 if(confirm("상품평을 작성하시겠습니까?")) {

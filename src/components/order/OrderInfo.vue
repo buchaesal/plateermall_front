@@ -37,6 +37,10 @@
             requestOrder(){
                 if(this.getCheckedValue == false){
                     alert("주문 동의를 확인해주세요.");
+                }else if(this.getPaymentValueInfo.cardName == ''){
+                    alert('결제할 카드를 선택해주세요.');
+                }else if(this.getPaymentValueInfo.installments == ''){
+                    alert('할부를 선택해주세요.')
                 }else{
                     this.$store.dispatch('ADD_ORDER');
                     this.$router.push({
@@ -54,9 +58,6 @@
                 }
             }
         },
-        async created(){
-            
-        },
         computed: {
             getAllPrice(){
                 return this.$store.state.orderDetailStore.priceInfo;
@@ -67,6 +68,9 @@
             getCheckedValue(){
                 return this.$store.state.orderDetailStore.isChecked;
             },
+            getPaymentValueInfo(){
+                return this.$store.state.orderDetailStore.cardInfo;
+            }
 
         },
 
