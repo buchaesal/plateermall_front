@@ -1,9 +1,9 @@
 <template>
     <div class="slide">
         <ul>
-            <li v-for="index in slideList.length / 2 - 2" :key="index" >
-                <img :src="slideList[(index * 2)].imgUrl" @click="slideClick(slideList[(index * 2)].query)">
-                <img :src="slideList[(index * 2) + 1].imgUrl" @click="slideClick(slideList[(index * 2 + 1)].query)">
+            <li v-for="index in slideList.length / 2" :key="index" >
+                <img :src="slideList[(index * 2) - 2].imgUrl" @click="slideClick(slideList[(index * 2 - 2)].query)">
+                <img :src="slideList[(index * 2) - 1].imgUrl" @click="slideClick(slideList[(index * 2 - 1)].query)">
             </li>
         </ul>
     </div>
