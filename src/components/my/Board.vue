@@ -10,30 +10,34 @@
             </div>
 
             <hr class="divider">
+            <sui-loader active centered inline v-if="questionList.length==0"/>
 
-            <ul class="status" id="div_countDetail">
-                <li>총 문의 건 : <span>{{questionList.length}}</span>건</li>
-                <li>답변완료 : <span>{{answerComplete}}</span>건</li>
-                <li>답변대기 : <span>{{answerStandBy}}</span>건</li>
-            </ul>
+            <div v-else>
+                <ul class="status" id="div_countDetail">
+                    <li>총 문의 건 : <span>{{questionList.length}}</span>건</li>
+                    <li>답변완료 : <span>{{answerComplete}}</span>건</li>
+                    <li>답변대기 : <span>{{answerStandBy}}</span>건</li>
+                </ul>
 
-<!--        <PaginatedList :list-array="questionList"></PaginatedList>-->
-        <PaginatedList v-if="!flag" :list-array="questionList"></PaginatedList>
-        <PaginatedList v-else :list-array="searchList"></PaginatedList>
+                <!--        <PaginatedList :list-array="questionList"></PaginatedList>-->
 
+
+                <PaginatedList v-if="!flag" :list-array="questionList"></PaginatedList>
+                <PaginatedList v-else :list-array="searchList"></PaginatedList>
+
+
+                <div class="search-box">
+                    <sui-dropdown class="search-dropdown"
+                                  placeholder="카테고리 선택"
+                                  selection
+                                  :options="options"
+                                  v-model="searchQuestionObject.searchType"
+                    />
+                    <sui-input class="search-input" v-model="searchQuestionObject.keyword"/>
+                    <sui-button secondary class="search-btn" @click="searchQuestionList"><a href="#">검색</a></sui-button>
+                </div>
+            </div>
         </div>
-
-        <div class="search-box">
-            <sui-dropdown class="search-dropdown"
-                          placeholder="카테고리 선택"
-                          selection
-                          :options="options"
-                          v-model="searchQuestionObject.searchType"
-            />
-            <sui-input class="search-input" v-model="searchQuestionObject.keyword"/>
-            <sui-button secondary class="search-btn" @click="searchQuestionList"><a href="#">검색</a></sui-button>
-        </div>
-
     </div>
 </template>
 
@@ -75,11 +79,11 @@
         },
         methods: {
             async searchQuestionList() {
-                if(!this.searchQuestionObject.searchType) {
+                if (!this.searchQuestionObject.searchType) {
                     alert("검색할 카테고리를 선택해주세요");
-                } else if(this.searchQuestionObject.searchType=='전체조건' && !this.searchQuestionObject.keyword) {
+                } else if (this.searchQuestionObject.searchType == '전체조건' && !this.searchQuestionObject.keyword) {
                     this.searchList = await getQuestionList();
-                } else if(!this.searchQuestionObject.keyword) {
+                } else if (!this.searchQuestionObject.keyword) {
                     alert("검색할 내용을 입력해주세요");
                 } else {
                     this.searchList = await searchQuestion(this.searchQuestionObject);
@@ -136,7 +140,7 @@
         color: white;
     }
 
-    .modal-msg li{
+    .modal-msg li {
         margin-bottom: 10px;
     }
 
