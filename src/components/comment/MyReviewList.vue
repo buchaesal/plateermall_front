@@ -8,7 +8,7 @@
 
     <div class='my-review-list'>
         <p id='no-review' v-if='getWrittenCount == 0'>작성한 상품평이 없습니다.</p>
-        <sui-loader active centered inline v-else-if="getWrittenCount == ''"/>
+        <sui-loader active centered inline v-else-if="(getWrittenInfo.goodsInfo).length == 0"/>
         <div v-else style="min-height: 500px">
             <sui-item-group divided>
                 <sui-item class='review-item' v-for='(goods, index) in getWrittenInfo.goodsInfo' :key='index'>

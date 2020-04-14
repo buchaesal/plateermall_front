@@ -91,7 +91,6 @@ const mutations = {
 
 const actions = {
     async ADD_ORDER(context){
-
         context.state.orderIdList=[];
 
         for(let index in context.state.goodsInfo){
