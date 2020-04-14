@@ -101,6 +101,7 @@
     import ShippingSpotForm from './ShippingSpotForm';
     import ShippingSpotModel from "./model/ShippingSpotModel";
     import _ from 'lodash';
+    import {addDeliveryAddress} from "../../api/ShippingSpotListApi";
 
     export default {
         name: "DeliveryManagement",
@@ -165,34 +166,22 @@
                 await this.$store.dispatch('setDefaultShippingSpot', this.selectedDefault);
                 alert('기본 배송지로 설정하였습니다.')
             },
-            updateShippingSpotList(defaultShippingSpot, otherShippingSpots) {
-                otherShippingSpots.push(defaultShippingSpot);
-                this.$store.commit('updateShippingSpotList', otherShippingSpots);
-                this.filterDefaultAndOtherSpots();
-            },
             async getShippingSpotListFromApi() {
                 await this.$store.dispatch('ADDRESS_LIST');
             },
-            filterDefaultAndOtherSpots() {
-                console.log('filterDefault')
-                this.shippingSpotSize = this.shippingSpots.length;
-                this.otherShippingSpots = [];
-                this.shippingSpots.filter((shippingSpot) => {
-                    if (shippingSpot.isDefault) {
-                        this.defaultShippingSpot = shippingSpot;
-                    } else {
-                        this.otherShippingSpots.push(shippingSpot);
-                    }
-                });
-            },
-            registerNewShippingSpot() {
+            async registerNewShippingSpot() {
                 if (confirm('저장 하시겠습니까?')) {
                     this.newShippingSpotModel.isDefault = this.shippingSpots.length === 0 ? 1 : 0;
-                    this.$store.dispatch('addShippingSpotListFromApi', this.newShippingSpotModel);
-                    alert('배송지가 등록되었습니다.');
-                    this.selectedDefault = this.selectedDefaultId;
-                    this.openShippingSpotFormFlag = false;
-                    this.newShippingSpotModel = new ShippingSpotModel();
+
+                    await addDeliveryAddress(this.newShippingSpotModel)
+                        .then(async () => {
+                            await this.$store.dispatch('ADDRESS_LIST');
+                        }).then(() => {
+                            this.selectedDefault = this.selectedDefaultId;
+                            this.openShippingSpotFormFlag = false;
+                            this.newShippingSpotModel = new ShippingSpotModel();
+                            alert('배송지가 등록되었습니다.');
+                        })
                 }
             },
             modifyAddress() {
