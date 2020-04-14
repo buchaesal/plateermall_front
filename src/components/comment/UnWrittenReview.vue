@@ -83,11 +83,16 @@ import subCommentModel from './model/SubCommentModel.js';
             setReview(){
                 if(confirm("상품평을 작성하시겠습니까?")) {
 
-                    alert("작성되었습니다.");
+                    let review = this.getCurrentReview;
+                    if(review.starPoint == null || review.deliveryValue == null || review.designValue == null || review.sizeValue == null || review.reviewContent == null){
+                        alert('입력하지 않은 내용이 있습니다.');
+                    }else{
+                        alert("작성되었습니다.");
+                        
+                        this.$store.dispatch('ADD_COMMENT', this.user);
+                        this.cancelAddComment();
+                    }
                     
-                    this.$store.dispatch('ADD_COMMENT', this.user);
-
-                    this.cancelAddComment();
                    
                 }
             },
@@ -113,6 +118,9 @@ import subCommentModel from './model/SubCommentModel.js';
             getCount(){
                 return this.$store.state.commentStore.unwritten.unWrittenCount;
             },
+            getCurrentReview(){
+                return this.$store.state.commentStore.writtenReview;
+            }
         },
     }
 </script>
