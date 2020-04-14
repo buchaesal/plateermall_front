@@ -14,7 +14,9 @@
             <FaqHeader :title="'등록된 문의'"></FaqHeader>
         </div>
 
-        <div id="table_form">
+        <sui-loader class="loader" active centered inline v-if="!questionDetail.territory"/>
+
+        <div id="table_form" v-else>
             <sui-form>
                 <sui-form-field>
                     <sui-table definition>
@@ -24,10 +26,10 @@
                                 <sui-table-cell>
                                     <p v-if="updateBtn">{{questionDetail.territory}}</p>
                                     <sui-dropdown v-else
-                                            :placeholder="questionDetail.territory"
-                                            selection
-                                            :options="options"
-                                            v-model="updateQuestionObject.territory"
+                                                  :placeholder="questionDetail.territory"
+                                                  selection
+                                                  :options="options"
+                                                  v-model="updateQuestionObject.territory"
                                     />
                                 </sui-table-cell>
                             </sui-table-row>
@@ -35,7 +37,8 @@
                                 <sui-table-cell class="form_head">제목</sui-table-cell>
                                 <sui-table-cell>
                                     <p v-if="updateBtn">{{questionDetail.title}}</p>
-                                    <sui-input v-else class="edit-data" v-model="updateQuestionObject.title" :placeholder="questionDetail.title"/>
+                                    <sui-input v-else class="edit-data" v-model="updateQuestionObject.title"
+                                               :placeholder="questionDetail.title"/>
                                 </sui-table-cell>
                             </sui-table-row>
                             <sui-table-row v-show="questionDetail.goodsTitle!=''">
@@ -54,7 +57,8 @@
                                 <sui-table-cell class="form_head">내용</sui-table-cell>
                                 <sui-table-cell class="answer-content">
                                     <p v-if="updateBtn">{{questionDetail.description}}</p>
-                                    <sui-input v-else class="edit-data" v-model="updateQuestionObject.description" :placeholder="questionDetail.description"/>
+                                    <sui-input v-else class="edit-data" v-model="updateQuestionObject.description"
+                                               :placeholder="questionDetail.description"/>
                                 </sui-table-cell>
                             </sui-table-row>
                         </sui-table-body>
@@ -63,7 +67,7 @@
             </sui-form>
             <div class="btn-box">
                 <sui-button basic secondary v-if="updateBtn" @click="updateBtnChange">수정</sui-button>
-                <sui-button basic secondary  v-if="updateBtn" @click="questionDelete">삭제</sui-button>
+                <sui-button basic secondary v-if="updateBtn" @click="questionDelete">삭제</sui-button>
                 <sui-button basic secondary v-if="!updateBtn" @click="questionUpdate">수정완료</sui-button>
                 <sui-button basic secondary v-if="!updateBtn" @click="questionUpdateCancel">수정취소</sui-button>
             </div>
@@ -73,36 +77,41 @@
             <FaqHeader :title="'등록된 답변'"></FaqHeader>
         </div>
 
-        <div>
-            <div class="no-answer" v-if="!answer">
-                <sui-icon name="info" size="huge" circular color="grey"/>
-                <p class="no-answer-msg">등록된 답변이 없습니다.</p>
-            </div>
+        <sui-loader active centered inline v-if="!answerCheck"/>
 
-            <sui-form v-else>
-                <sui-form-field>
-                    <sui-table definition>
-                        <sui-table-body>
-                            <sui-table-row>
-                                <sui-table-cell class="form_head">답변 등록 일시</sui-table-cell>
-                                <sui-table-cell>
-                                    {{answer.date}}
-                                </sui-table-cell>
-                            </sui-table-row>
-                            <sui-table-row>
-                                <sui-table-cell class="form_head">작성자</sui-table-cell>
-                                <sui-table-cell>{{answer.writer}}</sui-table-cell>
-                            </sui-table-row>
-                            <sui-table-row>
-                                <sui-table-cell class="form_head">답변 내용</sui-table-cell>
-                                <sui-table-cell class="answer-content">
-                                    {{answer.description}}
-                                </sui-table-cell>
-                            </sui-table-row>
-                        </sui-table-body>
-                    </sui-table>
-                </sui-form-field>
-            </sui-form>
+        <div v-else>
+
+            <div>
+                <div class="no-answer" v-if="!answer">
+                    <sui-icon name="info" size="huge" circular color="grey"/>
+                    <p class="no-answer-msg">등록된 답변이 없습니다.</p>
+                </div>
+
+                <sui-form v-else>
+                    <sui-form-field>
+                        <sui-table definition>
+                            <sui-table-body>
+                                <sui-table-row>
+                                    <sui-table-cell class="form_head">답변 등록 일시</sui-table-cell>
+                                    <sui-table-cell>
+                                        {{answer.date}}
+                                    </sui-table-cell>
+                                </sui-table-row>
+                                <sui-table-row>
+                                    <sui-table-cell class="form_head">작성자</sui-table-cell>
+                                    <sui-table-cell>{{answer.writer}}</sui-table-cell>
+                                </sui-table-row>
+                                <sui-table-row>
+                                    <sui-table-cell class="form_head">답변 내용</sui-table-cell>
+                                    <sui-table-cell class="answer-content">
+                                        {{answer.description}}
+                                    </sui-table-cell>
+                                </sui-table-row>
+                            </sui-table-body>
+                        </sui-table>
+                    </sui-form-field>
+                </sui-form>
+            </div>
         </div>
     </div>
 </template>
@@ -127,8 +136,8 @@
                 ],
                 questionDetail: {},
                 answer: {},
-                updateQuestionObject: {
-                },
+                answerCheck: '',
+                updateQuestionObject: {},
             }
         },
         components: {
@@ -137,11 +146,16 @@
         async created() {
             const postId = this.$route.params.postId;
             this.questionDetail = await getQuestion(postId);
-            this.updateQuestionObject = await this.questionDetail;
-            this.answer = await getAnswer(postId);
+            this.updateQuestionObject = this.questionDetail;
+            // this.answer = await getAnswer(postId);
+            await this.getAnswerCheck(postId);
             this.userInfo = await getCurrentUserInfo();
         },
         methods: {
+            async getAnswerCheck(postId) {
+              this.answer = await getAnswer(postId);
+              this.answerCheck = 1;
+            },
             async questionDelete() {
                 const postId = this.$route.params.postId;
 
@@ -246,5 +260,9 @@
 
     .divider {
         margin: 40px 0;
+    }
+
+    .loader {
+        margin-top: 40px !important;
     }
 </style>

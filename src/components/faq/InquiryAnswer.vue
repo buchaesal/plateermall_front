@@ -9,14 +9,19 @@
                 </ul>
             </div>
             <hr class="divider">
-            <ul class="status" id="div_countDetail">
-                <li>총 문의 건 : <span>{{myQuestionList.length}}</span>건</li>
-                <li>답변완료 : <span>{{answerComplete}}</span>건</li>
-                <li>답변대기 : <span>{{answerStandBy}}</span>건</li>
-            </ul>
 
-            <PaginatedList :list-array="myQuestionList"></PaginatedList>
+            <sui-loader active centered inline v-if="myQuestionList.length==0"/>
 
+            <div v-else>
+
+                <ul class="status" id="div_countDetail">
+                    <li>총 문의 건 : <span>{{myQuestionList.length}}</span>건</li>
+                    <li>답변완료 : <span>{{answerComplete}}</span>건</li>
+                    <li>답변대기 : <span>{{answerStandBy}}</span>건</li>
+                </ul>
+
+                <PaginatedList :list-array="myQuestionList"></PaginatedList>
+            </div>
         </div>
     </div>
 </template>
@@ -47,9 +52,9 @@
             this.myQuestionList = await getMyQuestionList(this.userInfo.name);
             this.answerIncrement();
         },
-        methods : {
+        methods: {
             answerIncrement() {
-                for(let i=0 ; i<this.myQuestionList.length ; i++) {
+                for (let i = 0; i < this.myQuestionList.length; i++) {
                     if (this.myQuestionList[i].state) {
                         this.answerComplete++;
                     } else {
@@ -97,11 +102,11 @@
         position: relative;
     }
 
-    .modal-msg li{
+    .modal-msg li {
         margin-bottom: 10px;
     }
 
     .divider {
-         margin: 40px 0;
-     }
+        margin: 40px 0;
+    }
 </style>
