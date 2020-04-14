@@ -15,7 +15,7 @@
                 </div>
                 <sui-card-content>
                     <sui-card-header>{{ducain.name}}</sui-card-header>
-                    <sui-card-meta>{{ducain.email}}</sui-card-meta>
+                    <sui-card-meta><a :href="'mailto:' + ducain.email">{{ducain.email}}</a></sui-card-meta>
                     <sui-card-description>{{ducain.description}}</sui-card-description>
                 </sui-card-content>
             </sui-card>
@@ -28,7 +28,7 @@
                         </div>
                         <sui-card-content>
                             <sui-card-header>{{newbie.name}}</sui-card-header>
-                            <sui-card-meta>{{newbie.email}}</sui-card-meta>
+                            <sui-card-meta><a :href="'mailto:' + newbie.email">{{newbie.email}}</a></sui-card-meta>
                             <sui-card-description>{{newbie.description}}</sui-card-description>
                         </sui-card-content>
                     </sui-card>
@@ -150,7 +150,7 @@
         -o-filter: blur(5px);
         -ms-filter: blur(5px);
         filter: blur(5px);
-        transform: scale(1.02);
+        transform: scale(1.05);
     }
 
     .card-img {
