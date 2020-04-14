@@ -1,21 +1,9 @@
 <template>
     <div class="slide">
         <ul>
-            <li>
-                <img src="../../assets/main-banner-1.jpg">
-                <img src="../../assets/main-banner-2.jpg">
-            </li>
-            <li>
-                <img src="../../assets/main-banner-3.jpg">
-                <img src="../../assets/main-banner-4.jpg">
-            </li>
-            <li>
-                <img src="../../assets/main-banner-5.jpg">
-                <img src="../../assets/main-banner-6.jpg">
-            </li>
-            <li>
-                <img src="../../assets/main-banner-7.jpg">
-                <img src="../../assets/main-banner-8.jpg">
+            <li v-for="index in slideList.length / 2 - 2" :key="index" >
+                <img :src="slideList[(index * 2)].imgUrl" @click="slideClick(slideList[(index * 2)].query)">
+                <img :src="slideList[(index * 2) + 1].imgUrl" @click="slideClick(slideList[(index * 2 + 1)].query)">
             </li>
         </ul>
     </div>
@@ -23,7 +11,51 @@
 
 <script>
     export default {
-        name: "Slide"
+        name: "Slide",
+
+        data() {
+            return {
+                slideList: [
+                    {
+                        imgUrl: require("../../assets/main-banner-1.jpg"),
+                        query: "나이키"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-banner-2.jpg"),
+                        query: "원피스"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-banner-3.jpg"),
+                        query: "팩"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-banner-4.jpg"),
+                        query: "팩"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-banner-5.jpg"),
+                        query: "컨버스"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-banner-6.jpg"),
+                        query: "나이키"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-banner-7.jpg"),
+                        query: "나이키"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-banner-8.jpg"),
+                        query: "나이키"
+                    },
+                ]
+            }
+        },
+        methods: {
+            slideClick(query) {
+                this.$router.push({name: "searchResult", query: {query: query}});
+            }
+        }
     }
 </script>
 
