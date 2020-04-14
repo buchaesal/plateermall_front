@@ -224,7 +224,7 @@
                 </section>
                 <div class="promotion-banner" v-if="!isEmpty(goodsData.cardPromotions)">
                     <div class="banner-text">
-                        <a href="#">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 할인</a>
+                        {{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 할인
                     </div>
                 </div>
                 <div class="details">
@@ -265,7 +265,7 @@
                     </section>
                     <div class="brand-banner">
                         <div class="banner-text">
-                            <a href="#">{{goodsData.seller}}</a>
+                            {{goodsData.seller}}
                         </div>
                     </div>
                     <div class="detail-tab">
@@ -1067,7 +1067,7 @@
         color: white;
     }
 
-    .banner-text a {
+    .banner-text {
         display: block;
         height: 100px;
         padding: 28px 0;
