@@ -2,7 +2,7 @@
     <div class="slide">
         <ul>
             <li v-for="(slide, index) in slideList" :key="index">
-                <img :src="slide.imgUrl"  @click="slideClick(slide.query)">
+                <img class="mini-slide" :src="slide.imgUrl"  @click="slideClick(slide.query)">
             </li>
         </ul>
     </div>
@@ -100,6 +100,10 @@
         display: inline;
         float: left;
         height: auto;
+    }
+    
+    .mini-slide {
+        cursor: pointer;
     }
 
 </style>

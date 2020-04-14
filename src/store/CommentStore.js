@@ -154,7 +154,8 @@ const actions = {
             console.log(error);
         });
 
-        state.fileList = null;
+        context.state.writtenReview = null;
+        context.state.fileList = null;
     },
 
     async UPDATE_COMMENT(context, userId){
@@ -174,7 +175,7 @@ const actions = {
             console.log(error);
         });
 
-        state.fileList = null;
+        context.state.fileList = null;
     },
 
     async DELETE_COMMENT(context, info){

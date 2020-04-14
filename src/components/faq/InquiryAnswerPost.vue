@@ -168,7 +168,7 @@
                         await questionDelete(postId);
                         alert("삭제되었습니다.")
                         this.$router.push("/board");
-                        this.goToBack();
+                        // this.goToBack();
                     }
                 }
             },
@@ -201,9 +201,9 @@
                     this.updateBtn = false;
                 }
             },
-            goToBack() {
-                this.$router.go(-2);
-            },
+            // goToBack() {
+            //     this.$router.go(-2);
+            // },
         },
     }
 </script>

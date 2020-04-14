@@ -1,37 +1,41 @@
 <template>
     <div>
-        <div class="my-cancel" v-if="wishProductCount === 0">
-            <i class="huge exclamation icon"></i>
-            <br/>
-            <br/>
-            <p>위시리스트에 담은 상품이 없습니다.</p>
-            <p>장기간 보관하고 싶은 상품을 위시하세요</p>
-
-        </div>
+        <sui-loader active centered inline v-if="wishListCheck === 0"/>
 
         <div v-else>
-            <div class="search-wishlist">
-                <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
+            <div class="my-cancel" v-if="wishProductCount === 0">
+                <i class="huge exclamation icon"></i>
+                <br/>
+                <br/>
+                <p>위시리스트에 담은 상품이 없습니다.</p>
+                <p>장기간 보관하고 싶은 상품을 위시하세요</p>
+
             </div>
-            <div class="wishlist-container">
-                <sui-card-group :items-per-row="4">
-                    <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
-                              @click="goToGoodsDetail(goodsData.goodsCode)">
-                        <sui-image :src=" goodsData.imgUrl" width="100%"/>
-                        <sui-card-content>
-                            <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
-                            <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
-                            <sui-card-description class="price">
-                                <div class="price-area">
-                                    {{goodsData.benefitPrice.toLocaleString()}}<span class="unit">원</span>
-                                </div>
-                                <div class="cancel-wish" @click.stop="cancelWish(goodsData.goodsCode)">
-                                    <i class="close icon"></i>
-                                </div>
-                            </sui-card-description>
-                        </sui-card-content>
-                    </sui-card>
-                </sui-card-group>
+
+            <div v-else>
+                <div class="search-wishlist">
+                    <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
+                </div>
+                <div class="wishlist-container">
+                    <sui-card-group :items-per-row="4">
+                        <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
+                                  @click="goToGoodsDetail(goodsData.goodsCode)">
+                            <sui-image :src=" goodsData.imgUrl" width="100%"/>
+                            <sui-card-content>
+                                <sui-card-header class="title">{{goodsData.title}}</sui-card-header>
+                                <sui-card-meta class="seller">{{goodsData.seller}}</sui-card-meta>
+                                <sui-card-description class="price">
+                                    <div class="price-area">
+                                        {{goodsData.benefitPrice.toLocaleString()}}<span class="unit">원</span>
+                                    </div>
+                                    <div class="cancel-wish" @click.stop="cancelWish(goodsData.goodsCode)">
+                                        <i class="close icon"></i>
+                                    </div>
+                                </sui-card-description>
+                            </sui-card-content>
+                        </sui-card>
+                    </sui-card-group>
+                </div>
             </div>
         </div>
     </div>
@@ -51,6 +55,7 @@
                 wishListGoods: [],
                 searchTxt: "",
                 userInfo: {},
+                wishListCheck: 0,
             }
         },
         computed: {
@@ -59,6 +64,10 @@
             },
         },
         methods: {
+            getWishListCheck() {
+                this.wishListCheck = 1;
+            },
+
             async setGoodsFromGoodsCodes() {
                 let goodsApi = new GoodsApi();
 
@@ -102,7 +111,8 @@
         },
         async created() {
             this.userInfo = await getCurrentUserInfo();
-            this.setWishList();
+            await this.setWishList();
+            this.getWishListCheck();
         },
     }
 </script>
