@@ -150,7 +150,7 @@
         -o-filter: blur(5px);
         -ms-filter: blur(5px);
         filter: blur(5px);
-        transform: scale(1.02);
+        transform: scale(1.05);
     }
 
     .card-img {
