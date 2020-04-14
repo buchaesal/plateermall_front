@@ -640,7 +640,7 @@
             await this.getWish();
         },
         updated() {
-            if (this.goodsData.goodsCode == undefined) {
+            if (this.goodsData === null) {
                 this.$router.push("/404");
             }
         },
