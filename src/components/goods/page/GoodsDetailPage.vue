@@ -93,7 +93,7 @@
                                 </dd>
                                 <dt>포인트</dt>
                                 <dd>
-                                <span class="oners-txt mt-none">플래티어 오너스 L.POINT 0.5% 적립
+                                <span class="oners-txt mt-none">플래티어 오너스 P.POINT 0.5% 적립
                                 <div class="tooltip tooltip-oners-saving">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
                                             @mouseleave="offTooltip2"><i class="info icon"></i>
@@ -107,7 +107,7 @@
                                             </dl>
                                             <dl>
                                                 <dt>적립유형</dt>
-                                                <dd>L.POINT</dd>
+                                                <dd>P.POINT</dd>
                                             </dl>
                                             <dl>
                                                 <dt>적립금액</dt>

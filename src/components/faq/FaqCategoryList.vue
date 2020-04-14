@@ -124,7 +124,7 @@
              <h3>포인트/쿠폰/이벤트</h3>
              <ul class="depth_menu">
                  <li>
-                     <router-link to="/cca-fo/faq/viewFAQ/P00006/P00049">L.POINT</router-link>
+                     <router-link to="/cca-fo/faq/viewFAQ/P00006/P00049">P.POINT</router-link>
                  </li>
                  <li>
                      <router-link to="/cca-fo/faq/viewFAQ/P00006/P00050">쿠폰</router-link>

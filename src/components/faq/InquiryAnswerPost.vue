@@ -130,7 +130,7 @@
                 options: [
                     {text: '주문내역확인', value: '주문내역확인',},
                     {text: '배송확인', value: '배송확인',},
-                    {text: 'L.POINT', value: 'L.POINT',},
+                    {text: 'P.POINT', value: 'P.POINT',},
                     {text: '반품접수', value: '반품접수',},
                     {text: '교환접수', value: '교환접수',},
                 ],
@@ -168,7 +168,7 @@
                         await questionDelete(postId);
                         alert("삭제되었습니다.")
                         this.$router.push("/board");
-                        this.goToBack();
+                        // this.goToBack();
                     }
                 }
             },
@@ -201,9 +201,9 @@
                     this.updateBtn = false;
                 }
             },
-            goToBack() {
-                this.$router.go(-2);
-            },
+            // goToBack() {
+            //     this.$router.go(-2);
+            // },
         },
     }
 </script>

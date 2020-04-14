@@ -2,8 +2,8 @@
     <div class="slide">
         <ul>
             <li v-for="index in slideList.length / 2" :key="index" >
-                <img :src="slideList[(index * 2) - 2].imgUrl" @click="slideClick(slideList[(index * 2 - 2)].query)">
-                <img :src="slideList[(index * 2) - 1].imgUrl" @click="slideClick(slideList[(index * 2 - 1)].query)">
+                <img class="slide1" :src="slideList[(index * 2) - 2].imgUrl" @click="slideClick(slideList[(index * 2 - 2)].query)">
+                <img class="slide2" :src="slideList[(index * 2) - 1].imgUrl" @click="slideClick(slideList[(index * 2 - 1)].query)">
             </li>
         </ul>
     </div>
@@ -125,6 +125,10 @@
         float: left;
         width: 50%;
         height: 640px;
+    }
+    
+    .slide1, .slide2 {
+        cursor: pointer;
     }
 
 </style>
