@@ -71,7 +71,7 @@
                             </sui-table-body>
                         </sui-table>
                         <div id="buttons">
-                            <sui-button secondary @click="registration">등록</sui-button>
+                            <sui-button type="button" secondary @click="registration">등록</sui-button>
                             <sui-button basic secondary>취소</sui-button>
                         </div>
                     </sui-form-field>
@@ -183,11 +183,10 @@
                 this.open = !this.open;
             },
             async registration() {
-                if (!(this.questionObject.territory) || !(this.questionObject.title) || !(this.questionObject.description)) {
+                if (!this.questionObject.territory || !this.questionObject.title || !this.questionObject.description) {
                     alert("문의내용을 채워주세요.")
                 } else {
                     await registrationQuestion(this.questionObject);
-                    // console.log(this.questionObject);
                     this.recentPostId = await getRecentQuestion();
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/answer/"+this.recentPostId);
