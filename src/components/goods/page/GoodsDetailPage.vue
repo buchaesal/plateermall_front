@@ -244,7 +244,7 @@
                         </div>
                         <h4 class="subheading">상품 상세 설명</h4>
                         <div class="goods-more-detail">
-                            {{goodsData.goodsDetail}}
+                            <div v-html="goodsData.goodsDetail"></div>
                         </div>
                         <div>
                             <sui-accordion exclusive>
