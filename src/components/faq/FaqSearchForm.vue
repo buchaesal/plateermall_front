@@ -10,7 +10,7 @@
         <ul class="rank">
             <li><a href="#">주문내역확인</a></li>
             <li><a href="#">배송확인</a></li>
-            <li><a href="#">L.POINT</a></li>
+            <li><a href="#">P.POINT</a></li>
             <li><a href="#">반품접수</a></li>
             <li><a href="#">교환접수</a></li>
         </ul>
