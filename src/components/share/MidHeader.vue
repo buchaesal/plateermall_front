@@ -52,7 +52,7 @@
                 if (!this.searchKeyword) {
                     this.searchKeyword = this.placeholder;
                 }
-                this.$router.push({name: "searchResult", query: {query: this.searchKeyword}})
+                this.$router.push({name: "searchResult", query: {query: this.searchKeyword}});
             },
             getQuery() {
                 this.searchKeyword = this.$route.query.query;
