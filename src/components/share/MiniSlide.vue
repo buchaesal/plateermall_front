@@ -1,17 +1,8 @@
 <template>
     <div class="slide">
         <ul>
-            <li>
-                <img src="../../assets/main-mini-banner-1.jpg">
-            </li>
-            <li>
-                <img src="../../assets/main-mini-banner-2.jpg">
-            </li>
-            <li>
-                <img src="../../assets/main-mini-banner-3.jpg">
-            </li>
-            <li>
-                <img src="../../assets/main-mini-banner-4.jpg">
+            <li v-for="(slide, index) in slideList" :key="index">
+                <img :src="slide.imgUrl"  @click="slideClick(slide.query)">
             </li>
         </ul>
     </div>
@@ -19,7 +10,35 @@
 
 <script>
     export default {
-        name: "MiniSlide"
+        name: "MiniSlide",
+
+        data() {
+            return {
+                slideList: [
+                    {
+                        imgUrl: require("../../assets/main-mini-banner-1.jpg"),
+                        query: "컨버스"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-mini-banner-2.jpg"),
+                        query: "나이키"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-mini-banner-3.jpg"),
+                        query: "컨버스"
+                    },
+                    {
+                        imgUrl: require("../../assets/main-mini-banner-4.jpg"),
+                        query: "원피스"
+                    },
+                ],
+            }
+        },
+        methods: {
+            slideClick(query) {
+                this.$router.push({name: "searchResult", query: {query: query}});
+            }
+        }
     }
 </script>
 

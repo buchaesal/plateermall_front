@@ -5,7 +5,7 @@
             <div class="fix-inner">
                 <div class="search-top">
                     <h3 class="title">“{{query}}” 검색결과 <em
-                            id="titleCount">{{goodsList.length.toLocaleString()}}</em></h3>
+                            id="titleCount" v-if="searchResult">{{goodsList.length.toLocaleString()}}</em></h3>
                 </div>
 
                 <Navigation :categoryList="categoryList" :isActive="isActive"
@@ -56,6 +56,7 @@
                 isActive: false,
                 resultCount: 0,
                 noItemMessage: "검색 결과가 없습니다.",
+                searchResult: false,
             }
         },
         methods: {
@@ -66,7 +67,7 @@
                 this.$store.commit("getPageGoodsModelList", new QueryModel(this.query, this.sort, this.categoryCode, this.minPrice, this.maxPrice));
             },
             getCategoryList() {
-                console.log("getcategorylist")
+                this.searchResult = true;
                 for (let goods of this.goodsList) {
                     for (let category of goods.categories) {
                         let data = {
