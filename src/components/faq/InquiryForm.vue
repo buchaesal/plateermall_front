@@ -3,9 +3,9 @@
         <div>
             <div class="inquiry_header">
                 <FaqHeader :title="'1:1문의하기'"></FaqHeader>
-                <ul class="bull_list-dash">
-                    <li>- 문의하신 내용에 대한 답변은 이메일 또는 마이롯데 &gt; 1:1답변확인에서 확인하실 수 있습니다.</li>
-                    <li>- 답변 완료 시 회원정보에 등록된 휴대폰번호로 알림을 받으실 수 있습니다.</li>
+                <ul class="modal-msg">
+                    <li> 문의하신 내용에 대한 답변은 이메일 또는 마이롯데 &gt; 1:1답변확인에서 확인하실 수 있습니다.</li>
+                    <li> 답변 완료 시 회원정보에 등록된 휴대폰번호로 알림을 받으실 수 있습니다.</li>
                 </ul>
             </div>
             <div id="table_form">
@@ -71,7 +71,7 @@
                             </sui-table-body>
                         </sui-table>
                         <div id="buttons">
-                            <sui-button secondary @click="registration">등록</sui-button>
+                            <sui-button type="button" secondary @click="registration">등록</sui-button>
                             <sui-button basic secondary>취소</sui-button>
                         </div>
                     </sui-form-field>
@@ -166,7 +166,7 @@
                 options: [
                     {text: '주문내역확인', value: '주문내역확인',},
                     {text: '배송확인', value: '배송확인',},
-                    {text: 'L.POINT', value: 'L.POINT',},
+                    {text: 'P.POINT', value: 'P.POINT',},
                     {text: '반품접수', value: '반품접수',},
                     {text: '교환접수', value: '교환접수',},
                 ]
@@ -183,11 +183,10 @@
                 this.open = !this.open;
             },
             async registration() {
-                if (!(this.questionObject.territory) || !(this.questionObject.title) || !(this.questionObject.description)) {
+                if (!this.questionObject.territory || !this.questionObject.title || !this.questionObject.description) {
                     alert("문의내용을 채워주세요.")
                 } else {
                     await registrationQuestion(this.questionObject);
-                    // console.log(this.questionObject);
                     this.recentPostId = await getRecentQuestion();
                     alert("등록이 완료되었습니다.");
                     this.$router.push("/answer/"+this.recentPostId);
@@ -221,10 +220,6 @@
         padding-left: 0;
     }
 
-    .bull_list-dash {
-        list-style: none;
-    }
-
     .form_head {
         height: 60px !important;
         text-align: center !important;
@@ -252,7 +247,7 @@
     }
 
     .modal-msg li{
-        margin-bottom: 10px;
+        margin-bottom: 10px !important;
     }
 
     hr {

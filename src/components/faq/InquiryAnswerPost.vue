@@ -2,7 +2,7 @@
     <div>
         <div class="inquiry_header">
             <FaqHeader :title="'1:1 답변확인'"></FaqHeader>
-            <ul class="bull_list-dash">
+            <ul class="modal-msg">
                 <li> 문의하신 내용에 대한 답변은 이메일 수신 등록시 이메일로 전달됩니다.</li>
                 <li> 문의 상태가 ‘처리중’인 경우는 상담원이 고객님의 문의를 처리중인 상태입니다.</li>
             </ul>
@@ -16,7 +16,7 @@
 
         <sui-loader class="loader" active centered inline v-if="!questionDetail.territory"/>
 
-        <div id="table_form" v-else>
+        <div class="table_form" v-else>
             <sui-form>
                 <sui-form-field>
                     <sui-table definition>
@@ -24,7 +24,7 @@
                             <sui-table-row>
                                 <sui-table-cell class="form_head">카테고리</sui-table-cell>
                                 <sui-table-cell>
-                                    <p v-if="updateBtn">{{questionDetail.territory}}</p>
+                                    <p v-if="!updateBtn">{{questionDetail.territory}}</p>
                                     <sui-dropdown v-else
                                                   :placeholder="questionDetail.territory"
                                                   selection
@@ -36,7 +36,7 @@
                             <sui-table-row>
                                 <sui-table-cell class="form_head">제목</sui-table-cell>
                                 <sui-table-cell>
-                                    <p v-if="updateBtn">{{questionDetail.title}}</p>
+                                    <p v-if="!updateBtn">{{questionDetail.title}}</p>
                                     <sui-input v-else class="edit-data" v-model="updateQuestionObject.title"
                                                :placeholder="questionDetail.title"/>
                                 </sui-table-cell>
@@ -56,7 +56,7 @@
                             <sui-table-row>
                                 <sui-table-cell class="form_head">내용</sui-table-cell>
                                 <sui-table-cell class="answer-content">
-                                    <p v-if="updateBtn">{{questionDetail.description}}</p>
+                                    <p v-if="!updateBtn">{{questionDetail.description}}</p>
                                     <sui-input v-else class="edit-data" v-model="updateQuestionObject.description"
                                                :placeholder="questionDetail.description"/>
                                 </sui-table-cell>
@@ -66,10 +66,10 @@
                 </sui-form-field>
             </sui-form>
             <div class="btn-box">
-                <sui-button basic secondary v-if="updateBtn" @click="updateBtnChange">수정</sui-button>
-                <sui-button basic secondary v-if="updateBtn" @click="questionDelete">삭제</sui-button>
-                <sui-button basic secondary v-if="!updateBtn" @click="questionUpdate">수정완료</sui-button>
-                <sui-button basic secondary v-if="!updateBtn" @click="questionUpdateCancel">수정취소</sui-button>
+                <sui-button basic secondary v-if="!updateBtn" @click="updateBtnChange">수정</sui-button>
+                <sui-button basic secondary v-if="!updateBtn" @click="questionDelete">삭제</sui-button>
+                <sui-button basic secondary v-if="updateBtn" @click="questionUpdate">수정완료</sui-button>
+                <sui-button basic secondary v-if="updateBtn" @click="questionUpdateCancel">수정취소</sui-button>
             </div>
         </div>
 
@@ -79,7 +79,7 @@
 
         <sui-loader active centered inline v-if="!answerCheck"/>
 
-        <div v-else>
+        <div class="table_form" v-else>
 
             <div>
                 <div class="no-answer" v-if="!answer">
@@ -125,12 +125,12 @@
         name: "InquiryAnswerPost",
         data() {
             return {
-                updateBtn: '0',
+                updateBtn: false,
                 userInfo: '',
                 options: [
                     {text: '주문내역확인', value: '주문내역확인',},
                     {text: '배송확인', value: '배송확인',},
-                    {text: 'L.POINT', value: 'L.POINT',},
+                    {text: 'P.POINT', value: 'P.POINT',},
                     {text: '반품접수', value: '반품접수',},
                     {text: '교환접수', value: '교환접수',},
                 ],
@@ -174,8 +174,8 @@
             },
             async questionUpdate() {
                 this.updateBtnChange();
-                await questionUpdate(this.updateQuestionObject);
                 alert("문의가 수정되었습니다.");
+                await questionUpdate(this.updateQuestionObject);
             },
             async questionUpdateCancel() {
                 //NavigationDuplicated발생 -> 구글링해서 .catch ~~를 달아주니 오류는 해결
@@ -188,17 +188,17 @@
 
                 // this.questionDetail = await getQuestion(this.questionDetail.postId);
 
-                this.updateBtn = 1;
+                this.updateBtn = true;
             },
             updateBtnChange() {
                 if (this.questionDetail.writer != this.userInfo.name) {
                     alert("수정 권한이 없습니다.");
                 } else if (this.answer) {
                     alert("답변이 완료된 문의는 수정할 수 없습니다.");
-                } else if (this.updateBtn == 0) {
-                    this.updateBtn = 1;
+                } else if (!this.updateBtn) {
+                    this.updateBtn = true;
                 } else {
-                    this.updateBtn = 0;
+                    this.updateBtn = false;
                 }
             },
             goToBack() {
@@ -210,11 +210,15 @@
 
 <style scoped>
 
-    #table_form {
+    .table_form {
         margin-top: 40px;
     }
 
-    .bull_list-dash, #table_form {
+    .modal-msg li {
+        margin-bottom: 10px;
+    }
+
+    .modal-msg, .table_form {
         margin-bottom: 40px;
     }
 

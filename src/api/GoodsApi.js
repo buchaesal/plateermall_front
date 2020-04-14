@@ -9,7 +9,7 @@ class GoodsApi {
             }
         ).catch(function (error) {
             console.log(error);
-            return error;
+            return null;
         });
     }
 

@@ -8,7 +8,7 @@
                             <strong>플래티어쇼핑(주)</strong>
                         </a>
                     </li>
-                    <li><a href="javascript:void(0);" title="LPOINT 회원소개">LPOINT 회원소개</a></li>
+                    <li><a href="javascript:void(0);" title="P.POINT 회원소개">P.POINT 회원소개</a></li>
                     <li class="privacy"><a href="javascript:void(0);" title="개인정보처리방침"><strong>개인정보처리방침</strong></a></li>
                     <li><a href="javascript:void(0);" title="청소년보호방침">청소년보호방침</a></li>
                     <li><a href="javascript:void(0);" title="고객의견" id="cm_customer-feedback">고객의견</a></li>

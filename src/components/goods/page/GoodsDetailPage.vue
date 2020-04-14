@@ -27,31 +27,31 @@
                                     class="unit">원</span>
                             </p>
                             <ul class="utils">
-                                <li class="share" @mouseover="onShareList" @mouseleave="offShareList">
-                                    <button class="circular ui icon basic button btn-share">
-                                        <i class="share alternate icon"></i>
-                                    </button>
-                                    <ul class="share-list" v-if="shareDisplay">
-                                        <li>
-                                            <sui-button basic circular facebook icon="facebook"/>
-                                            <br><span class="share-text">페이스북</span>
-                                        </li>
-                                        <li>
-                                            <sui-button basic circular twitter icon="twitter"/>
-                                            <br><span class="share-text">트위터</span>
-                                        </li>
-                                        <li>
-                                            <sui-button basic circular kakaotalk icon="comment"/>
-                                            <br><span class="share-text">카카오톡</span>
-                                        </li>
-                                        <li>
-                                            <button class="circular ui icon basic button url"><i
-                                                    class="linkify icon"></i>
-                                            </button>
-                                            <br><span class="share-text">URL복사</span>
-                                        </li>
-                                    </ul>
-                                </li>
+<!--                                <li class="share" @mouseover="onShareList" @mouseleave="offShareList">-->
+<!--                                    <button class="circular ui icon basic button btn-share">-->
+<!--                                        <i class="share alternate icon"></i>-->
+<!--                                    </button>-->
+<!--                                    <ul class="share-list" v-if="shareDisplay">-->
+<!--                                        <li>-->
+<!--                                            <sui-button basic circular facebook icon="facebook"/>-->
+<!--                                            <br><span class="share-text">페이스북</span>-->
+<!--                                        </li>-->
+<!--                                        <li>-->
+<!--                                            <sui-button basic circular twitter icon="twitter"/>-->
+<!--                                            <br><span class="share-text">트위터</span>-->
+<!--                                        </li>-->
+<!--                                        <li>-->
+<!--                                            <sui-button basic circular kakaotalk icon="comment"/>-->
+<!--                                            <br><span class="share-text">카카오톡</span>-->
+<!--                                        </li>-->
+<!--                                        <li @click="urlCopy">-->
+<!--                                            <button class="circular ui icon basic button url"><i-->
+<!--                                                    class="linkify icon"></i>-->
+<!--                                            </button>-->
+<!--                                            <br><span class="share-text">URL복사</span>-->
+<!--                                        </li>-->
+<!--                                    </ul>-->
+<!--                                </li>-->
                                 <li @click="likeBtnClick">
                                     <sui-button basic circular icon="heart red" v-if="isLike"/>
                                     <sui-button basic circular icon="heart outline" v-else/>
@@ -93,7 +93,7 @@
                                 </dd>
                                 <dt>포인트</dt>
                                 <dd>
-                                <span class="oners-txt mt-none">플래티어 오너스 L.POINT 0.5% 적립
+                                <span class="oners-txt mt-none">플래티어 오너스 P.POINT 0.5% 적립
                                 <div class="tooltip tooltip-oners-saving">
                                     <button class="circular ui icon basic button btn-tooltip" @mouseover="onTooltip2"
                                             @mouseleave="offTooltip2"><i class="info icon"></i>
@@ -107,7 +107,7 @@
                                             </dl>
                                             <dl>
                                                 <dt>적립유형</dt>
-                                                <dd>L.POINT</dd>
+                                                <dd>P.POINT</dd>
                                             </dl>
                                             <dl>
                                                 <dt>적립금액</dt>
@@ -173,21 +173,21 @@
                                     <span id="orderDcSumPrcTxt">{{(orderSumPrice).toLocaleString()}}</span> <span
                                             class="unit">원</span></p>
                             </div>
-<!--                            <div>-->
-<!--                                <sui-button-group class="two shipping-option">-->
-<!--                                    <sui-button toggle-->
-<!--                                                content="택배"-->
-<!--                                                basic="basic"-->
-<!--                                                :color="radioButtonsColor[0]"-->
-<!--                                                :active="radioButtons[0]"-->
-<!--                                                @click="shippingRadio(0)"></sui-button>-->
-<!--                                    <sui-button toggle basic-->
-<!--                                                content="방문 수령"-->
-<!--                                                :color="radioButtonsColor[1]"-->
-<!--                                                :active="radioButtons[1]"-->
-<!--                                                @click="shippingRadio(1)"></sui-button>-->
-<!--                                </sui-button-group>-->
-<!--                            </div>-->
+                            <!--                            <div>-->
+                            <!--                                <sui-button-group class="two shipping-option">-->
+                            <!--                                    <sui-button toggle-->
+                            <!--                                                content="택배"-->
+                            <!--                                                basic="basic"-->
+                            <!--                                                :color="radioButtonsColor[0]"-->
+                            <!--                                                :active="radioButtons[0]"-->
+                            <!--                                                @click="shippingRadio(0)"></sui-button>-->
+                            <!--                                    <sui-button toggle basic-->
+                            <!--                                                content="방문 수령"-->
+                            <!--                                                :color="radioButtonsColor[1]"-->
+                            <!--                                                :active="radioButtons[1]"-->
+                            <!--                                                @click="shippingRadio(1)"></sui-button>-->
+                            <!--                                </sui-button-group>-->
+                            <!--                            </div>-->
                             <div>
                                 <sui-button-group class="two cart-or-now">
                                     <sui-button content="쇼핑백" @click.native="addCart"></sui-button>
@@ -222,9 +222,9 @@
                         </div>
                     </div>
                 </section>
-                <div class="promotion-banner">
+                <div class="promotion-banner" v-if="!isEmpty(goodsData.cardPromotions)">
                     <div class="banner-text">
-                        <a href="#">프로모션 배너</a>
+                        <a href="#">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 할인</a>
                     </div>
                 </div>
                 <div class="details">
@@ -244,7 +244,7 @@
                         </div>
                         <h4 class="subheading">상품 상세 설명</h4>
                         <div class="goods-more-detail">
-                            {{goodsData.goodsDetail}}
+                            <div v-html="goodsData.goodsDetail"></div>
                         </div>
                         <div>
                             <sui-accordion exclusive>
@@ -564,8 +564,7 @@
                 if (!this.isAuthenticated) {
                     alert('로그인해주세요.');
                     return;
-                }
-                else {
+                } else {
                     let wishListApi = new WishListApi();
 
                     if (!this.isLike) {
@@ -641,7 +640,7 @@
             await this.getWish();
         },
         updated() {
-            if (this.goodsData.goodsCode == undefined) {
+            if (this.goodsData === null) {
                 this.$router.push("/404");
             }
         },
