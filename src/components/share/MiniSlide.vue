@@ -2,7 +2,7 @@
     <div class="slide">
         <ul>
             <li v-for="(slide, index) in slideList" :key="index">
-                <img :src="slide.imgUrl"  @click="slideClick(slide.query)">
+                <img class="mini-slide" :src="slide.imgUrl"  @click="slideClick(slide.query)">
             </li>
         </ul>
     </div>
@@ -50,9 +50,9 @@
     }
 
     .slide {
-        width: 100%;
+        width: 1600px;
         overflow: hidden;
-        margin-bottom: 6%;
+        margin: 0 auto 6% auto;
     }
 
     .slide ul {
@@ -100,6 +100,10 @@
         display: inline;
         float: left;
         height: auto;
+    }
+    
+    .mini-slide {
+        cursor: pointer;
     }
 
 </style>
