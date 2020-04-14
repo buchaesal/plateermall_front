@@ -77,9 +77,9 @@
             <FaqHeader :title="'등록된 답변'"></FaqHeader>
         </div>
 
-<!--        <sui-loader active centered inline v-if="!answer"/>-->
+        <sui-loader active centered inline v-if="!answerCheck"/>
 
-<!--        <div v-else>-->
+        <div v-else>
 
             <div>
                 <div class="no-answer" v-if="!answer">
@@ -113,7 +113,7 @@
                 </sui-form>
             </div>
         </div>
-<!--    </div>-->
+    </div>
 </template>
 
 <script>
@@ -136,6 +136,7 @@
                 ],
                 questionDetail: {},
                 answer: {},
+                answerCheck: '',
                 updateQuestionObject: {},
             }
         },
@@ -145,11 +146,16 @@
         async created() {
             const postId = this.$route.params.postId;
             this.questionDetail = await getQuestion(postId);
-            this.updateQuestionObject = await this.questionDetail;
-            this.answer = await getAnswer(postId);
+            this.updateQuestionObject = this.questionDetail;
+            // this.answer = await getAnswer(postId);
+            await this.getAnswerCheck(postId);
             this.userInfo = await getCurrentUserInfo();
         },
         methods: {
+            async getAnswerCheck(postId) {
+              this.answer = await getAnswer(postId);
+              this.answerCheck = 1;
+            },
             async questionDelete() {
                 const postId = this.$route.params.postId;
 
