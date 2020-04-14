@@ -3,9 +3,9 @@
         <div>
             <div class="inquiry_header">
                 <FaqHeader :title="'1:1문의하기'"></FaqHeader>
-                <ul class="bull_list-dash">
-                    <li>- 문의하신 내용에 대한 답변은 이메일 또는 마이롯데 &gt; 1:1답변확인에서 확인하실 수 있습니다.</li>
-                    <li>- 답변 완료 시 회원정보에 등록된 휴대폰번호로 알림을 받으실 수 있습니다.</li>
+                <ul class="modal-msg">
+                    <li> 문의하신 내용에 대한 답변은 이메일 또는 마이롯데 &gt; 1:1답변확인에서 확인하실 수 있습니다.</li>
+                    <li> 답변 완료 시 회원정보에 등록된 휴대폰번호로 알림을 받으실 수 있습니다.</li>
                 </ul>
             </div>
             <div id="table_form">
@@ -220,10 +220,6 @@
         padding-left: 0;
     }
 
-    .bull_list-dash {
-        list-style: none;
-    }
-
     .form_head {
         height: 60px !important;
         text-align: center !important;
@@ -251,7 +247,7 @@
     }
 
     .modal-msg li{
-        margin-bottom: 10px;
+        margin-bottom: 10px !important;
     }
 
     hr {
