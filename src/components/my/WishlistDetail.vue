@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div class="search-wishlist">
+            <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
+        </div>
+
         <sui-loader active centered inline v-if="wishListCheck === 0"/>
 
         <div v-else>
@@ -13,9 +17,6 @@
             </div>
 
             <div v-else>
-                <div class="search-wishlist">
-                    <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
-                </div>
                 <div class="wishlist-container">
                     <sui-card-group :items-per-row="4">
                         <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
@@ -58,16 +59,7 @@
                 wishListCheck: 0,
             }
         },
-        computed: {
-            wishProductCount: function () {
-                return this.wishListGoodsCodes.length;
-            },
-        },
         methods: {
-            getWishListCheck() {
-                this.wishListCheck = 1;
-            },
-
             async setGoodsFromGoodsCodes() {
                 let goodsApi = new GoodsApi();
 
@@ -96,8 +88,6 @@
                 let wishListApi = new WishListApi();
                 wishListApi.deleteGoodsWish(goodsCode)
                     .then(() => {
-                        this.wishListGoodsCodes = [];
-                        this.wishListGoods = [];
                         this.setWishList();
                     })
                     .catch(function (error) {
@@ -105,22 +95,35 @@
                     });
             },
             searchWish() {
-                this.wishListGoods = [];
                 this.setWishList();
             }
         },
         async created() {
             this.userInfo = await getCurrentUserInfo();
             await this.setWishList();
-            this.getWishListCheck();
         },
+        computed: {
+            wishProductCount: function () {
+                return this.wishListGoodsCodes.length;
+            },
+        },
+        watch: {
+            wishListGoodsCodes() {
+                this.wishListCheck = 0;
+            },
+            wishListGoods() {
+                this.wishListCheck = 1;
+            }
+        }
     }
 </script>
 
 <style scoped>
     .my-cancel {
         margin-top: 10%;
+        margin-bottom: 10%;
         text-align: center;
+        clear:both;
     }
 
     .my-cancel > p {

@@ -175,10 +175,6 @@
             Footer,
         },
         methods: {
-            async getCartListCheck() {
-                this.cartListCheck = 1;
-            },
-
             checkWholeItem() {
                 if (this.isTotalChecked) {
                     this.checkedCartList = this.$store.state.cartListStore.cartList;
@@ -242,6 +238,7 @@
             async deleteCart(deletedCart) {
                 const result = confirm("해당 상품을 삭제 하시겠습니까?");
                 if (result) {
+                    this.cartListCheck = 0;
                     await this.$store.dispatch('deleteCart', deletedCart);
                     this.checkedCartList = [];
                 }
@@ -250,6 +247,7 @@
             async checkedDeleteCartList() {
                 const result = confirm("선택된 " + this.checkedCartList.length + "개 상품을 삭제 하시겠습니까?");
                 if (result) {
+                    this.cartListCheck = 0;
                     await this.$store.dispatch('checkedDeleteCartList', this.checkedCartList);
                     this.checkedCartList = [];
                     this.isTotalChecked = false;
@@ -298,7 +296,6 @@
         async created() {
             await this.$store.dispatch('getLoginUserInfo');
             await this.$store.dispatch('getCartList');
-            await this.getCartListCheck();
             this.cardInfoList = await requestCardDiscountInfo();
         },
 
@@ -310,6 +307,12 @@
                 return this.$store.state.cartListStore.cartList.length;
             }
         },
+
+        watch: {
+            getCartList() {
+                this.cartListCheck = 1;
+            },
+        }
     }
 </script>
 
