@@ -83,11 +83,11 @@
                 this.getGoodsList();
             },
         },
-        created() {
+        async created() {
             this.getCategoryCode();
-            this.getCategoryInfo();
-            this.getCategoryList();
-            this.getGoodsList();
+            await this.getCategoryInfo();
+            await this.getCategoryList();
+            await this.getGoodsList();
         },
         updated() {
             if (this.categoryInfo.categoryCode == undefined) {

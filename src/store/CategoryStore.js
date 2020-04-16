@@ -15,6 +15,7 @@ const mutations = {
         state.errorInfo = error;
     },
     async getCategory(state, categoryCode) {
+        state.categoryInfo = {};
         state.categoryInfo = await categoryApi.getCategoryInfo(categoryCode);
     },
     async getLeftCategoryList(state, categoryCode) {
