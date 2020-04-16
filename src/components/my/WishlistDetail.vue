@@ -3,11 +3,10 @@
         <div class="search-wishlist">
             <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
         </div>
-
         <sui-loader active centered inline v-if="wishListCheck === 0"/>
 
         <div v-else>
-            <div class="my-cancel" v-if="wishProductCount === 0">
+            <div class="wishlist-result" v-if="wishProductCount === 0">
                 <i class="huge exclamation icon"></i>
                 <br/>
                 <br/>
@@ -16,7 +15,7 @@
 
             </div>
 
-            <div class="my-cancel" v-else-if="wishListGoodsCount === 0">
+            <div class="wishlist-result" v-else-if="wishListGoodsCount === 0">
                 <i class="huge exclamation icon"></i>
                 <br/>
                 <br/>
@@ -129,14 +128,14 @@
 </script>
 
 <style scoped>
-    .my-cancel {
+    .wishlist-result {
         margin-top: 10%;
         margin-bottom: 10%;
         text-align: center;
         clear:both;
     }
 
-    .my-cancel > p {
+    .wishlist-result > p {
         font-size: 15px;
     }
 
