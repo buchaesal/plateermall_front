@@ -274,6 +274,7 @@
                 const result = confirm("수량을 변경하시겠습니까?");
                 if (result) {
                     this.cartListCheck = 0;
+                    this.checkedCartList = [];
                     this.$store.dispatch('changeQuantity', cart);
                 }
             },

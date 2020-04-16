@@ -62,8 +62,6 @@ const actions = {
     },
 
     deleteCart(context, deletedCart) {
-        console.log(deletedCart);
-
         requestDeleteCart(deletedCart)
             .then(() => {
                 context.dispatch('getCartList');
@@ -89,8 +87,6 @@ const actions = {
     },
 
     containWishList(context, goodsCodeArr) {
-        console.log("containWishList : " + goodsCodeArr);
-
         const wishListApi = new WishListApi();
         wishListApi.addGoodsWishList(goodsCodeArr)
             .then(() => {

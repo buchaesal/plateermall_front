@@ -4,13 +4,7 @@ const state = {
     leftCategoryList: [],
     rightCategoryList: [],
     categoryList: [{}],
-    categoryInfo: {
-        "uuid": null,
-        "name": null,
-        "categoryCode": null,
-        "parentsCode": null,
-        "goodsList": null
-    },
+    categoryInfo: {},
     errorInfo: {},
 }
 
@@ -21,6 +15,7 @@ const mutations = {
         state.errorInfo = error;
     },
     async getCategory(state, categoryCode) {
+        state.categoryInfo = {};
         state.categoryInfo = await categoryApi.getCategoryInfo(categoryCode);
     },
     async getLeftCategoryList(state, categoryCode) {
