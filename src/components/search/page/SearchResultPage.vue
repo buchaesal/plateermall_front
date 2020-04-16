@@ -69,7 +69,7 @@
             getCategoryList() {
                 this.searchResult = true;
 
-                if (this.goodsList[0].goodsCode != undefined) {
+                if (this.goodsList[0].goodsCode !== undefined) {
                     for (let goods of this.goodsList) {
                         for (let category of goods.categories) {
                             let data = {
