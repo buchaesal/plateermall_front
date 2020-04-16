@@ -88,7 +88,7 @@
         border-left: 1px solid #D9D9D9;
         border-right: 1px solid #D9D9D9;
         border-bottom: 3px solid;
-        position: fixed;
+        position: absolute;
     }
 
     .info{
