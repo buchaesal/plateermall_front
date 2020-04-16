@@ -59,11 +59,17 @@
         components: {
             NoItem,
         },
+        data() {
+            return {
+                isReSort: false,
+            }
+        },
         methods: {
             goToGoodsDetail(goodsCode) {
                 this.$router.push("/goodsDetail/" + goodsCode);
             },
             reSort(sort) {
+                this.isReSort = true;
                 this.$emit("reSort", sort);
             },
             goodsListUpdate() {
@@ -71,7 +77,11 @@
             },
         },
         updated() {
-            this.goodsListUpdate();
+            if (this.isReSort) {
+                this.isReSort = false;
+            } else {
+                this.goodsListUpdate();
+            }
         }
     }
 </script>
