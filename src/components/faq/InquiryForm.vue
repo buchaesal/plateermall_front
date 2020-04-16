@@ -34,7 +34,7 @@
                                         <sui-checkbox label="상품 외 문의" v-model="isChecked" class="form-checkbox"/>
 
 <!--                                        수정 필요-->
-                                        <div class="select-my-order" v-if="!isChecked">
+                                        <div class="select-my-order" v-if="!isChecked || myOrderGoods.title">
                                                 {{myOrderGoods.title}}
                                         </div>
                                         <div v-else></div>
@@ -179,6 +179,7 @@
 
                 if(!this.myOrderGoods) {
                     alert("문의 상품을 선택하지 않으셨습니다.");
+                    return;
                 }
 
                 this.myOrderGoods = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
