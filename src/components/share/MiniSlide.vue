@@ -50,9 +50,9 @@
     }
 
     .slide {
-        width: 100%;
+        width: 1600px;
         overflow: hidden;
-        margin-bottom: 6%;
+        margin: 0 auto 6% auto;
     }
 
     .slide ul {

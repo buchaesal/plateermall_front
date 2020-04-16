@@ -19,8 +19,15 @@ const mutations ={
         // state.codeList = addList;
 
         let goodsList = state.goodsList;
-        goodsList.push(await new GoodsApi().getGoods(goodsCode));
-        state.goodsList = goodsList;
+        // goodsList.push(await new GoodsApi().getGoods(goodsCode));
+        // state.goodsList = goodsList;
+
+        // 중복 확인
+        if (goodsList.filter(goodsObject => goodsObject.goodsCode === goodsCode).length !== 0) {
+            let index = goodsList.findIndex(goodsObject => goodsObject.goodsCode === goodsCode);
+            goodsList.splice(index, 1);
+        }
+        state.goodsList = [await new GoodsApi().getGoods(goodsCode)].concat(goodsList);
     },
 
     clearList(state) {

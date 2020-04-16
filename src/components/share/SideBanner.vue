@@ -38,16 +38,16 @@
                         최근 본 쇼핑정보가 없습니다.
                     </div>
                 </li>
-                <li @click="goToDetail(good.goodsCode)" v-show="getRecentGoodsInfo.recentGoodsLength!=0" v-for="(good, index) in getRecentGoodsInfo.recentGoods" v-bind:key="index" class="shopping-info">
+                <li @click="goToDetail(goods.goodsCode)" v-show="getRecentGoodsInfo.recentGoodsLength!=0" v-for="(goods, index) in getRecentGoodsInfo.recentGoods" v-bind:key="index" class="shopping-info">
                     <div class="banner-item">
                         <div class="banner-item-img">
-                            <img :src=good.imgUrl class="goodsImg">
+                            <img :src=goods.imgUrl class="goodsImg">
                         </div>
                         <div class="banner-item-text">
-                            <a href="#" @click="goToDetail(good.goodsCode)">
-                                <p class="banner-item-title">{{good.title}}</p>
-                                <p class="banner-item-contents">{{good.copy}}</p>
-                                <p class="banner-item-price">{{good.originalPrice}}<span class="price">원</span></p>
+                            <a href="#" @click="goToDetail(goods.goodsCode)">
+                                <p class="banner-item-title">{{goods.title}}</p>
+                                <p class="banner-item-contents">{{goods.copy}}</p>
+                                <p class="banner-item-price">{{goods.benefitPrice.toLocaleString()}}<span class="price">원</span></p>
                             </a>
                         </div>
                     </div>

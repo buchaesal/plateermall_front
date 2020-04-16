@@ -78,18 +78,18 @@
             <div class="checkbox-wrap">
                 <div class="email-checkbox-wrap">
                     <span class="email-comp">이메일 수신</span>
-                    <input class="email-comp" type="radio" id="emailAgree" :value="1" v-model="user.emailAgree">
+                    <input class="email-comp" type="radio" id="emailAgree" :value="'true'" v-model="user.emailAgree">
                     <label for="emailAgree"> 동의 </label>
 
-                    <input class="email-comp" type="radio" id="emailDisagree" :value="0" v-model="user.emailAgree">
+                    <input class="email-comp" type="radio" id="emailDisagree" :value="'false'" v-model="user.emailAgree">
                     <label for="emailDisagree"> 동의안함 </label>
                 </div>
                 <div class="sms-checkbox-wrap">
                     <span class="sms-comp">SMS 수신</span>
-                    <input class="sms-comp" type="radio" id="smsAgree" :value="1" v-model="user.smsAgree">
+                    <input class="sms-comp" type="radio" id="smsAgree" :value="'true'" v-model="user.smsAgree">
                     <label for="smsAgree"> 동의 </label>
 
-                    <input class="sms-comp-disagree" type="radio" id="smsDisagree" :value="0" v-model="user.smsAgree">
+                    <input class="sms-comp-disagree" type="radio" id="smsDisagree" :value="'false'" v-model="user.smsAgree">
                     <label for="smsDisagree"> 동의안함 </label>
                 </div>
             </div>
@@ -117,8 +117,8 @@
                     email: '',
                     password: '',
                     phoneNumber: '',
-                    emailAgree: 0,
-                    smsAgree: 0,
+                    emailAgree: 'false',
+                    smsAgree: 'false',
                 },
                 userName: '',
                 currentEmailDomain: '직접입력',
@@ -172,6 +172,8 @@
 
                 this.user.email = this.userEmailId;
                 this.user.phoneNumber = `${this.currentHeadNumber}${this.user.phoneNumber}`;
+                this.user.smsAgree = this.user.smsAgree === 'true';
+                this.user.emailAgree = this.user.emailAgree === 'true';
 
                 this.$store.dispatch('SIGN_UP',this.user);
                 alert('회원가입이 완료되었습니다. 로그인해주세요.');

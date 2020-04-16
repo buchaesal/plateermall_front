@@ -224,7 +224,7 @@
                 </section>
                 <div class="promotion-banner" v-if="!isEmpty(goodsData.cardPromotions)">
                     <div class="banner-text">
-                        <a href="#">{{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 할인</a>
+                        {{goodsData.cardPromotions[0].card}} {{goodsData.cardPromotions[0].percentage}}% 할인
                     </div>
                 </div>
                 <div class="details">
@@ -265,7 +265,7 @@
                     </section>
                     <div class="brand-banner">
                         <div class="banner-text">
-                            <a href="#">{{goodsData.seller}}</a>
+                            {{goodsData.seller}}
                         </div>
                     </div>
                     <div class="detail-tab">
@@ -591,7 +591,9 @@
                 this.tooltip2Display = false;
             },
             addCart() {
-                if (this.selectedOptions.length === 0) {
+                if (this.isEmpty(this.userInfo.email)) {
+                    alert("로그인을 해주세요.");
+                } else if (this.selectedOptions.length === 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
                     requestAddCart(new CartListModel((this.userInfo).email, this.$route.params.goodsCode, this.selectedOptions));
@@ -605,7 +607,9 @@
                 this.$router.push("/cart");
             },
             directOrder() {
-                if (this.selectedOptions.length === 0) {
+                if (this.isEmpty(this.userInfo.email)) {
+                    alert("로그인을 해주세요.");
+                } else if (this.selectedOptions.length === 0) {
                     alert("옵션을 먼저 선택해주세요.");
                 } else {
                     this.$router.push({
@@ -1064,7 +1068,7 @@
         color: white;
     }
 
-    .banner-text a {
+    .banner-text {
         display: block;
         height: 100px;
         padding: 28px 0;

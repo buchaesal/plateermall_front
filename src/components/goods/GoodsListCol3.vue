@@ -16,8 +16,8 @@
                     <sui-card-content extra class="price">
                         <sui-icon name="won sign icon"/>
                         <span class="price">{{goodsData.benefitPrice.toLocaleString()}} ~</span><span class="unit"></span>
-                        <span class="original-price">{{goodsData.originalPrice}}</span>
-                        <span slot="right" class="dcrate">{{goodsData.dcRate}}%</span>
+                        <span class="original-price" v-if="goodsData.dcRate != 0">{{goodsData.originalPrice.toLocaleString()}}</span>
+                        <span slot="right" class="dcrate" v-if="goodsData.dcRate != 0">{{goodsData.dcRate}}%</span>
                     </sui-card-content>
                 </sui-card>
             </sui-card-group>
