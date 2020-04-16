@@ -5,6 +5,8 @@ import axios from 'axios';
 export const COMMENTS_URL = 'https://shoppingmall-comment.herokuapp.com/api/comments';
 export const GOODS_URL = 'https://shoppingmall-goods.herokuapp.com/api/goods';
 export const CATEGORY_URL = 'https://shoppingmall-goods.herokuapp.com/api/category';
+// export const GOODS_URL = 'http://localhost:9999/api/goods';
+// export const CATEGORY_URL = 'http://localhost:9999/api/category';
 export const CART_URL = 'https://shoppingmall-cart-wishlist.herokuapp.com/api/cart';
 
 export const FAQ_URL = 'https://shoppingmall-board.herokuapp.com/api/faq';
