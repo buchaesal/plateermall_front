@@ -16,7 +16,7 @@
 
             </div>
 
-            <div class="my-cancel" v-else-if="tempWishListGoodsCount === 0">
+            <div class="my-cancel" v-else-if="wishListGoodsCount === 0">
                 <i class="huge exclamation icon"></i>
                 <br/>
                 <br/>
@@ -113,7 +113,7 @@
             wishProductCount: function () {
                 return this.wishListGoodsCodes.length;
             },
-            tempWishListGoodsCount: function() {
+            wishListGoodsCount: function() {
                 return this.wishListGoods.length;
             }
         },
