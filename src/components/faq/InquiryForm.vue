@@ -34,7 +34,7 @@
                                         <sui-checkbox label="상품 외 문의" v-model="isChecked" class="form-checkbox"/>
 
 <!--                                        수정 필요-->
-                                        <div class="select-my-order" v-if="!isChecked || myOrderGoods.title">
+                                        <div class="select-my-order" v-if="!isChecked && myOrderGoods.title">
                                                 {{myOrderGoods.title}}
                                         </div>
                                         <div v-else></div>
@@ -177,7 +177,7 @@
 
                 this.open = !this.open;
 
-                if(!this.myOrderGoods) {
+                if(!this.myOrderQuestion) {
                     alert("문의 상품을 선택하지 않으셨습니다.");
                     return;
                 }
