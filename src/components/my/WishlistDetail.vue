@@ -1,8 +1,5 @@
 <template>
     <div>
-        <div class="search-wishlist">
-            <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
-        </div>
         <sui-loader active centered inline v-if="wishListCheck === 0"/>
 
         <div v-else>
@@ -15,14 +12,22 @@
 
             </div>
 
-            <div class="wishlist-result" v-else-if="wishListGoodsCount === 0">
-                <i class="huge exclamation icon"></i>
-                <br/>
-                <br/>
-                <p>일치하는 상품이 없습니다.</p>
+            <div v-else-if="wishListGoodsCount === 0">
+                <div class="search-wishlist">
+                    <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
+                </div>
+                <div class="wishlist-result">
+                    <i class="huge exclamation icon"></i>
+                    <br/>
+                    <br/>
+                    <p>일치하는 상품이 없습니다.</p>
+                </div>
             </div>
 
             <div v-else>
+                <div class="search-wishlist">
+                    <sui-input v-on:keyup.enter="searchWish" placeholder="상품 이름 입력" icon="search" v-model="searchTxt" />
+                </div>
                 <div class="wishlist-container">
                     <sui-card-group :items-per-row="4">
                         <sui-card class="goods-card" v-for="(goodsData, index) in wishListGoods" :key="index"
