@@ -41,6 +41,8 @@
                     alert('결제할 카드를 선택해주세요.');
                 }else if(this.getPaymentValueInfo.installments == ''){
                     alert('할부를 선택해주세요.')
+                }else if(this.getDefaultAddress.receiver == null){
+                    alert('배송지를 등록해주세요.')
                 }else{
                     this.$store.dispatch('ADD_ORDER');
                     this.$router.push({
@@ -70,8 +72,10 @@
             },
             getPaymentValueInfo(){
                 return this.$store.state.orderDetailStore.cardInfo;
+            },
+            getDefaultAddress(){
+                return this.$store.state.orderDetailStore.defaultAddress;
             }
-
         },
 
     }

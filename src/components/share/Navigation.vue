@@ -49,14 +49,16 @@
                                 <sui-checkbox radio label="직접 입력" value="5" v-model="priceOption"/>
                             </sui-form-field>
                             <sui-form-field>
-                                <input placeholder="최저가" maxlength="8" v-model="selfMinPrice"
+                                <input type="number" placeholder="최저가" maxlength="8" v-model="selfMinPrice"
+                                        @focus="inputRadioChange"
                                        @keyup.enter="setPriceRange"/>
                             </sui-form-field>
                             <sui-form-field>
-                                <input placeholder="최고가" maxlength="8" v-model="selfMaxPrice"
+                                <input type="number" placeholder="최고가" maxlength="8" v-model="selfMaxPrice"
+                                        @focus="inputRadioChange"
                                        @keyup.enter="setPriceRange"/>
                             </sui-form-field>
-                            <sui-button secondary type="submit" @click="setSelfPriceRange">검색</sui-button>
+                            <sui-button secondary type="button" @click="setSelfPriceRange">검색</sui-button>
                         </sui-form>
                     </div>
                 </sui-accordion-content>
@@ -93,6 +95,9 @@
                 this.$emit("changePriceRange", this.minPrice, this.maxPrice);
             },
             radioChange() {
+                this.selfMinPrice = "";
+                this.selfMinPrice = "";
+                
                 switch (this.priceOption) {
                     case "1":
                         this.minPrice = "";
@@ -113,11 +118,16 @@
                 }
                 this.changePriceRange();
             },
+            inputRadioChange() {
+                this.priceOption = "5";
+            },
             setSelfPriceRange() {
                 if (this.selfMinPrice == "") {
                     alert("최저가를 입력해주세요");
                 } else if (this.selfMaxPrice == "") {
                     alert("최고가를 입력해주세요");
+                } else if (this.selfMinPrice > this.selfMaxPrice) {
+                    alert("최고가는 최저가보다 커야합니다.")
                 } else {
                     this.minPrice = this.selfMinPrice;
                     this.maxPrice = this.selfMaxPrice;
@@ -193,6 +203,16 @@
 
     li {
         margin-top: 12px;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
     }
 
 </style>

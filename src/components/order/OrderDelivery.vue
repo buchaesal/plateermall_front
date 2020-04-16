@@ -3,12 +3,19 @@
         <span style="margin-right: 13%; float: left;" >배송지</span>
        
         <div class="default" style="margin-left: 18%;">
-            {{getDefaultAddress.receiver}}
-            ({{getDefaultAddress.spotAlias}})<br>
-            {{getDefaultAddress.roadAddress}}
-            {{getDefaultAddress.zipcodeAddress}}
-            {{getDefaultAddress.remainAddress}}<br>
-            {{getDefaultAddress.phoneNumber}}       
+            <div v-if="getDefaultAddress.receiver == null">
+                <p>배송지를 등록해주세요.</p>
+            </div>
+            
+            <div v-else>
+                {{getDefaultAddress.receiver}}
+                ({{getDefaultAddress.spotAlias}})<br>
+                {{getDefaultAddress.roadAddress}}
+                {{getDefaultAddress.zipcodeAddress}}
+                {{getDefaultAddress.remainAddress}}<br>
+                {{getDefaultAddress.phoneNumber}}      
+            </div>
+             
             <br>
             <sui-button @click="openModal(1)" size="tiny"  content="변경" style="margin-top: 3%;"/>
             <sui-button @click="openModal(2)" size="tiny" content="신규배송지 등록" />
@@ -156,7 +163,6 @@ import ShippingSpotModel from "../../components/my/model/ShippingSpotModel";
                     this.defaultAddress = this.addressInfo.data[index];
                 }
             }
-
             this.$store.commit('loadDefaultAddress', this.defaultAddress);
             this.addressIndex = "0";
         },

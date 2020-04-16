@@ -1,9 +1,5 @@
 import request,{SHIPPINGSPOT_URL} from './axios';
 
-//api/user/~~
-//리스트받아오느거
-//추가 삭제 수정
-//기본배송지변경
 export const getShippingSpotList = function () {
     return request.get(SHIPPINGSPOT_URL+'/list');
 }

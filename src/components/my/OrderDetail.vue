@@ -208,6 +208,7 @@
         display: inline-block;
         vertical-align: middle;
         margin-left: 40px;
+        width: 425px;
     }
 
     .my-order-list-price {

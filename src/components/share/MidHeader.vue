@@ -46,7 +46,13 @@
         },
         methods: {
             goToHome() {
-                this.$router.push('/');
+                this.$router.push('/').catch(error => {
+                    if (error.name == "NavigationDuplicated") {
+                        return;
+                    } else {
+                        throw error;
+                    }
+                });
             },
             goToResult() {
                 if (!this.searchKeyword) {

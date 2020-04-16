@@ -16,6 +16,13 @@
 
             </div>
 
+            <div class="my-cancel" v-else-if="tempWishListGoodsCount === 0">
+                <i class="huge exclamation icon"></i>
+                <br/>
+                <br/>
+                <p>일치하는 상품이 없습니다.</p>
+            </div>
+
             <div v-else>
                 <div class="wishlist-container">
                     <sui-card-group :items-per-row="4">
@@ -106,6 +113,9 @@
             wishProductCount: function () {
                 return this.wishListGoodsCodes.length;
             },
+            tempWishListGoodsCount: function() {
+                return this.wishListGoods.length;
+            }
         },
         watch: {
             wishListGoodsCodes() {

@@ -25,7 +25,13 @@
         name: "BottomHeader",
         methods: {
             goToHome() {
-                this.$router.push('/');
+                this.$router.push('/').catch(error => {
+                    if (error.name == "NavigationDuplicated") {
+                        return;
+                    } else {
+                        throw error;
+                    }
+                });
             },
             goToCategory(categoryCode) {
                 this.$router.push('/category/' + categoryCode).catch(error => {
