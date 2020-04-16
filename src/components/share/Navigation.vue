@@ -99,16 +99,16 @@
                         this.maxPrice = "";
                         break;
                     case "2":
-                        this.minPrice = "0";
-                        this.maxPrice = "50000";
+                        this.minPrice = 0;
+                        this.maxPrice = 50000;
                         break;
                     case "3":
-                        this.minPrice = "50000";
-                        this.maxPrice = "100000";
+                        this.minPrice = 50000;
+                        this.maxPrice = 100000;
                         break;
                     case "4":
-                        this.minPrice = "100000";
-                        this.maxPrice = "300000";
+                        this.minPrice = 100000;
+                        this.maxPrice = 300000;
                         break;
                 }
                 this.changePriceRange();
