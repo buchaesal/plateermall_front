@@ -114,12 +114,9 @@
                 createNewShippingSpot: false,
                 openShippingSpotFormFlag: false,
                 openModifyShippingSpotFormFlag: false,
-                defaultShippingSpot: {},
                 otherShippingSpots: [],
                 isModifyForm: false,
-                defaultShippingSpotCopy: {},
                 shippingSpotSize: -1,
-                checkedRadio: 'defaultShippingSpot',
                 selectedDefault: 0,
                 modifyShippingSpotModel: {}
             }
