@@ -174,7 +174,13 @@
         },
         methods: {
             async registerMyOrderQuestion(){
+
                 this.open = !this.open;
+
+                if(!this.myOrderGoods) {
+                    alert("문의 상품을 선택하지 않으셨습니다.");
+                }
+
                 this.myOrderGoods = await this.goodsApi.getGoods(this.myOrderQuestion.goodsId);
                 this.questionObject.orderId = this.myOrderQuestion.goodsId;
                 this.questionObject.goodsTitle = this.myOrderGoods.title;
