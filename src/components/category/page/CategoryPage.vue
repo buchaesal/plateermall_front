@@ -89,6 +89,11 @@
             this.getCategoryList();
             this.getGoodsList();
         },
+        updated() {
+            if (this.categoryInfo.categoryCode == undefined) {
+                this.$router.push("/404");
+            }
+        },
         computed: {
             categoryInfo() {
                 return this.$store.state.categoryStore.categoryInfo;
