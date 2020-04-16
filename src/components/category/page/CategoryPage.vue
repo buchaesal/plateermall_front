@@ -90,7 +90,7 @@
             this.getGoodsList();
         },
         updated() {
-            if (this.categoryInfo.categoryCode == null) {
+            if (this.categoryInfo.categoryCode == undefined) {
                 this.$router.push("/404");
             }
         },

@@ -4,13 +4,7 @@ const state = {
     leftCategoryList: [],
     rightCategoryList: [],
     categoryList: [{}],
-    categoryInfo: {
-        "uuid": null,
-        "name": null,
-        "categoryCode": null,
-        "parentsCode": null,
-        "goodsList": null
-    },
+    categoryInfo: {},
     errorInfo: {},
 }
 

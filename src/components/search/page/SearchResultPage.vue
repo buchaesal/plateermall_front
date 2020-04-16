@@ -68,23 +68,27 @@
             },
             getCategoryList() {
                 this.searchResult = true;
-                for (let goods of this.goodsList) {
-                    for (let category of goods.categories) {
-                        let data = {
-                            "name": category.name,
-                            "categoryCode": category.categoryCode,
-                        }
 
-                        if (this.categoryList.filter(category => category.categoryCode === data.categoryCode).length === 0
-                        ) {
-                            this.categoryList.push(data);
+                if (this.goodsList[0].goodsCode !== undefined) {
+                    for (let goods of this.goodsList) {
+                        for (let category of goods.categories) {
+                            let data = {
+                                "name": category.name,
+                                "categoryCode": category.categoryCode,
+                            }
+
+                            if (this.categoryList.filter(category => category.categoryCode === data.categoryCode).length === 0
+                            ) {
+                                this.categoryList.push(data);
+                            }
                         }
                     }
-                }
 
-                this.categoryList.sort(function (a, b) {
-                    return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
-                });
+                    this.categoryList.sort(function (a, b) {
+                        return a.name < b.name ? -1 : a.name > b.name ? 1 : 0;
+                    });
+                }
+                
             },
             changeCategory(categoryCode) {
                 this.categoryCode = categoryCode;
