@@ -110,8 +110,8 @@
         },
         watch: {
             "query": "getQuery",
-            "$route": ["getGoodsList", "getCategoryList"],
-            "categoryCode": ["getGoodsList"],
+            "$route": "getGoodsList",
+            "categoryCode": "getGoodsList",
         },
     }
 </script>
