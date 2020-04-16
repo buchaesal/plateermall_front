@@ -83,16 +83,11 @@
                 this.getGoodsList();
             },
         },
-        async created() {
+        created() {
             this.getCategoryCode();
-            await this.getCategoryInfo();
-            await this.getCategoryList();
-            await this.getGoodsList();
-        },
-        updated() {
-            if (this.categoryInfo.categoryCode == undefined) {
-                this.$router.push("/404");
-            }
+            this.getCategoryInfo();
+            this.getCategoryList();
+            this.getGoodsList();
         },
         computed: {
             categoryInfo() {
