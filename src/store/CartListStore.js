@@ -84,7 +84,6 @@ const actions = {
     changeQuantity(context, changeCart) {
         requestChangeQuantity(changeCart)
             .then(() => {
-                alert("수량이 변경되었습니다.");
                 context.dispatch('getCartList');
             });
     },
