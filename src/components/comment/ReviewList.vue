@@ -69,15 +69,17 @@ import ReviewOption from './ReviewOption.vue'
             },    
             getRequestCount(){
                 return this.$store.state.commentStore.reviewCount;
-            } 
+            },
+            isAuthenticated() {
+                return this.$store.getters.isAuthenticated;
+            }
         },
         methods:{
             async recommendComment(index){
-                let user = await getCurrentUserInfo();
-
-                if(user == null){
+                if(!this.isAuthenticated){
                     alert('로그인 후에 추천할 수 있습니다.');
                 }else{
+                    let user = await getCurrentUserInfo();
                     this.info.email = user.email;
                     this.info.index = index;
                     this.$store.dispatch('RECOMMEND_COMMENT', this.info);                    
