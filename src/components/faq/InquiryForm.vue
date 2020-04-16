@@ -21,13 +21,14 @@
                                                 selection
                                                 :options="options"
                                                 v-model="questionObject.territory"
+
                                         />
                                     </sui-table-cell>
                                 </sui-table-row>
                                 <sui-table-row>
                                     <sui-table-cell class="form_head">문의 상품</sui-table-cell>
                                     <sui-table-cell>
-                                        <sui-button class="select-order-goods-button" @click.native="toggle" :disabled="isChecked">
+                                        <sui-button class="select-order-goods-button" type="button" @click.native="toggle" :disabled="isChecked">
                                             주문 상품 선택
                                         </sui-button>
                                         <sui-checkbox label="상품 외 문의" v-model="isChecked" class="form-checkbox"/>
@@ -94,7 +95,6 @@
                     <div v-for="(goods, index) in goodsInOrderList" :key="index" v-show="myOrderList.length>0" class="goods-list">
 
                         <div class="my-order-list-goods">
-<!--                            <sui-checkbox class="goods-checkbox" radio/>-->
                             <span class="goods-img">
                                 <img :src="goods.imgUrl">
                             </span>
