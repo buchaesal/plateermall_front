@@ -79,7 +79,7 @@
         updated() {
             if (this.isReSort) {
                 this.isReSort = false;
-            } else if (this.goodsList[0].goodsCode !== undefined) {
+            } else if (this.goodsList[0].goodsCode != undefined) {
                 this.goodsListUpdate();
             }
         }
