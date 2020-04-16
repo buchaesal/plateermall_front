@@ -1,0 +1,47 @@
+#sizeGuideTable{width:816px;padding:29px 22px;border:5px solid #e9e9e9;background:#fff;text-align:left;font-size:11px;font-family:"dotum";padding-top:20px;}
+#sizeGuideTable h3{margin:0;padding:0}
+#sizeGuideTable ul li{list-style:none;padding:0;margin:0}
+#sizeGuideTable .size_title_wrap{width:814px;height:25px;margin:60px 0 10px 0;*zoom:1}
+#sizeGuideTable .size_title_wrap:after{content:"";display:block;clear:both}
+#sizeGuideTable .size_title_wrap h3.tamplete_title{float:left;color:#000;font-size:14px;margin-right:10px}
+#sizeGuideTable .size_title_wrap select.size_selector{float:left;vertical-align:middle;margin-right:5px}
+#sizeGuideTable .size_title_wrap input{float:left;vertical-align:middle}
+#sizeGuideTable .title_idx_1{margin-top:0}
+
+#sizeGuideTable .size_tabel{border-collapse:separate;border-spacing:0;border:0;text-align:center;width:auto}
+#sizeGuideTable .size_tabel caption{display:none}
+#sizeGuideTable .size_tabel th,#sizeGuide .size_tabel td{padding:0;border:0}
+#sizeGuideTable .size_tabel input{padding:0;margin:0}
+#sizeGuideTable .size_tabel input.txt{width:30px}
+#sizeGuideTable .size_tabel input.txt_wide{width:73px;color:#777}
+#sizeGuideTable .size_tabel input.txt,
+#sizeGuideTable .size_tabel input.txt_wide{height:14px;line-height:14px;border:1px solid #b3b3b3;text-align:center}
+#sizeGuideTable .size_tabel thead tr th{color:#565656}
+#sizeGuideTable .size_tabel thead tr th.label{width:126px}
+#sizeGuideTable .size_tabel thead tr.default_size th{height:27px;line-height:27px;border-width:0 0 1px 1px;border-style:solid;border-color:#a9a9a9 #efefef;background:#c2c2c2}
+#sizeGuideTable .size_tabel thead tr.default_size th.label{border-left:0}
+#sizeGuideTable .size_tabel thead tr.brand_size th{height:27px;line-height:27px;border-width:1px 0 1px 1px;border-style:solid;border-color:#e3e3e3 #fff #a9a9a9 #efefef;background:#c2c2c2}
+#sizeGuideTable .size_tabel thead tr.brand_size th.label{border-left:0}
+#sizeGuideTable .size_tabel thead tr.delete_btn th{border-width:0 0 1px 1px;border-style:solid;border-color:#fff #fff #a9a9a9 #efefef;vertical-align:top;height:16px;line-height:16px;background:#c2c2c2}
+#sizeGuideTable .size_tabel tbody tr th,
+#sizeGuideTable .size_tabel tbody tr td{border-width:0 0 0 1px;border-style:solid;border-color:#f5f5f5;background:#e2e2e2}
+#sizeGuideTable .size_tabel tbody tr.odd th,
+#sizeGuideTable .size_tabel tbody tr.odd td{background:#ededed}
+#sizeGuideTable .size_tabel tbody .cell{width:42px;height:30px}
+#sizeGuideTable .size_tabel tbody .cell_wide{width:85px;height:30px}
+#sizeGuideTable .size_tabel tbody .label{width:126px;border-left:0;color:#535353;font-weight:normal}
+
+#sizeGuideTable .size_guide_tip_wrap{padding:30px 0 0 25px;*zoom:1}
+#sizeGuideTable .size_guide_tip_wrap:after{content:"";display:block;clear:both}
+#sizeGuideTable .size_guide_tip_wrap .guide_img_wrap{float:left;width:360px}
+#sizeGuideTable .size_guide_tip_wrap .guide_tip_wrap{float:left;padding:17px 0 0 58px}
+#sizeGuideTable .size_guide_tip_wrap .guide_tip_wrap h3{color:#555;font-size:12px}
+#sizeGuideTable .size_guide_tip_wrap .guide_tip_wrap ul{margin-top:35px}
+#sizeGuideTable .size_guide_tip_wrap .guide_tip_wrap ul.tamplete_1{margin-top:15px}
+#sizeGuideTable .size_guide_tip_wrap .guide_tip_wrap ul li{position:relative;margin-bottom:9px;height:17px;line-height:17px;color:#666;padding-left:25px}
+#sizeGuideTable .size_guide_tip_wrap .guide_tip_wrap ul li span.no{display:block;position:absolute;top:1px;left:0;overflow:hidden;width:15px;height:12px;line-height:11px;color:#fff;font-size:10px;font-family:"verdana";font-weight:bold;text-align:center;background:#666}
+
+
+/* 20150422 Ãß°¡ */
+#sizeGuideTable.sizePad{width:816px;padding:29px 22px;border:5px solid #e9e9e9;background:#fff;text-align:left;font-size:11px;font-family:"dotum";padding-top:20px;box-sizing:border-box;}
+#sizeGuideTable.sizePad .size_guide_tip_wrap .guide_tip_wrap{float:left;padding:17px 0 0 0;}
