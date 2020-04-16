@@ -86,6 +86,7 @@
                         <sui-table-cell>사진 올리기</sui-table-cell>
                         <sui-table-cell>
                             <div id='img-group'>
+                            <p>- 사진을 클릭하면 삭제됩니다.</p>
                             <img class="image" @change="changeValue" @click="cancelUpload(0)" v-if="currentReview.myPhoto != ''" :src='currentReview.myPhoto' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             <img class="image" @change="changeValue" v-if="currentReview.myPhoto == ''" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             
@@ -95,7 +96,7 @@
                             <img class="image" @change="changeValue" @click="cancelUpload(2)" v-if="currentReview.myPhoto3 != ''" :src='currentReview.myPhoto3' style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             <img class="image" @change="changeValue" v-if="currentReview.myPhoto3 == ''" :src="require('../../assets/frame.png')" style="width: 100px; height: 100px; margin-right: 3%; float: left;"/>
                             
-                            <input id="image-input" v-on:change='fileSelect(currentReview)' name="files" ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%;"/>
+                            <input id="image-input" v-on:change='fileSelect(currentReview)' name="files" ref="commentimage" accept=".jpg,.jpeg,.png,.gif" type="file" text="" multiple="multiple" style="margin-top: 2%; margin-bottom: 2%; color: transparent;"/>
                             </div>
                             <p>- 매월 우수상품평 작성자 50명에게 P.POINT 2000점을 적립해 드립니다.</p>
                             <p>- 첨부가능 파일형식: JPG, JPEG, GIF, PNG</p>

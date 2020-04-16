@@ -99,6 +99,8 @@ import subCommentModel from './model/SubCommentModel.js';
             cancelAddComment(){
                 this.open = false;
                 this.currentReview =new subCommentModel();
+
+                this.$store.commit('loadFileData', null);
             },
         },
         components:{
