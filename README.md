@@ -1,24 +1,7 @@
-# shoppingmall_front
+# 쇼핑몰 사이트 구축 프로젝트 (Plateer mall) - Front
 
-## Project setup
-```
-npm install
-```
+## 사용기술
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+ + Vue.js (Vuex)
+ + heroku
+ + aws amplify
